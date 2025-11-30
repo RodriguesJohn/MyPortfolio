@@ -746,7 +746,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
             {/* Vertical App Store-style Cards - 2 full cards + 1 partially visible */}
             <div className="relative mb-12">
               {/* Scroll Controls - Top Right */}
-              <div className="flex items-center gap-2 mb-4 justify-end">
+              <div className="flex items-center gap-2 mb-4 justify-end pr-4 sm:pr-6 md:pr-8 lg:pr-16 xl:pr-24">
                 <button
                   onClick={scrollLeft}
                   className="p-2 sm:p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:bg-gray-50"
@@ -777,7 +777,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                 {infiniteProjects.map((project, index) => (
                   <motion.div
                     key={`${project.id}-${index}`}
-                    className="project-card-wrapper flex-shrink-0 w-[85%] sm:w-[70%] md:w-[42%] lg:w-[38%] snap-center lg:snap-start"
+                    className="project-card-wrapper flex-shrink-0 w-[95%] sm:w-[80%] md:w-[55%] lg:w-[45%] snap-center lg:snap-start"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                   >
