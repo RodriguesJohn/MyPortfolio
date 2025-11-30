@@ -403,7 +403,7 @@ function PlaybookCard() {
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-8 p-8 w-full">
+      <div className="grid md:grid-cols-2 gap-8 p-8 w-full mx-4 sm:mx-6 md:mx-8 lg:mx-16 xl:mx-24">
         {/* 3D Book */}
         <div className="relative flex items-center justify-center md:justify-start -ml-8">
           <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
