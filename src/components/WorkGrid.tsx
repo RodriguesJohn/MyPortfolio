@@ -404,9 +404,9 @@ function PlaybookCard() {
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-8 p-8 w-full mx-4 sm:mx-6 md:mx-8 lg:mx-16 xl:mx-24">
+      <div className="grid md:grid-cols-2 gap-8 p-8 w-full mx-4 sm:mx-6 md:mx-8 lg:mx-16 xl:mx-24 justify-items-center md:justify-items-start">
         {/* 3D Book */}
-        <div className="relative flex items-center justify-center -ml-8 md:-ml-8">
+        <div className="relative flex items-center justify-center ml-0 md:-ml-8 w-full md:w-auto">
           <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
             {/* Book Pages Stack - On the right side, tucked inside */}
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-white dark:bg-gray-100 rounded-r-sm shadow-lg" style={{ transform: 'translateX(8px)', zIndex: 0 }} />
@@ -442,8 +442,8 @@ function PlaybookCard() {
         </div>
         
         {/* Book Details */}
-        <div className="flex flex-col gap-6 text-center md:text-left">
-          <div>
+        <div className="flex flex-col gap-6 text-center md:text-left w-full md:w-auto">
+          <div className="w-full">
             <h3 className="text-2xl font-semibold mb-3 text-foreground">AI Design Playbook</h3>
             <p className="text-muted-foreground mb-6 leading-tight text-base opacity-90 max-w-md line-clamp-2 mx-auto md:mx-0">
               A comprehensive guide to integrating AI as a foundational layer in your products through strategy, design, and prototyping.
