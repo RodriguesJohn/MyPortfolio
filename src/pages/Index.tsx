@@ -67,7 +67,7 @@ const Index = () => {
       </div>
       
       {/* Floating Chat Input */}
-      <div className="fixed bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] sm:w-auto px-4 sm:px-0">
+      <div className="fixed bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] sm:w-auto px-4 sm:px-0" style={{ bottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -119,7 +119,7 @@ const Index = () => {
 
       {/* Chat Modal */}
       {isChatOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4">
           {/* Backdrop */}
           <div 
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -130,7 +130,7 @@ const Index = () => {
           />
           
           {/* Modal */}
-          <div className="relative w-full max-w-2xl h-[600px] bg-background rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative w-full h-full sm:h-[600px] sm:max-w-2xl bg-background rounded-t-2xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex items-center justify-between px-6 pt-10 pb-6 border-b border-border/50 relative">
               <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-muted/80 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full text-muted-foreground/70 pointer-events-none animate-shake">
@@ -195,7 +195,7 @@ const Index = () => {
             </div>
             
             {/* Input Area */}
-            <div className="p-4 border-t border-border/50">
+            <div className="p-4 border-t border-border/50 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
               {isVoiceMode ? (
                 <div className="flex flex-col items-center justify-center py-6 gap-4">
                   {isListening ? (
