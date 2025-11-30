@@ -744,7 +744,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
         ) : (
           <div className="relative">
             {/* Vertical App Store-style Cards - 2 full cards + 1 partially visible */}
-            <div className="relative mb-12 overflow-hidden">
+            <div className="relative mb-12">
               {/* Scroll Controls - Top Right */}
               <div className="flex items-center gap-2 mb-4 justify-end">
                 <button
