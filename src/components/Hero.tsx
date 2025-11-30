@@ -415,7 +415,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               {/* Content - Left Side */}
               <div className="flex-1 text-left w-full order-2 lg:order-1">
                 {/* Name */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-semibold mb-2 sm:mb-3 md:mb-4 lg:mb-5 text-foreground leading-tight tracking-tight">
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-medium mb-2 sm:mb-3 md:mb-4 lg:mb-5 text-foreground leading-tight tracking-tight">
                   John Rodrigues
                 </h1>
                 
@@ -424,7 +424,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   <div className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
                     <span>AI Product Designer / Design Engineer</span>
                     <span className="text-muted-foreground/40 hidden sm:inline">•</span>
-                    <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-medium">Based in San Francisco Bay Area</span>
+                    <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
                   I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.
