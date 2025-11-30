@@ -413,7 +413,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
             /* Regular Layout */
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 sm:gap-8 lg:gap-12 relative z-10 w-full">
               {/* Content - Left Side */}
-              <div className="flex-1 text-left lg:text-center xl:text-left w-full order-2 lg:order-1">
+              <div className="flex-1 text-left w-full order-2 lg:order-1">
                 {/* Name */}
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-semibold mb-2 sm:mb-3 md:mb-4 lg:mb-5 text-foreground leading-tight tracking-tight">
                   John Rodrigues
@@ -421,18 +421,18 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 
                 {/* Title */}
                 <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
-                  <div className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start lg:justify-center xl:justify-start gap-x-1.5 gap-y-0.5">
+                  <div className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
                     <span>AI Product Designer / Design Engineer</span>
                     <span className="text-muted-foreground/40 hidden sm:inline">•</span>
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-medium">Based in San Francisco Bay Area</span>
                   </div>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg lg:mx-auto xl:mx-0">
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
                   I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.
                 </p>
                 </div>
                 
                 {/* Company Logos - Small with Subtle Scroll */}
-                <div className="overflow-hidden w-full sm:w-3/4 lg:w-2/3 lg:mx-auto xl:mx-0 opacity-80 hover:opacity-100 transition-opacity duration-300">
+                <div className="overflow-hidden w-full sm:w-3/4 lg:w-2/3 opacity-80 hover:opacity-100 transition-opacity duration-300">
                   <div 
                     className="flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8"
                     style={{
