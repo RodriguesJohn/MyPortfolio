@@ -6,6 +6,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
+import { Progress } from "@/components/ui/progress";
 import p1Image from "@/assets/P1.png";
 import p2Image from "@/assets/P2.png";
 import p3Image from "@/assets/P3.png";
@@ -61,7 +62,7 @@ const projects = [
   },
   {
     id: 5,
-    title: "Toca",
+    title: "My Toca App",
     description: "Toca",
     image: p5Image,
     video: cardVideo,
@@ -212,7 +213,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
             <img
               src={project.image}
               alt={displayTitle}
-              className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <img
@@ -447,7 +448,7 @@ function PlaybookCard() {
             <p className="text-muted-foreground mb-6 leading-tight text-base opacity-90 max-w-md line-clamp-2">
               A comprehensive guide to integrating AI as a foundational layer in your products through strategy, design, and prototyping.
             </p>
-            <div className="flex items-center gap-6 mb-6 flex-wrap">
+            <div className="flex items-center gap-6 mb-6">
               <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
                 <img 
                   src="https://cdn.simpleicons.org/apple/000000" 
@@ -576,6 +577,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const [internalActiveTab, setInternalActiveTab] = useState(externalActiveTab || "explorations");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const autoScrollRef = useRef<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   
   // Use external tab if provided, otherwise use internal state
   const activeTab = externalActiveTab || internalActiveTab;
@@ -609,6 +611,35 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   // Duplicate projects for infinite scroll effect
   const infiniteProjects = [...displayProjects, ...displayProjects, ...displayProjects];
 
+  // Track scroll position for indicator
+  useEffect(() => {
+    if (showTabs || !scrollContainerRef.current) return;
+
+    const scrollContainer = scrollContainerRef.current;
+    
+    const updateScrollProgress = () => {
+      const singleSetWidth = scrollContainer.scrollWidth / 3;
+      if (singleSetWidth === 0) return;
+      
+      const currentScroll = scrollContainer.scrollLeft;
+      
+      // Calculate scroll position relative to the middle set (0 to singleSetWidth)
+      const relativeScroll = ((currentScroll - singleSetWidth) % singleSetWidth);
+      // Handle negative modulo
+      const normalizedScroll = relativeScroll < 0 ? (relativeScroll + singleSetWidth) / singleSetWidth : relativeScroll / singleSetWidth;
+      setScrollProgress(Math.max(0, Math.min(1, normalizedScroll)));
+    };
+
+    scrollContainer.addEventListener('scroll', updateScrollProgress);
+    
+    // Initial update
+    updateScrollProgress();
+
+    return () => {
+      scrollContainer.removeEventListener('scroll', updateScrollProgress);
+    };
+  }, [showTabs, displayProjects.length]);
+
   // Auto-scroll functionality - continuous infinite scroll
   useEffect(() => {
     if (showTabs || !scrollContainerRef.current) return;
@@ -630,6 +661,10 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
       } else {
         scrollContainer.scrollLeft = newScroll;
       }
+      
+      // Update scroll progress
+      const normalizedScroll = ((scrollContainer.scrollLeft - singleSetWidth) % singleSetWidth) / singleSetWidth;
+      setScrollProgress(normalizedScroll);
       
       autoScrollRef.current = requestAnimationFrame(autoScroll);
     };
@@ -745,23 +780,24 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
           <div className="relative">
             {/* Vertical App Store-style Cards - 2 full cards + 1 partially visible */}
             <div className="relative mb-12">
-              {/* Scroll Controls - Top Right */}
-              <div className="flex items-center gap-2 mb-4 justify-end pr-4 sm:pr-6 md:pr-8 lg:pr-16 xl:pr-24">
+              {/* Arrow Indicators - Top Right */}
+              <div className="flex items-center gap-2 mb-4 justify-end">
                 <button
                   onClick={scrollLeft}
-                  className="p-2 sm:p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:bg-gray-50"
+                  className="p-2 rounded-full bg-white dark:bg-gray-900 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
                   aria-label="Scroll left"
                 >
-                  <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
+                  <ChevronLeft className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                 </button>
                 <button
                   onClick={scrollRight}
-                  className="p-2 sm:p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:bg-gray-50"
+                  className="p-2 rounded-full bg-white dark:bg-gray-900 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
                   aria-label="Scroll right"
                 >
-                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
+                  <ChevronRight className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                 </button>
               </div>
+              
               <div 
                 ref={scrollContainerRef}
                 className="flex gap-3 sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide pb-6 snap-x snap-mandatory -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24"
@@ -788,6 +824,30 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                 <div className="flex-shrink-0 w-[7.5%] sm:w-[15%] md:w-[29%] lg:hidden" />
               </div>
             </div>
+            
+            {/* Scroll Indicator - Apple Style Dots */}
+            {displayProjects.length > 0 && (
+              <div className="flex items-center justify-center gap-2.5 mt-8 mb-4">
+                {displayProjects.map((project, index) => {
+                  // Calculate which dot should be active based on scroll position
+                  const totalCards = displayProjects.length;
+                  const cardProgress = scrollProgress * totalCards;
+                  const activeIndex = Math.floor(cardProgress) % totalCards;
+                  const isActive = index === activeIndex;
+                  
+                  return (
+                    <div
+                      key={project.id}
+                      className={`rounded-full transition-all duration-500 ease-out ${
+                        isActive 
+                          ? 'w-2.5 h-2.5 bg-foreground dark:bg-foreground opacity-100' 
+                          : 'w-2 h-2 bg-foreground dark:bg-foreground opacity-20 hover:opacity-35'
+                      }`}
+                    />
+                  );
+                })}
+              </div>
+            )}
             
           </div>
         )}

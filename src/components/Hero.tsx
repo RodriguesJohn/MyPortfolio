@@ -147,7 +147,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
   }
 
   return (
-    <section className={`pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-8 sm:pb-12 md:pb-16 lg:pb-24 xl:pb-32 w-full ${isConsulting ? 'bg-gray-50 min-h-screen' : 'bg-gray-50'}`}>
+    <section className={`-mt-24 sm:-mt-20 md:-mt-16 lg:-mt-12 pt-32 sm:pt-28 md:pt-32 lg:pt-36 xl:pt-40 pb-8 sm:pb-12 md:pb-16 lg:pb-24 xl:pb-32 w-full ${isConsulting ? 'bg-gray-50 min-h-screen' : 'bg-gray-50'}`}>
       <div className={`${isConsulting ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24`}>
         {/* White Card Container */}
         <div 
@@ -421,10 +421,9 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 
                 {/* Title */}
                 <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
-                  <div className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
+                  <div className="text-xs sm:text-sm md:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
                     <span>AI Product Designer / Design Engineer</span>
-                    <span className="text-muted-foreground/40 hidden sm:inline">•</span>
-                    <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal">Based in San Francisco Bay Area</span>
+                    <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-xs sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
                   I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.

@@ -1,5 +1,4 @@
 import { Linkedin, Twitter } from "lucide-react";
-import { PhotoJourney } from "./PhotoJourney";
 
 export function About() {
   return (
@@ -79,9 +78,6 @@ export function About() {
             </a>
           </div>
         </div>
-        
-        {/* Photo Journey */}
-        <PhotoJourney />
       </div>
     </section>
   );

@@ -35,7 +35,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
     <div className="fixed top-2 sm:top-4 left-0 right-0 z-50 flex justify-center pointer-events-none px-2 sm:px-4">
       <header className="w-full max-w-7xl px-3 sm:px-4 lg:px-8 border rounded-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm pointer-events-auto">
-      <div className="flex h-12 sm:h-14 items-center justify-between w-full">
+      <div className="flex h-16 sm:h-14 items-center justify-between w-full">
         <a href="/" className="text-base sm:text-lg font-semibold hover:opacity-80 transition-opacity flex-shrink-0" style={{ fontFamily: '"Dancing Script", cursive' }}>
           John Rodrigues
         </a>
