@@ -1,43 +1,813 @@
+import { useState, useRef, useEffect } from "react";
+import { useInView, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
+import p1Image from "@/assets/P1.png";
+import p2Image from "@/assets/P2.png";
+import p3Image from "@/assets/P3.png";
+import p4Image from "@/assets/P4.png";
+import p5Image from "@/assets/P5.png";
+import aiVoiceVideo from "@/assets/AIVoice.mov";
+import aiInsightsVideo from "@/assets/AI Insights App.mp4";
+import aiSummaryVideo from "@/assets/AISummary.mp4";
+import aiMentorVideo from "@/assets/AIMentor.mp4";
+import multiModalVideo from "@/assets/MultiModal.mp4";
+import cardVideo from "@/assets/Card.mp4";
+import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
+import myTokaVideo from "@/assets/MyTocaApp.mp4";
+import pamVideo from "@/assets/PAM.mp4";
+import noScrollAppImage from "@/assets/NoScrollApp.png";
+import googleLogo from "@/assets/GoogleLogog.png";
+import stanfordLogo from "@/assets/Standford.png";
+import chaseLogoDark from "@/assets/Chase.png";
+import chaseLogoLight from "@/assets/ChaseLightMOde.png";
+import citiLogo from "@/assets/Citi.svg.png";
+import tocaLogoDark from "@/assets/Toca.png";
+import appleLogo from "@/assets/Apple-Logo.png";
 
 const projects = [
   {
     id: 1,
-    title: "AI Chat Interface",
-    description: "Mobile application for conversational AI",
-    image: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=800&h=1200&fit=crop",
+    title: "AI Insights app for Citibank",
+    description: "AI Insights app for Citibank",
+    image: p5Image,
+    video: aiVoiceVideo,
+    thumbnailVideo: aiInsightsVideo,
+    companyLogo: citiLogo,
+    category: "commercial",
   },
   {
     id: 2,
-    title: "Banking Dashboard",
-    description: "Enterprise financial management platform",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=1200&fit=crop",
+    title: "No-scroll app, iOS app",
+    description: "No-scroll app, iOS app • 4.6 ⭐ App Store",
+    image: noScrollAppImage,
+    video: aiSummaryVideo,
+    link: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216?ppid=26858afa-d233-49c4-b4d3-4e2daaf8ce3f",
+    category: "commercial",
+  },
+  {
+    id: 3,
+    title: "Balance transfer for Citibank",
+    description: "Balance transfer for Citibank",
+    image: p5Image,
+    video: aiMentorVideo,
+    thumbnailVideo: balanceTransferVideo,
+    companyLogo: citiLogo,
+    category: "commercial",
+  },
+  {
+    id: 5,
+    title: "Toca",
+    description: "Toca",
+    image: p5Image,
+    video: cardVideo,
+    thumbnailVideo: myTokaVideo,
+    companyLogo: tocaLogoDark,
+    category: "commercial",
+  },
+  {
+    id: 6,
+    title: "PAM app",
+    description: "PAM app",
+    image: p5Image,
+    thumbnailVideo: pamVideo,
+    category: "commercial",
+  },
+  {
+    id: 4,
+    title: "AI Data Vision",
+    description: "JPMorgan Chase Project",
+    image: p5Image,
+    video: multiModalVideo,
+    companyLogo: chaseLogoDark,
+    category: "commercial",
+  },
+  {
+    id: 7,
+    title: "3D Printing Management App",
+    description: "For Jefferson",
+    image: p1Image,
+    category: "all-projects-only",
+  },
+  {
+    id: 10,
+    title: "Meditation WatchOS App",
+    description: "Concept Project",
+    image: p2Image,
+    category: "commercial",
+  },
+  {
+    id: 11,
+    title: "Digital Commercial Banking Platform",
+    description: "For JPMorgan Chase (Currently Working)",
+    image: p5Image,
+    companyLogo: chaseLogoDark,
+    category: "commercial",
+  },
+  {
+    id: 12,
+    title: "VR Learning Platform",
+    description: "For Jefferson Health",
+    image: p5Image,
+    category: "commercial",
+  },
+  {
+    id: 8,
+    title: "Voice Thoughts AI",
+    description: "Voice-to-thoughts app",
+    image: p5Image,
+    category: "past-projects",
+  },
+  {
+    id: 9,
+    title: "Smart Home Dashboard",
+    description: "Smart home control center",
+    image: p5Image,
+    category: "past-projects",
+  },
+  {
+    id: 10,
+    title: "Fitness Tracker Pro",
+    description: "AI fitness tracking",
+    image: p5Image,
+    category: "past-projects",
+  },
+  {
+    id: 11,
+    title: "E-commerce AI",
+    description: "Shopping assistant",
+    image: p5Image,
+    category: "past-projects",
+  },
+  {
+    id: 12,
+    title: "Travel Planner AI",
+    description: "Travel itinerary optimization",
+    image: p5Image,
+    category: "past-projects",
   },
 ];
 
-export function WorkGrid() {
-  return (
-    <section className="container px-6 lg:px-12 py-16">
-      <div className="grid md:grid-cols-2 gap-8">
-        {projects.map((project) => (
-          <Card
-            key={project.id}
-            className="group overflow-hidden border-0 bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
-          >
-            <div className="aspect-[3/4] overflow-hidden bg-background rounded-lg">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+interface WorkGridProps {
+  showTabs?: boolean;
+  activeTab?: string;
+}
+
+function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showTabs?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const navigate = useNavigate();
+  
+  // For exploration view, use video and different title/description
+  const displayVideo = showTabs && project.video;
+  // For home page, use thumbnailVideo if available, otherwise use image
+  const displayThumbnailVideo = !showTabs && project.thumbnailVideo;
+  const displayTitle = showTabs 
+    ? (project.id === 1 ? "Voice Interaction Exploration" : project.id === 2 ? "AI summary interaction" : project.id === 3 ? "AI mentor concept" : project.id === 4 ? "Multimodal interaction" : project.id === 5 ? "Card interaction" : project.title)
+    : project.title;
+  const displayDescription = showTabs 
+    ? (project.id === 1 ? "Voice Interaction Exploration" : project.id === 2 ? "AI summary interaction" : project.id === 3 ? "AI mentor concept" : project.id === 4 ? "Multimodal interaction" : project.id === 5 ? "Card interaction" : project.description)
+    : project.description;
+
+  if (!showTabs) {
+    return (
+      <Card
+        ref={ref}
+        className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl ${
+          isInView ? 'blur-0' : 'blur-lg'
+        }`}
+        style={{
+          boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.06), 0 2px 20px rgba(0, 0, 0, 0.03)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
+        }}
+        onClick={() => {
+          if (project.link) {
+            window.open(project.link, '_blank', 'noopener,noreferrer');
+          } else {
+            navigate(`/case-study?project=${project.id}`);
+          }
+        }}
+      >
+        {/* Taller aspect ratio for mobile app screenshots */}
+        <div className="aspect-[3/4] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+          {displayThumbnailVideo ? (
+            <video
+              src={project.thumbnailVideo}
+              className="w-full h-full object-cover object-top"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          ) : project.id === 2 ? (
+            <img
+              src={project.image}
+              alt={displayTitle}
+              className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <img
+              src={project.image}
+              alt={displayTitle}
+              className={`w-full h-full object-cover object-top transition-transform duration-500 ${
+                project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
+              }`}
+            />
+          )}
+          {project.id === 4 && (
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+              <span className="text-white font-semibold text-lg px-4 py-2 bg-black/60 rounded-lg backdrop-blur-sm">
+                Coming Soon
+              </span>
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-              <p className="text-muted-foreground">{project.description}</p>
+          )}
+        </div>
+        {/* Minimal text at bottom */}
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <h3 className="text-sm font-medium text-foreground truncate flex-1">{displayTitle}</h3>
+            {project.companyLogo && (
+              <img 
+                src={project.companyLogo} 
+                alt="Company logo" 
+                className="h-4 w-auto object-contain flex-shrink-0"
+              />
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground/70 truncate">{displayDescription}</p>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card
+      ref={ref}
+      className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl ${
+        isInView ? 'blur-0' : 'blur-lg'
+      }`}
+      style={{
+        boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.06), 0 2px 20px rgba(0, 0, 0, 0.03)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
+      }}
+      onClick={() => {
+        if (project.link) {
+          window.open(project.link, '_blank', 'noopener,noreferrer');
+        } else {
+          navigate(`/case-study?project=${project.id}`);
+        }
+      }}
+    >
+      {/* Video/Image Container - Rectangular shape */}
+      <div className="aspect-[4/3] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+        {displayVideo ? (
+          <video
+            src={project.video}
+            className="w-full h-full object-cover object-top"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : displayThumbnailVideo ? (
+          <video
+            src={project.thumbnailVideo}
+            className="w-full h-full object-cover object-top"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : project.id === 2 ? (
+          <img
+            src={project.image}
+            alt={displayTitle}
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt={displayTitle}
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
+      </div>
+
+      {/* Text at bottom */}
+      <div className="px-4 py-3">
+        <h3 className="text-sm font-medium text-foreground truncate">{displayTitle}</h3>
+      </div>
+    </Card>
+  );
+}
+
+function PastProjectListItem({ project }: { project: typeof projects[0] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const navigate = useNavigate();
+
+  return (
+    <div
+      ref={ref}
+      className={`flex gap-4 py-3 sm:py-4 cursor-pointer hover:bg-muted/30 rounded-lg transition-colors px-2 -mx-2 ${
+        isInView ? 'blur-0' : 'blur-lg'
+      }`}
+      onClick={() => {
+        if (project.link) {
+          window.open(project.link, '_blank', 'noopener,noreferrer');
+        } else {
+          navigate(`/case-study?project=${project.id}`);
+        }
+      }}
+    >
+      {/* Small Thumbnail */}
+      <div className="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-background">
+        {project.thumbnailVideo ? (
+          <video
+            src={project.thumbnailVideo}
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : project.id === 2 ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      
+      {/* Content */}
+      <div className="flex-1 min-w-0 flex flex-col justify-center">
+        <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1">
+          {project.title}
+        </h3>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function PlaybookCard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+
+    checkTheme();
+
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
+
+  return (
+    <Card 
+      ref={ref}
+      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[400px] flex items-center transition-all duration-500 ${
+        isInView ? 'blur-0' : 'blur-lg'
+      }`}
+    >
+      <div className="grid md:grid-cols-2 gap-8 p-8 w-full">
+        {/* 3D Book */}
+        <div className="relative flex items-center justify-center md:justify-start -ml-8">
+          <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
+            {/* Book Pages Stack - On the right side, tucked inside */}
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-white dark:bg-gray-100 rounded-r-sm shadow-lg" style={{ transform: 'translateX(8px)', zIndex: 0 }} />
+            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(6px)', zIndex: 1 }} />
+            <div className="absolute right-0 top-0 bottom-0 w-4 bg-white dark:bg-gray-100 rounded-r-sm" style={{ transform: 'translateX(4px)', zIndex: 2 }} />
+            <div className="absolute right-0 top-0 bottom-0 w-2 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(2px)', zIndex: 3 }} />
+            
+            {/* Front Cover */}
+            <div className="relative aspect-[3/4] w-48 bg-black rounded-lg overflow-hidden" style={{ 
+              transform: 'translateZ(0px)',
+              boxShadow: '0 25px 80px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1)',
+              zIndex: 10
+            }}>
+              <div className="p-6 h-full flex flex-col justify-between text-white relative">
+                <div>
+                  {/* Logo */}
+                  <div className="mb-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                      {/* Substack Logo */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-xs opacity-80 mb-1">AI Design</div>
+                  <h2 className="text-3xl font-medium mb-2 leading-tight">Playbook</h2>
+                </div>
+              </div>
+              {/* Book spine effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/40 to-transparent rounded-l-lg pointer-events-none" />
+            </div>
+          </div>
+        </div>
+        
+        {/* Book Details */}
+        <div className="flex flex-col gap-6">
+          <div>
+            <h3 className="text-2xl font-semibold mb-3 text-foreground">AI Design Playbook</h3>
+            <p className="text-muted-foreground mb-6 leading-tight text-base opacity-90 max-w-md line-clamp-2">
+              A comprehensive guide to integrating AI as a foundational layer in your products through strategy, design, and prototyping.
+            </p>
+            <div className="flex items-center gap-6 mb-6 flex-wrap">
+              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
+                <img 
+                  src="https://cdn.simpleicons.org/apple/000000" 
+                  alt="Apple" 
+                  className="h-6 w-6 transition-all object-contain object-center dark:invert"
+                  style={{ display: 'block' }}
+                />
+              </div>
+              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
+                <img 
+                  src={googleLogo} 
+                  alt="Google" 
+                  className="h-6 w-auto transition-all object-contain object-center"
+                />
+              </div>
+              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
+                <img 
+                  src={stanfordLogo} 
+                  alt="Stanford" 
+                  className="h-6 w-auto transition-all object-contain object-center"
+                />
+              </div>
+              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
+                <img 
+                  src={chaseLogo} 
+                  alt="Chase" 
+                  className="h-6 w-auto transition-all object-contain object-center"
+                />
+              </div>
+            </div>
+          </div>
+          <Button 
+            className="rounded-full w-fit group/btn hover:gap-3 transition-all duration-300" 
+            size="lg"
+            asChild
+          >
+            <a 
+              href="https://johnrodrigues.substack.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              Get the Playbook
+              <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+            </a>
+          </Button>
+        </div>
             </div>
           </Card>
-        ))}
+  );
+}
+
+
+function AllProjectsCard({ project }: { project: typeof projects[0] }) {
+  const navigate = useNavigate();
+  
+  return (
+    <Card
+      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl"
+      style={{
+        boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.06), 0 2px 20px rgba(0, 0, 0, 0.03)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
+      }}
+      onClick={() => {
+        if (project.link) {
+          window.open(project.link, '_blank', 'noopener,noreferrer');
+        } else {
+          navigate(`/case-study?project=${project.id}`);
+        }
+      }}
+    >
+      {/* Image/Video Container */}
+      <div className="aspect-[3/4] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+        {(project as any).isComingSoon ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200/50 text-muted-foreground text-sm font-medium">
+            Coming Soon
+          </div>
+        ) : project.thumbnailVideo ? (
+          <video
+            src={project.thumbnailVideo}
+            className="w-full h-full object-cover object-top"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : project.id === 2 ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt={project.title}
+            className={`w-full h-full object-cover object-top transition-transform duration-500 ${
+              project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
+            }`}
+          />
+        )}
       </div>
+      {/* Text Content */}
+      <div className="px-4 py-3">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+          {project.companyLogo && (
+            <img
+              src={project.companyLogo}
+              alt="Company logo"
+              className="h-4 w-auto object-contain flex-shrink-0"
+            />
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground/70 truncate">{project.description}</p>
+      </div>
+    </Card>
+  );
+}
+
+export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: WorkGridProps) {
+  const [internalActiveTab, setInternalActiveTab] = useState(externalActiveTab || "explorations");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const autoScrollRef = useRef<number | null>(null);
+  
+  // Use external tab if provided, otherwise use internal state
+  const activeTab = externalActiveTab || internalActiveTab;
+
+  const tabItems = [
+    { id: "explorations", label: "Explorations" },
+    { id: "all-projects", label: "All Projects" },
+  ];
+
+  const displayProjects = (showTabs || externalActiveTab === "explorations")
+    ? activeTab === "explorations"
+      ? projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10) // Show only first 5 cards for explorations, exclude project 4 and 10
+      : projects.filter((project) => {
+          // Include commercial projects and all-projects-only, explicitly include Meditation WatchOS App (id: 10)
+          return (project.category === "commercial" || project.category === "all-projects-only") || 
+                 (project.id === 10 && project.title === "Meditation WatchOS App");
+        }).sort((a, b) => {
+          // Sort: 1, 2, 3, 5, 6, then 4 (AI Data Vision last)
+          if (a.id === 4) return 1;
+          if (b.id === 4) return -1;
+          return a.id - b.id;
+        })
+    : projects.filter((project) => {
+        // Only show original projects on home page: 1, 2, 3, 5, 6
+        return project.id === 1 || project.id === 2 || project.id === 3 || project.id === 5 || project.id === 6;
+      }).sort((a, b) => {
+        // Sort: 1, 2, 3, 5, 6
+        return a.id - b.id;
+      });
+
+  // Duplicate projects for infinite scroll effect
+  const infiniteProjects = [...displayProjects, ...displayProjects, ...displayProjects];
+
+  // Auto-scroll functionality - continuous infinite scroll
+  useEffect(() => {
+    if (showTabs || !scrollContainerRef.current) return;
+
+    const scrollContainer = scrollContainerRef.current;
+    const scrollSpeed = 0.5; // pixels per frame
+    
+    // Start at the middle set of duplicated items
+    const singleSetWidth = scrollContainer.scrollWidth / 3;
+    scrollContainer.scrollLeft = singleSetWidth;
+
+    const autoScroll = () => {
+      const currentScroll = scrollContainer.scrollLeft;
+      const newScroll = currentScroll + scrollSpeed;
+      
+      // When we've scrolled past the second set, jump back to the first set seamlessly
+      if (newScroll >= singleSetWidth * 2) {
+        scrollContainer.scrollLeft = singleSetWidth;
+      } else {
+        scrollContainer.scrollLeft = newScroll;
+      }
+      
+      autoScrollRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    autoScrollRef.current = requestAnimationFrame(autoScroll);
+
+    return () => {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+      }
+    };
+  }, [showTabs, displayProjects.length]);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      // Stop auto-scroll
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+        autoScrollRef.current = null;
+      }
+      
+      const container = scrollContainerRef.current as HTMLElement;
+      const scrollAmount = container.clientWidth * 0.5; // Scroll by half viewport width
+      container.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      // Stop auto-scroll
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+        autoScrollRef.current = null;
+      }
+      
+      const container = scrollContainerRef.current as HTMLElement;
+      const scrollAmount = container.clientWidth * 0.5; // Scroll by half viewport width
+      container.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA]' : 'bg-white'}`}>
+      <div className={`${showTabs || externalActiveTab ? 'max-w-7xl' : 'max-w-4xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24`}>
+        {showTabs ? (
+          <>
+            <div className="flex justify-center mb-16">
+              <div className="inline-flex items-center p-1 rounded-full bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50">
+                {tabItems.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setInternalActiveTab(tab.id)}
+                    className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                      activeTab === tab.id
+                        ? "bg-white dark:bg-gray-800 text-foreground shadow-sm scale-100"
+                        : "text-muted-foreground hover:text-foreground hover:bg-gray-200/50 dark:hover:bg-gray-700/50"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {activeTab === "explorations" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                {displayProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} showTabs={showTabs} />
+                ))}
+              </div>
+            ) : activeTab === "all-projects" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {displayProjects.map((project) => (
+                  <AllProjectsCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : null}
+          </>
+        ) : externalActiveTab ? (
+          // Direct navigation to All Projects or Explorations (no tabs)
+          activeTab === "explorations" ? (
+            <>
+              {/* Header Section */}
+              <div className="mb-12 text-left">
+                <h1 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-4">
+                  Interaction Prototyping
+                </h1>
+                <p className="text-sm lg:text-base text-muted-foreground/80 max-w-2xl">
+                  I explore interactions, new interactions for AI, and sometimes simplify interactions to combine in design and code.
+                </p>
+              </div>
+              {/* Projects Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                {displayProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} showTabs={true} />
+                ))}
+              </div>
+            </>
+          ) : activeTab === "all-projects" ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {displayProjects.map((project) => (
+                <AllProjectsCard key={project.id} project={project} />
+              ))}
+            </div>
+          ) : null
+        ) : (
+          <div className="relative">
+            {/* Vertical App Store-style Cards - 2 full cards + 1 partially visible */}
+            <div className="relative mb-12 overflow-hidden">
+              {/* Scroll Controls - Top Right */}
+              <div className="flex items-center gap-2 mb-4 justify-end">
+                <button
+                  onClick={scrollLeft}
+                  className="p-2 sm:p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:bg-gray-50"
+                  aria-label="Scroll left"
+                >
+                  <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
+                </button>
+                <button
+                  onClick={scrollRight}
+                  className="p-2 sm:p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:bg-gray-50"
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
+                </button>
+              </div>
+              <div 
+                ref={scrollContainerRef}
+                className="flex gap-3 sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide pb-6 snap-x snap-mandatory -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24"
+                style={{ 
+                  scrollbarWidth: 'none', 
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                  scrollBehavior: 'smooth'
+                }}
+              >
+                {/* Spacer for centering first card - only on mobile */}
+                <div className="flex-shrink-0 w-[7.5%] sm:w-[15%] md:w-[29%] lg:hidden" />
+                {infiniteProjects.map((project, index) => (
+                  <motion.div
+                    key={`${project.id}-${index}`}
+                    className="project-card-wrapper flex-shrink-0 w-[85%] sm:w-[70%] md:w-[42%] lg:w-[38%] snap-center lg:snap-start"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  >
+                    <ProjectCard project={project} showTabs={showTabs} />
+                  </motion.div>
+                ))}
+                {/* Spacer for centering last card - only on mobile */}
+                <div className="flex-shrink-0 w-[7.5%] sm:w-[15%] md:w-[29%] lg:hidden" />
+              </div>
+            </div>
+            
+          </div>
+        )}
+      </div>
+      
+      {/* Playbook Card - Full Width Gray Background */}
+      {!showTabs && !externalActiveTab && (
+        <div className="bg-gray-50 dark:bg-gray-900/50 w-screen mt-12 py-12 lg:py-16" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <PlaybookCard />
+          </div>
+        </div>
+      )}
+      
+      {/* KPI Cards */}
+      {!showTabs && !externalActiveTab && (
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 mt-8">
+          <KPICardsWithHoverEffects />
+        </div>
+      )}
     </section>
   );
 }

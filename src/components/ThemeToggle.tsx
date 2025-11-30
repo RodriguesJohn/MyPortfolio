@@ -6,10 +6,18 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    const isDark = localStorage.getItem("theme") === "dark";
-    setTheme(isDark ? "dark" : "light");
-    if (isDark) {
+    // Ensure light mode is default - remove dark class if present
+    document.documentElement.classList.remove("dark");
+    
+    // Check localStorage, but default to light if not set
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark") {
+      setTheme("dark");
       document.documentElement.classList.add("dark");
+    } else {
+      // Default to light mode
+      setTheme("light");
+      localStorage.setItem("theme", "light");
     }
   }, []);
 
