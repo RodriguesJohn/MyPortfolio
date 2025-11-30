@@ -426,7 +426,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span className="text-muted-foreground/40 hidden sm:inline">•</span>
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal">Based in San Francisco Bay Area</span>
                   </div>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
+                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
                   I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.
                 </p>
                 </div>
