@@ -267,10 +267,10 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   </div>
                 </div>
                 
-                {/* Profile Picture - Full Width */}
-                <div className="w-full lg:order-2 order-1 mb-6 sm:mb-8 lg:mb-0">
+                {/* Profile Picture - Full Width on Mobile, Fixed on Desktop */}
+                <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-end lg:order-2 order-1 mb-6 sm:mb-8 lg:mb-0">
                   <div 
-                    className="profile-picture-container w-full h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
+                    className="profile-picture-container w-full h-64 sm:h-80 md:h-96 lg:w-80 lg:h-80 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
                     style={{
                       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04)',
                     }}
