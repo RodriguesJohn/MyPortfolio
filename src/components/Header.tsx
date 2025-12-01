@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -10,20 +11,21 @@ interface HeaderProps {
 }
 
 const navItems = [
-  { icon: Briefcase, label: "Home", value: "Work Highlights" },
+  { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
   { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
-  { icon: FolderOpen, label: "Explorations", value: "Explorations" },
+  { icon: FolderOpen, label: "Explorations", value: "Explorations", path: "/explorations" },
   { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
-  { icon: Handshake, label: "1:1 Consulting", value: "Consulting" },
-  { icon: MessageSquare, label: "Testimonial", value: "Testimonials" },
-  { icon: Mic, label: "Speaking", value: "Speaking" },
-  { icon: User, label: "About", value: "About" },
-  { icon: FolderOpen, label: "All Projects", value: "All Projects" },
-  { icon: LinkIcon, label: "Links", value: "Quick Links" },
+  { icon: Handshake, label: "1:1 Consulting", value: "Consulting", path: "/consulting" },
+  { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
+  { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
+  { icon: User, label: "About", value: "About", path: "/about" },
+  { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
+  { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
 ];
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const handleNavClick = (value?: string) => {
     if (value) {
@@ -36,14 +38,14 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
     <div className="fixed top-2 sm:top-4 left-0 right-0 z-50 flex justify-center pointer-events-none px-2 sm:px-4">
       <header className="w-full max-w-7xl px-3 sm:px-4 lg:px-8 border rounded-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm pointer-events-auto">
       <div className="flex h-16 sm:h-14 items-center justify-between w-full">
-        <a href="/" className="text-base sm:text-lg font-semibold hover:opacity-80 transition-opacity flex-shrink-0" style={{ fontFamily: '"Dancing Script", cursive' }}>
+        <Link to="/" className="text-base sm:text-lg font-semibold hover:opacity-80 transition-opacity flex-shrink-0" style={{ fontFamily: '"Dancing Script", cursive' }}>
           John Rodrigues
-        </a>
+        </Link>
         
         {/* Desktop Navigation Items */}
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => {
-            const isActive = activeTab === item.value;
+            const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
             
             if (item.href) {
               return (
@@ -63,8 +65,9 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
             }
             
             return (
-              <button
+              <Link
                 key={item.label}
+                to={item.path || "/"}
                 onClick={() => onTabChange?.(item.value)}
                 className={cn(
                   "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
@@ -74,7 +77,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                 )}
               >
                 {item.label}
-              </button>
+              </Link>
             );
           })}
         </nav>
@@ -127,7 +130,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                 
                 <nav className="flex-1 flex flex-col gap-2">
                   {navItems.map((item) => {
-                    const isActive = activeTab === item.value;
+                    const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
                     const Icon = item.icon;
                     
                     if (item.href) {
@@ -150,8 +153,9 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                     }
                     
                     return (
-                      <button
+                      <Link
                         key={item.label}
+                        to={item.path || "/"}
                         onClick={() => handleNavClick(item.value)}
                         className={cn(
                           "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all text-left",
@@ -162,7 +166,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                       >
                         <Icon className="h-4 w-4" />
                         {item.label}
-                      </button>
+                      </Link>
                     );
                   })}
                 </nav>

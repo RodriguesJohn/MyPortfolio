@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { WorkGrid } from "@/components/WorkGrid";
@@ -10,8 +11,46 @@ import { Consulting } from "@/components/Consulting";
 import { MessageCircle, Sparkles, Mic, Keyboard } from "lucide-react";
 import profileImage from "@/assets/PP.jpg";
 
+// Map URL paths to tab values
+const pathToTabMap: Record<string, string> = {
+  "/": "Work Highlights",
+  "/explorations": "Explorations",
+  "/all-projects": "All Projects",
+  "/consulting": "Consulting",
+  "/testimonials": "Testimonials",
+  "/speaking": "Speaking",
+  "/about": "About",
+  "/links": "Quick Links",
+};
+
+const tabToPathMap: Record<string, string> = {
+  "Work Highlights": "/",
+  "Explorations": "/explorations",
+  "All Projects": "/all-projects",
+  "Consulting": "/consulting",
+  "Testimonials": "/testimonials",
+  "Speaking": "/speaking",
+  "About": "/about",
+  "Quick Links": "/links",
+};
+
 const Index = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Work Highlights");
+
+  // Update activeTab based on URL path
+  useEffect(() => {
+    const tab = pathToTabMap[location.pathname] || "Work Highlights";
+    setActiveTab(tab);
+  }, [location.pathname]);
+
+  // Handle tab change with URL update
+  const handleTabChange = (tab: string) => {
+    const path = tabToPathMap[tab] || "/";
+    navigate(path);
+    setActiveTab(tab);
+  };
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [isVoiceMode, setIsVoiceMode] = useState(false);
@@ -26,7 +65,7 @@ const Index = () => {
       case "Explorations":
         return <WorkGrid showTabs={false} activeTab="explorations" />;
       case "Quick Links":
-        return <QuickLinks activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <QuickLinks activeTab={activeTab} onTabChange={handleTabChange} />;
       case "Consulting":
         return <Consulting />;
       case "Testimonials":
@@ -46,12 +85,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen pt-24">
-      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <Header activeTab={activeTab} onTabChange={handleTabChange} />
       {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
         activeTab={activeTab}
         onChatClick={() => setIsChatOpen(true)}  
         onWorkClick={() => {
-          setActiveTab("Work Highlights");
+          handleTabChange("Work Highlights");
           setTimeout(() => {
             const workSection = document.getElementById('work-section');
             if (workSection) {
