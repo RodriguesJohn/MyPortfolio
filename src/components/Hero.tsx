@@ -355,7 +355,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                         asChild
                       >
                         <a
-                          href="https://calendly.com/john-rodrigues" 
+                          href="https://calendly.com/john-john-rodrigues/30min" 
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -389,7 +389,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                         asChild
                       >
                         <a
-                          href="https://calendly.com/john-rodrigues" 
+                          href="https://calendly.com/john-john-rodrigues/30min" 
                           target="_blank"
                           rel="noopener noreferrer"
                         >
