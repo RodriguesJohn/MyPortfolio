@@ -130,7 +130,7 @@ const Index = () => {
           />
           
           {/* Modal - Bottom Sheet on Mobile, Centered Modal on Desktop */}
-          <div className="relative w-full h-[85vh] sm:h-[600px] sm:max-w-2xl bg-background rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-[slide-in-from-bottom_0.4s_cubic-bezier(0.16,1,0.3,1)] sm:animate-in sm:fade-in sm:zoom-in-95">
+          <div className="relative w-full h-[50vh] max-h-[600px] sm:h-[600px] sm:max-w-2xl bg-background rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-[slide-in-from-bottom_0.4s_cubic-bezier(0.16,1,0.3,1)] sm:animate-in sm:fade-in sm:zoom-in-95">
             {/* Drag Handle - Mobile Only */}
             <div className="flex justify-center pt-3 pb-2 sm:hidden">
               <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
