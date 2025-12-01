@@ -17,13 +17,13 @@ export function KPICardsWithHoverEffects() {
       icon: <IconCalendar className="w-6 h-6" />,
     },
     {
-      value: 25,
+      value: 20,
       suffix: "+",
-      label: "Number of apps worked on",
+      label: "Number of products worked on",
       icon: <IconPackage className="w-6 h-6" />,
     },
     {
-      value: 10,
+      value: 100,
       suffix: "M+",
       label: "Number of users impacted",
       icon: <IconUsers className="w-6 h-6" />,

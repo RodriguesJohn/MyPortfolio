@@ -122,17 +122,22 @@ const Index = () => {
         <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300"
             onClick={() => {
               setIsChatOpen(false);
               setChatInput('');
             }}
           />
           
-          {/* Modal */}
-          <div className="relative w-full h-full sm:h-[600px] sm:max-w-2xl bg-background rounded-t-2xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          {/* Modal - Bottom Sheet on Mobile, Centered Modal on Desktop */}
+          <div className="relative w-full h-[85vh] sm:h-[600px] sm:max-w-2xl bg-background rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-[slide-in-from-bottom_0.4s_cubic-bezier(0.16,1,0.3,1)] sm:animate-in sm:fade-in sm:zoom-in-95">
+            {/* Drag Handle - Mobile Only */}
+            <div className="flex justify-center pt-3 pb-2 sm:hidden">
+              <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
+            </div>
+            
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pt-10 pb-6 border-b border-border/50 relative">
+            <div className="flex items-center justify-between px-6 pt-4 sm:pt-10 pb-6 border-b border-border/50 relative">
               <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-muted/80 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full text-muted-foreground/70 pointer-events-none animate-shake">
                 Coming Soon
               </div>
