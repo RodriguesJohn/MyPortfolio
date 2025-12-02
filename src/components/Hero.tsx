@@ -389,7 +389,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                         asChild
                       >
                         <a
-                          href="https://calendly.com/john-john-rodrigues/30min" 
+                          href="https://calendly.com/john-john-rodrigues/for-businesses" 
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -422,11 +422,12 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Title */}
                 <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
                   <div className="text-sm sm:text-sm md:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
-                    <span>AI Product Designer / Design Engineer</span>
+                    <span>AI Product Designer & Design Engineer Focused on AI-Native &</span>
+                    <span className="w-full sm:w-auto">Agentic Products</span>
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
-                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/40 leading-relaxed max-w-lg">
-                  I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.
+                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/70 leading-relaxed max-w-lg">
+                  I help startups and innovation teams design and build AI-native, agentic products fast through AI strategy, product design, and technical prototyping.
                 </p>
                 </div>
                 
