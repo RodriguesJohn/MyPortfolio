@@ -531,7 +531,7 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
   
   return (
     <Card
-      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl"
+      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl h-full flex flex-col"
       style={{
         boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
       }}
@@ -731,7 +731,19 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   // Determine which projects to show based on the active tab
   let displayProjects: typeof projects;
   
-  if (activeTab === "explorations") {
+  // Check if this is the home page (no tabs, no external tab specified)
+  const isHomePage = !showTabs && !externalActiveTab;
+  
+  if (isHomePage) {
+    // Custom order for home page: UX Agent, AI Insights App, Balance Transfer, NoScrollApp
+    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
+    const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
+    const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
+    const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
+    
+    // Return in specified order, filtering out undefined
+    displayProjects = [uxAgent, aiInsights, balanceTransfer, noScrollApp].filter(Boolean) as typeof projects;
+  } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10);
   } else if (activeTab === "all-projects") {
@@ -778,18 +790,9 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     } else {
       displayProjects = allProjects;
     }
-  } else if (showTabs || externalActiveTab === "explorations" || externalActiveTab === "all-projects") {
-    // If tabs are shown but no specific tab is selected, default behavior
-    displayProjects = [];
   } else {
-    // Custom order for home page: UX Agent, AI Insights, No-scroll app, Balance Transfer
-    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
-    const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
-    const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
-    const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
-    
-    // Return in specified order, filtering out undefined
-    displayProjects = [uxAgent, aiInsights, noScrollApp, balanceTransfer].filter(Boolean) as typeof projects;
+    // Default: empty array
+    displayProjects = [];
   }
 
   return (
@@ -887,9 +890,9 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
         ) : (
           <>
             {/* 2x2 Grid - 4 projects */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
               {displayProjects.slice(0, 4).map((project) => (
-                <div key={project.id} className="transform scale-105 lg:scale-110">
+                <div key={project.id} className="h-full">
                   <AllProjectsCard project={project} />
                 </div>
               ))}
