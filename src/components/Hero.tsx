@@ -64,8 +64,8 @@ function ConsultingKPICard({
   }, [isInView, value]);
 
   return (
-    <div ref={ref}>
-      <Card className="flex flex-col py-10 relative group/kpi transition-shadow duration-300 border-[0.5px] border-border/30 dark:border-border/20 bg-card shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)]">
+    <div ref={ref} className="h-full">
+      <Card className="flex flex-col h-full py-8 md:py-10 relative group/kpi transition-shadow duration-300 border-[0.5px] border-border/30 dark:border-border/20 bg-card shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)]">
         <div className="opacity-0 group-hover/kpi:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none rounded-lg" />
         <div className="mb-4 relative z-10 px-6 md:px-10 text-neutral-600 dark:text-neutral-400 opacity-60">
           {icon}
@@ -76,7 +76,7 @@ function ConsultingKPICard({
             {displayValue}{suffix}
           </span>
         </div>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-6 md:px-10 opacity-60">
+        <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-6 md:px-10 opacity-60 flex-1">
           {label}
         </p>
       </Card>
@@ -107,7 +107,7 @@ function ConsultingKPIs() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 py-10 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 py-10 w-full items-stretch">
       {kpis.map((kpi) => (
         <ConsultingKPICard key={kpi.label} {...kpi} />
       ))}
@@ -422,12 +422,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Title */}
                 <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
                   <div className="text-sm sm:text-sm md:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
-                    <span>AI Product Designer & Design Engineer Focused on AI-Native &</span>
-                    <span className="w-full sm:w-auto">Agentic Products</span>
+                    <span>AI-Native Product Designer & Design Engineer</span>
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
-                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/70 leading-relaxed max-w-lg">
-                  I help startups and innovation teams design and build AI-native, agentic products fast through AI strategy, product design, and technical prototyping.
+                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/60 leading-relaxed max-w-lg">
+                  I help startups and innovation teams design and build AI-native mobile experiences combining product design, agentic systems, and functional prototyping.
                 </p>
                 </div>
                 

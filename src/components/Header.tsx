@@ -13,7 +13,7 @@ interface HeaderProps {
 const navItems = [
   { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
   { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
-  { icon: FolderOpen, label: "Explorations", value: "Explorations", path: "/explorations" },
+  { icon: FolderOpen, label: "AI Experiments", value: "Explorations", path: "/explorations" },
   { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
   { icon: Handshake, label: "1:1 Consulting", value: "Consulting", path: "/consulting" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
 import { Progress } from "@/components/ui/progress";
 import p1Image from "@/assets/P1.png";
@@ -12,6 +12,7 @@ import p2Image from "@/assets/P2.png";
 import p3Image from "@/assets/P3.png";
 import p4Image from "@/assets/P4.png";
 import p5Image from "@/assets/P5.png";
+import threeDImage from "@/assets/3D.png";
 import aiVoiceVideo from "@/assets/AIVoice.mov";
 import aiInsightsVideo from "@/assets/AI Insights App.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
@@ -21,6 +22,9 @@ import cardVideo from "@/assets/Card.mp4";
 import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
 import myTokaVideo from "@/assets/MyTocaApp.mp4";
 import pamVideo from "@/assets/PAM.mp4";
+import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
+import uxAgentVideo from "@/assets/UX.mp4";
+import zozoGif from "@/assets/Zozo.gif";
 import noScrollAppImage from "@/assets/NoScrollApp.png";
 import googleLogo from "@/assets/GoogleLogog.png";
 import stanfordLogo from "@/assets/Standford.png";
@@ -31,6 +35,23 @@ import tocaLogoDark from "@/assets/Toca.png";
 import appleLogo from "@/assets/Apple-Logo.png";
 
 const projects = [
+  {
+    id: 13,
+    title: "UX Agent",
+    description: "AI-powered UX design agent",
+    image: p5Image,
+    thumbnailVideo: uxAgentVideo,
+    category: "commercial",
+    isHackathonWinner: true,
+    hackathonText: "Winner of the hackathon conducted by OpenAI, Loveable, and AGI.",
+  },
+  {
+    id: 14,
+    title: "AI productivity OS",
+    description: "Currently building",
+    image: p5Image,
+    category: "commercial",
+  },
   {
     id: 1,
     title: "AI Insights app for Citibank",
@@ -91,7 +112,7 @@ const projects = [
     id: 7,
     title: "3D Printing Management App",
     description: "For Jefferson",
-    image: p1Image,
+    image: threeDImage,
     category: "all-projects-only",
   },
   {
@@ -99,6 +120,7 @@ const projects = [
     title: "Meditation WatchOS App",
     description: "Concept Project",
     image: p2Image,
+    thumbnailVideo: watchOSVideo,
     category: "commercial",
   },
   {
@@ -108,12 +130,13 @@ const projects = [
     image: p5Image,
     companyLogo: chaseLogoDark,
     category: "commercial",
+    isComingSoon: true,
   },
   {
     id: 12,
     title: "VR Learning Platform",
     description: "For Jefferson Health",
-    image: p5Image,
+    image: zozoGif,
     category: "commercial",
   },
   {
@@ -198,8 +221,8 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           }
         }}
       >
-        {/* Taller aspect ratio for mobile app screenshots */}
-        <div className="aspect-[3/4] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+        {/* Responsive aspect ratio: tall on mobile, rectangular on desktop */}
+        <div className="aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
           {displayThumbnailVideo ? (
             <video
               src={project.thumbnailVideo}
@@ -400,13 +423,13 @@ function PlaybookCard() {
   return (
     <Card 
       ref={ref}
-      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[400px] flex items-center transition-all duration-500 ${
+      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-12 mx-4 md:mx-8 lg:mx-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[400px] flex items-center transition-all duration-500 ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-8 p-8 w-full mx-4 sm:mx-6 md:mx-8 lg:mx-16 xl:mx-24 justify-items-center md:justify-items-start">
+      <div className="grid md:grid-cols-2 gap-8 p-8 w-full justify-items-center md:justify-items-start">
         {/* 3D Book */}
-        <div className="relative flex items-center justify-center ml-0 md:-ml-8 w-full md:w-auto">
+        <div className="relative flex items-center justify-center ml-0 md:ml-8 lg:ml-12 w-full md:w-auto">
           <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
             {/* Book Pages Stack - On the right side, tucked inside */}
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-white dark:bg-gray-100 rounded-r-sm shadow-lg" style={{ transform: 'translateX(8px)', zIndex: 0 }} />
@@ -524,10 +547,129 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
         }
       }}
     >
-      {/* Image/Video Container */}
-      <div className="aspect-[3/4] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+      {/* Responsive aspect ratio: tall on mobile, shorter on desktop */}
+      <div className={`aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6] overflow-hidden relative ${
+        project.id === 7 ? 'bg-gray-100' : 'bg-gradient-to-b from-gray-50 to-gray-100'
+      }`}>
         {(project as any).isComingSoon ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-200/50 text-muted-foreground text-sm font-medium">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200/50 gap-3">
+            {project.companyLogo && (
+              <img
+                src={project.companyLogo}
+                alt="Company logo"
+                className="h-8 w-auto object-contain opacity-60"
+              />
+            )}
+            <span className="text-muted-foreground text-sm font-medium">Coming Soon</span>
+          </div>
+        ) : project.thumbnailVideo ? (
+          <video
+            src={project.thumbnailVideo}
+            className={`w-full h-full ${
+              project.id === 1 ? 'object-contain object-center scale-150' : 
+              project.id === 13 ? 'object-contain object-center' : 
+              'object-cover object-top'
+            }`}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : project.id === 2 ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : project.id === 7 ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-contain object-center"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt={project.title}
+            className={`w-full h-full object-cover object-top transition-transform duration-500 ${
+              project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
+            }`}
+          />
+        )}
+      </div>
+      {/* Text Content */}
+      <div className="px-4 py-3">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+          {project.companyLogo && (
+            <img
+              src={project.companyLogo}
+              alt="Company logo"
+              className="h-4 w-auto object-contain flex-shrink-0"
+            />
+          )}
+        </div>
+        {!(project as any).isHackathonWinner ? (
+          <p className="text-xs text-muted-foreground/70 truncate">{project.description}</p>
+        ) : (
+          <div>
+            <p className="text-xs text-muted-foreground/70 leading-tight mb-1.5">
+              {(project as any).hackathonText}
+            </p>
+            <div className="flex items-center gap-1.5">
+              {(project as any).hackathonLogos && (project as any).hackathonLogos.map((logo: any, idx: number) => (
+                <img
+                  key={idx}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="h-3 w-auto object-contain opacity-60"
+                />
+              ))}
+              {!(project as any).hackathonLogos && (
+                <>
+                  <span className="text-[8px] text-muted-foreground/50 font-medium">OpenAI</span>
+                  <span className="text-[8px] text-muted-foreground/50 font-medium">•</span>
+                  <span className="text-[8px] text-muted-foreground/50 font-medium">Lovable</span>
+                  <span className="text-[8px] text-muted-foreground/50 font-medium">•</span>
+                  <span className="text-[8px] text-muted-foreground/50 font-medium">AGI Inc.</span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+}
+
+function CompactProjectCard({ project }: { project: typeof projects[0] }) {
+  const navigate = useNavigate();
+  
+  return (
+    <Card
+      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-xl flex-shrink-0"
+      style={{
+        boxShadow: '0 2px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.015)',
+        width: '280px'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.06), 0 2px 15px rgba(0, 0, 0, 0.03)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.015)';
+      }}
+      onClick={() => {
+        if (project.link) {
+          window.open(project.link, '_blank', 'noopener,noreferrer');
+        } else {
+          navigate(`/case-study?project=${project.id}`);
+        }
+      }}
+    >
+      {/* Compact aspect ratio */}
+      <div className="aspect-[4/3] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+        {(project as any).isComingSoon ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200/50 text-muted-foreground text-xs font-medium">
             Coming Soon
           </div>
         ) : project.thumbnailVideo ? (
@@ -555,19 +697,19 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
           />
         )}
       </div>
-      {/* Text Content */}
-      <div className="px-4 py-3">
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+      {/* Text Content - Compact */}
+      <div className="px-3 py-2">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <h3 className="text-xs font-medium text-foreground truncate flex-1">{project.title}</h3>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
               alt="Company logo"
-              className="h-4 w-auto object-contain flex-shrink-0"
+              className="h-3 w-auto object-contain flex-shrink-0"
             />
           )}
         </div>
-        <p className="text-xs text-muted-foreground/70 truncate">{project.description}</p>
+        <p className="text-[10px] text-muted-foreground/70 truncate">{project.description}</p>
       </div>
     </Card>
   );
@@ -575,146 +717,77 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
 
 export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: WorkGridProps) {
   const [internalActiveTab, setInternalActiveTab] = useState(externalActiveTab || "explorations");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const autoScrollRef = useRef<number | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   
   // Use external tab if provided, otherwise use internal state
   const activeTab = externalActiveTab || internalActiveTab;
 
   const tabItems = [
-    { id: "explorations", label: "Explorations" },
+    { id: "explorations", label: "AI Experiments" },
     { id: "all-projects", label: "All Projects" },
   ];
 
   const displayProjects = (showTabs || externalActiveTab === "explorations")
     ? activeTab === "explorations"
       ? projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10) // Show only first 5 cards for explorations, exclude project 4 and 10
-      : projects.filter((project) => {
-          // Include commercial projects and all-projects-only, explicitly include Meditation WatchOS App (id: 10)
-          return (project.category === "commercial" || project.category === "all-projects-only") || 
-                 (project.id === 10 && project.title === "Meditation WatchOS App");
-        }).sort((a, b) => {
-          // Sort: 1, 2, 3, 5, 6, then 4 (AI Data Vision last)
-          if (a.id === 4) return 1;
-          if (b.id === 4) return -1;
-          return a.id - b.id;
-        })
-    : projects.filter((project) => {
-        // Only show original projects on home page: 1, 2, 3, 5, 6
-        return project.id === 1 || project.id === 2 || project.id === 3 || project.id === 5 || project.id === 6;
-      }).sort((a, b) => {
-        // Sort: 1, 2, 3, 5, 6
-        return a.id - b.id;
-      });
-
-  // Duplicate projects for infinite scroll effect
-  const infiniteProjects = [...displayProjects, ...displayProjects, ...displayProjects];
-
-  // Track scroll position for indicator
-  useEffect(() => {
-    if (showTabs || !scrollContainerRef.current) return;
-
-    const scrollContainer = scrollContainerRef.current;
-    
-    const updateScrollProgress = () => {
-      const singleSetWidth = scrollContainer.scrollWidth / 3;
-      if (singleSetWidth === 0) return;
-      
-      const currentScroll = scrollContainer.scrollLeft;
-      
-      // Calculate scroll position relative to the middle set (0 to singleSetWidth)
-      const relativeScroll = ((currentScroll - singleSetWidth) % singleSetWidth);
-      // Handle negative modulo
-      const normalizedScroll = relativeScroll < 0 ? (relativeScroll + singleSetWidth) / singleSetWidth : relativeScroll / singleSetWidth;
-      setScrollProgress(Math.max(0, Math.min(1, normalizedScroll)));
-    };
-
-    scrollContainer.addEventListener('scroll', updateScrollProgress);
-    
-    // Initial update
-    updateScrollProgress();
-
-    return () => {
-      scrollContainer.removeEventListener('scroll', updateScrollProgress);
-    };
-  }, [showTabs, displayProjects.length]);
-
-  // Auto-scroll functionality - continuous infinite scroll
-  useEffect(() => {
-    if (showTabs || !scrollContainerRef.current) return;
-
-    const scrollContainer = scrollContainerRef.current;
-    const scrollSpeed = 0.5; // pixels per frame
-    
-    // Start at the middle set of duplicated items
-    const singleSetWidth = scrollContainer.scrollWidth / 3;
-    scrollContainer.scrollLeft = singleSetWidth;
-
-    const autoScroll = () => {
-      const currentScroll = scrollContainer.scrollLeft;
-      const newScroll = currentScroll + scrollSpeed;
-      
-      // When we've scrolled past the second set, jump back to the first set seamlessly
-      if (newScroll >= singleSetWidth * 2) {
-        scrollContainer.scrollLeft = singleSetWidth;
-      } else {
-        scrollContainer.scrollLeft = newScroll;
-      }
-      
-      // Update scroll progress
-      const normalizedScroll = ((scrollContainer.scrollLeft - singleSetWidth) % singleSetWidth) / singleSetWidth;
-      setScrollProgress(normalizedScroll);
-      
-      autoScrollRef.current = requestAnimationFrame(autoScroll);
-    };
-
-    autoScrollRef.current = requestAnimationFrame(autoScroll);
-
-    return () => {
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
-      }
-    };
-  }, [showTabs, displayProjects.length]);
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      // Stop auto-scroll
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
-        autoScrollRef.current = null;
-      }
-      
-      const container = scrollContainerRef.current as HTMLElement;
-      const scrollAmount = container.clientWidth * 0.5; // Scroll by half viewport width
-      container.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      // Stop auto-scroll
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
-        autoScrollRef.current = null;
-      }
-      
-      const container = scrollContainerRef.current as HTMLElement;
-      const scrollAmount = container.clientWidth * 0.5; // Scroll by half viewport width
-      container.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
+      : (() => {
+          // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
+          // Expected projects to show:
+          // - All commercial: IDs 1, 2, 3, 4, 5, 6, 10 (WatchOS), 11, 12 (VR), 13 (UX Agent), 14
+          // - All-projects-only: ID 7 (3D Printing)
+          // - Past-projects (without duplicates): IDs 8, 9
+          // Total: 14 projects
+          
+          const seenIds = new Set<number>();
+          const allProjects: typeof projects = [];
+          
+          // First: Add all commercial and all-projects-only projects
+          projects.forEach((project) => {
+            if ((project.category === "commercial" || project.category === "all-projects-only") && !seenIds.has(project.id)) {
+              allProjects.push(project);
+              seenIds.add(project.id);
+            }
+          });
+          
+          // Second: Add past-projects that don't have duplicate IDs (IDs 8, 9 only, as 10, 11, 12 are duplicates)
+          projects.forEach((project) => {
+            if (project.category === "past-projects" && !seenIds.has(project.id)) {
+              allProjects.push(project);
+              seenIds.add(project.id);
+            }
+          });
+          
+          // Sort by ID
+          allProjects.sort((a, b) => a.id - b.id);
+          
+          // Find WatchOS project (id: 10) - Meditation WatchOS App
+          const watchOS = allProjects.find(p => p.id === 10 && p.title === "Meditation WatchOS App");
+          
+          // Get all other projects (excluding WatchOS)
+          const otherProjects = allProjects.filter(p => !(p.id === 10 && p.title === "Meditation WatchOS App"));
+          
+          // Insert WatchOS at position 5 (second row, middle position in 3-column grid)
+          if (watchOS && otherProjects.length >= 4) {
+            return [...otherProjects.slice(0, 4), watchOS, ...otherProjects.slice(4)];
+          } else if (watchOS) {
+            return [...otherProjects, watchOS];
+          }
+          
+          return allProjects;
+        })()
+    : (() => {
+        // Custom order for home page: UX Agent, AI Insights, No-scroll app, Balance Transfer
+        const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
+        const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
+        const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
+        const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
+        
+        // Return in specified order, filtering out undefined
+        return [uxAgent, aiInsights, noScrollApp, balanceTransfer].filter(Boolean);
+      })();
 
   return (
     <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA]' : 'bg-white'}`}>
-      <div className={`${showTabs || externalActiveTab ? 'max-w-7xl' : 'max-w-4xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24`}>
+      <div className={`${showTabs || externalActiveTab ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16`}>
         {showTabs ? (
           <>
             <div className="flex justify-center mb-16">
@@ -736,17 +809,31 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
             </div>
 
             {activeTab === "explorations" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16 lg:gap-x-16 lg:gap-y-20 xl:gap-x-20 xl:gap-y-24">
                 {displayProjects.map((project) => (
                   <ProjectCard key={project.id} project={project} showTabs={showTabs} />
                 ))}
               </div>
             ) : activeTab === "all-projects" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {displayProjects.map((project) => (
-                  <AllProjectsCard key={project.id} project={project} />
-                ))}
-              </div>
+              <>
+                {/* 3 columns Grid - First 16 projects */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+                  {displayProjects.slice(0, 16).map((project) => (
+                    <AllProjectsCard key={project.id} project={project} />
+                  ))}
+                </div>
+                {/* Horizontal Scroll - Remaining projects */}
+                {displayProjects.length > 16 && (
+                  <div className="mt-8 lg:mt-12">
+                    <h3 className="text-lg font-semibold text-foreground mb-6">More Projects</h3>
+                    <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                      {displayProjects.slice(16).map((project) => (
+                        <CompactProjectCard key={project.id} project={project} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             ) : null}
           </>
         ) : externalActiveTab ? (
@@ -756,107 +843,58 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               {/* Header Section */}
               <div className="mb-12 text-left">
                 <h1 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-4">
-                  Interaction Prototyping
+                  AI Experiments
                 </h1>
                 <p className="text-sm lg:text-base text-muted-foreground/80 max-w-2xl">
                   I explore interactions, new interactions for AI, and sometimes simplify interactions to combine in design and code.
                 </p>
               </div>
               {/* Projects Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16 lg:gap-x-16 lg:gap-y-20 xl:gap-x-20 xl:gap-y-24">
                 {displayProjects.map((project) => (
                   <ProjectCard key={project.id} project={project} showTabs={true} />
                 ))}
               </div>
             </>
           ) : activeTab === "all-projects" ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayProjects.map((project) => (
-                <AllProjectsCard key={project.id} project={project} />
-              ))}
-            </div>
+            <>
+              {/* 3 columns Grid - First 16 projects */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+                {displayProjects.slice(0, 16).map((project) => (
+                  <AllProjectsCard key={project.id} project={project} />
+                ))}
+              </div>
+              {/* Horizontal Scroll - Remaining projects */}
+              {displayProjects.length > 16 && (
+                <div className="mt-8 lg:mt-12">
+                  <h3 className="text-lg font-semibold text-foreground mb-6">More Projects</h3>
+                  <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                    {displayProjects.slice(16).map((project) => (
+                      <CompactProjectCard key={project.id} project={project} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           ) : null
         ) : (
-          <div className="relative">
-            {/* Vertical App Store-style Cards - 2 full cards + 1 partially visible */}
-            <div className="relative mb-12">
-              {/* Arrow Indicators - Top Right */}
-              <div className="flex items-center gap-2 mb-4 justify-end">
-                <button
-                  onClick={scrollLeft}
-                  className="p-2 rounded-full bg-white dark:bg-gray-900 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="h-4 w-4 text-gray-700 dark:text-gray-300" />
-                </button>
-                <button
-                  onClick={scrollRight}
-                  className="p-2 rounded-full bg-white dark:bg-gray-900 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="h-4 w-4 text-gray-700 dark:text-gray-300" />
-                </button>
-              </div>
-              
-              <div 
-                ref={scrollContainerRef}
-                className="flex gap-3 sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide pb-6 snap-x snap-mandatory -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24"
-                style={{ 
-                  scrollbarWidth: 'none', 
-                  msOverflowStyle: 'none',
-                  WebkitOverflowScrolling: 'touch',
-                  scrollBehavior: 'smooth'
-                }}
-              >
-                {/* Spacer for centering first card - only on mobile */}
-                <div className="flex-shrink-0 w-[7.5%] sm:w-[15%] md:w-[29%] lg:hidden" />
-                {infiniteProjects.map((project, index) => (
-                  <motion.div
-                    key={`${project.id}-${index}`}
-                    className="project-card-wrapper flex-shrink-0 w-[95%] sm:w-[80%] md:w-[55%] lg:w-[45%] snap-center lg:snap-start"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    <ProjectCard project={project} showTabs={showTabs} />
-                  </motion.div>
-                ))}
-                {/* Spacer for centering last card - only on mobile */}
-                <div className="flex-shrink-0 w-[7.5%] sm:w-[15%] md:w-[29%] lg:hidden" />
-              </div>
+          <>
+            {/* 2x2 Grid - 4 projects */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10 mb-12">
+              {displayProjects.slice(0, 4).map((project) => (
+                <div key={project.id} className="transform scale-105 lg:scale-110">
+                  <AllProjectsCard project={project} />
+                </div>
+              ))}
             </div>
-            
-            {/* Scroll Indicator - Apple Style Dots */}
-            {displayProjects.length > 0 && (
-              <div className="flex items-center justify-center gap-2.5 mt-8 mb-4">
-                {displayProjects.map((project, index) => {
-                  // Calculate which dot should be active based on scroll position
-                  const totalCards = displayProjects.length;
-                  const cardProgress = scrollProgress * totalCards;
-                  const activeIndex = Math.floor(cardProgress) % totalCards;
-                  const isActive = index === activeIndex;
-                  
-                  return (
-                    <div
-                      key={project.id}
-                      className={`rounded-full transition-all duration-500 ease-out ${
-                        isActive 
-                          ? 'w-2.5 h-2.5 bg-foreground dark:bg-foreground opacity-100' 
-                          : 'w-2 h-2 bg-foreground dark:bg-foreground opacity-20 hover:opacity-35'
-                      }`}
-                    />
-                  );
-                })}
-              </div>
-            )}
-            
-          </div>
+          </>
         )}
       </div>
       
       {/* Playbook Card - Full Width Gray Background */}
       {!showTabs && !externalActiveTab && (
         <div className="bg-gray-50 dark:bg-gray-900/50 w-screen mt-12 py-12 lg:py-16" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
-          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
             <PlaybookCard />
           </div>
         </div>

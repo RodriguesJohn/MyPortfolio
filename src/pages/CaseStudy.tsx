@@ -53,6 +53,8 @@ import group4 from "@/assets/MediatationApp/Group 4.svg";
 import dotsSvg from "@/assets/MediatationApp/dots.svg";
 import slide16_9_7 from "@/assets/MediatationApp/Slide 16_9 - 7.svg";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
+// @ts-ignore
+import uxAgentVideo from "@/assets/UXAgentTest.MOV";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
 import meditationUntitled3 from "@/assets/MediatationApp/Untitled (2).png";
@@ -187,13 +189,14 @@ const CaseStudy = () => {
   const isMeditationWatchOS = projectId === "10";
   const isDigitalBanking = projectId === "11";
   const isVRLearning = projectId === "12";
+  const isUXAgent = projectId === "13";
 
   const handleTabChange = (tab: string) => {
     navigate('/');
   };
 
   // Check if it's a project that has a case study or should show "coming soon"
-  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS;
+  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent;
   const isComingSoon = isAIDataVision || is3DPrinting || isDigitalBanking || isVRLearning;
 
   // Get the case study title for coming soon projects
@@ -2188,6 +2191,80 @@ const CaseStudy = () => {
                   <p className="text-lg leading-relaxed text-muted-foreground/80">I learned how to design products with constant feedback.</p>
                 </li>
               </ul>
+            </Section>
+
+            {/* Footer */}
+            <Section>
+              <SectionText>
+                Thank you for reading. If you'd like to work with me, get in touch:{" "}
+                <a
+                  href="/"
+                  className="text-foreground font-semibold hover:underline"
+                >
+                  Contact me
+                </a>
+              </SectionText>
+            </Section>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isUXAgent) {
+    return (
+      <div className="min-h-screen bg-background pt-24">
+        <Header activeTab={undefined} onTabChange={handleTabChange} />
+        <div className="py-16 px-6 lg:px-16">
+          <div className="max-w-5xl mx-auto">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="mb-12 group pl-0 hover:pl-2 transition-all"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+            
+            {/* Coming Soon Banner */}
+            <div className="mb-8 p-4 rounded-lg bg-muted/50 border border-border/50">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Coming Soon:</span> Full case study in progress. Meanwhile, read this:
+              </p>
+            </div>
+
+            {/* Header */}
+            <div className="mb-16">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
+                UX Web Agent Case Study
+              </h1>
+            </div>
+
+            {/* Content */}
+            <Section>
+              <SectionText className="mb-6">
+                I won second place in a hackathon hosted by AGI, Inc., OpenAI, and Lovable. This was my first hackathon in SF, and I was honestly surprised I won but the product I built was truly good.
+              </SectionText>
+              
+              <SectionText className="mb-6">
+                I designed and developed UX Web Agent, a tool that analyzes any website and gives instant UX audits without needing an expert while also acting as a marketplace for human designers to provide deeper help.
+              </SectionText>
+              
+              <SectionText className="mb-6">
+                Integrating agentic workflows into products is reshaping how we build and design. While these products come with their own challenges, I can't ignore how innovation in AI is transforming product development.
+              </SectionText>
+              
+              <SectionText className="mb-6">
+                I leveraged Lovable, AGI Web Agent APIs, and Cursor to build this product. Originally, the product was designed for web, but now it's developed as a mobile app, so it's quickly accessible for people on-the-go. It's amazing how design and engineering skills are such a superpower you can literally build 0→1 AI products.
+              </SectionText>
+              
+              <SectionText className="mb-6">
+                I'm also thankful to the AGI Inc. team and Ayse Toker for the support throughout the project.
+              </SectionText>
+              
+              <SectionText className="mb-6">
+                When everyone can build a product, what differentiates your product is good design not just how it looks, but how it works. This project was a perfect case study of that.
+              </SectionText>
             </Section>
 
             {/* Footer */}
