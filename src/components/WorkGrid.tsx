@@ -51,6 +51,7 @@ const projects = [
     description: "Currently building",
     image: p5Image,
     category: "commercial",
+    isComingSoon: true,
   },
   {
     id: 1,
@@ -107,6 +108,7 @@ const projects = [
     video: multiModalVideo,
     companyLogo: chaseLogoDark,
     category: "commercial",
+    isComingSoon: true,
   },
   {
     id: 7,
@@ -726,64 +728,69 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     { id: "all-projects", label: "All Projects" },
   ];
 
-  const displayProjects = (showTabs || externalActiveTab === "explorations")
-    ? activeTab === "explorations"
-      ? projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10) // Show only first 5 cards for explorations, exclude project 4 and 10
-      : (() => {
-          // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
-          // Expected projects to show:
-          // - All commercial: IDs 1, 2, 3, 4, 5, 6, 10 (WatchOS), 11, 12 (VR), 13 (UX Agent), 14
-          // - All-projects-only: ID 7 (3D Printing)
-          // - Past-projects (without duplicates): IDs 8, 9
-          // Total: 14 projects
-          
-          const seenIds = new Set<number>();
-          const allProjects: typeof projects = [];
-          
-          // First: Add all commercial and all-projects-only projects
-          projects.forEach((project) => {
-            if ((project.category === "commercial" || project.category === "all-projects-only") && !seenIds.has(project.id)) {
-              allProjects.push(project);
-              seenIds.add(project.id);
-            }
-          });
-          
-          // Second: Add past-projects that don't have duplicate IDs (IDs 8, 9 only, as 10, 11, 12 are duplicates)
-          projects.forEach((project) => {
-            if (project.category === "past-projects" && !seenIds.has(project.id)) {
-              allProjects.push(project);
-              seenIds.add(project.id);
-            }
-          });
-          
-          // Sort by ID
-          allProjects.sort((a, b) => a.id - b.id);
-          
-          // Find WatchOS project (id: 10) - Meditation WatchOS App
-          const watchOS = allProjects.find(p => p.id === 10 && p.title === "Meditation WatchOS App");
-          
-          // Get all other projects (excluding WatchOS)
-          const otherProjects = allProjects.filter(p => !(p.id === 10 && p.title === "Meditation WatchOS App"));
-          
-          // Insert WatchOS at position 5 (second row, middle position in 3-column grid)
-          if (watchOS && otherProjects.length >= 4) {
-            return [...otherProjects.slice(0, 4), watchOS, ...otherProjects.slice(4)];
-          } else if (watchOS) {
-            return [...otherProjects, watchOS];
-          }
-          
-          return allProjects;
-        })()
-    : (() => {
-        // Custom order for home page: UX Agent, AI Insights, No-scroll app, Balance Transfer
-        const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
-        const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
-        const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
-        const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
-        
-        // Return in specified order, filtering out undefined
-        return [uxAgent, aiInsights, noScrollApp, balanceTransfer].filter(Boolean);
-      })();
+  // Determine which projects to show based on the active tab
+  let displayProjects: typeof projects;
+  
+  if (activeTab === "explorations") {
+    // Show only first 5 cards for explorations, exclude project 4 and 10
+    displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10);
+  } else if (activeTab === "all-projects") {
+    // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
+    // Expected projects to show:
+    // - All commercial: IDs 1, 2, 3, 4, 5, 6, 10 (WatchOS), 11, 12 (VR), 13 (UX Agent), 14
+    // - All-projects-only: ID 7 (3D Printing)
+    // - Past-projects (without duplicates): IDs 8, 9
+    // Total: 14 projects
+    
+    const seenIds = new Set<number>();
+    const allProjects: typeof projects = [];
+    
+    // First: Add all commercial and all-projects-only projects
+    projects.forEach((project) => {
+      if ((project.category === "commercial" || project.category === "all-projects-only") && !seenIds.has(project.id)) {
+        allProjects.push(project);
+        seenIds.add(project.id);
+      }
+    });
+    
+    // Second: Add past-projects that don't have duplicate IDs (IDs 8, 9 only, as 10, 11, 12 are duplicates)
+    projects.forEach((project) => {
+      if (project.category === "past-projects" && !seenIds.has(project.id)) {
+        allProjects.push(project);
+        seenIds.add(project.id);
+      }
+    });
+    
+    // Sort by ID
+    allProjects.sort((a, b) => a.id - b.id);
+    
+    // Find WatchOS project (id: 10) - Meditation WatchOS App
+    const watchOS = allProjects.find(p => p.id === 10 && p.title === "Meditation WatchOS App");
+    
+    // Get all other projects (excluding WatchOS)
+    const otherProjects = allProjects.filter(p => !(p.id === 10 && p.title === "Meditation WatchOS App"));
+    
+    // Insert WatchOS at position 5 (second row, middle position in 3-column grid)
+    if (watchOS && otherProjects.length >= 4) {
+      displayProjects = [...otherProjects.slice(0, 4), watchOS, ...otherProjects.slice(4)];
+    } else if (watchOS) {
+      displayProjects = [...otherProjects, watchOS];
+    } else {
+      displayProjects = allProjects;
+    }
+  } else if (showTabs || externalActiveTab === "explorations" || externalActiveTab === "all-projects") {
+    // If tabs are shown but no specific tab is selected, default behavior
+    displayProjects = [];
+  } else {
+    // Custom order for home page: UX Agent, AI Insights, No-scroll app, Balance Transfer
+    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
+    const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
+    const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
+    const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
+    
+    // Return in specified order, filtering out undefined
+    displayProjects = [uxAgent, aiInsights, noScrollApp, balanceTransfer].filter(Boolean) as typeof projects;
+  }
 
   return (
     <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA]' : 'bg-white'}`}>
