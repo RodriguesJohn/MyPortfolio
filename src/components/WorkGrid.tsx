@@ -37,7 +37,7 @@ import appleLogo from "@/assets/Apple-Logo.png";
 const projects = [
   {
     id: 13,
-    title: "UX Agent",
+    title: "UX AI Agent",
     description: "AI-powered UX design agent",
     image: p5Image,
     thumbnailVideo: uxAgentVideo,
@@ -399,114 +399,29 @@ function PastProjectListItem({ project }: { project: typeof projects[0] }) {
   );
 }
 
-function PlaybookCard() {
+function GetTheGuideCard() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
 
   return (
     <Card 
       ref={ref}
-      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-12 mx-4 md:mx-8 lg:mx-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[400px] flex items-center transition-all duration-500 ${
+      className={`p-8 md:p-12 bg-card/50 border-border/40 transition-all duration-500 mt-12 mx-4 md:mx-8 lg:mx-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] transition-all duration-500 ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-8 p-8 w-full justify-items-center md:justify-items-start">
-        {/* 3D Book */}
-        <div className="relative flex items-center justify-center ml-0 md:ml-8 lg:ml-12 w-full md:w-auto">
-          <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
-            {/* Book Pages Stack - On the right side, tucked inside */}
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-white dark:bg-gray-100 rounded-r-sm shadow-lg" style={{ transform: 'translateX(8px)', zIndex: 0 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(6px)', zIndex: 1 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-4 bg-white dark:bg-gray-100 rounded-r-sm" style={{ transform: 'translateX(4px)', zIndex: 2 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-2 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(2px)', zIndex: 3 }} />
-            
-            {/* Front Cover */}
-            <div className="relative aspect-[3/4] w-48 bg-black rounded-lg overflow-hidden" style={{ 
-              transform: 'translateZ(0px)',
-              boxShadow: '0 25px 80px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1)',
-              zIndex: 10
-            }}>
-              <div className="p-6 h-full flex flex-col justify-between text-white relative">
-                <div>
-                  {/* Logo */}
-                  <div className="mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                      {/* Substack Logo */}
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="text-xs opacity-80 mb-1">AI Design</div>
-                  <h2 className="text-3xl font-medium mb-2 leading-tight">Playbook</h2>
-                </div>
-              </div>
-              {/* Book spine effect */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/40 to-transparent rounded-l-lg pointer-events-none" />
-            </div>
-          </div>
-        </div>
-        
-        {/* Book Details */}
-        <div className="flex flex-col gap-6 text-center md:text-left w-full md:w-auto">
-          <div className="w-full">
-            <h3 className="text-2xl font-semibold mb-3 text-foreground">AI Design Playbook</h3>
-            <p className="text-muted-foreground mb-6 leading-tight text-base opacity-90 max-w-md line-clamp-2 mx-auto md:mx-0">
-              A comprehensive guide to integrating AI as a foundational layer in your products through strategy, design, and prototyping.
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left Side - Content */}
+        <div className="flex flex-col gap-6">
+          <div>
+            <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">Getting Started Guide</h3>
+            <p className="text-muted-foreground leading-relaxed text-base">
+              A step-by-step guide to help you navigate and learn AI design. Learn the foundations, key terminologies, and practical applications.
             </p>
-            <div className="flex items-center justify-center md:justify-start gap-6 mb-6">
-              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                <img 
-                  src="https://cdn.simpleicons.org/apple/000000" 
-                  alt="Apple" 
-                  className="h-6 w-6 transition-all object-contain object-center dark:invert"
-                  style={{ display: 'block' }}
-                />
-              </div>
-              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                <img 
-                  src={googleLogo} 
-                  alt="Google" 
-                  className="h-6 w-auto transition-all object-contain object-center"
-                />
-              </div>
-              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                <img 
-                  src={stanfordLogo} 
-                  alt="Stanford" 
-                  className="h-6 w-auto transition-all object-contain object-center"
-                />
-              </div>
-              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                <img 
-                  src={chaseLogo} 
-                  alt="Chase" 
-                  className="h-6 w-auto transition-all object-contain object-center"
-                />
-              </div>
-            </div>
           </div>
+          
           <Button 
-            className="rounded-full w-fit mx-auto md:mx-0 group/btn hover:gap-3 transition-all duration-300" 
+            className="rounded-lg w-fit bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 px-6 py-3 text-base font-medium" 
             size="lg"
             asChild
           >
@@ -515,13 +430,49 @@ function PlaybookCard() {
               target="_blank" 
               rel="noopener noreferrer"
             >
-              Get the Playbook
-              <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+              View the Guide
+              <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>
         </div>
+        
+        {/* Right Side - Guide Content Card */}
+        <div className="flex items-center justify-center lg:justify-end">
+          <Card className="bg-white dark:bg-gray-50 p-6 md:p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h4 className="text-xl font-bold text-black mb-6">Getting Started Guide</h4>
+            <div className="space-y-4 mb-6">
+              <div>
+                <p className="text-sm font-semibold text-black mb-1">Step 1: Foundation</p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Learn the core concepts of AI and understand key terminologies that will help you navigate...
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-black mb-1">Step 2: Tools & Methods</p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Explore practical tools and methodologies used in AI product design. Hands-on exercises...
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-black mb-1">Step 3: Application</p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Apply your knowledge to real-world scenarios. Build projects and create AI-powered...
+                </p>
+              </div>
             </div>
+            <a 
+              href="https://johnrodrigues.substack.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-black font-medium hover:underline inline-flex items-center gap-1"
+            >
+              Continue reading
+              <ArrowRight className="h-3 w-3" />
+            </a>
           </Card>
+        </div>
+      </div>
+    </Card>
   );
 }
 
@@ -735,8 +686,8 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: UX Agent, AI Insights App, Balance Transfer, NoScrollApp
-    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux agent")); // id: 13
+    // Custom order for home page: UX AI Agent, AI Insights App, Balance Transfer, NoScrollApp
+    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux ai agent")); // id: 13
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
@@ -749,7 +700,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   } else if (activeTab === "all-projects") {
     // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
     // Expected projects to show:
-    // - All commercial: IDs 1, 2, 3, 4, 5, 6, 10 (WatchOS), 11, 12 (VR), 13 (UX Agent), 14
+    // - All commercial: IDs 1, 2, 3, 4, 5, 6, 10 (WatchOS), 11, 12 (VR), 13 (UX AI Agent), 14
     // - All-projects-only: ID 7 (3D Printing)
     // - Past-projects (without duplicates): IDs 8, 9
     // Total: 14 projects
@@ -901,11 +852,11 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
         )}
       </div>
       
-      {/* Playbook Card - Full Width Gray Background */}
+      {/* Get the Guide Card - Full Width Gray Background */}
       {!showTabs && !externalActiveTab && (
         <div className="bg-gray-50 dark:bg-gray-900/50 w-screen mt-12 py-12 lg:py-16" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-            <PlaybookCard />
+            <GetTheGuideCard />
           </div>
         </div>
       )}
