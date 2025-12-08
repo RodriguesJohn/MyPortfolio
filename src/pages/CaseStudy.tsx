@@ -54,7 +54,7 @@ import group4 from "@/assets/MediatationApp/Group 4.svg";
 import dotsSvg from "@/assets/MediatationApp/dots.svg";
 import slide16_9_7 from "@/assets/MediatationApp/Slide 16_9 - 7.svg";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
-import uxAgentVideo from "@/assets/UX.mp4";
+import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
 import meditationUntitled3 from "@/assets/MediatationApp/Untitled (2).png";
@@ -2225,9 +2225,9 @@ const CaseStudy = () => {
     const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
 
     return (
-      <div className="min-h-screen bg-[#f5f5f7] dark:bg-gray-900 pt-24">
+      <div className="min-h-screen bg-[#F6F6F6] dark:bg-gray-900 pt-24">
         <Header activeTab={undefined} onTabChange={handleTabChange} />
-        <div className="py-16 px-6 lg:px-16 bg-[#f5f5f7] dark:bg-gray-900">
+        <div className="py-16 px-6 lg:px-16 bg-[#F6F6F6] dark:bg-gray-900">
           <div className="max-w-5xl mx-auto">
             <Button 
               variant="ghost" 
@@ -2248,7 +2248,7 @@ const CaseStudy = () => {
             </div>
 
             {/* Header */}
-            <div ref={scrollRef} className="mb-20 lg:mb-24 pt-12 lg:pt-16 relative min-h-[120vh] bg-[#f5f5f7] dark:bg-gray-900">
+            <div ref={scrollRef} className="mb-20 lg:mb-24 pt-12 lg:pt-16 relative min-h-[120vh] bg-[#F6F6F6] dark:bg-gray-900">
               <motion.div 
                 className="max-w-4xl mx-auto text-center relative z-0"
                 style={{
@@ -2282,7 +2282,7 @@ const CaseStudy = () => {
                   scale: videoScale
                 }}
               >
-                <div className="relative max-w-md w-full">
+                <div className="relative max-w-5xl w-full">
                   <video
                     src={uxAgentVideo}
                     className="w-full h-auto object-cover"

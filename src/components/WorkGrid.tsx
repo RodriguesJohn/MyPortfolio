@@ -23,7 +23,7 @@ import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
 import myTokaVideo from "@/assets/MyTocaApp.mp4";
 import pamVideo from "@/assets/PAM.mp4";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
-import uxAgentVideo from "@/assets/UX.mp4";
+import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import zozoGif from "@/assets/Zozo.gif";
 import noScrollAppImage from "@/assets/NoScrollApp.png";
 import googleLogo from "@/assets/GoogleLogog.png";
@@ -40,7 +40,7 @@ const projects = [
     title: "UX AI Agent",
     description: "AI-powered UX design agent",
     image: p5Image,
-    thumbnailVideo: uxAgentVideo,
+    thumbnailVideo: uxAgentVideo, // Thumbnail by V2UXAgent
     category: "commercial",
     isHackathonWinner: true,
     hackathonText: "Winner of the hackathon conducted by OpenAI, Loveable, and AGI.",
@@ -147,6 +147,7 @@ const projects = [
     description: "Voice-to-thoughts app",
     image: p5Image,
     category: "past-projects",
+    isComingSoon: true,
   },
   {
     id: 9,
@@ -154,6 +155,7 @@ const projects = [
     description: "Smart home control center",
     image: p5Image,
     category: "past-projects",
+    isComingSoon: true,
   },
   {
     id: 10,
@@ -569,7 +571,7 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
             src={project.thumbnailVideo}
             className={`w-full h-full ${
               project.id === 1 ? 'object-contain object-center scale-150' : 
-              project.id === 13 ? 'object-contain object-center' : 
+              project.id === 13 ? 'object-contain object-center scale-[1.75]' : 
               'object-cover object-top'
             }`}
             autoPlay
@@ -794,6 +796,13 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     // Default: empty array
     displayProjects = [];
   }
+
+  // Move all "Coming Soon" projects to the bottom
+  displayProjects.sort((a, b) => {
+    const aIsComingSoon = (a as any).isComingSoon ? 1 : 0;
+    const bIsComingSoon = (b as any).isComingSoon ? 1 : 0;
+    return aIsComingSoon - bIsComingSoon;
+  });
 
   return (
     <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA]' : 'bg-white'}`}>

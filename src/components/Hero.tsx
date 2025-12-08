@@ -425,8 +425,8 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span>AI-Native Product Designer & Design Engineer</span>
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
-                <p className="text-sm sm:text-sm md:text-base lg:text-lg text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I help startups and innovation teams design and build AI-native mobile experiences combining product design, agentic systems, and functional prototyping.
+                <p className="text-xs sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
+                  I help forward-thinking teams design AI-native mobile products with foundational agentic systems integration, delivering clarity, insight, and de-risked decisions so they can move forward confidently.
                 </p>
                 </div>
                 

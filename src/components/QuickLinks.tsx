@@ -44,11 +44,11 @@ function PlaybookCard() {
   return (
     <Card 
       ref={ref}
-      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[400px] flex items-center transition-all duration-500 ${
+      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[300px] sm:min-h-[400px] flex items-center transition-all duration-500 ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-8 p-8 w-full">
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6 md:p-8 w-full">
         {/* 3D Book */}
         <div className="relative flex items-center justify-center md:-ml-8">
           <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
@@ -59,24 +59,24 @@ function PlaybookCard() {
             <div className="absolute right-0 top-0 bottom-0 w-2 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(2px)', zIndex: 3 }} />
             
             {/* Front Cover */}
-            <div className="relative aspect-[3/4] w-48 bg-black rounded-lg overflow-hidden" style={{ 
+            <div className="relative aspect-[3/4] w-40 sm:w-48 bg-black rounded-lg overflow-hidden" style={{ 
               transform: 'translateZ(0px)',
               boxShadow: '0 25px 80px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1)',
               zIndex: 10
             }}>
-              <div className="p-6 h-full flex flex-col justify-between text-white relative">
-                <div>
+              <div className="p-3 sm:p-4 md:p-6 h-full flex flex-col justify-between text-white relative">
+                <div className="flex-1 flex flex-col">
                   {/* Logo */}
-                  <div className="mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                  <div className="mb-1.5 sm:mb-2 md:mb-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
                       {/* Substack Logo */}
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"/>
                       </svg>
                     </div>
                   </div>
-                  <div className="text-xs opacity-80 mb-1">AI Design</div>
-                  <h2 className="text-3xl font-medium mb-2 leading-tight">Playbook</h2>
+                  <div className="text-[9px] sm:text-[10px] md:text-xs opacity-80 mb-0.5 sm:mb-1">AI Design</div>
+                  <h2 className="text-sm sm:text-2xl md:text-3xl font-medium leading-[1.1]">Playbook</h2>
                 </div>
               </div>
               {/* Book spine effect */}
@@ -86,13 +86,13 @@ function PlaybookCard() {
         </div>
         
         {/* Book Details */}
-        <div className="flex flex-col gap-6 items-center md:items-start text-center md:text-left">
+        <div className="flex flex-col gap-4 sm:gap-6 items-center md:items-start text-center md:text-left">
           <div>
-            <h3 className="text-2xl font-semibold mb-3 text-foreground">AI Design Playbook</h3>
-            <p className="text-muted-foreground mb-6 leading-tight text-base opacity-60 max-w-md line-clamp-2">
-              A comprehensive guide to integrating AI as a foundational layer in your products through strategy, design, and prototyping.
+            <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3 text-foreground">AI Design Playbook</h3>
+            <p className="text-muted-foreground mb-4 sm:mb-6 leading-tight text-sm sm:text-base opacity-60 max-w-md">
+              Writing about AI & design for leaders. Sharing behind-the-scenes AI explorations, industry trends, guides, and resources. Join 1,600+ AI enthusiasts.
             </p>
-            <div className="flex items-center gap-6 mb-6 justify-center md:justify-start">
+            <div className="flex items-center gap-4 sm:gap-6 mb-4 sm:mb-6 justify-center md:justify-start flex-wrap">
               <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
                 <img 
                   src="https://cdn.simpleicons.org/apple/000000" 
