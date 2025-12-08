@@ -372,14 +372,13 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                       <div className="flex flex-col flex-grow">
                         <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                           <Briefcase className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
-                          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Business</h3>
+                          <h3 className="text-lg sm:text-xl font-semibold text-foreground">For Business</h3>
                         </div>
                         <p className="text-sm sm:text-base text-muted-foreground/70 mb-3 sm:mb-4 flex-grow">
-                          Ideal for startups and product teams looking to integrate AI into their mobile experience. Get expert guidance on AI product strategy, prototyping, and design engineering.
+                          I help forward-thinking teams design AI-native mobile products with foundational agentic systems integration, delivering clarity, insight, and de-risked decisions so they can move forward confidently.
                         </p>
-                        <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4">
-                          <span className="text-xl sm:text-2xl font-semibold text-foreground">$500</span>
-                          <span className="text-sm sm:text-base text-muted-foreground/70">/hr</span>
+                        <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4 hidden">
+                          <span className="text-xl sm:text-2xl font-semibold text-foreground">Contact for pricing</span>
                         </div>
                       </div>
                       
@@ -389,12 +388,12 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                         asChild
                       >
                         <a
-                          href="https://calendly.com/john-john-rodrigues/for-businesses" 
+                          href="https://calendly.com/john-john-rodrigues/discovery-call" 
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <Calendar className="h-5 w-5 mr-2" />
-                          Book a Call
+                          Book 15 min Discovery call
                         </a>
                       </Button>
                     </div>
@@ -402,7 +401,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 </div>
 
                 {/* Contract Note */}
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center hidden">
                   <p className="text-muted-foreground">
                     If you'd like to work in a full-time contract, feel free to <a href="mailto:john@example.com" className="underline hover:text-foreground transition-colors">reach out to me</a>.
                   </p>
