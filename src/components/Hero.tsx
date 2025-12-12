@@ -375,7 +375,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                           <h3 className="text-lg sm:text-xl font-semibold text-foreground">For Business</h3>
                         </div>
                         <p className="text-sm sm:text-base text-muted-foreground/70 mb-3 sm:mb-4 flex-grow">
-                          I help forward-thinking teams design AI-native mobile products with foundational agentic systems integration, delivering clarity, insight, and de-risked decisions so they can move forward confidently.
+                          I help forward-thinking teams design AI-native products with foundational agentic systems integration, delivering clarity, insight, and de-risked decisions so they can move forward confidently.
                         </p>
                         <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4 hidden">
                           <span className="text-xl sm:text-2xl font-semibold text-foreground">Contact for pricing</span>
