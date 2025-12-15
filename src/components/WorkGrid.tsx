@@ -49,7 +49,7 @@ const projects = [
   {
     id: 15,
     title: "AI Productivity OS.",
-    description: "AI Productivity OS",
+    description: "All-in-one productivity system helping you stay focused and efficient",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
     category: "commercial",
@@ -856,14 +856,16 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: AI Productivity OS, AI Insights App, Balance Transfer, NoScrollApp
+    // Custom order for home page: AI Productivity OS, AI Insights App, Balance Transfer, NoScrollApp, Toka App, ID Verification
     const aiProductivityOS = projects.find(p => p.id === 15); // AI Productivity OS
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
+    const tokaApp = projects.find(p => p.id === 5); // My Toca App
+    const idVerification = projects.find(p => p.id === 6); // Face ID verification
     
     // Return in specified order, filtering out undefined
-    displayProjects = [aiProductivityOS, aiInsights, balanceTransfer, noScrollApp].filter(Boolean) as typeof projects;
+    displayProjects = [aiProductivityOS, aiInsights, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 4 and 10, include project 0
     displayProjects = projects.filter((project) => (project.id <= 5 || project.id === 0) && project.id !== 4 && project.id !== 10);
@@ -1014,31 +1016,16 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               </div>
             </div>
             
-            {/* Mobile Tab - 2x2 Grid - 4 projects + no-scroll app */}
+            {/* Mobile Tab - 2x2 Grid - All mobile projects */}
             {categoryTab === "Mobile" && (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
-                  {displayProjects.slice(0, 4).map((project) => (
+                  {displayProjects.map((project) => (
                     <div key={project.id} className="h-full">
                       <AllProjectsCard project={project} slightlyReducedHeight={true} />
                     </div>
                   ))}
                 </div>
-                {/* Additional cards in two columns */}
-                {displayProjects.length > 4 && (() => {
-                  const noScrollApp = displayProjects[4]; // No-scroll app
-                  const faceIDProject = projects.find(p => p.id === 6); // Face ID verification
-                  const additionalProjects = [noScrollApp, faceIDProject].filter(Boolean) as typeof projects;
-                  return (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
-                      {additionalProjects.map((project) => (
-                        <div key={project.id} className="h-full">
-                          <AllProjectsCard project={project} slightlyReducedHeight={true} />
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })()}
               </>
             )}
             
