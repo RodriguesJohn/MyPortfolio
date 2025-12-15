@@ -58,8 +58,7 @@ const projects = [
     id: 13,
     title: "UX AI Agent",
     description: "AI-powered UX design agent",
-    image: p5Image,
-    thumbnailVideo: uxAgentVideo,
+    image: uxAgentPGImage,
     category: "commercial",
     isHackathonWinner: true,
     hackathonText: "Winner of the hackathon conducted by OpenAI, Loveable, and AGI.",
@@ -625,7 +624,6 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
             src={project.thumbnailVideo}
             className={`w-full h-full ${
               project.id === 1 ? 'object-contain object-center scale-150' : 
-              project.id === 13 ? 'object-contain object-center scale-[1.75]' : 
               'object-cover object-top'
             }`}
             autoPlay
@@ -1029,10 +1027,11 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               </>
             )}
             
-            {/* Web Tab - One card, full width */}
+            {/* Web Tab - Two cards, full width */}
             {categoryTab === "Web" && (() => {
+              const uxAgentProject = projects.find(p => p.id === 13); // UX AI Agent (V2UXAgent)
               const webProject = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
-              const webProjects = webProject ? [webProject] : [];
+              const webProjects = [uxAgentProject, webProject].filter(Boolean) as typeof projects;
               return (
                 <div className="grid grid-cols-1 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
                   {webProjects.map((project) => (
