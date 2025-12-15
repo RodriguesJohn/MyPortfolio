@@ -311,11 +311,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
-                      <span className="text-base text-muted-foreground/70">SAS App</span>
+                      <span className="text-base text-muted-foreground/70">SaaS Product Design</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
-                      <span className="text-base text-muted-foreground/70">Product Design</span>
+                      <span className="text-base text-muted-foreground/70">MVP Design and Prototyping</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
@@ -327,7 +327,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
-                      <span className="text-base text-muted-foreground/70">Functional prototyping</span>
+                      <span className="text-base text-muted-foreground/70">Functional Prototyping</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
