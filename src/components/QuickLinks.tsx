@@ -11,7 +11,7 @@ import tocaLogoWhite from "@/assets/toca White.png";
 import tocaLogoDark from "@/assets/Toca.png";
 import googleLogo from "@/assets/GoogleLogog.png";
 import stanfordLogo from "@/assets/Standford.png";
-import { Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Twitter, Github } from "lucide-react";
 
 interface QuickLinksProps {
   activeTab: string;
@@ -203,13 +203,19 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
     },
     {
       id: 3,
+      name: "GitHub",
+      url: "https://github.com/RodriguesJohn",
+      icon: Github,
+    },
+    {
+      id: 4,
       name: "Threads",
       url: "https://www.threads.com/@johnrodriguesb?hl=en",
       icon: null,
       imageUrl: "https://cdn.inspireuplift.com/uploads/images/seller_products/1688676356_Untitled-1.png",
     },
     {
-      id: 4,
+      id: 5,
       name: "Substack",
       url: "https://johnrodrigues.substack.com/?utm_campaign=profile_chips",
       icon: null,
