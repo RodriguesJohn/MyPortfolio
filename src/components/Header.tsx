@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu } from "lucide-react";
+import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -14,13 +20,17 @@ const navItems = [
   { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
   { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
   { icon: FolderOpen, label: "AI Experiments", value: "Explorations", path: "/explorations" },
-  { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
-  { icon: Handshake, label: "1:1 Consulting", value: "Consulting", path: "/consulting" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
   { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
   { icon: User, label: "About", value: "About", path: "/about" },
-  { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
   { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
+];
+
+// Accordion menu items
+const accordionMenuItems = [
+  { icon: Handshake, label: "One-to-one consulting", value: "Consulting", path: "/consulting" },
+  { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
+  { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
 ];
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
@@ -80,6 +90,62 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
               </Link>
             );
           })}
+          
+          {/* Accordion Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+                  "text-muted-foreground/60 hover:text-foreground hover:bg-muted/50",
+                  "flex items-center gap-1 outline-none border-none bg-transparent"
+                )}
+              >
+                More
+                <ChevronDown className="h-3 w-3" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {accordionMenuItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
+                
+                if (item.href) {
+                  return (
+                    <DropdownMenuItem key={item.label} asChild>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </a>
+                    </DropdownMenuItem>
+                  );
+                }
+                
+                return (
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link
+                      to={item.path || "/"}
+                      onClick={() => {
+                        onTabChange?.(item.value);
+                      }}
+                      className={cn(
+                        "flex items-center gap-2 cursor-pointer",
+                        isActive && "bg-muted/50"
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
         
         {/* Mobile Menu Button */}
@@ -130,6 +196,48 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                 
                 <nav className="flex-1 flex flex-col gap-2">
                   {navItems.map((item) => {
+                    const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
+                    const Icon = item.icon;
+                    
+                    if (item.href) {
+                      return (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={cn(
+                            "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all",
+                            "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                          )}
+                        >
+                          <Icon className="h-4 w-4" />
+                          {item.label}
+                        </a>
+                      );
+                    }
+                    
+                    return (
+                      <Link
+                        key={item.label}
+                        to={item.path || "/"}
+                        onClick={() => handleNavClick(item.value)}
+                        className={cn(
+                          "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all text-left",
+                          isActive 
+                            ? "text-foreground bg-muted/80" 
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                  
+                  {/* Accordion Menu Items in Mobile */}
+                  {accordionMenuItems.map((item) => {
                     const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
                     const Icon = item.icon;
                     

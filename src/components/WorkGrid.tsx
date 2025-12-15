@@ -22,6 +22,7 @@ import cardVideo from "@/assets/Card.mp4";
 import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
 import myTokaVideo from "@/assets/MyTocaApp.mp4";
 import pamVideo from "@/assets/PAM.mp4";
+import faceIDVideo from "@/assets/FaceID.mp4";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import zozoGif from "@/assets/Zozo.gif";
@@ -33,14 +34,32 @@ import chaseLogoLight from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
 import tocaLogoDark from "@/assets/Toca.png";
 import appleLogo from "@/assets/Apple-Logo.png";
+import dcbImage from "@/assets/DCB.png";
+import uxAgentPGImage from "@/assets/UXAgent.png";
 
 const projects = [
+  {
+    id: 0,
+    title: "AI Productivity OS.",
+    description: "AI Productivity OS",
+    image: p5Image,
+    category: "commercial",
+    isComingSoon: true,
+  },
+  {
+    id: 15,
+    title: "AI Productivity OS.",
+    description: "AI Productivity OS",
+    image: p5Image,
+    thumbnailVideo: aiVoiceVideo,
+    category: "commercial",
+  },
   {
     id: 13,
     title: "UX AI Agent",
     description: "AI-powered UX design agent",
     image: p5Image,
-    thumbnailVideo: uxAgentVideo, // Thumbnail by V2UXAgent
+    thumbnailVideo: uxAgentVideo,
     category: "commercial",
     isHackathonWinner: true,
     hackathonText: "Winner of the hackathon conducted by OpenAI, Loveable, and AGI.",
@@ -94,10 +113,11 @@ const projects = [
   },
   {
     id: 6,
-    title: "PAM app",
-    description: "PAM app",
+    title: "Face ID verification",
+    description: "Citibank project",
     image: p5Image,
-    thumbnailVideo: pamVideo,
+    thumbnailVideo: faceIDVideo,
+    companyLogo: citiLogo,
     category: "commercial",
   },
   {
@@ -178,6 +198,29 @@ const projects = [
     image: p5Image,
     category: "past-projects",
   },
+  {
+    id: 16,
+    title: "Digital Commercial Banking Platform",
+    description: "For JPMorgan Chase",
+    image: dcbImage,
+    companyLogo: chaseLogoDark,
+    category: "commercial",
+  },
+  {
+    id: 17,
+    title: "Vendo AI",
+    description: "Vendo AI",
+    image: p5Image,
+    category: "commercial",
+    showBlankThumbnail: true,
+  },
+  {
+    id: 18,
+    title: "UX Agent",
+    description: "UX Agent P&G",
+    image: uxAgentPGImage,
+    category: "commercial",
+  },
 ];
 
 interface WorkGridProps {
@@ -231,6 +274,10 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
             <video
               src={project.thumbnailVideo}
               className="w-full h-full object-cover object-top"
+              style={{
+                objectPosition: project.id === 15 ? '0% center' : 'center top',
+                transform: project.id === 15 ? 'translateX(-20%)' : 'none'
+              }}
               autoPlay
               loop
               muted
@@ -528,7 +575,7 @@ function PlaybookCard() {
 }
 
 
-function AllProjectsCard({ project }: { project: typeof projects[0] }) {
+function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square }: { project: typeof projects[0]; reducedHeight?: boolean; slightlyReducedHeight?: boolean; square?: boolean }) {
   const navigate = useNavigate();
   
   return (
@@ -552,10 +599,17 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
       }}
     >
       {/* Responsive aspect ratio: tall on mobile, shorter on desktop */}
-      <div className={`aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6] overflow-hidden relative ${
+      <div className={`${
+        square ? 'aspect-square' :
+        reducedHeight ? 'aspect-[16/9] md:aspect-[16/9] lg:aspect-[16/9]' : 
+        slightlyReducedHeight ? 'aspect-[4/5] md:aspect-[5/6] lg:aspect-[3/4]' :
+        'aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6]'
+      } overflow-hidden relative ${
         project.id === 7 ? 'bg-gray-100' : 'bg-gradient-to-b from-gray-50 to-gray-100'
       }`}>
-        {(project as any).isComingSoon ? (
+        {(project as any).showBlankThumbnail ? (
+          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/50" />
+        ) : (project as any).isComingSoon ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200/50 gap-3">
             {project.companyLogo && (
               <img
@@ -646,6 +700,70 @@ function AllProjectsCard({ project }: { project: typeof projects[0] }) {
   );
 }
 
+function ListProjectCard({ project }: { project: typeof projects[0] }) {
+  const navigate = useNavigate();
+  
+  return (
+    <div
+      className="group flex items-center gap-6 py-4 cursor-pointer transition-opacity hover:opacity-80"
+      onClick={() => {
+        if (project.link) {
+          window.open(project.link, '_blank', 'noopener,noreferrer');
+        } else {
+          navigate(`/case-study?project=${project.id}`);
+        }
+      }}
+    >
+      {/* Thumbnail - Square and Larger */}
+      <div className="flex-shrink-0 w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100">
+        {(project as any).isComingSoon ? (
+          <div className="w-full h-full flex items-center justify-center bg-gray-200/50">
+            {project.companyLogo && (
+              <img
+                src={project.companyLogo}
+                alt="Company logo"
+                className="h-10 w-auto object-contain opacity-60"
+              />
+            )}
+          </div>
+        ) : project.thumbnailVideo ? (
+          <video
+            src={project.thumbnailVideo}
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (project as any).showBlankThumbnail ? (
+          <div className="w-full h-full bg-gray-100 dark:bg-gray-800/50" />
+        ) : (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <h3 className="text-lg font-medium text-foreground truncate">{project.title}</h3>
+          {project.companyLogo && (
+            <img
+              src={project.companyLogo}
+              alt="Company logo"
+              className="h-5 w-auto object-contain flex-shrink-0"
+            />
+          )}
+        </div>
+        <p className="text-sm text-muted-foreground/70 truncate">{project.description}</p>
+      </div>
+    </div>
+  );
+}
+
 function CompactProjectCard({ project }: { project: typeof projects[0] }) {
   const navigate = useNavigate();
   
@@ -721,12 +839,13 @@ function CompactProjectCard({ project }: { project: typeof projects[0] }) {
 
 export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: WorkGridProps) {
   const [internalActiveTab, setInternalActiveTab] = useState(externalActiveTab || "explorations");
+  const [categoryTab, setCategoryTab] = useState("Mobile");
   
   // Use external tab if provided, otherwise use internal state
   const activeTab = externalActiveTab || internalActiveTab;
 
   const tabItems = [
-    { id: "explorations", label: "AI Experiments" },
+    { id: "explorations", label: "Prototypes & Experiments" },
     { id: "all-projects", label: "All Projects" },
   ];
 
@@ -737,17 +856,17 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: UX AI Agent, AI Insights App, Balance Transfer, NoScrollApp
-    const uxAgent = projects.find(p => p.title.toLowerCase().includes("ux ai agent")); // id: 13
+    // Custom order for home page: AI Productivity OS, AI Insights App, Balance Transfer, NoScrollApp
+    const aiProductivityOS = projects.find(p => p.id === 15); // AI Productivity OS
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
     
     // Return in specified order, filtering out undefined
-    displayProjects = [uxAgent, aiInsights, balanceTransfer, noScrollApp].filter(Boolean) as typeof projects;
+    displayProjects = [aiProductivityOS, aiInsights, balanceTransfer, noScrollApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
-    // Show only first 5 cards for explorations, exclude project 4 and 10
-    displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 4 && project.id !== 10);
+    // Show only first 5 cards for explorations, exclude project 4 and 10, include project 0
+    displayProjects = projects.filter((project) => (project.id <= 5 || project.id === 0) && project.id !== 4 && project.id !== 10);
   } else if (activeTab === "all-projects") {
     // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
     // Expected projects to show:
@@ -835,23 +954,12 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               </div>
             ) : activeTab === "all-projects" ? (
               <>
-                {/* 3 columns Grid - First 16 projects */}
+                {/* 3 columns Grid with square cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12">
-                  {displayProjects.slice(0, 16).map((project) => (
-                    <AllProjectsCard key={project.id} project={project} />
+                  {displayProjects.map((project) => (
+                    <AllProjectsCard key={project.id} project={project} square={true} />
                   ))}
                 </div>
-                {/* Horizontal Scroll - Remaining projects */}
-                {displayProjects.length > 16 && (
-                  <div className="mt-8 lg:mt-12">
-                    <h3 className="text-lg font-semibold text-foreground mb-6">More Projects</h3>
-                    <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
-                      {displayProjects.slice(16).map((project) => (
-                        <CompactProjectCard key={project.id} project={project} />
-                      ))}
-                    </div>
-                  </div>
-                )}
               </>
             ) : null}
           </>
@@ -862,7 +970,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               {/* Header Section */}
               <div className="mb-12 text-left">
                 <h1 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-4">
-                  AI Experiments
+                  Prototypes & Experiments
                 </h1>
                 <p className="text-sm lg:text-base text-muted-foreground/80 max-w-2xl">
                   I explore interactions, new interactions for AI, and sometimes simplify interactions to combine in design and code.
@@ -877,35 +985,78 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
             </>
           ) : activeTab === "all-projects" ? (
             <>
-              {/* 3 columns Grid - First 16 projects */}
+              {/* 3 columns Grid with square cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12">
-                {displayProjects.slice(0, 16).map((project) => (
-                  <AllProjectsCard key={project.id} project={project} />
+                {displayProjects.map((project) => (
+                  <AllProjectsCard key={project.id} project={project} square={true} />
                 ))}
               </div>
-              {/* Horizontal Scroll - Remaining projects */}
-              {displayProjects.length > 16 && (
-                <div className="mt-8 lg:mt-12">
-                  <h3 className="text-lg font-semibold text-foreground mb-6">More Projects</h3>
-                  <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 xl:-mx-24 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
-                    {displayProjects.slice(16).map((project) => (
-                      <CompactProjectCard key={project.id} project={project} />
-                    ))}
-                  </div>
-                </div>
-              )}
             </>
           ) : null
         ) : (
           <>
-            {/* 2x2 Grid - 4 projects */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
-              {displayProjects.slice(0, 4).map((project) => (
-                <div key={project.id} className="h-full">
-                  <AllProjectsCard project={project} />
-                </div>
-              ))}
+            {/* Category Tabs */}
+            <div className="flex justify-start mb-12">
+              <div className="inline-flex items-center p-1 rounded-full bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50">
+                {["Mobile", "Web"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setCategoryTab(tab)}
+                    className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                      categoryTab === tab
+                        ? "bg-white dark:bg-gray-800 text-foreground shadow-sm scale-100"
+                        : "text-muted-foreground hover:text-foreground hover:bg-gray-200/50 dark:hover:bg-gray-700/50"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
             </div>
+            
+            {/* Mobile Tab - 2x2 Grid - 4 projects + no-scroll app */}
+            {categoryTab === "Mobile" && (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
+                  {displayProjects.slice(0, 4).map((project) => (
+                    <div key={project.id} className="h-full">
+                      <AllProjectsCard project={project} slightlyReducedHeight={true} />
+                    </div>
+                  ))}
+                </div>
+                {/* Additional cards in two columns */}
+                {displayProjects.length > 4 && (() => {
+                  const noScrollApp = displayProjects[4]; // No-scroll app
+                  const faceIDProject = projects.find(p => p.id === 6); // Face ID verification
+                  const additionalProjects = [noScrollApp, faceIDProject].filter(Boolean) as typeof projects;
+                  return (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
+                      {additionalProjects.map((project) => (
+                        <div key={project.id} className="h-full">
+                          <AllProjectsCard project={project} slightlyReducedHeight={true} />
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </>
+            )}
+            
+            {/* Web Tab - One card, full width */}
+            {categoryTab === "Web" && (() => {
+              const webProject = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
+              const webProjects = webProject ? [webProject] : [];
+              return (
+                <div className="grid grid-cols-1 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
+                  {webProjects.map((project) => (
+                    <div key={project.id} className="h-full">
+                      <AllProjectsCard project={project} reducedHeight={true} />
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+            
           </>
         )}
       </div>

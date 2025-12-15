@@ -55,6 +55,7 @@ import dotsSvg from "@/assets/MediatationApp/dots.svg";
 import slide16_9_7 from "@/assets/MediatationApp/Slide 16_9 - 7.svg";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
+import aiVoiceVideo from "@/assets/AIVoice.mov";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
 import meditationUntitled3 from "@/assets/MediatationApp/Untitled (2).png";
@@ -190,13 +191,14 @@ const CaseStudy = () => {
   const isDigitalBanking = projectId === "11";
   const isVRLearning = projectId === "12";
   const isUXAgent = projectId === "13";
+  const isAIProductivityOS = projectId === "15";
 
   const handleTabChange = (tab: string) => {
     navigate('/');
   };
 
   // Check if it's a project that has a case study or should show "coming soon"
-  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent;
+  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS;
   const isComingSoon = isAIDataVision || is3DPrinting || isDigitalBanking || isVRLearning;
 
   // Get the case study title for coming soon projects
@@ -2356,27 +2358,93 @@ const CaseStudy = () => {
     );
   }
 
-  const projectDetails = [
-    { label: "My Role", value: "Lead AI Product Designer" },
-    { label: "Responsibility", value: "Vision Strategy, UI & Interaction Design, AI Prototyping" },
-    { label: "Advisor", value: "Zachary Evetts, Creative Director" },
-    { label: "UX Writer", value: "Catherine Hong" },
-    { label: "Timeline", value: "4 weeks" },
-    { label: "Nature of project", value: "Leadership Proposal & Innovation Initiative" },
-  ];
+  // AI Productivity OS Case Study
+  if (isAIProductivityOS) {
+    return (
+      <div className="min-h-screen bg-background pt-24">
+        <Header activeTab={undefined} onTabChange={handleTabChange} />
+        <div className="py-16 px-6 lg:px-16">
+          <div className="max-w-5xl mx-auto">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="mb-12 group pl-0 hover:pl-2 transition-all"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+            
+            {/* Header */}
+            <div className="mb-16">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
+                AI Productivity OS
+              </h1>
+              <SectionText className="text-xl mb-8">
+                AI Productivity OS is an iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
+              </SectionText>
+              
+              {/* Video */}
+              <div className="rounded-xl overflow-hidden bg-muted/20 mt-8">
+                <video
+                  src={aiVoiceVideo}
+                  className="w-full h-auto"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              </div>
+            </div>
 
-  const pros = [
-    "Provides a simpler, less crowded experience for users compared to the current app",
-    "Allows for a fresh visual identity that could better resonate with a younger generation",
-  ];
+            {/* Status */}
+            <Section>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 border border-border/50">
+                <p className="text-sm font-medium text-foreground">Status: Currently Prototyping</p>
+              </div>
+            </Section>
 
-  const cons = [
-    "High development and maintenance costs for a separate product",
-    "Additional friction for customers who prefer a single app experience",
-    "Increases product development scope, potentially delaying time-to-market",
-  ];
+            {/* Footer */}
+            <Section>
+              <SectionText>
+                Thank you for reading. If you'd like to work with me, get in touch:{" "}
+                <a 
+                  href="/" 
+                  className="text-foreground font-semibold hover:underline"
+                >
+                  Contact me
+                </a>
+              </SectionText>
+            </Section>
 
-  return (
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // AI Insights Case Study (default)
+  if (isAIInsights) {
+    const projectDetails = [
+      { label: "My Role", value: "Lead AI Product Designer" },
+      { label: "Responsibility", value: "Vision Strategy, UI & Interaction Design, AI Prototyping" },
+      { label: "Advisor", value: "Zachary Evetts, Creative Director" },
+      { label: "UX Writer", value: "Catherine Hong" },
+      { label: "Timeline", value: "4 weeks" },
+      { label: "Nature of project", value: "Leadership Proposal & Innovation Initiative" },
+    ];
+
+    const pros = [
+      "Provides a simpler, less crowded experience for users compared to the current app",
+      "Allows for a fresh visual identity that could better resonate with a younger generation",
+    ];
+
+    const cons = [
+      "High development and maintenance costs for a separate product",
+      "Additional friction for customers who prefer a single app experience",
+      "Increases product development scope, potentially delaying time-to-market",
+    ];
+
+    return (
     <div className="min-h-screen bg-background pt-24">
       <Header activeTab={undefined} onTabChange={handleTabChange} />
       <div className="py-16 px-6 lg:px-16">
@@ -2745,6 +2813,9 @@ const CaseStudy = () => {
       </div>
     </div>
   );
+  }
+
+  return null;
 };
 
 export default CaseStudy;

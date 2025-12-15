@@ -375,7 +375,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                           <h3 className="text-lg sm:text-xl font-semibold text-foreground">For Business</h3>
                         </div>
                         <p className="text-sm sm:text-base text-muted-foreground/70 mb-3 sm:mb-4 flex-grow">
-                          I Help Forward Thinking Teams Turn AI Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
+                          I Help Forward Thinking Teams Turn Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
                         </p>
                         <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4 hidden">
                           <span className="text-xl sm:text-2xl font-semibold text-foreground">Contact for pricing</span>
@@ -425,7 +425,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-xs sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I Help Forward Thinking Teams Turn AI Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
+                  I Help Forward Thinking Teams Turn Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
                 </p>
                 </div>
                 
