@@ -55,6 +55,7 @@ import dotsSvg from "@/assets/MediatationApp/dots.svg";
 import slide16_9_7 from "@/assets/MediatationApp/Slide 16_9 - 7.svg";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
+import uxAgentPGImage from "@/assets/UXAgent.png";
 import aiVoiceVideo from "@/assets/AIVoice.mov";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
@@ -2215,21 +2216,10 @@ const CaseStudy = () => {
 
   if (isUXAgent) {
     // UX AI Agent Case Study
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-      target: scrollRef,
-      offset: ["start start", "end start"]
-    });
-
-    const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-    const textScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.7]);
-    const videoY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-    const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
-
     return (
-      <div className="min-h-screen bg-[#F6F6F6] dark:bg-gray-900 pt-24">
+      <div className="min-h-screen bg-background pt-24">
         <Header activeTab={undefined} onTabChange={handleTabChange} />
-        <div className="py-16 px-6 lg:px-16 bg-[#F6F6F6] dark:bg-gray-900">
+        <div className="py-16 px-6 lg:px-16">
           <div className="max-w-5xl mx-auto">
             <Button 
               variant="ghost" 
@@ -2240,105 +2230,36 @@ const CaseStudy = () => {
               Back to Home
             </Button>
             
-            {/* Coming Soon Banner */}
-            <div className="mb-4 mt-4 flex justify-center">
-              <div className="py-2 px-4 rounded-lg bg-muted/50 border border-border/50 text-center inline-block">
-                <p className="text-xs text-muted-foreground">
-                  Case study coming soon
-                </p>
+            {/* Header */}
+            <div className="mb-16">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
+                UX AI Agent
+              </h1>
+              
+              {/* Overview */}
+              <Section>
+                <SectionTitle>Overview</SectionTitle>
+                <SectionText>
+                  UX agent helps you do automated UX audits for your websites and make recommendations to improve conversion rates.
+                </SectionText>
+              </Section>
+
+              {/* Full Case Study Coming Soon */}
+              <div className="mt-8 mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 border border-border/50">
+                  <p className="text-sm font-medium text-foreground">Full Case Study coming soon</p>
+                </div>
               </div>
             </div>
 
-            {/* Header */}
-            <div ref={scrollRef} className="mb-20 lg:mb-24 pt-12 lg:pt-16 relative min-h-[120vh] bg-[#F6F6F6] dark:bg-gray-900">
-              <motion.div 
-                className="max-w-4xl mx-auto text-center relative z-0"
-                style={{
-                  opacity: textOpacity,
-                  scale: textScale
-                }}
-              >
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground tracking-tight mb-6 lg:mb-8 leading-[1.1]">
-                  UX Audits Made Accessible with AI
-                </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground/70 mb-10 lg:mb-12 leading-relaxed max-w-3xl mx-auto font-normal">
-                  Get UX website insights and auto improve your websites with UX AI agent
-                </p>
-                <Button 
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 inline-flex items-center gap-2"
-                  onClick={() => {
-                    window.open('https://forms.gle/jF7yY64dLRPTD6AT7', '_blank', 'noopener,noreferrer');
-                  }}
-                >
-                  Join the waitlist
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </motion.div>
-              
-              {/* Hero App Image/Video */}
-              <motion.div 
-                className="mt-16 lg:mt-24 flex justify-center sticky top-0 z-20"
-                style={{
-                  y: videoY,
-                  scale: videoScale
-                }}
-              >
-                <div className="relative max-w-5xl w-full">
-                  <video
-                    src={uxAgentVideo}
-                    className="w-full h-auto object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
-                </div>
-              </motion.div>
+            {/* Image at Bottom */}
+            <div className="mt-12 rounded-xl overflow-hidden bg-muted/20">
+              <img
+                src={uxAgentPGImage}
+                alt="UX AI Agent"
+                className="w-full h-auto object-cover"
+              />
             </div>
-
-            {/* Content */}
-            <Section>
-              <SectionTitle>Project Overview</SectionTitle>
-              <SectionText className="mb-6">
-                This is an iOS mobile app that helps you drop your website, get a quick audit, and then uses AI agents to recommend changes and self-improve your website to increase conversion, drive outcomes, and help reach the goals of your product.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                This case study is a flagship project that highlights how designers can integrate AI in their workflows, quickly prototype their ideas by combining design, code, and AI tools, and demonstrates how to integrate agentic workflows to drive outcomes.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                The product is being worked on by John Rodrigues, and the MVP will be launched soon.
-              </SectionText>
-            </Section>
-
-            <Section>
-              <SectionTitle>Background</SectionTitle>
-              <SectionText className="mb-6">
-                UX AI Agent was born from a hackathon hosted by AGI, Inc., OpenAI, and Lovable, where it secured second place. The project emerged as a response to the growing need for accessible UX auditing tools that don't require expert knowledge or expensive consultations.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                The tool was designed and developed to analyze any website and provide instant UX audits powered by AI, while also serving as a marketplace where human designers can offer deeper, more specialized assistance when needed.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                The project represents a shift in how products are built and designed, as integrating agentic workflows becomes increasingly central to product development. While AI-powered products present unique challenges, they also offer unprecedented opportunities for innovation and rapid prototyping.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                Built using Lovable, AGI Web Agent APIs, and Cursor, the product initially launched as a web application. Recognizing the need for on-the-go accessibility, it has since evolved into a mobile app, demonstrating how design and engineering skills combined with AI tools can rapidly transform concepts from 0→1.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                The project was developed with support from the AGI Inc. team and Ayse Toker, whose contributions were instrumental in bringing the vision to life.
-              </SectionText>
-              
-              <SectionText className="mb-6">
-                In an era where anyone can build a product, what truly differentiates a solution is thoughtful design—not just in how it looks, but in how it works. This project serves as a case study in that principle, showcasing how design thinking elevates AI-powered products beyond mere functionality.
-              </SectionText>
-            </Section>
 
             {/* Footer */}
             <Section>
