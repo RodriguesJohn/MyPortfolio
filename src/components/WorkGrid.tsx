@@ -842,6 +842,49 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   // Use external tab if provided, otherwise use internal state
   const activeTab = externalActiveTab || internalActiveTab;
 
+  // Function to play click sound - realistic button click
+  const playClickSound = () => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const now = audioContext.currentTime;
+      
+      // Create a quick pop sound with two frequencies (low + high)
+      const oscillator1 = audioContext.createOscillator();
+      const oscillator2 = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      // Low frequency for the "thud" of button press
+      oscillator1.frequency.setValueAtTime(150, now);
+      oscillator1.type = 'sine';
+      
+      // High frequency for the "click" sound
+      oscillator2.frequency.setValueAtTime(800, now);
+      oscillator2.type = 'sine';
+      
+      oscillator1.connect(gainNode);
+      oscillator2.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // Quick attack and decay for button-like sound
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(0.25, now + 0.001);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.03);
+      
+      oscillator1.start(now);
+      oscillator1.stop(now + 0.03);
+      oscillator2.start(now);
+      oscillator2.stop(now + 0.03);
+    } catch (error) {
+      // Silently fail if audio context is not available
+      console.debug('Audio context not available');
+    }
+  };
+
+  const handleCategoryTabChange = (tab: string) => {
+    playClickSound();
+    setCategoryTab(tab);
+  };
+
   const tabItems = [
     { id: "explorations", label: "Prototypes & Experiments" },
     { id: "all-projects", label: "All Projects" },
@@ -1001,7 +1044,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                 {["Mobile", "Web"].map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setCategoryTab(tab)}
+                    onClick={() => handleCategoryTabChange(tab)}
                     className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                       categoryTab === tab
                         ? "bg-white dark:bg-gray-800 text-foreground shadow-sm scale-100"
@@ -1014,9 +1057,16 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               </div>
             </div>
             
-            {/* Mobile Tab - 2x2 Grid - All mobile projects */}
-            {categoryTab === "Mobile" && (
-              <>
+            {/* Tab Content Container */}
+            <div className="relative min-h-[400px]">
+              {/* Mobile Tab - 2x2 Grid - All mobile projects */}
+              <div
+                className={`transition-all duration-500 ease-in-out ${
+                  categoryTab === "Mobile"
+                    ? "opacity-100 translate-y-0 visible"
+                    : "opacity-0 translate-y-4 invisible absolute inset-0"
+                }`}
+              >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
                   {displayProjects.map((project) => (
                     <div key={project.id} className="h-full">
@@ -1024,24 +1074,32 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                     </div>
                   ))}
                 </div>
-              </>
-            )}
-            
-            {/* Web Tab - Two cards, full width */}
-            {categoryTab === "Web" && (() => {
-              const uxAgentProject = projects.find(p => p.id === 13); // UX AI Agent (V2UXAgent)
-              const webProject = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
-              const webProjects = [uxAgentProject, webProject].filter(Boolean) as typeof projects;
-              return (
-                <div className="grid grid-cols-1 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
-                  {webProjects.map((project) => (
-                    <div key={project.id} className="h-full">
-                      <AllProjectsCard project={project} reducedHeight={true} />
+              </div>
+              
+              {/* Web Tab - Two cards, full width */}
+              <div
+                className={`transition-all duration-500 ease-in-out ${
+                  categoryTab === "Web"
+                    ? "opacity-100 translate-y-0 visible"
+                    : "opacity-0 translate-y-4 invisible absolute inset-0"
+                }`}
+              >
+                {(() => {
+                  const uxAgentProject = projects.find(p => p.id === 13); // UX AI Agent (V2UXAgent)
+                  const webProject = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
+                  const webProjects = [uxAgentProject, webProject].filter(Boolean) as typeof projects;
+                  return (
+                    <div className="grid grid-cols-1 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
+                      {webProjects.map((project) => (
+                        <div key={project.id} className="h-full">
+                          <AllProjectsCard project={project} reducedHeight={true} />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              );
-            })()}
+                  );
+                })()}
+              </div>
+            </div>
             
           </>
         )}
