@@ -207,7 +207,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Content - First */}
                 <div className="flex-1 w-full lg:order-1 order-2">
                   <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-6 text-foreground leading-tight tracking-tight">
-                    Get 1:1 Consulting and Work Directly with me
+                    Get 1:1 Consulting and Work Directly With Me
                   </h1>
                   
                   <p className="text-base text-muted-foreground/70 mb-4">
@@ -433,7 +433,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I Help Forward Thinking Teams Turn Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
+                  I Help Forward-Thinking Teams Turn Ideas Into Clear Product Direction, Working Agentic Prototypes, and Systems so they can confidently ship products with high craft and human-centered UX
                 </p>
                 </div>
                 

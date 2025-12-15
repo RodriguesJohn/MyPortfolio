@@ -247,8 +247,8 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
               <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-medium">Based in San Francisco Bay Area</span>
             </div>
             
-            <p className="text-xs sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              I help businesses design and prototype native mobile apps with improved UX, clean UI, AI integrated at the foundational level with delightful interactions.
+            <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
+              I Help Forward-Thinking Teams Turn Ideas Into Clear Product Direction, Working Agentic Prototypes, and Systems so they can confidently ship products with high craft and human-centered UX
             </p>
           </div>
 

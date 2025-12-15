@@ -23,7 +23,6 @@ const navItems = [
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
   { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
   { icon: User, label: "About", value: "About", path: "/about" },
-  { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
 ];
 
 // Accordion menu items
@@ -31,6 +30,7 @@ const accordionMenuItems = [
   { icon: Handshake, label: "One-to-one consulting", value: "Consulting", path: "/consulting" },
   { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
   { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
+  { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
 ];
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
