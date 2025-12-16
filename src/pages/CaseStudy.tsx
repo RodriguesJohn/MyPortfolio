@@ -2300,12 +2300,9 @@ const CaseStudy = () => {
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
                 AI Productivity OS
               </h1>
-              <SectionText className="text-xl mb-8">
-                AI Productivity OS is an iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
-              </SectionText>
               
               {/* Video */}
-              <div className="rounded-xl overflow-hidden bg-muted/20 mt-8">
+              <div className="rounded-xl overflow-hidden bg-muted/20 mb-12">
                 <video
                   src={aiVoiceVideo}
                   className="w-full h-auto"
@@ -2317,11 +2314,61 @@ const CaseStudy = () => {
               </div>
             </div>
 
-            {/* Status */}
+            {/* Product Overview */}
             <Section>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 border border-border/50">
-                <p className="text-sm font-medium text-foreground">Status: Currently Prototyping</p>
-              </div>
+              <SectionTitle>Product Overview</SectionTitle>
+              <SectionText>
+                AI Productivity OS is an iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
+              </SectionText>
+            </Section>
+
+            {/* Why Should This Product Exist */}
+            <Section>
+              <SectionTitle>Why Should This Product Exist</SectionTitle>
+              <SectionText>
+                Most AI productivity tools fall into two extremes: chat-focused interfaces or traditional to-do lists that require manual entry. Chat-based tools are good at conversation, but they rarely <strong>translate intent into actionable, trackable work</strong>. On the other hand, existing task managers rely heavily on manual input, which increases cognitive load and friction when the user is on the go, leaving users with fragmented workflows.
+              </SectionText>
+            </Section>
+
+            {/* My Role, Scope and Tool Stack */}
+            <Section>
+              <SectionTitle>My Role, Scope and Tool Stack</SectionTitle>
+              <SectionText className="mb-4">
+                <strong>Role:</strong> Product Designer & Design Engineer.
+              </SectionText>
+              <SectionText className="mb-4">
+                <strong>Scope:</strong> 0→1 ownership of product direction, UX, UI, interaction design, user research, and prototyping.
+              </SectionText>
+              <SectionText>
+                <strong>Tool Stack:</strong> Figma, SwiftUI, Cursor, Xcode, plus extensive sketching with pen and paper.
+              </SectionText>
+            </Section>
+
+            {/* Propose */}
+            <Section>
+              <SectionTitle>Propose</SectionTitle>
+              <SectionText>
+                This self-initiated project explores how AI-native, voice-first interactions can reduce cognitive load by turning human intent into actionable work. It represents an end-to-end product effort from problem framing and direction-setting to prototyping, shipping, and learning from real user behavior to refine the experience over time.
+              </SectionText>
+            </Section>
+
+            {/* Motivation */}
+            <Section>
+              <SectionTitle>Motivation</SectionTitle>
+              <SectionText className="mb-6">
+                I found myself constantly juggling handwritten notes, sticky notes, documents, Notion, multiple to-do list apps, and even ChatGPT. Everything felt scattered. Sometimes I'd be on the go and have a thought I wanted to capture quickly, but there was no easy or consistent way to do it.
+              </SectionText>
+              <SectionText className="mb-6">
+                Most to-do apps are designed to track tasks, while goals are treated as something separate. When I tried existing tools, I noticed that tasks and goals often lived in different places and even when they were connected, I couldn't use voice to capture what was on my mind. The friction of manually entering and organizing everything made the experience feel heavy and fragmented.
+              </SectionText>
+              <SectionText className="mb-6">
+                This gap is what motivated me to create this app.
+              </SectionText>
+              <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 my-6 italic text-foreground/90">
+                <p className="text-base lg:text-lg">
+                  <strong>How might we design a system that can track both tasks and goals through an easy-to-use, voice-first interface, one that understands user intent and reduces the cognitive load of manually creating and managing lists?</strong>
+                </p>
+              </blockquote>
             </Section>
 
             {/* Footer */}
