@@ -175,12 +175,6 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
 
   const mainLinks = [
     {
-      id: 1,
-      title: "Prototyping with AI course",
-      url: "https://theaidesignacademy.com/",
-      description: "Learn prototyping AI apps with Cursor and master Vibe coding in 14 days",
-    },
-    {
       id: 3,
       title: "My Portfolio",
       url: "https://john-rodrigues.com/",

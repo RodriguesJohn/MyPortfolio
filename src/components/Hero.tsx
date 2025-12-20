@@ -151,7 +151,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
       <div className={`${isConsulting ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24`}>
         {/* White Card Container */}
         <div 
-          className={`bg-white dark:bg-gray-900/50 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-16 relative overflow-hidden ${isConsulting ? '' : 'transition-transform duration-500 ease-out cursor-pointer group'} border border-gray-200/50`}
+          className={`bg-white dark:bg-gray-900/50 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-16 relative overflow-hidden ${isConsulting ? '' : 'transition-transform duration-500 ease-out cursor-pointer group'} border border-gray-200/50 hover:border-gray-200/70 dark:hover:border-gray-700/50`}
           style={isConsulting ? {
             boxShadow: '0 4px 60px rgba(0, 0, 0, 0.03), 0 2px 40px rgba(0, 0, 0, 0.015)'
           } : {
@@ -497,7 +497,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="rounded-full border border-foreground/20 hover:border-foreground/40 dark:border-white/20 dark:hover:border-white/40 bg-background/50 hover:bg-background/80 backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md px-6 py-6 text-sm font-medium"
+                    className="rounded-full border border-foreground/20 hover:border-foreground/30 dark:border-white/20 dark:hover:border-white/30 bg-background/50 hover:bg-background/80 backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md px-6 py-6 text-sm font-medium"
                     onClick={onChatClick}
                   >
                     Chat with John.ai
