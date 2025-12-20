@@ -433,7 +433,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I Help Forward-Thinking Teams Design & Prototype Agentic Mobile Apps and AI Systems With High Craft and Human-Centered UX
+                  I Help Forward-Thinking Teams Integrate Agentic Systems and Workflows at the Foundational Level of Their Products with high craft and human-centered UX
                 </p>
                 </div>
                 

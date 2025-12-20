@@ -38,12 +38,27 @@ const Index = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Work Highlights");
+  const [isDark, setIsDark] = useState(false);
 
   // Update activeTab based on URL path
   useEffect(() => {
     const tab = pathToTabMap[location.pathname] || "Work Highlights";
     setActiveTab(tab);
   }, [location.pathname]);
+
+  // Check for dark mode
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Handle tab change with URL update
   const handleTabChange = (tab: string) => {
@@ -55,6 +70,13 @@ const Index = () => {
   const [chatInput, setChatInput] = useState("");
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  
+  const handleChatClick = () => {
+    setIsChatOpen(true);
+  };
+  
+  // Force light mode for Delphi AI - always use light theme parameter
+  const delphiUrl = "https://www.delphi.ai/john-rodrigues?theme=light";
 
   const renderContent = () => {
     switch (activeTab) {
@@ -88,7 +110,7 @@ const Index = () => {
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
       {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
         activeTab={activeTab}
-        onChatClick={() => setIsChatOpen(true)}  
+        onChatClick={handleChatClick}
         onWorkClick={() => {
           handleTabChange("Work Highlights");
           setTimeout(() => {
@@ -156,7 +178,7 @@ const Index = () => {
         </form>
       </div>
 
-      {/* Chat Modal */}
+      {/* Chat Modal with Embedded Delphi AI */}
       {isChatOpen && (
         <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4">
           {/* Backdrop */}
@@ -169,17 +191,14 @@ const Index = () => {
           />
           
           {/* Modal - Bottom Sheet on Mobile, Centered Modal on Desktop */}
-          <div className="relative w-full h-[50vh] max-h-[600px] sm:h-[600px] sm:max-w-2xl bg-background rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-[slide-in-from-bottom_0.4s_cubic-bezier(0.16,1,0.3,1)] sm:animate-in sm:fade-in sm:zoom-in-95">
+          <div className="relative w-full h-[90vh] sm:h-[85vh] sm:max-w-4xl bg-background rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden animate-[slide-in-from-bottom_0.4s_cubic-bezier(0.16,1,0.3,1)] sm:animate-in sm:fade-in sm:zoom-in-95">
             {/* Drag Handle - Mobile Only */}
             <div className="flex justify-center pt-3 pb-2 sm:hidden">
               <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
             </div>
             
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pt-4 sm:pt-10 pb-6 border-b border-border/50 relative">
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-muted/80 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full text-muted-foreground/70 pointer-events-none animate-shake">
-                Coming Soon
-              </div>
+            <div className="flex items-center justify-between px-6 pt-4 sm:pt-6 pb-4 border-b border-border/50 relative flex-shrink-0">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full overflow-hidden border border-border/50 flex-shrink-0">
                   <img 
@@ -189,8 +208,8 @@ const Index = () => {
                   />
                 </div>
                 <div>
-                  <h2 className="font-semibold text-foreground">John.ai</h2>
-                  <p className="text-xs text-muted-foreground">Ask me about my work, experience, or anything else</p>
+                  <h2 className="font-semibold text-foreground">Chat with John.ai</h2>
+                  <p className="text-xs text-muted-foreground">Powered by Delphi AI</p>
                 </div>
               </div>
               <button
@@ -206,119 +225,16 @@ const Index = () => {
               </button>
             </div>
             
-            {/* Chat Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {/* Welcome Message */}
-              <div className="flex gap-3 items-start">
-                <div className="h-8 w-8 rounded-full overflow-hidden border border-border/50 flex-shrink-0 mt-1">
-                  <img 
-                    src={profileImage} 
-                    alt="John.ai" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="bg-muted/50 rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%]">
-                  <p className="text-sm text-foreground">
-                    Hi! I'm John's AI assistant. I can help you learn about his work, experience, skills, and projects. What would you like to know?
-                  </p>
-                </div>
-              </div>
-              
-              {/* Suggested Questions */}
-              <div className="flex flex-wrap gap-2 pl-11">
-                <button className="px-3 py-1.5 text-xs bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-muted-foreground hover:text-foreground transition-colors">
-                  What projects has John worked on?
-                </button>
-                <button className="px-3 py-1.5 text-xs bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-muted-foreground hover:text-foreground transition-colors">
-                  Tell me about his AI experience
-                </button>
-                <button className="px-3 py-1.5 text-xs bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-muted-foreground hover:text-foreground transition-colors">
-                  What's his design philosophy?
-                </button>
-              </div>
-            </div>
-            
-            {/* Input Area */}
-            <div className="p-4 border-t border-border/50 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-              {isVoiceMode ? (
-                <div className="flex flex-col items-center justify-center py-6 gap-4">
-                  {isListening ? (
-                    <div 
-                      className="flex items-center gap-1 h-12 cursor-pointer hover:opacity-80 transition-opacity"
-                      onClick={() => setIsListening(false)}
-                      title="Tap to stop listening"
-                    >
-                      {[...Array(5)].map((_, i) => (
-                        <div
-                          key={i}
-                          className="w-1.5 bg-foreground rounded-full animate-wave"
-                          style={{
-                            height: '20%',
-                            animationDelay: `${i * 0.1}s`,
-                            animationDuration: '1s'
-                          }}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setIsListening(true)}
-                      className="h-16 w-16 rounded-full bg-foreground flex items-center justify-center hover:opacity-90 transition-all hover:scale-105 active:scale-95 shadow-lg"
-                      title="Tap to speak"
-                    >
-                      <Mic className="h-8 w-8 text-background" />
-                    </button>
-                  )}
-                  <p className="text-sm text-muted-foreground font-medium animate-pulse">{isListening ? 'Listening...' : 'Tap to speak'}</p>
-                  <button 
-                    onClick={() => {
-                      setIsVoiceMode(false);
-                      setIsListening(false);
-                    }}
-                    className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-2 mt-2 px-3 py-1.5 rounded-full hover:bg-muted transition-colors"
-                  >
-                    <Keyboard className="h-3 w-3" />
-                    Switch to keyboard
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-3 bg-gray-100 dark:bg-gray-800 rounded-full px-4 py-2">
-                  <input
-                    type="text"
-                    placeholder="Type your message..."
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && chatInput.trim()) {
-                        setChatInput('');
-                      }
-                    }}
-                    autoFocus
-                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/70 text-foreground"
-                  />
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setIsVoiceMode(true)}
-                      className="h-8 w-8 rounded-full hover:bg-background/50 flex items-center justify-center transition-colors text-muted-foreground hover:text-foreground"
-                      title="Switch to voice"
-                    >
-                      <Mic className="h-4 w-4" />
-                    </button>
-                    <button 
-                      onClick={() => {
-                        if (chatInput.trim()) {
-                          setChatInput('');
-                        }
-                      }}
-                      className="h-8 w-8 rounded-full bg-foreground text-background flex items-center justify-center hover:opacity-90 transition-opacity"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              )}
+            {/* Embedded Delphi AI iframe */}
+            <div className="flex-1 overflow-hidden relative bg-white">
+              <iframe
+                src={delphiUrl}
+                className="w-full h-full border-0"
+                title="Chat with John.ai"
+                allow="microphone; camera"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                style={{ colorScheme: 'light' }}
+              />
             </div>
           </div>
         </div>
