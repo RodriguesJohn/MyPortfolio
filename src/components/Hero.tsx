@@ -269,8 +269,8 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 
                 {/* Profile Picture - Full Width on Mobile, Fixed on Desktop */}
                 <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-end lg:order-2 order-1 mb-6 sm:mb-8 lg:mb-0">
-                  <div 
-                    className="profile-picture-container w-full h-64 sm:h-80 md:h-96 lg:w-80 lg:h-80 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
+                <div 
+                  className="profile-picture-container w-full h-80 sm:h-96 md:h-[28rem] lg:w-96 lg:h-96 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
                     style={{
                       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04)',
                     }}
@@ -508,7 +508,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               {/* Profile Picture - Full Width on Mobile, Right Side on Desktop */}
               <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-start order-1 lg:order-2">
                 <div 
-                  className="profile-picture-container w-full lg:w-64 lg:h-64 h-64 sm:h-72 md:h-80 lg:h-64 rounded-xl sm:rounded-xl lg:rounded-2xl xl:rounded-3xl overflow-hidden transition-transform duration-300 ease-out"
+                  className="profile-picture-container w-full lg:w-80 lg:h-80 h-80 sm:h-96 md:h-[28rem] lg:h-80 rounded-xl sm:rounded-xl lg:rounded-2xl xl:rounded-3xl overflow-hidden transition-transform duration-300 ease-out"
                   style={{
                     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04)',
                     transformStyle: 'preserve-3d'
