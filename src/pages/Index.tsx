@@ -148,7 +148,7 @@ const Index = () => {
           <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground/70 flex-shrink-0 pointer-events-none" />
           <input
             type="text"
-            placeholder="Chat with John.ai"
+            placeholder="what would you like to learn more about?"
             value={chatInput}
             onChange={(e) => {
               setChatInput(e.target.value);

@@ -491,6 +491,18 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     </div>
                   </div>
                 </div>
+                
+                {/* Chat with John CTA */}
+                <div className="mt-6 sm:mt-8">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full border border-foreground/20 hover:border-foreground/40 dark:border-white/20 dark:hover:border-white/40 bg-background/50 hover:bg-background/80 backdrop-blur-sm transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md px-6 py-6 text-sm font-medium"
+                    onClick={onChatClick}
+                  >
+                    Chat with John.ai
+                  </Button>
+                </div>
               </div>
               
               {/* Profile Picture - Full Width on Mobile, Right Side on Desktop */}
