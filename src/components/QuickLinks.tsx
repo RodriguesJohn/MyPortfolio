@@ -248,9 +248,12 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
             </div>
             
             <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              I Help Forward-Thinking Teams Integrate Agentic Systems and Workflows at the Foundational Level of Their Products with high craft and human-centered UX
+              I help forward-thinking teams integrate AI and agentic workflows into the foundational layers of their products, so they can ship with confidence, high craft, and human-centered UX.
             </p>
           </div>
+
+          {/* AI Design Playbook Card */}
+          <PlaybookCard />
 
           <div className="flex flex-col gap-4 mb-12">
             {mainLinks.map((link) => {
@@ -293,9 +296,6 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
               );
             })}
           </div>
-
-          {/* AI Design Playbook Card */}
-          <PlaybookCard />
 
           <div className="flex gap-4 justify-center">
             {socialLinks.map((link) => (
