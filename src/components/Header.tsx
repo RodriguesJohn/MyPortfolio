@@ -22,7 +22,6 @@ const navItems = [
   { icon: FolderOpen, label: "AI Experiments", value: "Explorations", path: "/explorations" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
   { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
-  { icon: User, label: "About", value: "About", path: "/about" },
 ];
 
 // Accordion menu items
@@ -32,6 +31,7 @@ const accordionMenuItems = [
   { icon: Book, label: "Books", value: "Books", path: "/books" },
   { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
   { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
+  { icon: User, label: "About", value: "About", path: "/about" },
 ];
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
