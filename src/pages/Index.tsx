@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { Speaking } from "@/components/Speaking";
 import { About } from "@/components/About";
 import { Consulting } from "@/components/Consulting";
+import { Books } from "@/components/Books";
 import { MessageCircle, Sparkles, Mic, Keyboard } from "lucide-react";
 import profileImage from "@/assets/PP.jpg";
 
@@ -21,6 +22,7 @@ const pathToTabMap: Record<string, string> = {
   "/speaking": "Speaking",
   "/about": "About",
   "/links": "Quick Links",
+  "/books": "Books",
 };
 
 const tabToPathMap: Record<string, string> = {
@@ -32,6 +34,7 @@ const tabToPathMap: Record<string, string> = {
   "Speaking": "/speaking",
   "About": "/about",
   "Quick Links": "/links",
+  "Books": "/books",
 };
 
 const Index = () => {
@@ -96,6 +99,8 @@ const Index = () => {
         return <Speaking />;
       case "About":
         return <About />;
+      case "Books":
+        return <Books />;
       default:
         return <WorkGrid />;
     }
@@ -104,11 +109,12 @@ const Index = () => {
   const isQuickLinksPage = activeTab === "Quick Links";
   const isTestimonialsPage = activeTab === "Testimonials";
   const isSpeakingPage = activeTab === "Speaking";
+  const isBooksPage = activeTab === "Books";
 
   return (
     <div className="min-h-screen pt-24">
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
-      {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
+      {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && !isBooksPage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
         activeTab={activeTab}
         onChatClick={handleChatClick}
         onWorkClick={() => {
@@ -121,7 +127,7 @@ const Index = () => {
           }, 100);
         }} 
       />}
-      <div className={activeTab === "All Projects" || activeTab === "Explorations" ? "bg-[#FAFAFA] min-h-screen" : "bg-white"}>
+      <div className={activeTab === "All Projects" || activeTab === "Explorations" || activeTab === "Books" ? "bg-[#FAFAFA] min-h-screen" : "bg-white"}>
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
           {renderContent()}
         </div>

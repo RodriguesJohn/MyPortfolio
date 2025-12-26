@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown } from "lucide-react";
+import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown, Book } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -29,6 +29,7 @@ const navItems = [
 const accordionMenuItems = [
   { icon: Handshake, label: "One-to-one consulting", value: "Consulting", path: "/consulting" },
   { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
+  { icon: Book, label: "Books", value: "Books", path: "/books" },
   { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
   { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
 ];
