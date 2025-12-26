@@ -248,7 +248,8 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
             </div>
             
             <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              I help forward-thinking teams integrate AI and agentic workflows into the foundational layers of their products, so they can ship with confidence, high craft, and human-centered UX.
+              AI-Native Product Designer & Design Engineer |<br />
+              I help forward-thinking teams design, prototype and ship agentic products grounded in high-craft & human-centered UX.
             </p>
           </div>
 

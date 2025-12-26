@@ -10,7 +10,7 @@ import metaLogo from "@/assets/Meta-Emblem.png";
 import appleLogo from "@/assets/Apple-Logo.png";
 import intercomLogo from "@/assets/intercom-2.svg";
 import { Button } from "@/components/ui/button";
-import { Calendar, CheckCircle2, GraduationCap, Briefcase } from "lucide-react";
+import { Calendar, CheckCircle2, GraduationCap } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
 import { Card } from "@/components/ui/card";
 import { useInView } from "framer-motion";
@@ -207,11 +207,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Content - First */}
                 <div className="flex-1 w-full lg:order-1 order-2">
                   <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-6 text-foreground leading-tight tracking-tight">
-                    Get 1:1 Consulting and Work Directly With Me
+                    Work directly with John Rodrigues
                   </h1>
                   
                   <p className="text-base text-muted-foreground/70 mb-4">
-                    Trusted by designers and teams at leading companies
+                    Works with designers and teams at leading companies
                   </p>
                   
                   {/* Company Logos */}
@@ -264,6 +264,27 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                         className="h-full w-auto object-contain"
                       />
                     </div>
+                  </div>
+                  
+                  {/* CTA Button */}
+                  <div className="mt-8">
+                    <Button
+                      size="lg"
+                      className="rounded-full px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                      asChild
+                    >
+                      <a
+                        href="https://calendly.com/john-john-rodrigues/discovery-call" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Calendar className="h-5 w-5 mr-2" />
+                        Book 15-minute call
+                      </a>
+                    </Button>
+                    <p className="text-sm text-muted-foreground/60 mt-3">
+                      For businesses and invite-only
+                    </p>
                   </div>
                 </div>
                 
@@ -336,85 +357,6 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   </div>
                 </div>
               </div>
-              
-              {/* CTA at Bottom - Aligned with Content */}
-              <div className="mt-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Individual Card */}
-                    <Card className="p-4 sm:p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] border-[0.5px] border-border/30 flex flex-col justify-between h-full transition-all duration-300">
-                      <div className="flex flex-col gap-4 sm:gap-6 h-full">
-                        <div className="flex flex-col flex-grow">
-                          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                            <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
-                            <h3 className="text-lg sm:text-xl font-semibold text-foreground">Individual</h3>
-                          </div>
-                          <p className="text-sm sm:text-base text-muted-foreground/70 mb-3 sm:mb-4 flex-grow">
-                            Ideal for solo founders, designers, and creators who want expert guidance on their product, portfolio, or personal AI project.
-                          </p>
-                          <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4">
-                            <span className="text-xl sm:text-2xl font-semibold text-foreground">$250</span>
-                            <span className="text-sm sm:text-base text-muted-foreground/70">/hr</span>
-                          </div>
-                        </div>
-                        
-                        <Button
-                          size="lg"
-                          className="rounded-full px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base w-full bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 shadow-md hover:shadow-lg"
-                        asChild
-                      >
-                        <a
-                          href="https://calendly.com/john-john-rodrigues/30min" 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Calendar className="h-5 w-5 mr-2" />
-                          Book a Call
-                        </a>
-                      </Button>
-                    </div>
-                  </Card>
-
-                  {/* Business Card */}
-                  <Card className="p-4 sm:p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] border-[0.5px] border-border/30 flex flex-col justify-between h-full transition-all duration-300">
-                    <div className="flex flex-col gap-4 sm:gap-6 h-full">
-                      <div className="flex flex-col flex-grow">
-                        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                          <Briefcase className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
-                          <h3 className="text-lg sm:text-xl font-semibold text-foreground">For Business</h3>
-                        </div>
-                        <p className="text-sm sm:text-base text-muted-foreground/70 mb-3 sm:mb-4 flex-grow">
-                          I Help Forward Thinking Teams Turn Ideas Into Clear Product Direction & Working Agentic Prototypes & Systems
-                        </p>
-                        <div className="flex items-baseline gap-1 mt-auto pt-3 sm:pt-4 hidden">
-                          <span className="text-xl sm:text-2xl font-semibold text-foreground">Contact for pricing</span>
-                        </div>
-                      </div>
-                      
-                      <Button
-                        size="lg"
-                        className="rounded-full px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base w-full bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 shadow-md hover:shadow-lg"
-                        asChild
-                      >
-                        <a
-                          href="https://calendly.com/john-john-rodrigues/discovery-call" 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Calendar className="h-5 w-5 mr-2" />
-                          Book 15 min Discovery call
-                        </a>
-                      </Button>
-                    </div>
-                  </Card>
-                </div>
-
-                {/* Contract Note */}
-                <div className="mt-8 text-center hidden">
-                  <p className="text-muted-foreground">
-                    If you'd like to work in a full-time contract, feel free to <a href="mailto:john@example.com" className="underline hover:text-foreground transition-colors">reach out to me</a>.
-                  </p>
-                </div>
-              </div>
             </div>
           ) : (
             /* Regular Layout */
@@ -433,7 +375,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I help forward-thinking teams integrate AI and agentic workflows into the foundational layers of their products, so they can ship with confidence, high craft, and human-centered UX.
+                  I help forward-thinking teams design, prototype and ship agentic products grounded in high-craft & human-centered UX.
                 </p>
                 </div>
                 
