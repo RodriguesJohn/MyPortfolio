@@ -19,7 +19,7 @@ interface HeaderProps {
 const navItems = [
   { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
   { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
-  { icon: FolderOpen, label: "AI Experiments", value: "Explorations", path: "/explorations" },
+  { icon: FolderOpen, label: "Experiments", value: "Explorations", path: "/explorations" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
   { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
 ];
