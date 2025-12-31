@@ -42,12 +42,25 @@ function PlaybookCard() {
   const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
 
   return (
-    <Card 
-      ref={ref}
-      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[300px] sm:min-h-[400px] flex items-center transition-all duration-500 ${
-        isInView ? 'blur-0' : 'blur-lg'
-      }`}
-    >
+    <>
+      <style>{`
+        @keyframes gentle-pulse {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+          }
+          50% {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0);
+          }
+        }
+      `}</style>
+      <Card 
+        ref={ref}
+        className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[300px] sm:min-h-[400px] flex items-center transition-all duration-500 ${
+          isInView ? 'blur-0' : 'blur-lg'
+        }`}
+      >
       <div className="grid md:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-6 md:p-8 w-full">
         {/* 3D Book */}
         <div className="relative flex items-center justify-center md:-ml-8">
@@ -125,7 +138,10 @@ function PlaybookCard() {
             </div>
           </div>
           <Button 
-            className="rounded-full w-fit group/btn hover:gap-3 transition-all duration-300" 
+            className="rounded-full w-fit group/btn hover:gap-3 transition-all duration-300 hover:animate-none" 
+            style={{
+              animation: 'gentle-pulse 2s ease-in-out infinite'
+            }}
             size="lg"
             asChild
           >
@@ -141,6 +157,7 @@ function PlaybookCard() {
         </div>
       </div>
     </Card>
+    </>
   );
 }
 
