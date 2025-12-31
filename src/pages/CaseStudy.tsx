@@ -2334,7 +2334,7 @@ const CaseStudy = () => {
             <Section>
               <SectionTitle>My Role, Scope and Tool Stack</SectionTitle>
               <SectionText className="mb-4">
-                <strong>Role:</strong> Product Designer/Researcher/Prototyper/Strategist and Design Engineer.
+                <strong>Role:</strong> Product Designer, Researcher, Prototyper, Strategist and Design Engineer.
               </SectionText>
               <SectionText className="mb-4">
                 <strong>Scope:</strong> 0→1 ownership of product direction, UX, UI, interaction design, user research, and prototyping.
