@@ -2340,7 +2340,7 @@ const CaseStudy = () => {
                 <strong>Scope:</strong> 0→1 ownership of product direction, UX, UI, interaction design, user research, and prototyping.
               </SectionText>
               <SectionText>
-                <strong>Tool Stack:</strong> Figma, SwiftUI, Cursor, Xcode, Google AI Studio, Gemini API, Wispr Flow API, plus extensive sketching with pen and paper.
+                <strong>Tool Stack:</strong> Figma, SwiftUI, Cursor, Xcode, Google AI Studio, Gemini API, Wispr Flow API, ElevenLabs, plus extensive sketching with pen and paper.
               </SectionText>
             </Section>
 
