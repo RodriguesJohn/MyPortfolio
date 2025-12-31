@@ -242,13 +242,12 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
             <h2 className="text-3xl sm:text-4xl font-semibold mb-2 sm:mb-3 text-black dark:text-white tracking-[-0.02em] leading-[1.1] px-4">John Rodrigues</h2>
             
             <div className="text-sm sm:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 mb-4 sm:mb-6 px-4">
-              <span>AI Product Designer / Design Engineer</span>
+              <span>AI-Native Product Designer</span>
               <span className="text-muted-foreground/40 hidden sm:inline">•</span>
               <span className="text-muted-foreground/60 block sm:inline w-full sm:w-auto font-medium">Based in San Francisco Bay Area</span>
             </div>
             
             <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              AI-Native Product Designer & Design Engineer |<br />
               I help forward-thinking teams design, prototype and ship agentic products grounded in high-craft & human-centered UX.
             </p>
           </div>
