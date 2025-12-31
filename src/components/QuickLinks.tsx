@@ -122,13 +122,6 @@ function PlaybookCard() {
                   className="h-6 w-auto transition-all object-contain object-center"
                 />
               </div>
-              <div className="h-6 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                <img 
-                  src="https://cdn.simpleicons.org/adobe/FF0000" 
-                  alt="Adobe" 
-                  className="h-6 w-auto transition-all object-contain object-center"
-                />
-              </div>
             </div>
           </div>
           <Button 
