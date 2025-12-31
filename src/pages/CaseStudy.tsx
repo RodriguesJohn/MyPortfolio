@@ -2279,7 +2279,7 @@ const CaseStudy = () => {
     );
   }
 
-  // AI Productivity OS Case Study
+  // Eva AI Case Study
   if (isAIProductivityOS) {
     return (
       <div className="min-h-screen bg-background pt-24">
@@ -2298,7 +2298,7 @@ const CaseStudy = () => {
             {/* Header */}
             <div className="mb-16">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
-                AI Productivity OS
+                Eva AI - personalized productivity OS
               </h1>
               
               {/* Video */}
@@ -2318,7 +2318,7 @@ const CaseStudy = () => {
             <Section>
               <SectionTitle>Product Overview</SectionTitle>
               <SectionText>
-                AI Productivity OS is an iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
+                Eva AI is a productivity OS iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
               </SectionText>
             </Section>
 
