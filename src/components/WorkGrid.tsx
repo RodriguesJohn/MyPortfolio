@@ -73,7 +73,7 @@ const projects = [
   },
   {
     id: 1,
-    title: "AI Insights app for Citibank",
+    title: "AI Insights App for Citibank",
     description: "AI Insights app for Citibank",
     image: p5Image,
     video: aiVoiceVideo,
@@ -83,7 +83,7 @@ const projects = [
   },
   {
     id: 2,
-    title: "No-scroll app, iOS app",
+    title: "No-Scroll App, iOS App",
     description: "No-scroll app, iOS app • 4.6 ⭐ App Store",
     image: noScrollAppImage,
     video: aiSummaryVideo,
@@ -92,7 +92,7 @@ const projects = [
   },
   {
     id: 3,
-    title: "Balance transfer for Citibank",
+    title: "Balance Transfer for Citibank",
     description: "Balance transfer for Citibank",
     image: p5Image,
     video: aiMentorVideo,
@@ -112,7 +112,7 @@ const projects = [
   },
   {
     id: 6,
-    title: "Face ID verification",
+    title: "Face ID Verification",
     description: "Citibank project",
     image: p5Image,
     thumbnailVideo: faceIDVideo,
