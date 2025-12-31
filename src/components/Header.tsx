@@ -118,7 +118,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 cursor-pointer"
+                        className="flex items-center gap-2 cursor-pointer text-xs font-medium"
                       >
                         <Icon className="h-4 w-4" />
                         {item.label}
@@ -135,7 +135,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                         onTabChange?.(item.value);
                       }}
                       className={cn(
-                        "flex items-center gap-2 cursor-pointer",
+                        "flex items-center gap-2 cursor-pointer text-xs font-medium",
                         isActive && "bg-muted/50"
                       )}
                     >
