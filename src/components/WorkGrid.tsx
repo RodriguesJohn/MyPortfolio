@@ -49,7 +49,7 @@ const projects = [
   {
     id: 15,
     title: "Eva AI - personalized productivity OS",
-    description: "There should be a voice-based, all-in-one productivity system for improving the workflow and being efficient.",
+    description: "voice-based all-in-one productivity system to improve efficiency, focus, and workflow.",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
     category: "commercial",
