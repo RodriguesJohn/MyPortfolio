@@ -2348,7 +2348,7 @@ const CaseStudy = () => {
             <Section>
               <SectionTitle>Propose</SectionTitle>
               <SectionText>
-                This self-initiated project explores how AI-native, voice-first interactions can reduce cognitive load by turning human intent into actionable work. It represents an end-to-end product effort from problem framing and direction-setting to prototyping, shipping, and learning from real user behavior to refine the experience over time.
+                This project explores how AI-native, voice-first interactions can reduce cognitive load by turning human intent into actionable work. It represents an end-to-end product effort from problem framing and direction-setting to prototyping, shipping, and learning from real user behavior to refine the experience over time.
               </SectionText>
             </Section>
 
