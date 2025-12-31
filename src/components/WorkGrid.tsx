@@ -48,7 +48,7 @@ const projects = [
   },
   {
     id: 15,
-    title: "AI Productivity OS.",
+    title: "Eva AI personalized productivity OS",
     description: "All-in-one productivity system helping you stay focused and efficient",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
