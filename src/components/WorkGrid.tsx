@@ -36,6 +36,7 @@ import tocaLogoDark from "@/assets/Toca.png";
 import appleLogo from "@/assets/Apple-Logo.png";
 import dcbImage from "@/assets/DCB.png";
 import uxAgentPGImage from "@/assets/UXAgent.png";
+import agenticThinkingImage from "@/assets/AgenticThinking.png";
 
 const projects = [
   {
@@ -224,7 +225,7 @@ const projects = [
     id: 19,
     title: "Agentic Thinking Framework",
     description: "Step-by-step framework to design, integrate and drive outcomes with AI as foundational layer",
-    image: p5Image,
+    image: agenticThinkingImage,
     category: "commercial",
     link: "https://johnrodrigues.substack.com/p/bringing-intentionality-to-ai-integration",
   },
