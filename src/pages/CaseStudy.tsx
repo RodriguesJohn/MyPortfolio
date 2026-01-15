@@ -2298,7 +2298,7 @@ const CaseStudy = () => {
             {/* Header */}
             <div className="mb-16">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
-                Eva AI - Personalized Productivity OS
+                Eva AI- Personal Assistant | iOS Mobile App
               </h1>
               
               {/* Video */}

@@ -48,7 +48,7 @@ const projects = [
   },
   {
     id: 15,
-    title: "Eva AI - Personalized Productivity OS",
+    title: "Eva AI- Personal Assistant | iOS Mobile App",
     description: "voice-based all-in-one productivity system to improve efficiency, focus, and workflow.",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
