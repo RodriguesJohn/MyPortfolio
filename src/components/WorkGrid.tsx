@@ -1072,8 +1072,14 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
                   {displayProjects.map((project) => (
-                    <div key={project.id} className="h-full">
-                      <AllProjectsCard project={project} slightlyReducedHeight={true} />
+                    <div 
+                      key={project.id} 
+                      className={`h-full ${project.id === 16 ? 'sm:col-span-2' : ''}`}
+                    >
+                      <AllProjectsCard 
+                        project={project} 
+                        {...(project.id === 16 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
+                      />
                     </div>
                   ))}
                 </div>
