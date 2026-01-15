@@ -372,7 +372,6 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
                   <div className="text-sm sm:text-sm md:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
                     <span>Sr. Product Designer focused on AI-native experiences and systems.</span>
-                    <span className="hidden text-muted-foreground/60 block sm:inline w-full sm:w-auto font-normal text-sm sm:text-sm md:text-base lg:text-lg">Based in San Francisco Bay Area</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
                   I help forward-thinking teams design, prototype and ship agentic products grounded in high-craft & human-centered UX.
