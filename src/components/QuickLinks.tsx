@@ -258,7 +258,7 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
             </div>
             
             <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              I help forward thinking teams design, prototype and ship AI native products fast that are grounded in high craft, product thinking and engineering.
+              I help forward thinking teams design, prototype and ship AI native products fast that are grounded in high craft, product thinking and design engineering.
             </p>
           </div>
 

@@ -374,7 +374,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span>Sr. Product Designer focused on AI-native experiences and systems.</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I help forward thinking teams design, prototype and ship AI native products fast that are grounded in high craft, product thinking and engineering.
+                  I help forward thinking teams design, prototype and ship AI native products fast that are grounded in high craft, product thinking and design engineering.
                 </p>
                 </div>
                 
