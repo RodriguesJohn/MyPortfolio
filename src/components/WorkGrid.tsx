@@ -912,8 +912,8 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     // Third row: balanceTransfer, noScrollApp, tokaApp, idVerification
     displayProjects = [aiProductivityOS, aiInsights, digitalCommercialBanking, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
-    // Show only first 5 cards for explorations, exclude project 4 and 10, include project 0
-    displayProjects = projects.filter((project) => (project.id <= 5 || project.id === 0) && project.id !== 4 && project.id !== 10);
+    // Show only first 5 cards for explorations, exclude project 0, 4 and 10
+    displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
   } else if (activeTab === "all-projects") {
     // Show ALL projects - explicitly include all commercial, all-projects-only, and past-projects
     // Expected projects to show:
@@ -925,9 +925,9 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     const seenIds = new Set<number>();
     const allProjects: typeof projects = [];
     
-    // First: Add all commercial and all-projects-only projects
+    // First: Add all commercial and all-projects-only projects, exclude project 0
     projects.forEach((project) => {
-      if ((project.category === "commercial" || project.category === "all-projects-only") && !seenIds.has(project.id)) {
+      if ((project.category === "commercial" || project.category === "all-projects-only") && !seenIds.has(project.id) && project.id !== 0) {
         allProjects.push(project);
         seenIds.add(project.id);
       }
