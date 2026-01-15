@@ -258,7 +258,7 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
             </div>
             
             <p className="text-sm sm:text-sm lg:text-base text-muted-foreground/40 leading-relaxed max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
-              I design and ship end-to-end AI-enabled products & systems through human-centered design, strong craft, prototyping, and design engineering.
+              I design and ship end-to-end AI-enabled products & systems through human-centered design, high craft, prototyping, and design engineering.
             </p>
           </div>
 
