@@ -897,19 +897,20 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: Digital Commercial Banking Platform, AI Productivity OS, AI Insights App, Balance Transfer, NoScrollApp, Toka App, ID Verification
-    const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
+    // Custom order for home page: AI Productivity OS, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, NoScrollApp, Toka App, ID Verification
     const aiProductivityOS = projects.find(p => p.id === 15); // AI Productivity OS
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
+    const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
     const tokaApp = projects.find(p => p.id === 5); // My Toca App
     const idVerification = projects.find(p => p.id === 6); // Face ID verification
     
     // Return in specified order, filtering out undefined
-    // First row: digitalCommercialBanking (full width), aiProductivityOS, aiInsights
-    // Second row: balanceTransfer, noScrollApp, tokaApp, idVerification
-    displayProjects = [digitalCommercialBanking, aiProductivityOS, aiInsights, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
+    // First row: aiProductivityOS, aiInsights
+    // Second row: digitalCommercialBanking (full width)
+    // Third row: balanceTransfer, noScrollApp, tokaApp, idVerification
+    displayProjects = [aiProductivityOS, aiInsights, digitalCommercialBanking, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 4 and 10, include project 0
     displayProjects = projects.filter((project) => (project.id <= 5 || project.id === 0) && project.id !== 4 && project.id !== 10);
