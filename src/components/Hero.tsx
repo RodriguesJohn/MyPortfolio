@@ -374,7 +374,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                     <span>Senior Product Designer focused on AI-native products and systems.</span>
                   </div>
                 <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I help forward thinking teams design, prototype and ship AI native products fast that are grounded in high craft, product thinking and design engineering.
+                  I design and ship end-to-end AI-enabled products & systems through human-centered design, strong craft, prototyping, and design engineering.
                 </p>
                 </div>
                 
