@@ -18,6 +18,7 @@ import {
   IconCalendar,
   IconUsers,
 } from "@tabler/icons-react";
+import ShinyText from "@/components/ShinyText";
 
 interface HeroProps {
   onChatClick: () => void;
@@ -359,80 +360,109 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               </div>
             </div>
           ) : (
-            /* Regular Layout */
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 sm:gap-8 lg:gap-12 relative z-10 w-full">
-              {/* Content - Left Side */}
-              <div className="flex-1 text-left w-full order-2 lg:order-1">
-                {/* Name */}
-                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-medium mb-2 sm:mb-3 md:mb-4 lg:mb-5 text-foreground leading-tight tracking-tight">
-                  John Rodrigues
-                </h1>
-                
-                {/* Title */}
-                <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 md:mb-10">
-                  <div className="text-sm sm:text-sm md:text-base lg:text-lg text-foreground font-medium leading-relaxed flex flex-wrap items-center justify-start gap-x-1.5 gap-y-0.5">
-                    <span>Senior Product Designer focused on AI-native products.</span>
-                  </div>
-                <p className="text-sm sm:text-xs md:text-sm lg:text-base text-muted-foreground/60 leading-relaxed max-w-lg">
-                  I design and ship end-to-end AI-enabled products & systems through human-centered design, high craft, prototyping, and design engineering.
-                </p>
+            /* Regular Layout - Vertical Stack with Small Circular Photo */
+            <div className="flex flex-col items-start text-left gap-6 sm:gap-6 relative z-10 w-full">
+              {/* Profile Picture - Small and Circular at Top */}
+              <div className="flex-shrink-0">
+                <div
+                  className="profile-picture-container w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden transition-transform duration-300 ease-out"
+                  style={{
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04)',
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  <img
+                    src={profileImage}
+                    alt="John Rodrigues"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: 'center 30%' }}
+                  />
                 </div>
-                
-                {/* Company Logos - Small with Subtle Scroll */}
-                <div className="overflow-hidden w-full sm:w-3/4 lg:w-2/3 opacity-80 hover:opacity-100 transition-opacity duration-300">
-                  <div 
-                    className="flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8"
+              </div>
+
+              {/* Content - All Left-Aligned */}
+              <div className="flex-1 text-left w-full">
+                {/* Main Title */}
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-tight tracking-tight">
+                  <ShinyText 
+                    text="Designing Product Intelligence" 
+                    color="hsl(var(--foreground))"
+                    shineColor="hsl(var(--foreground) / 0.8)"
+                    speed={3}
+                    spread={120}
+                  />
+                  <span className="thinking-dots">
+                    <span className="dot">.</span>
+                    <span className="dot">.</span>
+                    <span className="dot">.</span>
+                  </span>
+                </h1>
+
+                {/* Name and Role */}
+                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                  <div className="text-base sm:text-lg md:text-xl lg:text-xl text-foreground font-medium leading-relaxed">
+                    <span>John Rodrigues, Senior Product Designer focusing on 0-1 AI products.</span>
+                  </div>
+                  <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/70 leading-relaxed w-full">
+                    I help fast-paced companies design 0-1 AI products with human-centered design, high craft, prototyping, and design engineering. I specialize in transforming complex AI capabilities into intuitive, user-friendly experiences.
+                  </p>
+                </div>
+
+                {/* Company Logos - Left-Aligned */}
+                <div className="overflow-hidden w-full sm:w-3/4 lg:w-2/3 opacity-80 hover:opacity-100 transition-opacity duration-300 mb-6 sm:mb-8">
+                  <div
+                    className="flex items-center gap-4 sm:gap-6 md:gap-8"
                     style={{
                       animation: 'scroll 20s linear infinite'
                     }}
                   >
                     {/* First set of logos */}
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={citiLogo} 
-                        alt="Citi" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={citiLogo}
+                        alt="Citi"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={chaseLogoLight} 
-                        alt="Chase" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={chaseLogoLight}
+                        alt="Chase"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={tocaLogoDark} 
-                        alt="TOCA" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={tocaLogoDark}
+                        alt="TOCA"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
                     {/* Duplicate set for seamless loop */}
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={citiLogo} 
-                        alt="Citi" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={citiLogo}
+                        alt="Citi"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={chaseLogoLight} 
-                        alt="Chase" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={chaseLogoLight}
+                        alt="Chase"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
-                    <div className="h-3 sm:h-4 lg:h-5 flex items-center flex-shrink-0">
-                      <img 
-                        src={tocaLogoDark} 
-                        alt="TOCA" 
+                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                      <img
+                        src={tocaLogoDark}
+                        alt="TOCA"
                         className="h-full w-auto transition-all object-contain opacity-100"
                       />
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Chat with John CTA */}
                 <div className="mt-6 sm:mt-8">
                   <Button
@@ -443,24 +473,6 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   >
                     Chat with John.ai
                   </Button>
-                </div>
-              </div>
-              
-              {/* Profile Picture - Full Width on Mobile, Right Side on Desktop */}
-              <div className="flex-shrink-0 w-full lg:w-auto flex justify-center lg:justify-start order-1 lg:order-2">
-                <div 
-                  className="profile-picture-container w-full lg:w-80 lg:h-80 h-80 sm:h-96 md:h-[28rem] lg:h-80 rounded-xl sm:rounded-xl lg:rounded-2xl xl:rounded-3xl overflow-hidden transition-transform duration-300 ease-out"
-                  style={{
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04)',
-                    transformStyle: 'preserve-3d'
-                  }}
-                >
-                  <img 
-                    src={profileImage} 
-                    alt="John Rodrigues" 
-                    className="w-full h-full object-cover rounded-xl sm:rounded-xl lg:rounded-2xl xl:rounded-3xl"
-                    style={{ objectPosition: 'center 30%' }}
-                  />
                 </div>
               </div>
             </div>

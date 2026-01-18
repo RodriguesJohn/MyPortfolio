@@ -36,7 +36,6 @@ import tocaLogoDark from "@/assets/Toca.png";
 import appleLogo from "@/assets/Apple-Logo.png";
 import dcbImage from "@/assets/DCB.png";
 import uxAgentPGImage from "@/assets/UXAgent.png";
-import agenticThinkingImage from "@/assets/AgenticThinking.png";
 
 const projects = [
   {
@@ -220,14 +219,6 @@ const projects = [
     description: "UX Agent P&G",
     image: uxAgentPGImage,
     category: "commercial",
-  },
-  {
-    id: 19,
-    title: "Agentic Thinking Framework",
-    description: "Step-by-step framework to design, integrate and drive outcomes with AI as foundational layer",
-    image: agenticThinkingImage,
-    category: "commercial",
-    link: "https://johnrodrigues.substack.com/p/bringing-intentionality-to-ai-integration",
   },
 ];
 
@@ -906,23 +897,21 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: AI Productivity OS, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, NoScrollApp, Agentic Thinking Framework, Toka App, ID Verification
+    // Custom order for home page: AI Productivity OS, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, NoScrollApp, Toka App, ID Verification
     const aiProductivityOS = projects.find(p => p.id === 15); // AI Productivity OS
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
-    const agenticFramework = projects.find(p => p.id === 19); // Agentic Thinking Framework
     const tokaApp = projects.find(p => p.id === 5); // My Toca App
     const idVerification = projects.find(p => p.id === 6); // Face ID verification
-    
+
     // Return in specified order, filtering out undefined
     // First row: aiProductivityOS, aiInsights
     // Second row: digitalCommercialBanking (full width)
     // Third row: balanceTransfer, noScrollApp
-    // Fourth row: agenticFramework (full width)
-    // Fifth row: tokaApp, idVerification
-    displayProjects = [aiProductivityOS, aiInsights, digitalCommercialBanking, balanceTransfer, noScrollApp, agenticFramework, tokaApp, idVerification].filter(Boolean) as typeof projects;
+    // Fourth row: tokaApp, idVerification
+    displayProjects = [aiProductivityOS, aiInsights, digitalCommercialBanking, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
@@ -1085,13 +1074,13 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
                   {displayProjects.map((project) => (
-                    <div 
-                      key={project.id} 
-                      className={`h-full ${project.id === 16 || project.id === 19 ? 'sm:col-span-2' : ''}`}
+                    <div
+                      key={project.id}
+                      className={`h-full ${project.id === 16 ? 'sm:col-span-2' : ''}`}
                     >
-                      <AllProjectsCard 
-                        project={project} 
-                        {...(project.id === 16 || project.id === 19 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
+                      <AllProjectsCard
+                        project={project}
+                        {...(project.id === 16 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
                       />
                     </div>
                   ))}
