@@ -253,6 +253,20 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(false);
+  
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    checkDarkMode();
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
   
   // For exploration view, use video and different title/description
   const displayVideo = showTabs && project.video;
@@ -265,10 +279,13 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
     ? (project.id === 1 ? "Voice Interaction Exploration" : project.id === 2 ? "AI summary interaction" : project.id === 3 ? "AI mentor concept" : project.id === 4 ? "Multimodal interaction" : project.id === 5 ? "Card interaction" : project.description)
     : project.description;
   
-  // Use dark Chase logo for project cards (Chase.png is white/not visible on white background)
-  // Projects 4, 16, and 19 use Chase logo - use ChaseLightMOde.png (dark version) for visibility
-  const displayLogo = (project.companyLogo === chaseLogoDark || project.id === 4 || project.id === 16 || project.id === 19)
-    ? chaseLogoLight 
+  // Switch Chase logo based on dark/light mode
+  // Projects 4, 16, and 19 use Chase logo
+  // In light mode: use chaseLogoLight (dark logo for visibility on white background)
+  // In dark mode: use chaseLogoDark (light logo for visibility on dark background)
+  const isChaseProject = project.id === 4 || project.id === 16 || project.id === 19;
+  const displayLogo = isChaseProject 
+    ? (isDark ? chaseLogoDark : chaseLogoLight)
     : project.companyLogo;
 
   if (!showTabs) {

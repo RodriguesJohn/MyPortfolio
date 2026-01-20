@@ -118,14 +118,17 @@ function ConsultingKPIs() {
 
 function TitleWithAnimation() {
   return (
-    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-loose tracking-tight flex items-center gap-2 flex-wrap">
-      <span className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold">
-        Designing 0→1 AI-native products
-      </span>
-      <span className="thinking-dots">
-        <span className="dot">.</span>
-        <span className="dot">.</span>
-        <span className="dot">.</span>
+    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-tight sm:leading-loose tracking-tight">
+      <span className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold">
+        Designing 0→1 AI-native{" "}
+        <span className="whitespace-nowrap">
+          products
+          <span className="thinking-dots inline-block ml-1">
+            <span className="dot">.</span>
+            <span className="dot">.</span>
+            <span className="dot">.</span>
+          </span>
+        </span>
       </span>
     </h1>
   );
@@ -402,7 +405,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
 
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  <div className="text-xs sm:text-sm md:text-base lg:text-base text-foreground/70 font-medium leading-relaxed">
+                  <div className="text-sm sm:text-sm md:text-base lg:text-base text-foreground/70 font-medium leading-relaxed">
                     <span>Product Designer with over a decade of experience. | Based in San Francisco Bay Area.</span>
                   </div>
                   <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/60 leading-relaxed w-full">
