@@ -30,7 +30,6 @@ import zozoGif from "@/assets/Zozo.gif";
 import noScrollAppImage from "@/assets/NoScrollApp.png";
 import googleLogo from "@/assets/GoogleLogog.png";
 import stanfordLogo from "@/assets/Standford.png";
-import chaseLogoDark from "@/assets/Chase.png";
 import chaseLogoLight from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
 import tocaLogoDark from "@/assets/Toca.png";
@@ -135,7 +134,7 @@ const projects = [
     image: p5Image,
     video: multiModalVideo,
     thumbnailVideo: multiModalVideo,
-    companyLogo: chaseLogoDark,
+    companyLogo: chaseLogoLight,
     category: "commercial",
   },
   {
@@ -158,7 +157,7 @@ const projects = [
     title: "Digital Commercial Banking Platform",
     description: "For JPMorgan Chase (Currently Working)",
     image: p5Image,
-    companyLogo: chaseLogoDark,
+    companyLogo: chaseLogoLight,
     category: "commercial",
     isComingSoon: true,
   },
@@ -211,7 +210,7 @@ const projects = [
     title: "Digital Commercial Banking Platform",
     description: "For JPMorgan Chase",
     image: dcbImage,
-    companyLogo: chaseLogoDark,
+    companyLogo: chaseLogoLight,
     category: "commercial",
     businessCategory: "B2B",
     secondaryTag: "Shipped",
@@ -237,7 +236,7 @@ const projects = [
     description: "Budgeting Tool for JPMC Analysts and CFOs",
     image: p5Image,
     thumbnailVideo: aiDataVisionVideo,
-    companyLogo: chaseLogoDark,
+    companyLogo: chaseLogoLight,
     category: "commercial",
     businessCategory: "B2B",
     secondaryTag: "Innovation Initiative",
@@ -279,13 +278,11 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
     ? (project.id === 1 ? "Voice Interaction Exploration" : project.id === 2 ? "AI summary interaction" : project.id === 3 ? "AI mentor concept" : project.id === 4 ? "Multimodal interaction" : project.id === 5 ? "Card interaction" : project.description)
     : project.description;
   
-  // Switch Chase logo based on dark/light mode
+  // Use Chase light mode logo for all Chase projects
   // Projects 4, 16, and 19 use Chase logo
-  // In light mode: use chaseLogoLight (dark logo for visibility on white background)
-  // In dark mode: use chaseLogoDark (light logo for visibility on dark background)
   const isChaseProject = project.id === 4 || project.id === 16 || project.id === 19;
   const displayLogo = isChaseProject 
-    ? (isDark ? chaseLogoDark : chaseLogoLight)
+    ? chaseLogoLight
     : project.companyLogo;
 
   if (!showTabs) {
@@ -533,7 +530,7 @@ function PlaybookCard() {
     return () => observer.disconnect();
   }, []);
 
-  const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
+  const chaseLogo = chaseLogoLight;
 
   return (
     <Card 

@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import profileImage from "@/assets/PP.jpg";
-import chaseLogoDark from "@/assets/Chase.png";
 import chaseLogoLight from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
 import tocaLogoWhite from "@/assets/toca White.png";

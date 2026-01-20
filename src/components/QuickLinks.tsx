@@ -4,7 +4,6 @@ import { useInView } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import profileImage from "@/assets/PP.jpg";
-import chaseLogoDark from "@/assets/Chase.png";
 import chaseLogoLight from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
 import tocaLogoWhite from "@/assets/toca White.png";
@@ -39,7 +38,7 @@ function PlaybookCard() {
     return () => observer.disconnect();
   }, []);
 
-  const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
+  const chaseLogo = chaseLogoLight;
 
   return (
     <>
@@ -181,7 +180,7 @@ export function QuickLinks({ activeTab, onTabChange }: QuickLinksProps) {
   }, []);
 
   const tocaLogo = isDark ? tocaLogoWhite : tocaLogoDark;
-  const chaseLogo = isDark ? chaseLogoDark : chaseLogoLight;
+  const chaseLogo = chaseLogoLight;
 
   const mainLinks = [
     {
