@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, CheckCircle2, GraduationCap } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
 import { Card } from "@/components/ui/card";
-import { useInView } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 import {
   IconCalendar,
   IconUsers,
@@ -113,6 +113,21 @@ function ConsultingKPIs() {
         <ConsultingKPICard key={kpi.label} {...kpi} />
       ))}
     </div>
+  );
+}
+
+function TitleWithAnimation() {
+  return (
+    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-loose tracking-tight flex items-center gap-2 flex-wrap">
+      <span className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold">
+        Designing 0→1 AI-native products
+      </span>
+      <span className="thinking-dots">
+        <span className="dot">.</span>
+        <span className="dot">.</span>
+        <span className="dot">.</span>
+      </span>
+    </h1>
   );
 }
 
@@ -383,28 +398,15 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               {/* Content - All Left-Aligned */}
               <div className="flex-1 text-left w-full">
                 {/* Main Title */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-loose tracking-tight">
-                  <ShinyText 
-                    text="Designing 0→1 AI-native products" 
-                    color="hsl(var(--foreground))"
-                    shineColor="hsl(var(--foreground) / 0.8)"
-                    speed={3}
-                    spread={120}
-                  />
-                  <span className="thinking-dots">
-                    <span className="dot">.</span>
-                    <span className="dot">.</span>
-                    <span className="dot">.</span>
-                  </span>
-                </h1>
+                <TitleWithAnimation />
 
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  <div className="text-xs sm:text-sm md:text-base lg:text-base text-foreground font-medium leading-relaxed">
-                    <span>John Rodrigues, Sr. Product Designer based in the San Francisco Bay Area. Over a decade of experience.</span>
+                  <div className="text-xs sm:text-sm md:text-base lg:text-base text-foreground/70 font-medium leading-relaxed">
+                    <span>Product Designer with over a decade of experience. | Based in San Francisco Bay Area.</span>
                   </div>
-                  <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/70 leading-relaxed w-full">
-                    I help fast-paced, forward-thinking companies design 0→1 products with human-centered design, high craft, prototyping, and design engineering. I specialize in transforming ambiguous problem spaces into clear product decisions and direction so that teams can make decisions with confidence.
+                  <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/60 leading-relaxed w-full">
+                    I partner with fast-paced, forward-thinking companies to design 0→1 products with human-centered design, high craft, prototyping, and design engineering. Helping teams move from ambiguity to clarity.
                   </p>
                 </div>
 

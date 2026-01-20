@@ -18,6 +18,7 @@ import aiInsightsVideo from "@/assets/AI Insights App.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
 import multiModalVideo from "@/assets/MultiModal.mp4";
+import aiDataVisionVideo from "@/assets/AIDataVision.mp4";
 import cardVideo from "@/assets/Card.mp4";
 import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
 import myTokaVideo from "@/assets/MyTocaApp.mp4";
@@ -53,6 +54,8 @@ const projects = [
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
     category: "commercial",
+    businessCategory: "B2C",
+    secondaryTag: "Soon to be launched",
   },
   {
     id: 13,
@@ -80,6 +83,8 @@ const projects = [
     thumbnailVideo: aiInsightsVideo,
     companyLogo: citiLogo,
     category: "commercial",
+    businessCategory: "B2C",
+    secondaryTag: "AI Integration Project",
   },
   {
     id: 2,
@@ -89,6 +94,8 @@ const projects = [
     video: aiSummaryVideo,
     link: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216?ppid=26858afa-d233-49c4-b4d3-4e2daaf8ce3f",
     category: "commercial",
+    businessCategory: "B2C",
+    secondaryTag: "Shipped",
   },
   {
     id: 3,
@@ -99,6 +106,8 @@ const projects = [
     thumbnailVideo: balanceTransferVideo,
     companyLogo: citiLogo,
     category: "commercial",
+    businessCategory: "B2C",
+    secondaryTag: "Shipped",
   },
   {
     id: 5,
@@ -125,9 +134,9 @@ const projects = [
     description: "JPMorgan Chase Project",
     image: p5Image,
     video: multiModalVideo,
+    thumbnailVideo: multiModalVideo,
     companyLogo: chaseLogoDark,
     category: "commercial",
-    isComingSoon: true,
   },
   {
     id: 7,
@@ -204,6 +213,8 @@ const projects = [
     image: dcbImage,
     companyLogo: chaseLogoDark,
     category: "commercial",
+    businessCategory: "B2B",
+    secondaryTag: "Shipped",
   },
   {
     id: 17,
@@ -219,6 +230,17 @@ const projects = [
     description: "UX Agent P&G",
     image: uxAgentPGImage,
     category: "commercial",
+  },
+  {
+    id: 19,
+    title: "Budgeting AI Agent",
+    description: "Budgeting Tool for JPMC Analysts and CFOs",
+    image: p5Image,
+    thumbnailVideo: aiDataVisionVideo,
+    companyLogo: chaseLogoDark,
+    category: "commercial",
+    businessCategory: "B2B",
+    secondaryTag: "Innovation Initiative",
   },
 ];
 
@@ -242,6 +264,12 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   const displayDescription = showTabs 
     ? (project.id === 1 ? "Voice Interaction Exploration" : project.id === 2 ? "AI summary interaction" : project.id === 3 ? "AI mentor concept" : project.id === 4 ? "Multimodal interaction" : project.id === 5 ? "Card interaction" : project.description)
     : project.description;
+  
+  // Use dark Chase logo for project cards (Chase.png is white/not visible on white background)
+  // Projects 4, 16, and 19 use Chase logo - use ChaseLightMOde.png (dark version) for visibility
+  const displayLogo = (project.companyLogo === chaseLogoDark || project.id === 4 || project.id === 16 || project.id === 19)
+    ? chaseLogoLight 
+    : project.companyLogo;
 
   if (!showTabs) {
     return (
@@ -268,13 +296,17 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         }}
       >
         {/* Responsive aspect ratio: tall on mobile, rectangular on desktop */}
-        <div className="aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
+        <div className={`aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10] overflow-hidden relative ${
+          project.id === 19 ? 'bg-white' : 'bg-gradient-to-b from-gray-50 to-gray-100'
+        }`}>
           {displayThumbnailVideo ? (
             <video
               src={project.thumbnailVideo}
-              className="w-full h-full object-cover object-top"
+              className={`w-full h-full ${
+                project.id === 19 ? 'object-contain object-center' : 'object-cover object-top'
+              }`}
               style={{
-                objectPosition: project.id === 15 ? '0% center' : 'center top',
+                objectPosition: project.id === 15 ? '0% center' : project.id === 19 ? 'center center' : 'center top',
                 transform: project.id === 15 ? 'translateX(-20%)' : 'none'
               }}
               autoPlay
@@ -307,17 +339,33 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         </div>
         {/* Minimal text at bottom */}
         <div className="px-4 py-3">
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <h3 className="text-sm font-medium text-foreground truncate flex-1">{displayTitle}</h3>
-            {project.companyLogo && (
+          <div className="flex items-center justify-between gap-2 mb-1">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <h3 className="text-sm font-medium text-foreground truncate flex-1">{displayTitle}</h3>
+            </div>
+            {displayLogo && (
               <img 
-                src={project.companyLogo} 
+                src={displayLogo} 
                 alt="Company logo" 
                 className="h-4 w-auto object-contain flex-shrink-0"
               />
             )}
           </div>
-          <p className="text-xs text-muted-foreground/70 truncate">{displayDescription}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xs text-muted-foreground/70 truncate flex-1">{displayDescription}</p>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              {(project as any).businessCategory && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100/40 text-gray-700/40 dark:bg-gray-800/30 dark:text-gray-300/40">
+                  {(project as any).businessCategory}
+                </span>
+              )}
+              {(project as any).secondaryTag && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100/40 text-gray-600/40 dark:bg-gray-800/20 dark:text-gray-400/40">
+                  {(project as any).secondaryTag}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </Card>
     );
@@ -604,7 +652,9 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
         slightlyReducedHeight ? 'aspect-[4/5] md:aspect-[5/6] lg:aspect-[3/4]' :
         'aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6]'
       } overflow-hidden relative ${
-        project.id === 7 ? 'bg-gray-100' : 'bg-gradient-to-b from-gray-50 to-gray-100'
+        project.id === 7 ? 'bg-gray-100' : 
+        project.id === 19 ? 'bg-white' : 
+        'bg-gradient-to-b from-gray-50 to-gray-100'
       }`}>
         {(project as any).showBlankThumbnail ? (
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/50" />
@@ -623,8 +673,11 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
           <video
             src={project.thumbnailVideo}
             className={`w-full h-full ${
-              project.id === 1 ? 'object-contain object-center scale-150' : 
-              'object-cover object-top'
+              project.id === 1
+                ? 'object-contain object-center scale-150'
+                : project.id === 19
+                ? 'object-contain object-center'
+                : 'object-cover object-top'
             }`}
             autoPlay
             loop
@@ -656,7 +709,21 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
       {/* Text Content */}
       <div className="px-4 py-3">
         <div className="flex items-center justify-between gap-2 mb-2">
-          <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              {(project as any).businessCategory && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800/60 dark:text-gray-300">
+                  {(project as any).businessCategory}
+                </span>
+              )}
+              {(project as any).secondaryTag && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:text-gray-400">
+                  {(project as any).secondaryTag}
+                </span>
+              )}
+            </div>
+          </div>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
@@ -897,21 +964,21 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: AI Productivity OS, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, NoScrollApp, Toka App, ID Verification
-    const aiProductivityOS = projects.find(p => p.id === 15); // AI Productivity OS
+    // Custom order for home page: Eva AI, Budgeting AI Agent, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, No-Scroll App, My Toca App
+    const aiProductivityOS = projects.find(p => p.id === 15); // Eva AI
+    const budgetingAIAgent = projects.find(p => p.id === 19); // Budgeting AI Agent
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
     const tokaApp = projects.find(p => p.id === 5); // My Toca App
-    const idVerification = projects.find(p => p.id === 6); // Face ID verification
 
     // Return in specified order, filtering out undefined
-    // First row: aiProductivityOS, aiInsights
+    // First row: aiProductivityOS, budgetingAIAgent
     // Second row: digitalCommercialBanking (full width)
-    // Third row: balanceTransfer, noScrollApp
-    // Fourth row: tokaApp, idVerification
-    displayProjects = [aiProductivityOS, aiInsights, digitalCommercialBanking, balanceTransfer, noScrollApp, tokaApp, idVerification].filter(Boolean) as typeof projects;
+    // Third row: aiInsights, balanceTransfer
+    // Fourth row: noScrollApp, tokaApp
+    displayProjects = [aiProductivityOS, budgetingAIAgent, digitalCommercialBanking, aiInsights, balanceTransfer, noScrollApp, tokaApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
