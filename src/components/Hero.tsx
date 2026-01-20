@@ -401,7 +401,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                   <div className="text-xs sm:text-sm md:text-base lg:text-base text-foreground font-medium leading-relaxed">
-                    <span>John Rodrigues, Senior Product Designer based in the San Francisco Bay Area. Over a decade of experience.</span>
+                    <span>John Rodrigues, Sr. Product Designer based in the San Francisco Bay Area. Over a decade of experience.</span>
                   </div>
                   <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/70 leading-relaxed w-full">
                     I help fast-paced, forward-thinking companies design 0→1 products with human-centered design, high craft, prototyping, and design engineering. I specialize in transforming ambiguous problem spaces into clear product decisions and direction so that teams can make decisions with confidence.
