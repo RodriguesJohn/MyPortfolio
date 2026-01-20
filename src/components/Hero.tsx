@@ -383,9 +383,9 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               {/* Content - All Left-Aligned */}
               <div className="flex-1 text-left w-full">
                 {/* Main Title */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-tight tracking-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-semibold mb-3 sm:mb-4 leading-loose tracking-tight">
                   <ShinyText 
-                    text="Designing Product Intelligence" 
+                    text="Designing 0→1 AI-native products" 
                     color="hsl(var(--foreground))"
                     shineColor="hsl(var(--foreground) / 0.8)"
                     speed={3}
@@ -400,11 +400,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
 
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  <div className="text-base sm:text-lg md:text-xl lg:text-xl text-foreground font-medium leading-relaxed">
-                    <span>John Rodrigues, Senior Product Designer focusing on 0-1 AI products.</span>
+                  <div className="text-xs sm:text-sm md:text-base lg:text-base text-foreground font-medium leading-relaxed">
+                    <span>John Rodrigues, Senior Product Designer based in the San Francisco Bay Area. Over a decade of experience.</span>
                   </div>
                   <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/70 leading-relaxed w-full">
-                    I help fast-paced companies design 0-1 AI products with human-centered design, high craft, prototyping, and design engineering. I specialize in transforming complex AI capabilities into intuitive, user-friendly experiences.
+                    I help fast-paced, forward-thinking companies design 0→1 products with human-centered design, high craft, prototyping, and design engineering. I specialize in transforming ambiguous problem spaces into clear product decisions and direction so that teams can make decisions with confidence.
                   </p>
                 </div>
 
