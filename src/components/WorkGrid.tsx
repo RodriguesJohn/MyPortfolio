@@ -978,21 +978,23 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: Eva AI, Budgeting AI Agent, AI Insights App, Digital Commercial Banking Platform, Balance Transfer, No-Scroll App, My Toca App
+    // Custom order for home page: Digital Commercial Banking Platform, Eva AI, Budgeting AI Agent, UX AI Agent (full width), AI Insights App, Balance Transfer, No-Scroll App, My Toca App
+    const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const aiProductivityOS = projects.find(p => p.id === 15); // Eva AI
     const budgetingAIAgent = projects.find(p => p.id === 19); // Budgeting AI Agent
+    const uxAIAgent = projects.find(p => p.id === 13); // UX AI Agent
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
-    const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
     const tokaApp = projects.find(p => p.id === 5); // My Toca App
 
     // Return in specified order, filtering out undefined
-    // First row: aiProductivityOS, budgetingAIAgent
-    // Second row: digitalCommercialBanking (full width)
-    // Third row: aiInsights, balanceTransfer
-    // Fourth row: noScrollApp, tokaApp
-    displayProjects = [aiProductivityOS, budgetingAIAgent, digitalCommercialBanking, aiInsights, balanceTransfer, noScrollApp, tokaApp].filter(Boolean) as typeof projects;
+    // First row: digitalCommercialBanking (full width)
+    // Second row: aiProductivityOS, budgetingAIAgent
+    // Third row: uxAIAgent (full width)
+    // Fourth row: aiInsights, balanceTransfer
+    // Fifth row: noScrollApp, tokaApp
+    displayProjects = [digitalCommercialBanking, aiProductivityOS, budgetingAIAgent, uxAIAgent, aiInsights, balanceTransfer, noScrollApp, tokaApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
@@ -1157,11 +1159,11 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                   {displayProjects.map((project) => (
                     <div
                       key={project.id}
-                      className={`h-full ${project.id === 16 ? 'sm:col-span-2' : ''}`}
+                      className={`h-full ${project.id === 16 || project.id === 13 ? 'sm:col-span-2' : ''}`}
                     >
                       <AllProjectsCard
                         project={project}
-                        {...(project.id === 16 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
+                        {...(project.id === 16 || project.id === 13 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
                       />
                     </div>
                   ))}
