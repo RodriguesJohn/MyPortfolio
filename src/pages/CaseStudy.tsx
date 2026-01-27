@@ -57,6 +57,7 @@ import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import uxAgentPGImage from "@/assets/UXAgent.png";
 import aiVoiceVideo from "@/assets/AIVoice.mov";
+import dcbImage from "@/assets/DCB.png";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
 import meditationUntitled3 from "@/assets/MediatationApp/Untitled (2).png";
@@ -189,7 +190,7 @@ const CaseStudy = () => {
   const isPAM = projectId === "6";
   const is3DPrinting = projectId === "7";
   const isMeditationWatchOS = projectId === "10";
-  const isDigitalBanking = projectId === "11";
+  const isDigitalBanking = projectId === "11" || projectId === "16";
   const isVRLearning = projectId === "12";
   const isUXAgent = projectId === "13";
   const isAIProductivityOS = projectId === "15";
@@ -199,8 +200,8 @@ const CaseStudy = () => {
   };
 
   // Check if it's a project that has a case study or should show "coming soon"
-  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS;
-  const isComingSoon = isAIDataVision || is3DPrinting || isDigitalBanking || isVRLearning;
+  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS || isDigitalBanking;
+  const isComingSoon = isAIDataVision || is3DPrinting || isVRLearning;
 
   // Get the case study title for coming soon projects
   const getComingSoonTitle = () => {
@@ -2230,6 +2231,13 @@ const CaseStudy = () => {
               Back to Home
             </Button>
             
+            {/* Case Study Available on Request Notice */}
+            <div className="mb-8 p-4 bg-muted/30 border border-border/50 rounded-lg">
+              <p className="text-sm font-medium text-foreground">
+                Case study available upon request
+              </p>
+            </div>
+            
             {/* Header */}
             <div className="mb-16">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
@@ -2243,13 +2251,6 @@ const CaseStudy = () => {
                   UX agent helps you do automated UX audits for your websites and make recommendations to improve conversion rates.
                 </SectionText>
               </Section>
-
-              {/* Full Case Study Coming Soon */}
-              <div className="mt-8 mb-12">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 border border-border/50">
-                  <p className="text-sm font-medium text-foreground">Full Case Study coming soon</p>
-                </div>
-              </div>
             </div>
 
             {/* Image at Bottom */}
@@ -2382,6 +2383,73 @@ const CaseStudy = () => {
                   Contact me
                 </a>
               </SectionText>
+            </Section>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Digital Commercial Banking Case Study
+  if (isDigitalBanking) {
+    return (
+      <div className="min-h-screen bg-background pt-24">
+        <Header activeTab={undefined} onTabChange={handleTabChange} />
+        <div className="py-16 px-6 lg:px-16">
+          <div className="max-w-5xl mx-auto">
+            {/* Back Button */}
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="mb-12 group pl-0 hover:pl-2 transition-all"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+            
+            {/* Case Study Available on Request Notice */}
+            <div className="mb-8 p-4 bg-muted/30 border border-border/50 rounded-lg">
+              <p className="text-sm font-medium text-foreground">
+                Case study available on request
+              </p>
+            </div>
+
+            {/* Header */}
+            <div className="mb-16">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
+                Digital Commercial Banking Platform
+              </h1>
+              <SectionText className="text-xl">
+                A comprehensive digital platform designed for JPMorgan Chase to transform commercial banking operations and enhance client experience.
+              </SectionText>
+            </div>
+
+            {/* Hero Image */}
+            <div className="mb-16 rounded-2xl overflow-hidden bg-muted/20">
+              <img
+                src={dcbImage}
+                alt="Digital Commercial Banking Platform"
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* Content Section */}
+            <Section>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start gap-4">
+                  <span className="text-foreground mt-2 text-xl leading-none">•</span>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">
+                    Led the end-to-end lending experience for the launch of a B2B SaaS Digital Commercial Banking platform for startups, supporting JPMorgan's expansion into the large and growing small business lending market valued in the trillions globally.
+                  </p>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="text-foreground mt-2 text-xl leading-none">•</span>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">
+                    Established a component library and design system for the lending platform, partnering with engineering and cross-functional teams to drive adoption - streamlining design workflows and reducing product maintenance overhead.
+                  </p>
+                </li>
+              </ul>
             </Section>
 
           </div>
