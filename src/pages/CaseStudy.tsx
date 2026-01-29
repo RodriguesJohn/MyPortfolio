@@ -2393,25 +2393,32 @@ const CaseStudy = () => {
 
   // Digital Commercial Banking Case Study
   if (isDigitalBanking) {
+    const digitalBankingDetails = [
+      { label: "My Role", value: "Senior Product Designer" },
+      { label: "Responsibility", value: "Accounts, Lending Experience, Design System" },
+      { label: "Timeline", value: "2+ Years" },
+      { label: "Initiative", value: "~$27M Platform Build" },
+    ];
+
     return (
       <div className="min-h-screen bg-background pt-24">
         <Header activeTab={undefined} onTabChange={handleTabChange} />
         <div className="py-16 px-6 lg:px-16">
           <div className="max-w-5xl mx-auto">
             {/* Back Button */}
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               onClick={() => navigate('/')}
               className="mb-12 group pl-0 hover:pl-2 transition-all"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Home
             </Button>
-            
+
             {/* Case Study Available on Request Notice */}
             <div className="mb-8 p-4 bg-muted/30 border border-border/50 rounded-lg">
               <p className="text-sm font-medium text-foreground">
-                Case study available on request
+                Full case study with visuals available on request
               </p>
             </div>
 
@@ -2421,7 +2428,7 @@ const CaseStudy = () => {
                 Digital Commercial Banking Platform
               </h1>
               <SectionText className="text-xl">
-                A comprehensive digital platform designed for JPMorgan Chase to transform commercial banking operations and enhance client experience.
+                A ~$27M initiative to build a digital commercial banking platform from scratch for Innovation Economy clients, including startups and small businesses who needed a place to manage accounts, track cash flow, handle lending, and see their full financial picture.
               </SectionText>
             </div>
 
@@ -2434,22 +2441,446 @@ const CaseStudy = () => {
               />
             </div>
 
-            {/* Content Section */}
+            {/* Project Details Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+              {digitalBankingDetails.map((detail, idx) => (
+                <DetailCard key={idx} label={detail.label} value={detail.value} />
+              ))}
+            </div>
+
+            {/* The Opportunity */}
             <Section>
-              <ul className="space-y-4 mb-8">
+              <SectionTitle>The Opportunity</SectionTitle>
+              <SectionText className="mb-6">
+                When Silicon Valley Bank collapsed in March 2023, thousands of startups needed a new bank overnight. Many turned to J.P. Morgan, but the bank wasn't ready for them.
+              </SectionText>
+              <SectionText className="mb-6">
+                J.P. Morgan had robust solutions for enterprise clients, but nothing built for startups and small businesses. These founders needed something different: a platform where they could manage accounts, track cash flow, handle lending, and see their full financial picture without navigating enterprise-level complexity.
+              </SectionText>
+              <SectionText>
+                That gap became a ~$27M initiative to build a digital commercial banking platform from scratch for Innovation Economy clients. I joined when the project was in early discovery. Wireframes existed, but there was no unified product vision. Over the next two years, I helped shape what this platform became.
+              </SectionText>
+            </Section>
+
+            {/* My Role */}
+            <Section>
+              <SectionTitle>My Role</SectionTitle>
+              <SectionText className="mb-6">
+                I started on the Accounts experience, designing how founders would view and manage their financial accounts. Within months, my scope expanded. I was pulled into a strategic project with the CTO to create an end-to-end site map of the entire platform, a task that required me to understand every workstream and how they connected.
+              </SectionText>
+              <SectionText className="mb-8">
+                Today, I lead the Lending experience. But I stay actively involved across workstreams because on a platform this interconnected, design decisions in one area ripple into others.
+              </SectionText>
+
+              <h3 className="text-lg font-semibold mb-4 text-foreground">What I owned:</h3>
+              <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-4">
                   <span className="text-foreground mt-2 text-xl leading-none">•</span>
-                  <p className="text-lg leading-relaxed text-muted-foreground/80">
-                    Led the end-to-end lending experience for the launch of a B2B SaaS Digital Commercial Banking platform for startups, supporting JPMorgan's expansion into the large and growing small business lending market valued in the trillions globally.
-                  </p>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">Accounts overview and data visualization</p>
                 </li>
                 <li className="flex items-start gap-4">
                   <span className="text-foreground mt-2 text-xl leading-none">•</span>
-                  <p className="text-lg leading-relaxed text-muted-foreground/80">
-                    Established a component library and design system for the lending platform, partnering with engineering and cross-functional teams to drive adoption - streamlining design workflows and reducing product maintenance overhead.
-                  </p>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">Lending home page, detail pages, and transaction views</p>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="text-foreground mt-2 text-xl leading-none">•</span>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">Auto-pay and paperless features</p>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="text-foreground mt-2 text-xl leading-none">•</span>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">Lending tile component (used across the entire platform)</p>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="text-foreground mt-2 text-xl leading-none">•</span>
+                  <p className="text-lg leading-relaxed text-muted-foreground/80">End-to-end site map with the CTO</p>
                 </li>
               </ul>
+            </Section>
+
+            {/* Understanding the Users */}
+            <Section>
+              <SectionTitle>Understanding the Users</SectionTitle>
+              <SectionText className="mb-8">
+                Our users are startup founders and small business owners. They're not finance professionals. They're building products, raising funding, managing teams. Somewhere in between, they need to manage their company's money.
+              </SectionText>
+              <SectionText className="mb-8">
+                Through user research, we identified three core problems:
+              </SectionText>
+
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">Navigation was broken</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Users couldn't find their way to lending information. The path required going through Accounts, which made sense to internal teams but confused users.
+                  </p>
+                </Card>
+                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">Language was a barrier</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Too much financial jargon. Terms like "facility" and "utilization" meant nothing to founders who just wanted to know what they owed and when.
+                  </p>
+                </Card>
+                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">No central hub for loans</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Users with multiple loans had no single place to see them all. They had to visit individual pages, creating stress and making it easy to miss important details.
+                  </p>
+                </Card>
+              </div>
+
+              <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
+                <blockquote className="text-xl font-medium text-foreground leading-relaxed pl-4 italic">
+                  "I just want to know what I owe and when it's due. Why do I have to click through five screens to find that?"
+                </blockquote>
+                <p className="text-sm text-muted-foreground/70 mt-4 pl-4">Research participant</p>
+              </Card>
+            </Section>
+
+            {/* Accounts: Building the Foundation */}
+            <Section>
+              <SectionTitle>Accounts: Building the Foundation</SectionTitle>
+              <SectionText className="mb-6">
+                When I joined, the Accounts experience was basic wireframes, a transaction list without context. Users could see individual transactions, but they couldn't visualize their overall financial picture or understand how different accounts related.
+              </SectionText>
+              <SectionText className="mb-6">
+                I designed the accounts overview, which brought together multiple account types in one view: checking accounts, lending accounts, and external connected accounts. The centerpiece was a <strong className="text-foreground font-semibold">balance over time visualization</strong> that helped founders see how their money moved.
+              </SectionText>
+
+              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="The Constraint">
+                <p>I couldn't design from scratch. I had to work within the existing design system and use High Charts components. This meant solving the problem with what was buildable, not what was ideally possible.</p>
+              </HighlightCard>
+
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold mb-4 text-foreground">My process:</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-4">
+                    <span className="text-foreground mt-2 text-xl leading-none">1.</span>
+                    <p className="text-lg leading-relaxed text-muted-foreground/80">Competitor research to understand how other platforms handled account visualization</p>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-foreground mt-2 text-xl leading-none">2.</span>
+                    <p className="text-lg leading-relaxed text-muted-foreground/80">User research to validate what founders actually needed</p>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-foreground mt-2 text-xl leading-none">3.</span>
+                    <p className="text-lg leading-relaxed text-muted-foreground/80">Wireframing and sharing concepts with PM for feedback</p>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-foreground mt-2 text-xl leading-none">4.</span>
+                    <p className="text-lg leading-relaxed text-muted-foreground/80">Multiple iterations, high-fidelity designs, and working with the design system team for implementation</p>
+                  </li>
+                </ul>
+              </div>
+            </Section>
+
+            {/* The Pivot to Lending */}
+            <Section>
+              <SectionTitle>The Pivot to Lending</SectionTitle>
+              <SectionText className="mb-6">
+                The research insight about navigation changed my trajectory on this project.
+              </SectionText>
+              <SectionText className="mb-6">
+                Users were struggling to find lending information because it was buried inside Accounts. Every time they needed to check a loan, they had to navigate through screens that weren't relevant to their task. This wasn't a small usability issue. It was a structural problem.
+              </SectionText>
+              <SectionText className="mb-8">
+                <strong className="text-foreground font-semibold">I advocated for giving lending its own dedicated space.</strong> Based on the research, users didn't want to dig through Accounts to manage loans. They wanted a direct path: a lending home page where everything lived.
+              </SectionText>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="p-6 bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-800/30">
+                  <h3 className="text-lg font-semibold mb-3 text-foreground flex items-center gap-2">
+                    <XCircle className="h-5 w-5 text-red-600" />
+                    Before
+                  </h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Dashboard → Accounts → Dig for Lending details
+                  </p>
+                  <p className="text-sm text-muted-foreground/70 mt-2">Users got lost in the navigation</p>
+                </Card>
+                <Card className="p-6 bg-green-50/50 dark:bg-green-950/20 border border-green-200/50 dark:border-green-800/30">
+                  <h3 className="text-lg font-semibold mb-3 text-foreground flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    After
+                  </h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Dashboard → Lending home directly
+                  </p>
+                  <p className="text-sm text-muted-foreground/70 mt-2">Clear, direct path to loan information</p>
+                </Card>
+              </div>
+
+              <SectionText className="mt-8">
+                This proposal was accepted, and I transitioned from Accounts to leading the Lending experience.
+              </SectionText>
+            </Section>
+
+            {/* Designing the Lending Experience */}
+            <Section>
+              <SectionTitle>Designing the Lending Experience</SectionTitle>
+              <SectionText className="mb-8">
+                The lending home page became my primary focus. The goal was simple: give founders one place to manage all their loans: see balances, track due dates, understand utilization, take action.
+              </SectionText>
+
+              <h3 className="text-lg font-semibold mb-4 text-foreground">What I designed:</h3>
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded">In Progress</span>
+                    <p className="text-base text-muted-foreground/90">Lending home page: The centralized hub</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded">Shipped</span>
+                    <p className="text-base text-muted-foreground/90">Facility detail pages</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded">Shipped</span>
+                    <p className="text-base text-muted-foreground/90">Transaction details</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded">Shipped</span>
+                    <p className="text-base text-muted-foreground/90">Auto-pay feature</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded">Shipped</span>
+                    <p className="text-base text-muted-foreground/90">Paperless feature</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded">Shipped</span>
+                    <p className="text-base text-muted-foreground/90">Lending tile component</p>
+                  </div>
+                </div>
+              </div>
+
+              <SectionText>
+                This work required constant coordination. The lending tile, for example, had to appear in Accounts, on the Dashboard, and within Lending itself. That meant aligning with three workstreams on a single component, agreeing on visual treatment, interaction patterns, and data display. I led those conversations, proposed solutions when teams disagreed, and made sure the final component worked everywhere.
+              </SectionText>
+            </Section>
+
+            {/* Solving the Multiple Loans Problem */}
+            <Section>
+              <SectionTitle>Solving the Multiple Loans Problem</SectionTitle>
+              <SectionText className="mb-6">
+                The hardest design challenge in Lending was handling multiple loans.
+              </SectionText>
+              <SectionText className="mb-6">
+                Every loan is different: different terms, different balances, different due dates. But users needed to see them together in one view without getting overwhelmed. This was an information hierarchy problem: how do you show variety and complexity without creating clutter?
+              </SectionText>
+              <SectionText className="mb-8">
+                I explored several approaches. A tabbed interface felt too hidden, and users might miss loans. A long scrolling list felt overwhelming. A card-based layout worked better, but the cards needed careful hierarchy so users could scan quickly and find what mattered.
+              </SectionText>
+
+              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="The Solution">
+                <p className="mb-4">A modular loan component that:</p>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>Displays key information at a glance (balance, due date, utilization)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>Shows loan-specific KPIs without overwhelming the view</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>Allows easy navigation between multiple loans</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>Scales whether you have one loan or ten</span>
+                  </li>
+                </ul>
+              </HighlightCard>
+
+              <SectionText className="mt-8">
+                I designed this component to be flexible enough for the design system. It's now being contributed back so other teams can reuse it across the platform.
+              </SectionText>
+            </Section>
+
+            {/* Simplifying the Language */}
+            <Section>
+              <SectionTitle>Simplifying the Language</SectionTitle>
+              <SectionText className="mb-6">
+                One research finding that shaped my work: users didn't understand the terminology. Words like "facility," "utilization," and "disbursement" meant something to bankers but nothing to founders.
+              </SectionText>
+              <SectionText className="mb-8">
+                I partnered with content design to simplify language across the lending experience. We audited every label, description, and instruction. We rewrote them in plain terms that a founder could scan and understand immediately.
+              </SectionText>
+
+              <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
+                <blockquote className="text-xl font-medium text-foreground leading-relaxed pl-4">
+                  This wasn't just a copy task. Language is part of the interface. Confusing words create cognitive load just like confusing layouts. Simplifying content was a design decision.
+                </blockquote>
+              </Card>
+            </Section>
+
+            {/* Design System Contributions */}
+            <Section>
+              <SectionTitle>Design System Contributions</SectionTitle>
+              <SectionText className="mb-8">
+                I didn't just design screens. I contributed to the system that other designers build on.
+              </SectionText>
+
+              <div className="space-y-4">
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">Lending tile component</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Designed as a reusable pattern with documented states, variants, and usage guidelines. It now appears across Accounts, Dashboard, and Lending.
+                  </p>
+                </Card>
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">Data visualization patterns</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Working within High Charts constraints, I established patterns for how we display financial data: balance over time, loan utilization, KPIs. These patterns are documented for consistency.
+                  </p>
+                </Card>
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">Modular loan component</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                    Currently being added to the design system with full specs for responsive behavior and accessibility.
+                  </p>
+                </Card>
+              </div>
+            </Section>
+
+            {/* How I Collaborated */}
+            <Section>
+              <SectionTitle>How I Collaborated</SectionTitle>
+              <SectionText className="mb-8">
+                Building a platform this complex required constant collaboration.
+              </SectionText>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">With my PM</h3>
+                  <SectionText>
+                    Our relationship was a partnership, not a handoff. They brought business context and user problems; I brought research insights and design perspectives. We defined requirements together, debating priorities, questioning assumptions, aligning on what to build. I didn't wait for specs; I was part of shaping them.
+                  </SectionText>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">With engineering</h3>
+                  <SectionText>
+                    I learned to design within constraints. When I proposed custom components early on, engineers pushed back. They weren't in the design system and would delay the timeline. Instead of fighting it, I adapted. I referenced existing High Charts components, worked with the design system team to extend what existed, and found solutions that met user needs without creating engineering debt.
+                  </SectionText>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">Across workstreams</h3>
+                  <SectionText>
+                    I coordinated with three teams: Accounts, Lending, and the CLP/Dashboard team. We had weekly syncs to align on shared components and patterns. When other designers flagged that my lending tile wasn't consistent with their account tiles, I didn't just adjust my work. I proposed a unified approach that worked for everyone.
+                  </SectionText>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-foreground">Proactive contributions</h3>
+                  <SectionText>
+                    Beyond my immediate scope, I initiated the site map project with the CTO because I saw that teams were designing in isolation without a shared view of the product. I proposed the lending hub based on research, not because someone asked me to. When content was confusing users, I partnered with content design to fix it rather than treating it as someone else's problem.
+                  </SectionText>
+                </div>
+              </div>
+            </Section>
+
+            {/* What Shipped */}
+            <Section>
+              <SectionTitle>What Shipped</SectionTitle>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">Accounts</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Accounts overview bringing together multiple account types</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Balance over time data visualization</span>
+                    </li>
+                  </ul>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">Lending</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Facility detail pages</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Transaction details</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Auto-pay feature</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Paperless feature</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Lending tile component</span>
+                    </li>
+                  </ul>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">In Progress</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-3">
+                      <span className="h-5 w-5 rounded-full border-2 border-amber-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Lending home page (proposing to leadership)</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="h-5 w-5 rounded-full border-2 border-amber-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">Modular loan component (being added to design system)</span>
+                    </li>
+                  </ul>
+
+                  <h3 className="text-lg font-semibold mb-4 mt-6 text-foreground">Platform</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-base text-muted-foreground/90">End-to-end site map created with the CTO</span>
+                    </li>
+                  </ul>
+                </Card>
+              </div>
+            </Section>
+
+            {/* Reflection */}
+            <Section>
+              <SectionTitle>Reflection</SectionTitle>
+              <SectionText className="mb-6">
+                This was a two-year effort on a platform that's still evolving. The work taught me that designing at this scale isn't just about screens. It's about systems, alignment, and influence.
+              </SectionText>
+              <SectionText className="mb-8">
+                The hardest parts were coordination and constraints. Aligning three workstreams on a single component. Adapting when engineering said something wasn't buildable. Advocating for the user when product strategy pushed in a different direction.
+              </SectionText>
+
+              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="What I'm proud of">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>A lending experience that gives founders one place to manage their loans</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>A site map that aligned an entire platform</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>Components that are now part of the design system other teams build on</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>A process where I wasn't waiting for direction. I was helping shape what we built</span>
+                  </li>
+                </ul>
+              </HighlightCard>
             </Section>
 
           </div>
