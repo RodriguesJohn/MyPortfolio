@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
+import { PasswordProtect } from "@/components/PasswordProtect";
 import { ArrowLeft, ArrowRight, Lightbulb, CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import aiInsightsVideo from "@/assets/AI Insights App.mp4";
@@ -2401,6 +2402,10 @@ const CaseStudy = () => {
     ];
 
     return (
+      <PasswordProtect
+        password="AccessJohnPortfolio"
+        storageKey="digital-banking-auth"
+      >
       <div className="min-h-screen bg-background pt-24">
         <Header activeTab={undefined} onTabChange={handleTabChange} />
         <div className="py-16 px-6 lg:px-16">
@@ -2414,13 +2419,6 @@ const CaseStudy = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Home
             </Button>
-
-            {/* Case Study Available on Request Notice */}
-            <div className="mb-8 p-4 bg-muted/30 border border-border/50 rounded-lg">
-              <p className="text-sm font-medium text-foreground">
-                Full case study with visuals available on request
-              </p>
-            </div>
 
             {/* Header */}
             <div className="mb-16">
@@ -2886,6 +2884,7 @@ const CaseStudy = () => {
           </div>
         </div>
       </div>
+      </PasswordProtect>
     );
   }
 
@@ -2917,15 +2916,15 @@ const CaseStudy = () => {
       <div className="py-16 px-6 lg:px-16">
         <div className="max-w-5xl mx-auto">
           {/* Back Button */}
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={() => navigate('/')}
           className="mb-12 group pl-0 hover:pl-2 transition-all"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Home
         </Button>
-        
+
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
@@ -3267,8 +3266,8 @@ const CaseStudy = () => {
         <Section>
           <SectionText>
             Thank you for reading. If you'd like to work with me, get in touch:{" "}
-            <a 
-              href="/" 
+            <a
+              href="/"
               className="text-foreground font-semibold hover:underline"
             >
               Contact me
