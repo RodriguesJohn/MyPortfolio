@@ -106,64 +106,51 @@ const SectionText = ({ children, className = "" }: { children: React.ReactNode; 
   <p className={`text-lg leading-relaxed text-muted-foreground/80 ${className}`}>{children}</p>
 );
 
-const HighlightCard = ({ icon, title, children, accentColor = '#003B70' }: { icon?: React.ReactNode; title?: string; children: React.ReactNode; accentColor?: string }) => (
-  <Card className="p-8 bg-muted/20 border-l-4 shadow-[0_4px_20px_rgba(0,0,0,0.08)]" style={{ borderLeftColor: accentColor }}>
+const HighlightCard = ({ icon, title, children }: { icon?: React.ReactNode; title?: string; children: React.ReactNode }) => (
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
     <div className="flex items-start gap-4">
       {icon && <div className="flex-shrink-0 mt-1">{icon}</div>}
       <div className="flex-1">
-        {title && <h3 className="text-lg font-semibold mb-3 text-foreground">{title}</h3>}
-        <div className="text-base leading-relaxed text-muted-foreground/90">{children}</div>
-      </div>
-    </div>
-  </Card>
-);
-
-const OutcomeCard = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative overflow-hidden rounded-2xl border border-border/30 bg-gradient-to-br from-muted/40 via-muted/20 to-background shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300">
-    {/* Left accent bar with Citi brand color */}
-    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[#003B70] via-[#004A8F] to-[#003B70]" />
-    
-    {/* Subtle pattern overlay */}
-    <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_1px_1px,hsl(var(--foreground))_1px,transparent_0)] bg-[length:24px_24px] pointer-events-none" />
-    
-    <div className="relative p-10 lg:p-12">
-      {/* Icon badge */}
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-foreground/5 border border-foreground/10 mb-8 group-hover:bg-foreground/10 transition-colors">
-        <Lightbulb className="h-8 w-8 text-foreground/80" />
-      </div>
-      
-      {/* Title */}
-      <h3 className="text-xl lg:text-2xl font-bold mb-8 text-foreground tracking-tight">
-        Outcome
-      </h3>
-      
-      {/* Content */}
-      <div className="text-lg leading-relaxed text-muted-foreground/90">
-        {children}
+        {title && <h3 className="text-base font-semibold mb-3 text-foreground">{title}</h3>}
+        <div className="text-base leading-relaxed text-muted-foreground/80">{children}</div>
       </div>
     </div>
   </div>
 );
 
-const QuoteCard = ({ children, accentColor = '#003B70' }: { children: React.ReactNode; accentColor?: string }) => (
-  <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: accentColor }}>
-    <blockquote className="text-xl font-medium text-foreground leading-relaxed pl-4">
+const SimpleCard = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+    {title && <h3 className="text-base font-semibold mb-3 text-foreground">{title}</h3>}
+    <div className="text-base leading-relaxed text-muted-foreground/80">{children}</div>
+  </div>
+);
+
+const OutcomeCard = ({ children }: { children: React.ReactNode }) => (
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+    <h3 className="text-base font-semibold mb-4 text-foreground">Outcome</h3>
+    <div className="text-base leading-relaxed text-muted-foreground/80">
+      {children}
+    </div>
+  </div>
+);
+
+const QuoteCard = ({ children }: { children: React.ReactNode }) => (
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+    <blockquote className="text-base text-muted-foreground/80 leading-relaxed italic">
       {children}
     </blockquote>
-  </Card>
+  </div>
 );
 
 const DetailCard = ({ label, value }: { label: string; value: string }) => (
-  <Card className="p-6 hover:shadow-md transition-shadow duration-200">
-    <CardContent className="p-0">
-      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{label}</h3>
-      <p className="text-lg font-medium text-foreground leading-snug">{value}</p>
-    </CardContent>
-  </Card>
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{label}</h3>
+    <p className="text-base font-medium text-foreground leading-snug">{value}</p>
+  </div>
 );
 
 const ProsConsCard = ({ title, items, type }: { title: string; items: string[]; type: "pros" | "cons" }) => (
-  <Card className="p-6 h-full">
+  <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)] h-full">
     <h3 className="text-base font-semibold mb-5 text-foreground">{title}</h3>
     <ul className="space-y-3">
       {items.map((item, idx) => (
@@ -173,11 +160,11 @@ const ProsConsCard = ({ title, items, type }: { title: string; items: string[]; 
           ) : (
             <XCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
           )}
-          <p className="text-base leading-relaxed text-muted-foreground/90">{item}</p>
+          <p className="text-base leading-relaxed text-muted-foreground/80">{item}</p>
         </li>
       ))}
     </ul>
-  </Card>
+  </div>
 );
 
 const CaseStudy = () => {
@@ -365,11 +352,11 @@ const CaseStudy = () => {
                 </p>
               </li>
             </ul>
-            <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-              <p className="text-xl font-medium text-foreground leading-relaxed pl-4 italic">
+            <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+              <p className="text-base text-muted-foreground/80 leading-relaxed italic">
                 "After redesigning the user flow, customers found the improved balance transfer feature more intuitive and user-friendly compared to the previous web experience. With a user base of 20 million on the Citi Mobile App, even a 1% increase in conversion rates could potentially result in an additional $2 million in revenue for Citi. This enhancement not only streamlines the balance transfer process but also empowers users to manage their balance transfer effortlessly at their fingertips"
               </p>
-            </Card>
+            </div>
             <div className="rounded-xl overflow-hidden bg-muted/20 mt-8">
               <img
                 src={balanceT}
@@ -2505,33 +2492,33 @@ const CaseStudy = () => {
                 Through user research, we identified three core problems:
               </SectionText>
 
-              <div className="grid md:grid-cols-3 gap-4 mb-8">
-                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-                  <h3 className="text-lg font-semibold mb-3 text-foreground">Navigation was broken</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">Navigation was broken</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Users couldn't find their way to lending information. The path required going through Accounts, which made sense to internal teams but confused users.
                   </p>
-                </Card>
-                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-                  <h3 className="text-lg font-semibold mb-3 text-foreground">Language was a barrier</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                </div>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">Language was a barrier</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Too much financial jargon. Terms like "facility" and "utilization" meant nothing to founders who just wanted to know what they owed and when.
                   </p>
-                </Card>
-                <Card className="p-6 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-                  <h3 className="text-lg font-semibold mb-3 text-foreground">No central hub for loans</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                </div>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">No central hub for loans</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Users with multiple loans had no single place to see them all. They had to visit individual pages, creating stress and making it easy to miss important details.
                   </p>
-                </Card>
+                </div>
               </div>
 
-              <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-                <blockquote className="text-xl font-medium text-foreground leading-relaxed pl-4 italic">
+              <blockquote className="border-l-2 border-border pl-6 py-2">
+                <p className="text-lg text-muted-foreground/80 italic">
                   "I just want to know what I owe and when it's due. Why do I have to click through five screens to find that?"
-                </blockquote>
-                <p className="text-sm text-muted-foreground/70 mt-4 pl-4">Research participant</p>
-              </Card>
+                </p>
+                <p className="text-sm text-muted-foreground/60 mt-2">— Research participant</p>
+              </blockquote>
             </Section>
 
             {/* Accounts: Building the Foundation */}
@@ -2544,9 +2531,9 @@ const CaseStudy = () => {
                 I designed the accounts overview, which brought together multiple account types in one view: checking accounts, lending accounts, and external connected accounts. The centerpiece was a <strong className="text-foreground font-semibold">balance over time visualization</strong> that helped founders see how their money moved.
               </SectionText>
 
-              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="The Constraint">
+              <SimpleCard title="The Constraint">
                 <p>I couldn't design from scratch. I had to work within the existing design system and use High Charts components. This meant solving the problem with what was buildable, not what was ideally possible.</p>
-              </HighlightCard>
+              </SimpleCard>
 
               <div className="mt-8">
                 <h3 className="text-lg font-semibold mb-4 text-foreground">My process:</h3>
@@ -2585,26 +2572,20 @@ const CaseStudy = () => {
               </SectionText>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <Card className="p-6 bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-800/30">
-                  <h3 className="text-lg font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <XCircle className="h-5 w-5 text-red-600" />
-                    Before
-                  </h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">Before</h3>
+                  <p className="text-lg text-foreground mb-1">
                     Dashboard → Accounts → Dig for Lending details
                   </p>
-                  <p className="text-sm text-muted-foreground/70 mt-2">Users got lost in the navigation</p>
-                </Card>
-                <Card className="p-6 bg-green-50/50 dark:bg-green-950/20 border border-green-200/50 dark:border-green-800/30">
-                  <h3 className="text-lg font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-600" />
-                    After
-                  </h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                  <p className="text-sm text-muted-foreground/70">Users got lost in the navigation</p>
+                </div>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">After</h3>
+                  <p className="text-lg text-foreground mb-1">
                     Dashboard → Lending home directly
                   </p>
-                  <p className="text-sm text-muted-foreground/70 mt-2">Clear, direct path to loan information</p>
-                </Card>
+                  <p className="text-sm text-muted-foreground/70">Clear, direct path to loan information</p>
+                </div>
               </div>
 
               <SectionText className="mt-8">
@@ -2669,27 +2650,15 @@ const CaseStudy = () => {
                 I explored several approaches. A tabbed interface felt too hidden, and users might miss loans. A long scrolling list felt overwhelming. A card-based layout worked better, but the cards needed careful hierarchy so users could scan quickly and find what mattered.
               </SectionText>
 
-              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="The Solution">
+              <SimpleCard title="The Solution">
                 <p className="mb-4">A modular loan component that:</p>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Displays key information at a glance (balance, due date, utilization)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Shows loan-specific KPIs without overwhelming the view</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Allows easy navigation between multiple loans</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Scales whether you have one loan or ten</span>
-                  </li>
+                <ul className="space-y-2 text-base">
+                  <li>Displays key information at a glance (balance, due date, utilization)</li>
+                  <li>Shows loan-specific KPIs without overwhelming the view</li>
+                  <li>Allows easy navigation between multiple loans</li>
+                  <li>Scales whether you have one loan or ten</li>
                 </ul>
-              </HighlightCard>
+              </SimpleCard>
 
               <SectionText className="mt-8">
                 I designed this component to be flexible enough for the design system. It's now being contributed back so other teams can reuse it across the platform.
@@ -2706,11 +2675,11 @@ const CaseStudy = () => {
                 I partnered with content design to simplify language across the lending experience. We audited every label, description, and instruction. We rewrote them in plain terms that a founder could scan and understand immediately.
               </SectionText>
 
-              <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-                <blockquote className="text-xl font-medium text-foreground leading-relaxed pl-4">
+              <blockquote className="border-l-2 border-border pl-6 py-2">
+                <p className="text-lg text-muted-foreground/80 italic">
                   This wasn't just a copy task. Language is part of the interface. Confusing words create cognitive load just like confusing layouts. Simplifying content was a design decision.
-                </blockquote>
-              </Card>
+                </p>
+              </blockquote>
             </Section>
 
             {/* Design System Contributions */}
@@ -2720,25 +2689,25 @@ const CaseStudy = () => {
                 I didn't just design screens. I contributed to the system that other designers build on.
               </SectionText>
 
-              <div className="space-y-4">
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">Lending tile component</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">Lending tile component</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Designed as a reusable pattern with documented states, variants, and usage guidelines. It now appears across Accounts, Dashboard, and Lending.
                   </p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">Data visualization patterns</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                </div>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">Data visualization patterns</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Working within High Charts constraints, I established patterns for how we display financial data: balance over time, loan utilization, KPIs. These patterns are documented for consistency.
                   </p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">Modular loan component</h3>
-                  <p className="text-base leading-relaxed text-muted-foreground/90">
+                </div>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-2 text-foreground">Modular loan component</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground/80">
                     Currently being added to the design system with full specs for responsive behavior and accessibility.
                   </p>
-                </Card>
+                </div>
               </div>
             </Section>
 
@@ -2785,56 +2754,56 @@ const CaseStudy = () => {
               <SectionTitle>What Shipped</SectionTitle>
 
               <div className="grid md:grid-cols-3 gap-6">
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 text-foreground">Accounts</h3>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-4 text-foreground">Accounts</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Accounts overview bringing together multiple account types</span>
+                      <span className="text-base text-muted-foreground/80">Accounts overview bringing together multiple account types</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Balance over time data visualization</span>
+                      <span className="text-base text-muted-foreground/80">Balance over time data visualization</span>
                     </li>
                   </ul>
-                </Card>
+                </div>
 
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 text-foreground">Lending</h3>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-4 text-foreground">Lending</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Facility detail pages</span>
+                      <span className="text-base text-muted-foreground/80">Facility detail pages</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Transaction details</span>
+                      <span className="text-base text-muted-foreground/80">Transaction details</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Auto-pay feature</span>
+                      <span className="text-base text-muted-foreground/80">Auto-pay feature</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Paperless feature</span>
+                      <span className="text-base text-muted-foreground/80">Paperless feature</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Lending tile component</span>
+                      <span className="text-base text-muted-foreground/80">Lending tile component</span>
                     </li>
                   </ul>
-                </Card>
+                </div>
 
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 text-foreground">In Progress</h3>
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <h3 className="text-base font-semibold mb-4 text-foreground">In Progress</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
                       <span className="h-5 w-5 rounded-full border-2 border-amber-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Lending home page (proposing to leadership)</span>
+                      <span className="text-base text-muted-foreground/80">Lending home page (proposing to leadership)</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="h-5 w-5 rounded-full border-2 border-amber-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-base text-muted-foreground/90">Modular loan component (being added to design system)</span>
+                      <span className="text-base text-muted-foreground/80">Modular loan component (being added to design system)</span>
                     </li>
                   </ul>
 
@@ -2845,7 +2814,7 @@ const CaseStudy = () => {
                       <span className="text-base text-muted-foreground/90">End-to-end site map created with the CTO</span>
                     </li>
                   </ul>
-                </Card>
+                </div>
               </div>
             </Section>
 
@@ -2859,26 +2828,14 @@ const CaseStudy = () => {
                 The hardest parts were coordination and constraints. Aligning three workstreams on a single component. Adapting when engineering said something wasn't buildable. Advocating for the user when product strategy pushed in a different direction.
               </SectionText>
 
-              <HighlightCard icon={<Lightbulb className="h-5 w-5 text-foreground" />} title="What I'm proud of">
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>A lending experience that gives founders one place to manage their loans</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>A site map that aligned an entire platform</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Components that are now part of the design system other teams build on</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>A process where I wasn't waiting for direction. I was helping shape what we built</span>
-                  </li>
+              <SimpleCard title="What I'm proud of">
+                <ul className="space-y-2 text-base">
+                  <li>A lending experience that gives founders one place to manage their loans</li>
+                  <li>A site map that aligned an entire platform</li>
+                  <li>Components that are now part of the design system other teams build on</li>
+                  <li>A process where I wasn't waiting for direction. I was helping shape what we built</li>
                 </ul>
-              </HighlightCard>
+              </SimpleCard>
             </Section>
 
           </div>
@@ -3046,11 +3003,11 @@ const CaseStudy = () => {
             </li>
           </ul>
 
-          <Card className="p-8 bg-muted/20 border-l-4" style={{ borderLeftColor: '#003B70' }}>
-            <p className="text-xl font-medium text-foreground leading-relaxed pl-4">
-              <strong>Hypothesis:</strong> Even a 2% increase in product offering conversion could unlock an estimated <strong>$80 million*</strong> in additional annual revenue for Citi. <strong>Assumption:</strong> Each customer could generate around $200 in value annually
+          <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+            <p className="text-base text-muted-foreground/80 leading-relaxed">
+              <strong className="text-foreground">Hypothesis:</strong> Even a 2% increase in product offering conversion could unlock an estimated <strong className="text-foreground">$80 million*</strong> in additional annual revenue for Citi. <strong className="text-foreground">Assumption:</strong> Each customer could generate around $200 in value annually
             </p>
-          </Card>
+          </div>
           
           <p className="text-base leading-relaxed mt-6 italic text-muted-foreground/80">
             That's why solving for overwhelmed users is important for users and Citi's customers
