@@ -57,7 +57,8 @@ import slide16_9_7 from "@/assets/MediatationApp/Slide 16_9 - 7.svg";
 import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import uxAgentPGImage from "@/assets/UXAgent.png";
-import aiVoiceVideo from "@/assets/AIVoice.mov";
+import aiVoiceVideo from "@/assets/EvaAIV2.mov";
+import evaAIImage from "@/assets/EvaAI.jpg";
 import ollieAIVideo from "@/assets/OllieAIDemo.mp4";
 import dcbImage from "@/assets/DCB.png";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
@@ -2292,15 +2293,12 @@ const CaseStudy = () => {
                 Eva AI- Personal Assistant | iOS Mobile App
               </h1>
               
-              {/* Video */}
-              <div className="rounded-xl overflow-hidden bg-muted/20 mb-12">
-                <video
-                  src={aiVoiceVideo}
+              {/* Hero Image */}
+              <div className="rounded-xl overflow-hidden mb-8">
+                <img 
+                  src={evaAIImage} 
+                  alt="Eva AI" 
                   className="w-full h-auto"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
                 />
               </div>
             </div>
@@ -2316,6 +2314,19 @@ const CaseStudy = () => {
             {/* Why Should This Product Exist */}
             <Section>
               <SectionTitle>Why Should This Product Exist</SectionTitle>
+              
+              {/* Video */}
+              <div className="rounded-xl overflow-hidden bg-muted/20 mb-8">
+                <video
+                  src={aiVoiceVideo}
+                  className="w-full h-auto"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              </div>
+              
               <SectionText>
                 Most AI productivity tools fall into two extremes: chat-focused interfaces or traditional to-do lists that require manual entry. Chat-based tools are good at conversation, but they rarely <strong>translate intent into actionable, trackable work</strong>. On the other hand, existing task managers rely heavily on manual input, which increases cognitive load and friction when the user is on the go, leaving users with fragmented workflows.
               </SectionText>

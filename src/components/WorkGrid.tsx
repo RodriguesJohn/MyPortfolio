@@ -13,7 +13,7 @@ import p3Image from "@/assets/P3.png";
 import p4Image from "@/assets/P4.png";
 import p5Image from "@/assets/P5.png";
 import threeDImage from "@/assets/3D.png";
-import aiVoiceVideo from "@/assets/AIVoice.mov";
+import aiVoiceVideo from "@/assets/EvaAIV2.mov";
 import aiInsightsVideo from "@/assets/AI Insights App.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
