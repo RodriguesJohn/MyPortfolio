@@ -20,7 +20,7 @@ import aiMentorVideo from "@/assets/AIMentor.mp4";
 import multiModalVideo from "@/assets/MultiModal.mp4";
 import aiDataVisionVideo from "@/assets/AIDataVision.mp4";
 import cardVideo from "@/assets/Card.mp4";
-import balanceTransferVideo from "@/assets/BalanceTransferApp.mp4";
+import balanceTransferVideo from "@/assets/BT.mp4";
 import myTokaVideo from "@/assets/MyTocaApp.mp4";
 import pamVideo from "@/assets/PAM.mp4";
 import faceIDVideo from "@/assets/FaceID.mp4";
