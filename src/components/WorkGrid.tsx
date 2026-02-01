@@ -36,6 +36,9 @@ import tocaLogoDark from "@/assets/Toca.png";
 import appleLogo from "@/assets/Apple-Logo.png";
 import dcbImage from "@/assets/DCB.png";
 import uxAgentPGImage from "@/assets/UXAgent.png";
+import outfixVideo from "@/assets/OutfixV2.mp4";
+import ollieAIImage from "@/assets/OllieAIV1.png";
+import ollieAIVideo from "@/assets/OllieAIDemo.mp4";
 
 const projects = [
   {
@@ -88,7 +91,7 @@ const projects = [
   {
     id: 2,
     title: "No-Scroll App, iOS App",
-    description: "No-scroll app, iOS app • 4.6 ⭐ App Store",
+    description: "No-scroll app, iOS app • 4.6 ⭐ App Store • 50K+ downloads",
     image: noScrollAppImage,
     video: aiSummaryVideo,
     link: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216?ppid=26858afa-d233-49c4-b4d3-4e2daaf8ce3f",
@@ -240,6 +243,23 @@ const projects = [
     category: "commercial",
     businessCategory: "B2B",
     secondaryTag: "Innovation Initiative",
+  },
+  {
+    id: 20,
+    title: "Outfix AI",
+    description: "Fast 0→1, end-to-end, AI, consumer",
+    image: p5Image,
+    thumbnailVideo: outfixVideo,
+    category: "commercial",
+    businessCategory: "B2C",
+  },
+  {
+    id: 21,
+    title: "Ollie AI",
+    description: "Figma plugin that lets designers use AI directly on the canvas",
+    image: ollieAIImage,
+    thumbnailVideo: ollieAIVideo,
+    category: "commercial",
   },
 ];
 
@@ -638,10 +658,15 @@ function PlaybookCard() {
 
 function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square }: { project: typeof projects[0]; reducedHeight?: boolean; slightlyReducedHeight?: boolean; square?: boolean }) {
   const navigate = useNavigate();
-  
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+
   return (
     <Card
-      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl h-full flex flex-col"
+      ref={ref}
+      className={`group overflow-hidden border-0 bg-white transition-all duration-700 cursor-pointer rounded-2xl h-full flex flex-col ${
+        isInView ? 'blur-0 opacity-100 scale-100' : 'blur-sm opacity-50 scale-95'
+      }`}
       style={{
         boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
       }}
@@ -666,10 +691,11 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
         slightlyReducedHeight ? 'aspect-[4/5] md:aspect-[5/6] lg:aspect-[3/4]' :
         'aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6]'
       } overflow-hidden relative ${
-        project.id === 7 ? 'bg-gray-100' : 
-        project.id === 19 ? 'bg-white' : 
+        project.id === 7 ? 'bg-gray-100' :
+        project.id === 19 ? 'bg-white' :
+        project.id === 20 ? 'bg-gradient-to-b from-gray-50 to-gray-100' :
         'bg-gradient-to-b from-gray-50 to-gray-100'
-      }`}>
+      } ${project.id === 20 ? 'pb-4' : ''}`}>
         {(project as any).showBlankThumbnail ? (
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/50" />
         ) : (project as any).isComingSoon ? (
@@ -691,6 +717,8 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
                 ? 'object-contain object-center scale-150'
                 : project.id === 19
                 ? 'object-contain object-center'
+                : project.id === 20
+                ? 'object-contain object-top'
                 : 'object-cover object-top'
             }`}
             autoPlay
@@ -978,23 +1006,28 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: Digital Commercial Banking Platform, Eva AI, Budgeting AI Agent, UX AI Agent (full width), AI Insights App, Balance Transfer, No-Scroll App, My Toca App
+    // Custom order for home page: Digital Commercial Banking Platform, Outfix, Balance Transfer (full width), Eva AI, Ollie AI, UX AI Agent (full width), AI Insights App, No-Scroll App, Budgeting AI Agent, My Toca App
     const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
+    const outfix = projects.find(p => p.id === 20); // Outfix
+    const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const aiProductivityOS = projects.find(p => p.id === 15); // Eva AI
-    const budgetingAIAgent = projects.find(p => p.id === 19); // Budgeting AI Agent
+    const ollieAI = projects.find(p => p.id === 21); // Ollie AI
     const uxAIAgent = projects.find(p => p.id === 13); // UX AI Agent
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
-    const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
-    const tokaApp = projects.find(p => p.id === 5); // My Toca App
+    const budgetingAIAgent = projects.find(p => p.id === 19); // Budgeting AI Agent
+    const tocaApp = projects.find(p => p.id === 5); // My Toca App
 
     // Return in specified order, filtering out undefined
     // First row: digitalCommercialBanking (full width)
-    // Second row: aiProductivityOS, budgetingAIAgent
-    // Third row: uxAIAgent (full width)
-    // Fourth row: aiInsights, balanceTransfer
-    // Fifth row: noScrollApp, tokaApp
-    displayProjects = [digitalCommercialBanking, aiProductivityOS, budgetingAIAgent, uxAIAgent, aiInsights, balanceTransfer, noScrollApp, tokaApp].filter(Boolean) as typeof projects;
+    // Second row: outfix (full width)
+    // Third row: balanceTransfer (full width)
+    // Fourth row: aiProductivityOS (full width)
+    // Fifth row: ollieAI (full width)
+    // Sixth row: aiInsights, budgetingAIAgent
+    // Seventh row: uxAIAgent (full width)
+    // Eighth row: noScrollApp, tocaApp
+    displayProjects = [digitalCommercialBanking, outfix, balanceTransfer, aiProductivityOS, ollieAI, aiInsights, budgetingAIAgent, uxAIAgent, noScrollApp, tocaApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
@@ -1155,15 +1188,15 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                     : "opacity-0 translate-y-4 invisible absolute inset-0"
                 }`}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14 mb-12 items-stretch">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20 mb-12 items-stretch">
                   {displayProjects.map((project) => (
                     <div
                       key={project.id}
-                      className={`h-full ${project.id === 16 || project.id === 13 ? 'sm:col-span-2' : ''}`}
+                      className={`h-full ${project.id === 16 || project.id === 20 || project.id === 3 || project.id === 15 || project.id === 21 || project.id === 13 ? 'sm:col-span-2' : ''}`}
                     >
                       <AllProjectsCard
                         project={project}
-                        {...(project.id === 16 || project.id === 13 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
+                        {...(project.id === 16 || project.id === 20 || project.id === 3 || project.id === 15 || project.id === 21 || project.id === 13 ? { reducedHeight: true } : { slightlyReducedHeight: true })}
                       />
                     </div>
                   ))}
@@ -1194,11 +1227,12 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
                 })()}
               </div>
             </div>
-            
+
+
           </>
         )}
       </div>
-      
+
       {/* Get the Guide Card - Full Width Gray Background */}
       {!showTabs && !externalActiveTab && (
         <div className="bg-gray-50 dark:bg-gray-900/50 w-screen mt-12 py-12 lg:py-16" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
@@ -1207,7 +1241,164 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
           </div>
         </div>
       )}
-      
+
+      {/* Testimonials Section - Horizontal Scrolling Marquee */}
+      {!showTabs && !externalActiveTab && (
+        <div className="w-full py-16 bg-white" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-8">
+            <h2 className="text-2xl font-semibold text-foreground">What clients say</h2>
+          </div>
+          <div className="relative overflow-hidden">
+            {/* Gradient fade on edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            {/* Scrolling container */}
+            <div 
+              className="flex gap-6 animate-scroll-testimonials pl-6"
+              style={{
+                width: 'max-content',
+              }}
+            >
+              {/* First set of testimonials */}
+              {[
+                {
+                  id: 0,
+                  text: "Yay!!! Thank you John! You literally explained auto layout today so effortlessly. I understand it more now than ever before. I'm considering taking your course, so I can take my Figma skills up a notch.",
+                  author: "Yariela B",
+                  role: "UX Designer",
+                  companyLogo: googleLogo,
+                },
+                {
+                  id: 1,
+                  text: "Had an amazing chat with John. We exchanged some interesting resources and talked about the importance to understand the value of a designer.",
+                  author: "Lucas W",
+                  role: "Product Designer",
+                  companyLogo: appleLogo,
+                },
+                {
+                  id: 2,
+                  text: "John has shown tremendous value as a UX designer. This year, he has answered every challenge in taking on additional responsibility in project management, client relationship building and increased design ownership and delivery.",
+                  author: "Zachary E",
+                  role: "Creative Director, VP",
+                  companyLogo: citiLogo,
+                },
+                {
+                  id: 3,
+                  text: "His thoughtful ideas and entrepreneurship have enhanced our team's collaboration. His design works have significantly boosted visibility and impact across all product areas. His keen eye for UX heuristics and resourcefulness with new technologies are impressive.",
+                  author: "Kristian K",
+                  role: "Product Designer, VP",
+                  companyLogo: chaseLogoLight,
+                },
+                {
+                  id: 4,
+                  text: "Thank you for the great communication, collaboration and execution! Working with John has been a real pleasure. The new design makes No Scroll feel like a brand new app. If you're considering working with John, don't hesitate.",
+                  author: "Andrew",
+                  role: "Founder of No Scroll App",
+                },
+                {
+                  id: 5,
+                  text: "Collaborating with John was both easy and productive. John provided valuable insights into product development and user experience that truly enhanced our project to move to the next level. I highly recommend John.",
+                  author: "Edward Petkovicz",
+                  role: "faxion.ai",
+                },
+              ].map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200/50 shadow-sm"
+                >
+                  <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="pt-4 border-t border-border/30">
+                    <p className="font-semibold text-foreground">
+                      {testimonial.author}
+                    </p>
+                    <p className="text-sm text-muted-foreground/70 mt-1">{testimonial.role}</p>
+                    {testimonial.companyLogo && (
+                      <div className="mt-4 flex items-center">
+                        <img 
+                          src={testimonial.companyLogo} 
+                          alt="Company logo" 
+                          className="h-5 w-auto object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {[
+                {
+                  id: 0,
+                  text: "Yay!!! Thank you John! You literally explained auto layout today so effortlessly. I understand it more now than ever before. I'm considering taking your course, so I can take my Figma skills up a notch.",
+                  author: "Yariela B",
+                  role: "UX Designer",
+                  companyLogo: googleLogo,
+                },
+                {
+                  id: 1,
+                  text: "Had an amazing chat with John. We exchanged some interesting resources and talked about the importance to understand the value of a designer.",
+                  author: "Lucas W",
+                  role: "Product Designer",
+                  companyLogo: appleLogo,
+                },
+                {
+                  id: 2,
+                  text: "John has shown tremendous value as a UX designer. This year, he has answered every challenge in taking on additional responsibility in project management, client relationship building and increased design ownership and delivery.",
+                  author: "Zachary E",
+                  role: "Creative Director, VP",
+                  companyLogo: citiLogo,
+                },
+                {
+                  id: 3,
+                  text: "His thoughtful ideas and entrepreneurship have enhanced our team's collaboration. His design works have significantly boosted visibility and impact across all product areas. His keen eye for UX heuristics and resourcefulness with new technologies are impressive.",
+                  author: "Kristian K",
+                  role: "Product Designer, VP",
+                  companyLogo: chaseLogoLight,
+                },
+                {
+                  id: 4,
+                  text: "Thank you for the great communication, collaboration and execution! Working with John has been a real pleasure. The new design makes No Scroll feel like a brand new app. If you're considering working with John, don't hesitate.",
+                  author: "Andrew",
+                  role: "Founder of No Scroll App",
+                },
+                {
+                  id: 5,
+                  text: "Collaborating with John was both easy and productive. John provided valuable insights into product development and user experience that truly enhanced our project to move to the next level. I highly recommend John.",
+                  author: "Edward Petkovicz",
+                  role: "faxion.ai",
+                },
+              ].map((testimonial) => (
+                <div
+                  key={`dup-${testimonial.id}`}
+                  className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200/50 shadow-sm"
+                >
+                  <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="pt-4 border-t border-border/30">
+                    <p className="font-semibold text-foreground">
+                      {testimonial.author}
+                    </p>
+                    <p className="text-sm text-muted-foreground/70 mt-1">{testimonial.role}</p>
+                    {testimonial.companyLogo && (
+                      <div className="mt-4 flex items-center">
+                        <img 
+                          src={testimonial.companyLogo} 
+                          alt="Company logo" 
+                          className="h-5 w-auto object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* KPI Cards */}
       {!showTabs && !externalActiveTab && (
         <div className="max-w-4xl mx-auto px-6 lg:px-8 mt-8">

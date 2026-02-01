@@ -58,6 +58,7 @@ import watchOSVideo from "@/assets/MediatationApp/watchOS.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import uxAgentPGImage from "@/assets/UXAgent.png";
 import aiVoiceVideo from "@/assets/AIVoice.mov";
+import ollieAIVideo from "@/assets/OllieAIDemo.mp4";
 import dcbImage from "@/assets/DCB.png";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
@@ -182,13 +183,14 @@ const CaseStudy = () => {
   const isVRLearning = projectId === "12";
   const isUXAgent = projectId === "13";
   const isAIProductivityOS = projectId === "15";
+  const isOllieAI = projectId === "21";
 
   const handleTabChange = (tab: string) => {
     navigate('/');
   };
 
   // Check if it's a project that has a case study or should show "coming soon"
-  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS || isDigitalBanking;
+  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS || isDigitalBanking || isOllieAI;
   const isComingSoon = isAIDataVision || is3DPrinting || isVRLearning;
 
   // Get the case study title for coming soon projects
@@ -2370,6 +2372,58 @@ const CaseStudy = () => {
                 >
                   Contact me
                 </a>
+              </SectionText>
+            </Section>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Ollie AI Case Study
+  if (isOllieAI) {
+    return (
+      <div className="min-h-screen bg-background pt-24">
+        <Header activeTab={undefined} onTabChange={handleTabChange} />
+        <div className="py-16 px-6 lg:px-16">
+          <div className="max-w-5xl mx-auto">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="mb-12 group pl-0 hover:pl-2 transition-all"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-4">
+                Ollie AI: Figma AI Assistant
+              </h1>
+              <SectionText className="text-xl">
+                A Figma plugin that lets designers use AI directly on the canvas. No switching between tools, no copy-pasting, no workflow challenges.
+              </SectionText>
+            </div>
+
+            {/* Video */}
+            <div className="w-full rounded-2xl overflow-hidden mb-12">
+              <video
+                src={ollieAIVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* Why I built it */}
+            <Section>
+              <SectionTitle>Why I Built It</SectionTitle>
+              <SectionText>
+                Designers spend too much time on repetitive tasks like setting up frames, organizing layers, and other tedious work. AI can help, but most tools live outside Figma. You generate something, then manually bring it back in. That's friction. Ollie removes that friction. Talk to the AI, and it works directly on your canvas. Simple.
               </SectionText>
             </Section>
 
