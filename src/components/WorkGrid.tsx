@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useInView, motion } from "framer-motion";
+import { useInView, motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -252,6 +252,7 @@ const projects = [
     thumbnailVideo: outfixVideo,
     category: "commercial",
     businessCategory: "B2C",
+    showRequestModal: true,
   },
   {
     id: 21,
@@ -273,6 +274,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {
     const checkDarkMode = () => {
@@ -309,7 +311,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
     return (
       <Card
         ref={ref}
-        className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl ${
+        className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl relative ${
           isInView ? 'blur-0' : 'blur-lg'
         }`}
         style={{
@@ -322,13 +324,77 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
         }}
         onClick={() => {
-          if (project.link) {
+          if ((project as any).showRequestModal) {
+            setShowModal(true);
+          } else if (project.link) {
             window.open(project.link, '_blank', 'noopener,noreferrer');
           } else {
             navigate(`/case-study?project=${project.id}`);
           }
         }}
       >
+        {/* Request Snackbar - Center of card */}
+        <AnimatePresence>
+          {showModal && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0 z-[50] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm rounded-2xl"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowModal(false);
+              }}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 25,
+                  mass: 0.8
+                }}
+                className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-2xl border border-border/50 w-full max-w-sm"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <h3 className="text-base font-semibold text-foreground mb-1">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Case study available upon request.
+                    </p>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(false);
+                    }}
+                    className="flex-shrink-0 h-7 w-7 rounded-full hover:bg-muted flex items-center justify-center transition-colors"
+                  >
+                    <svg className="h-4 w-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="mt-3">
+                  <a
+                    href="mailto:john@john-rodrigues.com"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center justify-center px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors"
+                  >
+                    Request Access
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
         {/* Responsive aspect ratio: tall on mobile, rectangular on desktop */}
         <div className={`aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10] overflow-hidden relative ${
           project.id === 19 ? 'bg-white' : 'bg-gradient-to-b from-gray-50 to-gray-100'
@@ -408,7 +474,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   return (
     <Card
       ref={ref}
-      className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl ${
+      className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl relative ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
       style={{
@@ -421,13 +487,72 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
       }}
       onClick={() => {
-        if (project.link) {
+        if ((project as any).showRequestModal) {
+          setShowModal(true);
+        } else if (project.link) {
           window.open(project.link, '_blank', 'noopener,noreferrer');
         } else {
           navigate(`/case-study?project=${project.id}`);
         }
       }}
     >
+      {/* Request Snackbar - Center of card */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 z-[50] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm rounded-2xl"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowModal(false);
+            }}
+          >
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 10 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-2xl border border-border/50 w-full max-w-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1">
+                  <h3 className="text-base font-semibold text-foreground mb-1">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Case study available upon request.
+                  </p>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowModal(false);
+                  }}
+                  className="flex-shrink-0 h-7 w-7 rounded-full hover:bg-muted flex items-center justify-center transition-colors"
+                >
+                  <svg className="h-4 w-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="mt-3">
+                <a
+                  href="mailto:john@john-rodrigues.com"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center justify-center px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors"
+                >
+                  Request Access
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
       {/* Video/Image Container - Rectangular shape */}
       <div className="aspect-[4/3] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
         {displayVideo ? (
@@ -660,30 +785,96 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <Card
-      ref={ref}
-      className={`group overflow-hidden border-0 bg-white transition-all duration-700 cursor-pointer rounded-2xl h-full flex flex-col ${
-        isInView ? 'blur-0 opacity-100 scale-100' : 'blur-sm opacity-50 scale-95'
-      }`}
-      style={{
-        boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.06), 0 2px 20px rgba(0, 0, 0, 0.03)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
-      }}
-      onClick={() => {
-        if (project.link) {
-          window.open(project.link, '_blank', 'noopener,noreferrer');
-        } else {
-          navigate(`/case-study?project=${project.id}`);
-        }
-      }}
-    >
+    <>
+      <Card
+        ref={ref}
+        className={`group overflow-hidden border-0 bg-white transition-all duration-700 cursor-pointer rounded-2xl h-full flex flex-col relative ${
+          isInView ? 'blur-0 opacity-100 scale-100' : 'blur-sm opacity-50 scale-95'
+        }`}
+        style={{
+          boxShadow: '0 2px 40px rgba(0, 0, 0, 0.03), 0 1px 20px rgba(0, 0, 0, 0.015)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.06), 0 2px 20px rgba(0, 0, 0, 0.03)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
+        }}
+        onClick={() => {
+          if ((project as any).showRequestModal) {
+            setShowModal(true);
+          } else if (project.link) {
+            window.open(project.link, '_blank', 'noopener,noreferrer');
+          } else {
+            navigate(`/case-study?project=${project.id}`);
+          }
+        }}
+      >
+        {/* Request Snackbar - Center of card */}
+        <AnimatePresence>
+          {showModal && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0 z-[50] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm rounded-2xl"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowModal(false);
+              }}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 25,
+                  mass: 0.8
+                }}
+                className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-2xl border border-border/50 w-full max-w-sm"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <h3 className="text-base font-semibold text-foreground mb-1">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Case study available upon request.
+                    </p>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(false);
+                    }}
+                    className="flex-shrink-0 h-7 w-7 rounded-full hover:bg-muted flex items-center justify-center transition-colors"
+                  >
+                    <svg className="h-4 w-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="mt-3">
+                  <a
+                    href="mailto:john@john-rodrigues.com"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center justify-center px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors"
+                  >
+                    Request Access
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
       {/* Responsive aspect ratio: tall on mobile, shorter on desktop */}
       <div className={`${
         square ? 'aspect-square' :
@@ -804,6 +995,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
         )}
       </div>
     </Card>
+    </>
   );
 }
 

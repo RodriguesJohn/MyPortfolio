@@ -31,7 +31,7 @@ export function KPICardsWithHoverEffects() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 py-10 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 py-10 w-full items-stretch">
       {kpis.map((kpi, index) => (
         <KPICard key={kpi.label} {...kpi} index={index} />
       ))}
@@ -80,10 +80,10 @@ const KPICard = ({
   }, [isInView, value]);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="h-full">
       <Card
         className={cn(
-          "flex flex-col py-10 relative group/kpi transition-shadow duration-300 border-[0.5px] border-border/30 dark:border-border/20 bg-card",
+          "flex flex-col py-10 relative group/kpi transition-shadow duration-300 border-[0.5px] border-border/30 dark:border-border/20 bg-card h-full",
           "shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]",
           "dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)]"
         )}
