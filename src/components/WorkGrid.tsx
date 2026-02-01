@@ -1437,9 +1437,6 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
       {/* Testimonials Section - Horizontal Scrolling Marquee */}
       {!showTabs && !externalActiveTab && (
         <div className="w-full py-16 bg-white" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-8">
-            <h2 className="text-2xl font-semibold text-foreground">What clients say</h2>
-          </div>
           <div className="relative overflow-hidden">
             {/* Gradient fade on edges */}
             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
