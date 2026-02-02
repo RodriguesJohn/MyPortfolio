@@ -51,7 +51,7 @@ const projects = [
   },
   {
     id: 15,
-    title: "Eva AI- Personal Assistant | iOS Mobile App",
+    title: "Eva AI | iOS Mobile App | Powered by Google Gemini",
     description: "voice-based all-in-one productivity system to improve efficiency, focus, and workflow.",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
