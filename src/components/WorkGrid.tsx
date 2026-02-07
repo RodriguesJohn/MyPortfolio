@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
 import { Progress } from "@/components/ui/progress";
 import p1Image from "@/assets/P1.png";
@@ -163,6 +163,7 @@ const projects = [
     companyLogo: chaseLogoLight,
     category: "commercial",
     isComingSoon: true,
+    blurThumbnail: true,
   },
   {
     id: 12,
@@ -217,6 +218,7 @@ const projects = [
     category: "commercial",
     businessCategory: "B2B",
     secondaryTag: "Shipped",
+    blurThumbnail: true,
   },
   {
     id: 17,
@@ -577,13 +579,13 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           <img
             src={project.image}
             alt={displayTitle}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         ) : (
           <img
             src={project.image}
             alt={displayTitle}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -636,7 +638,7 @@ function PastProjectListItem({ project }: { project: typeof projects[0] }) {
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -935,7 +937,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
             alt={project.title}
             className={`w-full h-full object-cover object-top transition-transform duration-500 ${
               project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
-            }`}
+            } ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -943,7 +945,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
       <div className="px-4 py-3">
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <h3 className="text-sm font-medium text-foreground truncate flex-1">{project.title}</h3>
+            <h3 className="text-sm font-medium text-foreground truncate flex-1 flex items-center gap-1.5">{project.title}{(project as any).blurThumbnail && <Lock className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />}</h3>
             <div className="flex items-center gap-1.5 flex-shrink-0">
               {(project as any).businessCategory && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800/60 dark:text-gray-300">
@@ -1040,7 +1042,7 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -1048,7 +1050,7 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <h3 className="text-lg font-medium text-foreground truncate">{project.title}</h3>
+          <h3 className="text-lg font-medium text-foreground truncate flex items-center gap-1.5">{project.title}{(project as any).blurThumbnail && <Lock className="w-4 h-4 text-muted-foreground flex-shrink-0" />}</h3>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
@@ -1114,14 +1116,14 @@ function CompactProjectCard({ project }: { project: typeof projects[0] }) {
             alt={project.title}
             className={`w-full h-full object-cover object-top transition-transform duration-500 ${
               project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
-            }`}
+            } ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
       {/* Text Content - Compact */}
       <div className="px-3 py-2">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <h3 className="text-xs font-medium text-foreground truncate flex-1">{project.title}</h3>
+          <h3 className="text-xs font-medium text-foreground truncate flex-1 flex items-center gap-1">{project.title}{(project as any).blurThumbnail && <Lock className="w-3 h-3 text-muted-foreground flex-shrink-0" />}</h3>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
