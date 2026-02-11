@@ -45,7 +45,7 @@ export const PortfolioPasswordProtect = ({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
         <div className="animate-pulse text-muted-foreground">Loading...</div>
       </div>
     );
@@ -56,7 +56,7 @@ export const PortfolioPasswordProtect = ({
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <Card className="p-8 shadow-lg">
           <CardContent className="p-0">
