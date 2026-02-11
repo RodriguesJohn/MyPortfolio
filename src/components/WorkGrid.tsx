@@ -218,7 +218,6 @@ const projects = [
     category: "commercial",
     businessCategory: "B2B",
     secondaryTag: "Shipped",
-    blurThumbnail: true,
   },
   {
     id: 17,
