@@ -45,7 +45,7 @@ export const PortfolioPasswordProtect = ({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 sm:px-6">
         <div className="animate-pulse text-muted-foreground">Loading...</div>
       </div>
     );
@@ -56,23 +56,23 @@ export const PortfolioPasswordProtect = ({
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        <Card className="p-8 shadow-lg">
+    <div className="min-h-screen min-h-[100dvh] bg-[#FAFAFA] flex items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      <div className="w-full max-w-[calc(100%-2rem)] sm:max-w-md mx-auto">
+        <Card className="p-5 sm:p-8 shadow-lg rounded-xl sm:rounded-2xl">
           <CardContent className="p-0">
-            <div className="flex flex-col items-center text-center mb-8">
-              <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-6 animate-pulse">
-                <Lock className="h-8 w-8 text-muted-foreground animate-bounce" style={{ animationDuration: '2s' }} />
+            <div className="flex flex-col items-center text-center mb-5 sm:mb-8">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-muted/50 flex items-center justify-center mb-3 sm:mb-6 animate-pulse">
+                <Lock className="h-6 w-6 sm:h-8 sm:w-8 text-muted-foreground animate-bounce" style={{ animationDuration: '2s' }} />
               </div>
-              <h1 className="text-2xl font-bold text-foreground mb-2">
+              <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2">
                 John Rodrigues
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-xs sm:text-base text-muted-foreground px-2">
                 Please enter the password to access my portfolio.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
               <div>
                 <div className="relative">
                   <Input
@@ -80,35 +80,35 @@ export const PortfolioPasswordProtect = ({
                     placeholder="Enter password"
                     value={inputPassword}
                     onChange={(e) => setInputPassword(e.target.value)}
-                    className="w-full pr-10 focus:ring-0 focus:ring-offset-0 focus:border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="w-full pr-10 h-11 sm:h-10 text-base sm:text-sm focus:ring-0 focus:ring-offset-0 focus:border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0"
                     autoFocus
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
+                      <EyeOff className="h-5 w-5 sm:h-4 sm:w-4" />
                     ) : (
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-5 w-5 sm:h-4 sm:w-4" />
                     )}
                   </button>
                 </div>
                 {error && (
-                  <p className="text-sm text-red-500 mt-2">{error}</p>
+                  <p className="text-xs sm:text-sm text-red-500 mt-2">{error}</p>
                 )}
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full h-11 sm:h-10 text-sm sm:text-base">
                 Enter Portfolio
               </Button>
             </form>
 
-            <p className="text-sm text-muted-foreground text-center mt-6">
+            <p className="text-[11px] sm:text-sm text-muted-foreground text-center mt-4 sm:mt-6 px-2">
               To request password, write to{" "}
               <a
                 href="mailto:john@john-rodrigues.com"
-                className="text-primary font-medium underline hover:text-primary/80 cursor-pointer transition-colors"
+                className="text-primary font-medium underline hover:text-primary/80 cursor-pointer transition-colors break-all"
               >
                 john@john-rodrigues.com
               </a>
