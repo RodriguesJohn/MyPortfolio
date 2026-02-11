@@ -80,7 +80,7 @@ export const PortfolioPasswordProtect = ({
                     placeholder="Enter password"
                     value={inputPassword}
                     onChange={(e) => setInputPassword(e.target.value)}
-                    className="w-full pr-10"
+                    className="w-full pr-10 focus:ring-0 focus:ring-offset-0 focus:border-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0"
                     autoFocus
                   />
                   <button
@@ -108,7 +108,7 @@ export const PortfolioPasswordProtect = ({
               To request password, write to{" "}
               <a
                 href="mailto:john@john-rodrigues.com"
-                className="text-foreground font-medium hover:underline"
+                className="text-primary font-medium underline hover:text-primary/80 cursor-pointer transition-colors"
               >
                 john@john-rodrigues.com
               </a>
