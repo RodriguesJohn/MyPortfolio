@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
-import { PasswordProtect } from "@/components/PasswordProtect";
 import { ArrowLeft, ArrowRight, Lightbulb, CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import aiInsightsVideo from "@/assets/AI Insights App.mp4";
@@ -2454,10 +2453,6 @@ const CaseStudy = () => {
     ];
 
     return (
-      <PasswordProtect
-        password="AccessJohnPortfolio"
-        storageKey="digital-banking-auth"
-      >
       <div className="min-h-screen bg-background pt-24">
         <Header activeTab={undefined} onTabChange={handleTabChange} />
         <div className="py-16 px-6 lg:px-16">
@@ -2906,7 +2901,6 @@ const CaseStudy = () => {
           </div>
         </div>
       </div>
-      </PasswordProtect>
     );
   }
 
