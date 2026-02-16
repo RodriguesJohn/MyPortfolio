@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Lock, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
+import { motion } from "framer-motion";
 
 interface PasswordProtectProps {
   children: React.ReactNode;
@@ -84,9 +85,30 @@ export const PasswordProtect = ({
           <Card className="p-8 shadow-lg">
             <CardContent className="p-0">
               <div className="flex flex-col items-center text-center mb-8">
-                <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-6">
-                  <Lock className="h-8 w-8 text-muted-foreground" />
-                </div>
+                <motion.div
+                  className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-6"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0.1
+                  }}
+                >
+                  <motion.div
+                    animate={{
+                      rotate: [0, -10, 10, -10, 10, 0],
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.5,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Lock className="h-8 w-8 text-muted-foreground" />
+                  </motion.div>
+                </motion.div>
                 <h1 className="text-2xl font-bold text-foreground mb-2">
                   Case Study Available on Request
                 </h1>
