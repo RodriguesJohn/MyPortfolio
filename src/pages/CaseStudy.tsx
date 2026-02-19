@@ -177,7 +177,7 @@ const CaseStudy = () => {
   const isBalanceTransfer = projectId === "3";
   const isAIDataVision = projectId === "4";
   const isToca = projectId === "5";
-  const isPAM = projectId === "6";
+  const isPAM = projectId === "6" || projectId === "22";
   const is3DPrinting = projectId === "7";
   const isMeditationWatchOS = projectId === "10";
   const isDigitalBanking = projectId === "11" || projectId === "16";

@@ -264,6 +264,15 @@ const projects = [
     thumbnailVideo: ollieAIVideo,
     category: "commercial",
   },
+  {
+    id: 22,
+    title: "Please Assist Me",
+    description: "Mobile app to outsource household chores through one platform",
+    image: p5Image,
+    thumbnailVideo: pamVideo,
+    category: "commercial",
+    businessCategory: "B2C",
+  },
 ];
 
 interface WorkGridProps {
@@ -1212,7 +1221,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: Digital Commercial Banking Platform, Outfix, Balance Transfer (full width), Orbi AI, Ollie AI, UX AI Agent (full width), AI Insights App, No-Scroll App, Budgeting AI Agent, My Toca App
+    // Custom order for home page: Digital Commercial Banking Platform, Outfix, Balance Transfer (full width), Orbi AI, Ollie AI, UX AI Agent (full width), AI Insights App, No-Scroll App, Please Assist Me, My Toca App
     const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const outfix = projects.find(p => p.id === 20); // Outfix
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
@@ -1221,7 +1230,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     const uxAIAgent = projects.find(p => p.id === 13); // UX AI Agent
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank
     const noScrollApp = projects.find(p => p.id === 2); // No-scroll app, iOS app
-    const budgetingAIAgent = projects.find(p => p.id === 19); // Budgeting AI Agent
+    const pleaseAssistMe = projects.find(p => p.id === 22); // Please Assist Me
     const tocaApp = projects.find(p => p.id === 5); // My Toca App
 
     // Return in specified order, filtering out undefined
@@ -1230,10 +1239,10 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     // Third row: balanceTransfer (full width)
     // Fourth row: aiProductivityOS (full width)
     // Fifth row: ollieAI (full width)
-    // Sixth row: aiInsights, budgetingAIAgent
+    // Sixth row: aiInsights, pleaseAssistMe
     // Seventh row: uxAIAgent (full width)
     // Eighth row: noScrollApp, tocaApp
-    displayProjects = [digitalCommercialBanking, outfix, balanceTransfer, aiProductivityOS, ollieAI, aiInsights, budgetingAIAgent, uxAIAgent, noScrollApp, tocaApp].filter(Boolean) as typeof projects;
+    displayProjects = [digitalCommercialBanking, outfix, balanceTransfer, aiProductivityOS, ollieAI, aiInsights, pleaseAssistMe, uxAIAgent, noScrollApp, tocaApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
