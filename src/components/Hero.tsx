@@ -405,7 +405,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                   <div className="text-sm sm:text-sm md:text-base lg:text-base text-foreground/70 font-medium leading-relaxed">
-                    <span>Product Designer with over a decade of experience. | Based in San Francisco Bay Area.</span>
+                    <span>Sr. Product Designer | Design Engineer | Based in San Francisco Bay Area</span>
                   </div>
                   <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/60 leading-relaxed w-full">
                     I partner with fast-paced, forward-thinking companies to design 0→1 products with human-centered design, high craft, prototyping, and design engineering. Hands-on product designer simplifying complexity into easy-to-use products and systems.

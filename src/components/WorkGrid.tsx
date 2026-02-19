@@ -51,7 +51,7 @@ const projects = [
   },
   {
     id: 15,
-    title: "Eva AI | iOS Mobile App | Powered by Google Gemini",
+    title: "Orbi AI | iOS Mobile App | Powered by Google Gemini",
     description: "voice-based all-in-one productivity system to improve efficiency, focus, and workflow.",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
@@ -1199,11 +1199,11 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   const isHomePage = !showTabs && !externalActiveTab;
   
   if (isHomePage) {
-    // Custom order for home page: Digital Commercial Banking Platform, Outfix, Balance Transfer (full width), Eva AI, Ollie AI, UX AI Agent (full width), AI Insights App, No-Scroll App, Budgeting AI Agent, My Toca App
+    // Custom order for home page: Digital Commercial Banking Platform, Outfix, Balance Transfer (full width), Orbi AI, Ollie AI, UX AI Agent (full width), AI Insights App, No-Scroll App, Budgeting AI Agent, My Toca App
     const digitalCommercialBanking = projects.find(p => p.id === 16); // Digital Commercial Banking Platform
     const outfix = projects.find(p => p.id === 20); // Outfix
     const balanceTransfer = projects.find(p => p.id === 3); // Balance transfer for Citibank
-    const aiProductivityOS = projects.find(p => p.id === 15); // Eva AI
+    const aiProductivityOS = projects.find(p => p.id === 15); // Orbi AI
     const ollieAI = projects.find(p => p.id === 21); // Ollie AI
     const uxAIAgent = projects.find(p => p.id === 13); // UX AI Agent
     const aiInsights = projects.find(p => p.id === 1); // AI Insights app for Citibank

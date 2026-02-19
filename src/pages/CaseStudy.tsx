@@ -2271,7 +2271,7 @@ const CaseStudy = () => {
     );
   }
 
-  // Eva AI Case Study
+  // Orbi AI Case Study
   if (isAIProductivityOS) {
     return (
       <div className="min-h-screen bg-background pt-24">
@@ -2290,14 +2290,14 @@ const CaseStudy = () => {
             {/* Header */}
             <div className="mb-16">
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
-                Eva AI- Personal Assistant | iOS Mobile App
+                Orbi AI - Personal Assistant | iOS Mobile App
               </h1>
               
               {/* Hero Image */}
               <div className="rounded-xl overflow-hidden mb-8">
                 <img 
                   src={evaAIImage} 
-                  alt="Eva AI" 
+                  alt="Orbi AI" 
                   className="w-full h-auto"
                 />
               </div>
@@ -2307,7 +2307,7 @@ const CaseStudy = () => {
             <Section>
               <SectionTitle>Product Overview</SectionTitle>
               <SectionText>
-                Eva AI is a productivity OS iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
+                Orbi AI is a productivity OS iOS app designed to help you stay productive and efficient by managing your goals, tasks, and captured thoughts with the power of AI. Voice input makes task tracking effortless, eliminating the need for manual entry. The AI understands your intent and automatically categorizes your tasks and goals, so you don't have to do it yourself. The app is built to help people stay on track with their goals, manage tasks seamlessly, and remain organized.
               </SectionText>
             </Section>
 
