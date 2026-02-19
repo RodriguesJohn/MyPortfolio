@@ -6,6 +6,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Lock } from "lucide-react";
 import { KPICardsWithHoverEffects } from "@/components/ui/kpi-cards-with-hover-effects";
+import { About } from "@/components/About";
 import { Progress } from "@/components/ui/progress";
 import p1Image from "@/assets/P1.png";
 import p2Image from "@/assets/P2.png";
@@ -386,7 +387,11 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
                   <a
                     href="mailto:john@john-rodrigues.com"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center justify-center px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors"
+                    className="inline-flex items-center justify-center px-4 py-2 text-white rounded-full text-sm font-medium transition-all hover:scale-105 active:scale-95"
+                    style={{
+                      background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+                    }}
                   >
                     Request Access
                   </a>
@@ -761,14 +766,18 @@ function PlaybookCard() {
               </div>
             </div>
           </div>
-          <Button 
-            className="rounded-full w-fit mx-auto md:mx-0 group/btn hover:gap-3 transition-all duration-300" 
+          <Button
+            className="rounded-full w-fit mx-auto md:mx-0 group/btn hover:gap-3 transition-all duration-300 text-white hover:scale-105 active:scale-95"
             size="lg"
+            style={{
+              background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+            }}
             asChild
           >
-            <a 
-              href="https://johnrodrigues.substack.com/" 
-              target="_blank" 
+            <a
+              href="https://johnrodrigues.substack.com/"
+              target="_blank"
               rel="noopener noreferrer"
             >
               Get the Playbook
@@ -866,7 +875,11 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
                   <a
                     href="mailto:john@john-rodrigues.com"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center justify-center px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors"
+                    className="inline-flex items-center justify-center px-4 py-2 text-white rounded-full text-sm font-medium transition-all hover:scale-105 active:scale-95"
+                    style={{
+                      background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+                    }}
                   >
                     Request Access
                   </a>
@@ -1425,6 +1438,15 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
           </>
         )}
       </div>
+
+      {/* About Section */}
+      {!showTabs && !externalActiveTab && (
+        <div className="w-screen mt-12" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+            <About />
+          </div>
+        </div>
+      )}
 
       {/* Get the Guide Card - Full Width Gray Background */}
       {!showTabs && !externalActiveTab && (

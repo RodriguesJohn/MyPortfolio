@@ -71,12 +71,16 @@ function BookCard({
                 Coming Soon
               </Button>
             ) : (
-              <Button 
-                className="rounded-full w-full group/btn hover:gap-3 transition-all duration-300" 
+              <Button
+                className="rounded-full w-full group/btn hover:gap-3 transition-all duration-300 text-white hover:scale-105 active:scale-95"
                 size="lg"
+                style={{
+                  background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+                }}
                 asChild
               >
-                <a 
+                <a
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -4,6 +4,8 @@ import chaseLogoLight from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
 import tocaLogoWhite from "@/assets/toca White.png";
 import tocaLogoDark from "@/assets/Toca.png";
+import outfixLogo from "@/assets/OutfixLogo.png";
+import pamLogo from "@/assets/PAMLogo.png";
 import googleLogo from "@/assets/GoogleLogog.png";
 import metaLogo from "@/assets/Meta-Emblem.png";
 import appleLogo from "@/assets/Apple-Logo.png";
@@ -288,11 +290,15 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   <div className="mt-8">
                     <Button
                       size="lg"
-                      className="rounded-full px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                      className="rounded-full px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base text-white transition-all duration-300 hover:scale-105 active:scale-95"
+                      style={{
+                        background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+                      }}
                       asChild
                     >
                       <a
-                        href="https://calendly.com/john-john-rodrigues/discovery-call" 
+                        href="https://calendly.com/john-john-rodrigues/discovery-call"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -413,57 +419,41 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 </div>
 
                 {/* Company Logos - Left-Aligned */}
-                <div className="overflow-hidden w-full sm:w-3/4 lg:w-2/3 opacity-80 hover:opacity-100 transition-opacity duration-300 mb-6 sm:mb-8">
-                  <div
-                    className="flex items-center gap-4 sm:gap-6 md:gap-8"
-                    style={{
-                      animation: 'scroll 20s linear infinite'
-                    }}
-                  >
-                    {/* First set of logos */}
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={citiLogo}
-                        alt="Citi"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={chaseLogoLight}
-                        alt="Chase"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={tocaLogoDark}
-                        alt="TOCA"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
-                    {/* Duplicate set for seamless loop */}
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={citiLogo}
-                        alt="Citi"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={chaseLogoLight}
-                        alt="Chase"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
-                    <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
-                      <img
-                        src={tocaLogoDark}
-                        alt="TOCA"
-                        className="h-full w-auto transition-all object-contain opacity-100"
-                      />
-                    </div>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8 opacity-80 hover:opacity-100 transition-opacity duration-300 mb-6 sm:mb-8">
+                  <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                    <img
+                      src={outfixLogo}
+                      alt="Outfix"
+                      className="h-full w-auto transition-all object-contain opacity-100"
+                    />
+                  </div>
+                  <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                    <img
+                      src={tocaLogoDark}
+                      alt="TOCA"
+                      className="h-full w-auto transition-all object-contain opacity-100"
+                    />
+                  </div>
+                  <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                    <img
+                      src={citiLogo}
+                      alt="Citi"
+                      className="h-full w-auto transition-all object-contain opacity-100"
+                    />
+                  </div>
+                  <div className="h-4 sm:h-5 lg:h-6 flex items-center flex-shrink-0">
+                    <img
+                      src={chaseLogoLight}
+                      alt="Chase"
+                      className="h-full w-auto transition-all object-contain opacity-100"
+                    />
+                  </div>
+                  <div className="h-8 sm:h-9 lg:h-10 flex items-center flex-shrink-0">
+                    <img
+                      src={pamLogo}
+                      alt="Please Assist Me"
+                      className="h-full w-auto transition-all object-contain opacity-100"
+                    />
                   </div>
                 </div>
 
@@ -650,8 +640,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
       {/* Call-to-Action Buttons Group */}
       <div className="flex items-center gap-4 flex-wrap hidden mt-8">
         <Button
-          variant="default"
-          className="rounded-full"
+          className="rounded-full text-white hover:scale-105 active:scale-95"
+          style={{
+            background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+          }}
           onClick={onWorkClick}
         >
           Explore my Work

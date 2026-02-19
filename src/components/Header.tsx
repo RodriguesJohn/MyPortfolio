@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown, Book } from "lucide-react";
+import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown, Book, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -21,13 +21,12 @@ const navItems = [
   { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
   { icon: FolderOpen, label: "Playbook", href: "https://johnrodrigues.substack.com/" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
-  { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
 ];
 
 // Accordion menu items
 const accordionMenuItems = [
-  { icon: Handshake, label: "One-to-one consulting", value: "Consulting", path: "/consulting" },
-  { icon: BookOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
+  { icon: Handshake, label: "Book 15-minute call", value: "Consulting", path: "/consulting" },
+  { icon: Mic, label: "Speaking", value: "Speaking", path: "/speaking" },
   { icon: Book, label: "Books", value: "Books", path: "/books" },
   { icon: FolderOpen, label: "All Projects", value: "All Projects", path: "/all-projects" },
   { icon: LinkIcon, label: "Links", value: "Quick Links", path: "/links" },
@@ -153,24 +152,25 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
         <div className="flex items-center gap-2">
           <div className="hidden lg:flex items-center gap-2">
             <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full h-8 w-8"
+              variant="outline"
+              className="rounded-full h-8 text-xs font-medium"
               asChild
             >
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Linkedin className="h-4 w-4" />
-              </a>
+              <Link to="/resume" onClick={() => onTabChange?.("Resume")}>
+                Resume
+              </Link>
             </Button>
-            
+
             <Button
-              variant="ghost"
-              className="rounded-full gap-2 h-8 text-xs"
+              className="rounded-full h-8 text-xs font-medium text-white border-0"
+              style={{
+                background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+              }}
               asChild
             >
-              <a href="mailto:contact@example.com">
-                <Mail className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Get in touch</span>
+              <a href="https://www.linkedin.com/in/john-rodrigues4/" target="_blank" rel="noopener noreferrer">
+                Get in touch
               </a>
             </Button>
           </div>
@@ -282,23 +282,26 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                 
                 <div className="flex flex-col gap-2 pt-6 border-t">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     className="w-full justify-start gap-3"
                     asChild
                   >
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="h-4 w-4" />
-                      LinkedIn
-                    </a>
+                    <Link to="/resume" onClick={() => handleNavClick("Resume")}>
+                      <FileText className="h-4 w-4" />
+                      Resume
+                    </Link>
                   </Button>
-                  
+
                   <Button
-                    variant="ghost"
-                    className="w-full justify-start gap-3"
+                    className="w-full justify-start gap-3 text-white border-0"
+                    style={{
+                      background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+                    }}
                     asChild
                   >
-                    <a href="mailto:contact@example.com">
-                      <Mail className="h-4 w-4" />
+                    <a href="https://www.linkedin.com/in/john-rodrigues4/" target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="h-4 w-4" />
                       Get in touch
                     </a>
                   </Button>

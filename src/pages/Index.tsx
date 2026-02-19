@@ -9,6 +9,7 @@ import { Speaking } from "@/components/Speaking";
 import { About } from "@/components/About";
 import { Consulting } from "@/components/Consulting";
 import { Books } from "@/components/Books";
+import { Resume } from "@/components/Resume";
 import { MessageCircle, Sparkles, Mic, Keyboard } from "lucide-react";
 import profileImage from "@/assets/PP.jpg";
 
@@ -23,6 +24,7 @@ const pathToTabMap: Record<string, string> = {
   "/about": "About",
   "/links": "Quick Links",
   "/books": "Books",
+  "/resume": "Resume",
 };
 
 const tabToPathMap: Record<string, string> = {
@@ -35,6 +37,7 @@ const tabToPathMap: Record<string, string> = {
   "About": "/about",
   "Quick Links": "/links",
   "Books": "/books",
+  "Resume": "/resume",
 };
 
 const Index = () => {
@@ -101,6 +104,8 @@ const Index = () => {
         return <About />;
       case "Books":
         return <Books />;
+      case "Resume":
+        return <Resume />;
       default:
         return <WorkGrid />;
     }
@@ -110,11 +115,12 @@ const Index = () => {
   const isTestimonialsPage = activeTab === "Testimonials";
   const isSpeakingPage = activeTab === "Speaking";
   const isBooksPage = activeTab === "Books";
+  const isResumePage = activeTab === "Resume";
 
   return (
     <div className="min-h-screen pt-24">
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
-      {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && !isBooksPage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
+      {!isQuickLinksPage && !isTestimonialsPage && !isSpeakingPage && !isBooksPage && !isResumePage && activeTab !== "All Projects" && activeTab !== "Explorations" && <Hero 
         activeTab={activeTab}
         onChatClick={handleChatClick}
         onWorkClick={() => {
@@ -127,7 +133,7 @@ const Index = () => {
           }, 100);
         }} 
       />}
-      <div className={activeTab === "All Projects" || activeTab === "Explorations" || activeTab === "Books" ? "bg-[#FAFAFA] min-h-screen" : "bg-white"}>
+      <div className={activeTab === "All Projects" || activeTab === "Explorations" || activeTab === "Books" || activeTab === "Resume" ? "bg-[#FAFAFA] min-h-screen" : "bg-white"}>
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
           {renderContent()}
         </div>
@@ -176,7 +182,11 @@ const Index = () => {
           />
           <button
             type="submit"
-            className="flex items-center justify-center h-9 w-9 rounded-full bg-foreground text-background flex-shrink-0 hover:bg-foreground/90 transition-all hover:scale-105 active:scale-95"
+            className="flex items-center justify-center h-9 w-9 rounded-full text-white flex-shrink-0 transition-all hover:scale-105 active:scale-95"
+            style={{
+              background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+            }}
             aria-label="Send message"
           >
             <MessageCircle className="h-4 w-4" />
