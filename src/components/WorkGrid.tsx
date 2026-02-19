@@ -272,6 +272,8 @@ const projects = [
     thumbnailVideo: pamVideo,
     category: "commercial",
     businessCategory: "B2C",
+    secondaryTag: "Shipped",
+    rating: "3.7 on App Store",
   },
 ];
 
@@ -477,6 +479,11 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
               {(project as any).secondaryTag && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100/40 text-gray-600/40 dark:bg-gray-800/20 dark:text-gray-400/40">
                   {(project as any).secondaryTag}
+                </span>
+              )}
+              {(project as any).rating && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-100/60 text-amber-700/70 dark:bg-amber-900/30 dark:text-amber-400/70">
+                  ★ {(project as any).rating}
                 </span>
               )}
             </div>
@@ -976,6 +983,11 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
               {(project as any).secondaryTag && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:text-gray-400">
                   {(project as any).secondaryTag}
+                </span>
+              )}
+              {(project as any).rating && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400">
+                  ★ {(project as any).rating}
                 </span>
               )}
             </div>
