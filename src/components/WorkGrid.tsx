@@ -92,13 +92,14 @@ const projects = [
   {
     id: 2,
     title: "No-Scroll App, iOS App",
-    description: "No-scroll app, iOS app • 4.6 ⭐ App Store • 50K+ downloads",
+    description: "Screen time limiting app • 50K+ downloads",
     image: noScrollAppImage,
     video: aiSummaryVideo,
     link: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216?ppid=26858afa-d233-49c4-b4d3-4e2daaf8ce3f",
     category: "commercial",
     businessCategory: "B2C",
     secondaryTag: "Shipped",
+    rating: "4.6 on App Store",
   },
   {
     id: 3,
