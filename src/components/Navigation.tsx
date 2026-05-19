@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 const tabs = [
   "Work Highlights",
   "All Projects",
-  "Learn",
+  "AI Design Academy",
   "Publication",
   "Testimonials",
   "Speaking",
@@ -26,13 +26,14 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   };
 
   const renderTab = (tab: string) => {
-    if (tab === "Learn") {
+    if (tab === "AI Design Academy") {
       return (
         <a
           key={tab}
-          href="https://theaidesignacademy.com/"
+          href="https://www.theaidesignacademy.com/"
           target="_blank"
           rel="noopener noreferrer"
+          title="Opens AI Design Academy in a new tab (separate site from this portfolio)"
           className={`py-4 px-2 text-sm md:text-base border-b-2 whitespace-nowrap transition-colors border-transparent text-muted-foreground hover:text-foreground flex-shrink-0`}
           onClick={() => setIsMenuOpen(false)}
         >
@@ -98,13 +99,14 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
               <div className="border-t bg-background">
                 <div className="flex flex-col">
                   {tabs.map((tab) => {
-                    if (tab === "Learn") {
+                    if (tab === "AI Design Academy") {
                       return (
                         <a
                           key={tab}
-                          href="https://theaidesignacademy.com/"
+                          href="https://www.theaidesignacademy.com/"
                           target="_blank"
                           rel="noopener noreferrer"
+                          title="Opens AI Design Academy in a new tab (separate site from this portfolio)"
                           className={`py-3 px-4 text-sm transition-colors border-l-4 ${
                             activeTab === tab
                               ? "border-foreground font-medium bg-muted/50"

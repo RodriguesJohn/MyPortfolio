@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown, Book, FileText } from "lucide-react";
+import { Linkedin, Mail, Briefcase, FolderOpen, GraduationCap, BookOpen, MessageSquare, Mic, User, Link as LinkIcon, Handshake, Menu, ChevronDown, Book, FileText, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -18,8 +18,12 @@ interface HeaderProps {
 
 const navItems = [
   { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
-  { icon: GraduationCap, label: "Learn", href: "https://theaidesignacademy.com/" },
-  { icon: FolderOpen, label: "Playbook", href: "https://johnrodrigues.substack.com/" },
+  {
+    icon: GraduationCap,
+    label: "AI Design Academy",
+    href: "https://www.theaidesignacademy.com/",
+  },
+  { icon: FolderOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
 ];
 
@@ -58,12 +62,19 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
             const isActive = activeTab === item.value || (item.path && location.pathname === item.path);
             
             if (item.href) {
+              const isAcademy =
+                item.href.includes("theaidesignacademy.com");
               return (
                 <a
                   key={item.label}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title={
+                    isAcademy
+                      ? "Opens AI Design Academy in a new tab (separate site from this portfolio)"
+                      : undefined
+                  }
                   className={cn(
                     "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
                     "text-muted-foreground/60 hover:text-foreground hover:bg-muted/50"
@@ -151,6 +162,16 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2">
           <div className="hidden lg:flex items-center gap-2">
+            <a
+              href="https://github.com/RodriguesJohn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-8 w-8 flex items-center justify-center rounded-full text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 transition-all"
+              aria-label="GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+
             <Button
               variant="outline"
               className="rounded-full h-8 text-xs font-medium"
@@ -201,12 +222,19 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                     const Icon = item.icon;
                     
                     if (item.href) {
+                      const isAcademy =
+                        item.href.includes("theaidesignacademy.com");
                       return (
                         <a
                           key={item.label}
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          title={
+                            isAcademy
+                              ? "Opens AI Design Academy in a new tab (separate site from this portfolio)"
+                              : undefined
+                          }
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={cn(
                             "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all",
@@ -281,6 +309,17 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                 </nav>
                 
                 <div className="flex flex-col gap-2 pt-6 border-t">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start gap-3"
+                    asChild
+                  >
+                    <a href="https://github.com/RodriguesJohn" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Github className="h-4 w-4" />
+                      GitHub
+                    </a>
+                  </Button>
+
                   <Button
                     variant="outline"
                     className="w-full justify-start gap-3"

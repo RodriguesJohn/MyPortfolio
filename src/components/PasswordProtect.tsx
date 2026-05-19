@@ -18,7 +18,6 @@ export const PasswordProtect = ({
   children,
   password,
   storageKey,
-  title = "Protected Content"
 }: PasswordProtectProps) => {
   const [inputPassword, setInputPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +27,6 @@ export const PasswordProtect = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user has already authenticated
     const storedAuth = sessionStorage.getItem(storageKey);
     if (storedAuth === "authenticated") {
       setIsAuthenticated(true);
@@ -50,7 +48,7 @@ export const PasswordProtect = ({
   };
 
   const handleTabChange = () => {
-    navigate('/');
+    navigate("/");
   };
 
   if (isLoading) {
@@ -75,7 +73,7 @@ export const PasswordProtect = ({
         <div className="max-w-md mx-auto">
           <Button
             variant="ghost"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="mb-12 group pl-0 hover:pl-2 transition-all"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -86,35 +84,45 @@ export const PasswordProtect = ({
             <CardContent className="p-0">
               <div className="flex flex-col items-center text-center mb-8">
                 <motion.div
-                  className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-6"
+                  className="relative w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-6"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{
                     type: "spring",
                     stiffness: 260,
                     damping: 20,
-                    delay: 0.1
+                    delay: 0.1,
                   }}
                 >
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full bg-muted/40"
+                    animate={{ scale: [1, 1.6], opacity: [0.5, 0] }}
+                    transition={{
+                      duration: 2.2,
+                      ease: "easeOut",
+                      repeat: Infinity,
+                      repeatDelay: 0.4,
+                    }}
+                  />
                   <motion.div
                     animate={{
-                      rotate: [0, -10, 10, -10, 10, 0],
+                      y: [0, -2, 0],
+                      rotate: [0, -8, 8, -8, 8, 0, 0, 0, 0],
                     }}
                     transition={{
-                      duration: 0.6,
-                      delay: 0.5,
-                      ease: "easeInOut"
+                      duration: 3.2,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      times: [0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.5, 0.75, 1],
                     }}
                   >
-                    <Lock className="h-8 w-8 text-muted-foreground" />
+                    <Lock className="h-8 w-8 text-muted-foreground relative z-10" />
                   </motion.div>
                 </motion.div>
-                <h1 className="text-2xl font-bold text-foreground mb-2">
-                  Case Study Available on Request
+                <h1 className="text-xl font-semibold text-foreground">
+                  Available on request
                 </h1>
-                <p className="text-muted-foreground">
-                  Case studies available on request. Please enter the password to view.
-                </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -125,7 +133,7 @@ export const PasswordProtect = ({
                       placeholder="Enter password"
                       value={inputPassword}
                       onChange={(e) => setInputPassword(e.target.value)}
-                      className="w-full pr-10"
+                      className="w-full pr-10 h-11 border-foreground/20 focus-visible:border-foreground/40"
                       autoFocus
                     />
                     <button
@@ -150,17 +158,15 @@ export const PasswordProtect = ({
               </form>
 
               <p className="text-sm text-muted-foreground text-center mt-6">
-                If you do not have the password, contact{" "}
+                Need access?{" "}
                 <a
-                  href="mailto:john@john-rodrigues.com"
-                  className="text-foreground font-medium hover:underline"
+                  href="https://www.linkedin.com/in/john-rodrigues4/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground font-medium underline underline-offset-2"
                 >
-                  John
-                </a>.
-              </p>
-
-              <p className="text-xs text-muted-foreground/60 text-center mt-4">
-                More in-depth case studies and walk-throughs are available on request.
+                  Contact John
+                </a>
               </p>
             </CardContent>
           </Card>

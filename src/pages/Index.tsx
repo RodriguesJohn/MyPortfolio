@@ -133,7 +133,7 @@ const Index = () => {
           }, 100);
         }} 
       />}
-      <div className={activeTab === "All Projects" || activeTab === "Explorations" || activeTab === "Books" || activeTab === "Resume" ? "bg-[#FAFAFA] min-h-screen" : "bg-white"}>
+      <div className={activeTab === "All Projects" || activeTab === "Explorations" || activeTab === "Books" || activeTab === "Resume" ? "bg-[#FAFAFA] dark:bg-background min-h-screen" : "bg-white dark:bg-background"}>
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
           {renderContent()}
         </div>
@@ -224,7 +224,7 @@ const Index = () => {
                   />
                 </div>
                 <div>
-                  <h2 className="font-semibold text-foreground">Chat with John.ai</h2>
+                  <h2 className="font-semibold text-foreground">John.ai</h2>
                   <p className="text-xs text-muted-foreground">Powered by Delphi AI</p>
                 </div>
               </div>
@@ -246,7 +246,7 @@ const Index = () => {
               <iframe
                 src={delphiUrl}
                 className="w-full h-full border-0"
-                title="Chat with John.ai"
+                title="John.ai"
                 allow="microphone; camera"
                 sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
                 style={{ colorScheme: 'light' }}

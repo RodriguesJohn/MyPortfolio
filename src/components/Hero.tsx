@@ -125,9 +125,9 @@ function TitleWithAnimation() {
         <span className="whitespace-nowrap">
           products
           <span className="thinking-dots inline-block ml-1">
-            <span className="dot">.</span>
-            <span className="dot">.</span>
-            <span className="dot">.</span>
+            <span className="dot" />
+            <span className="dot" />
+            <span className="dot" />
           </span>
         </span>
       </span>
@@ -167,11 +167,11 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
   }
 
   return (
-    <section className={`-mt-24 sm:-mt-20 md:-mt-16 lg:-mt-12 pt-32 sm:pt-28 md:pt-32 lg:pt-36 xl:pt-40 pb-8 sm:pb-12 md:pb-16 lg:pb-24 xl:pb-32 w-full ${isConsulting ? 'bg-gray-50 min-h-screen' : 'bg-gray-50'}`}>
+    <section className={`-mt-24 sm:-mt-20 md:-mt-16 lg:-mt-12 pt-32 sm:pt-28 md:pt-32 lg:pt-36 xl:pt-40 pb-8 sm:pb-12 md:pb-16 lg:pb-24 xl:pb-32 w-full ${isConsulting ? 'bg-gray-50 dark:bg-background min-h-screen' : 'bg-gray-50 dark:bg-background'}`}>
       <div className={`${isConsulting ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24`}>
         {/* White Card Container */}
         <div 
-          className={`bg-white dark:bg-gray-900/50 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-16 relative overflow-hidden ${isConsulting ? '' : 'transition-transform duration-500 ease-out cursor-pointer group'} border border-gray-200/50 hover:border-gray-200/70 dark:hover:border-gray-700/50`}
+          className={`bg-white dark:bg-card rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-16 relative overflow-hidden ${isConsulting ? '' : 'transition-transform duration-500 ease-out cursor-pointer group'} border border-gray-200/50 dark:border-border hover:border-gray-200/70 dark:hover:border-border/70`}
           style={isConsulting ? {
             boxShadow: '0 4px 60px rgba(0, 0, 0, 0.03), 0 2px 40px rgba(0, 0, 0, 0.015)'
           } : {
@@ -411,7 +411,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                 {/* Name and Role */}
                 <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                   <div className="text-sm sm:text-sm md:text-base lg:text-base text-foreground/70 font-medium leading-relaxed">
-                    <span>Sr. Product Designer | Design Engineer | Based in San Francisco Bay Area</span>
+                    <span>AI Native Product Designer | Design Engineer | Based in the Bay Area</span>
                   </div>
                   <p className="text-base sm:text-base md:text-lg lg:text-lg text-muted-foreground/60 leading-relaxed w-full">
                     I partner with fast-paced, forward-thinking companies to design 0→1 products with human-centered design, high craft, prototyping, and design engineering. Hands-on product designer simplifying complexity into easy-to-use products and systems.
@@ -457,7 +457,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   </div>
                 </div>
 
-                {/* Chat with John CTA */}
+                {/* John.ai CTA */}
                 <div className="mt-6 sm:mt-8">
                   <Button
                     variant="outline"
@@ -486,8 +486,8 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
               <h2 className="text-2xl font-semibold mb-8 text-foreground">What clients say</h2>
               <div className="relative overflow-hidden">
                 {/* Gradient fade on edges */}
-                <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 dark:from-background to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 dark:from-background to-transparent z-10 pointer-events-none" />
                 
                 {/* Scrolling container */}
                 <div 
@@ -541,7 +541,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   ].map((testimonial) => (
                     <div
                       key={testimonial.id}
-                      className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-lg p-6 border border-gray-200/50 shadow-sm"
+                      className="flex-shrink-0 w-[350px] bg-white dark:bg-card rounded-lg p-6 border border-gray-200/50 dark:border-border shadow-sm"
                     >
                       <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
                         "{testimonial.text}"
@@ -608,7 +608,7 @@ export function Hero({ onChatClick, onWorkClick, activeTab }: HeroProps) {
                   ].map((testimonial) => (
                     <div
                       key={`dup-${testimonial.id}`}
-                      className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-lg p-6 border border-gray-200/50 shadow-sm"
+                      className="flex-shrink-0 w-[350px] bg-white dark:bg-card rounded-lg p-6 border border-gray-200/50 dark:border-border shadow-sm"
                     >
                       <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
                         "{testimonial.text}"

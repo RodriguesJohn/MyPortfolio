@@ -103,9 +103,9 @@ export function ParticleSphere({ isVisible }: ParticleSphereProps) {
 
       particlesRef.current.forEach((particle, index) => {
         // Rotate around X axis
-        let x = particle.x - centerX;
-        let y = particle.y - centerY;
-        let z = particle.z - centerZ;
+        const x = particle.x - centerX;
+        const y = particle.y - centerY;
+        const z = particle.z - centerZ;
 
         // Rotate around Y axis
         const cosY = Math.cos(rotationY);

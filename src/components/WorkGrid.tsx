@@ -52,7 +52,7 @@ const projects = [
   },
   {
     id: 15,
-    title: "Orbi AI | iOS Mobile App | Powered by Google Gemini",
+    title: "Orbi AI - Agentic Productivity iOS App",
     description: "voice-based all-in-one productivity system to improve efficiency, focus, and workflow.",
     image: p5Image,
     thumbnailVideo: aiVoiceVideo,
@@ -255,7 +255,6 @@ const projects = [
     thumbnailVideo: outfixVideo,
     category: "commercial",
     businessCategory: "B2C",
-    showRequestModal: true,
   },
   {
     id: 21,
@@ -325,7 +324,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
     return (
       <Card
         ref={ref}
-        className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl relative ${
+        className={`group overflow-hidden border-0 bg-white dark:bg-card transition-all duration-500 cursor-pointer rounded-2xl relative ${
           isInView ? 'blur-0' : 'blur-lg'
         }`}
         style={{
@@ -350,7 +349,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         {/* Request Snackbar - Center of card */}
         <AnimatePresence>
           {showModal && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -361,11 +360,11 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
                 setShowModal(false);
               }}
             >
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.85, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                transition={{ 
+                transition={{
                   type: "spring",
                   stiffness: 400,
                   damping: 25,
@@ -415,7 +414,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         
         {/* Responsive aspect ratio: tall on mobile, rectangular on desktop */}
         <div className={`aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10] overflow-hidden relative ${
-          project.id === 19 ? 'bg-white' : 'bg-gradient-to-b from-gray-50 to-gray-100'
+          project.id === 19 ? 'bg-white dark:bg-muted' : 'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-muted dark:to-muted/60'
         }`}>
           {displayThumbnailVideo ? (
             <video
@@ -497,7 +496,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   return (
     <Card
       ref={ref}
-      className={`group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-2xl relative ${
+      className={`group overflow-hidden border-0 bg-white dark:bg-card transition-all duration-500 cursor-pointer rounded-2xl relative ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
       style={{
@@ -703,49 +702,109 @@ function PlaybookCard() {
   return (
     <Card 
       ref={ref}
-      className={`group overflow-visible border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-8 mb-8 mx-4 sm:mt-12 sm:mb-12 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-16 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[300px] flex items-center transition-all duration-500 ${
+      className={`group overflow-hidden border-[0.5px] border-border/30 bg-gradient-to-br from-muted/50 to-muted/30 hover:from-muted/60 hover:to-muted/40 transition-all duration-500 mt-8 mb-8 mx-4 sm:mt-12 sm:mb-12 sm:mx-6 md:mx-8 lg:mx-12 xl:mx-16 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:border-border/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] min-h-[300px] flex items-center transition-all duration-500 ${
         isInView ? 'blur-0' : 'blur-lg'
       }`}
     >
-      <div className="grid md:grid-cols-2 gap-6 p-4 sm:p-6 md:p-8 w-full justify-items-center md:justify-items-start my-4 mx-4 sm:my-6 sm:mx-6 md:my-12 md:mx-12 lg:my-16 lg:mx-16 xl:my-20 xl:mx-20">
+      <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10 lg:gap-14 p-6 sm:p-8 md:p-10 w-full">
         {/* 3D Book */}
-        <div className="relative flex items-center justify-center ml-0 md:-ml-8 w-full md:w-auto">
-          <div className="relative perspective-1000" style={{ transform: 'rotateY(-15deg)' }}>
-            {/* Book Pages Stack - On the right side, tucked inside */}
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-white dark:bg-gray-100 rounded-r-sm shadow-lg" style={{ transform: 'translateX(8px)', zIndex: 0 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(6px)', zIndex: 1 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-4 bg-white dark:bg-gray-100 rounded-r-sm" style={{ transform: 'translateX(4px)', zIndex: 2 }} />
-            <div className="absolute right-0 top-0 bottom-0 w-2 bg-gray-50 dark:bg-gray-200 rounded-r-sm" style={{ transform: 'translateX(2px)', zIndex: 3 }} />
-            
-            {/* Front Cover */}
-            <div className="relative aspect-[3/4] w-36 sm:w-40 md:w-48 bg-black rounded-lg overflow-hidden" style={{ 
-              transform: 'translateZ(0px)',
-              boxShadow: '0 25px 80px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1)',
-              zIndex: 10
-            }}>
-              <div className="p-6 h-full flex flex-col justify-between text-white relative">
+        <div className="flex-shrink-0 flex items-center justify-center py-4" style={{ perspective: "1200px" }}>
+          <div
+            className="relative"
+            style={{
+              width: 176,
+              height: 232,
+              transform: "rotateY(-18deg) rotateX(3deg)",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {/* Page stack — thin layered edges on the right */}
+            {[
+              { w: 6, x: 6, bg: "#e5e7eb" },
+              { w: 4, x: 4, bg: "#f3f4f6" },
+              { w: 2, x: 2, bg: "#fafafa" },
+            ].map((page, i) => (
+              <div
+                key={i}
+                className="absolute top-[3px] bottom-[3px] rounded-r-[2px]"
+                style={{
+                  right: 0,
+                  width: page.w,
+                  background: page.bg,
+                  transform: `translateX(${page.x}px)`,
+                  zIndex: i,
+                }}
+              />
+            ))}
+
+            {/* Cover */}
+            <div
+              className="absolute inset-0 rounded-[6px] overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(135deg, #141414 0%, #050505 55%, #0a0a0a 100%)",
+                boxShadow:
+                  "0 30px 60px -20px rgba(0,0,0,0.55), 0 18px 36px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset",
+                zIndex: 10,
+              }}
+            >
+              {/* Spine highlight */}
+              <div
+                className="absolute left-0 top-0 bottom-0 w-[6px] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)",
+                }}
+              />
+              {/* Subtle top sheen */}
+              <div
+                className="absolute inset-x-0 top-0 h-1/2 pointer-events-none opacity-30"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%)",
+                }}
+              />
+
+              <div className="relative h-full flex flex-col justify-between p-5 text-white">
+                <div className="h-9 w-9 rounded-md bg-white/10 flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                  </svg>
+                </div>
                 <div>
-                  {/* Logo */}
-                  <div className="mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                      {/* Substack Logo */}
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" fill="currentColor"/>
-                      </svg>
-                    </div>
+                  <div className="text-[10px] tracking-[0.2em] uppercase opacity-55 mb-1.5">
+                    AI Design
                   </div>
-                  <div className="text-xs opacity-80 mb-1">AI Design</div>
-                  <h2 className="text-3xl font-medium mb-2 leading-tight">Playbook</h2>
+                  <div className="text-2xl font-semibold leading-tight tracking-tight">
+                    Playbook
+                  </div>
+                  <div className="mt-4 h-px w-8 bg-white/30" />
                 </div>
               </div>
-              {/* Book spine effect */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/40 to-transparent rounded-l-lg pointer-events-none" />
             </div>
+
+            {/* Ground shadow beneath the book */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+              style={{
+                bottom: -14,
+                width: "78%",
+                height: 20,
+                background:
+                  "radial-gradient(ellipse at center, rgba(0,0,0,0.28) 0%, transparent 70%)",
+                filter: "blur(6px)",
+              }}
+            />
           </div>
         </div>
-        
+
         {/* Book Details */}
-        <div className="flex flex-col gap-4 text-center md:text-left w-full md:w-auto">
+        <div className="flex flex-col gap-4 text-center md:text-left flex-1 min-w-0">
           <div className="w-full">
             <h3 className="text-xl sm:text-2xl font-semibold mb-3 text-foreground">AI Design Playbook</h3>
             <p className="text-muted-foreground mb-4 sm:mb-6 leading-tight text-sm sm:text-base opacity-90 max-w-md mx-auto md:mx-0">
@@ -818,7 +877,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
     <>
       <Card
         ref={ref}
-        className={`group overflow-hidden border-0 bg-white transition-all duration-700 cursor-pointer rounded-2xl h-full flex flex-col relative ${
+        className={`group overflow-hidden border-0 bg-white dark:bg-card transition-all duration-700 cursor-pointer rounded-2xl h-full flex flex-col relative ${
           isInView ? 'blur-0 opacity-100 scale-100' : 'blur-sm opacity-50 scale-95'
         }`}
         style={{
@@ -913,10 +972,10 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
         slightlyReducedHeight ? 'aspect-[4/5] md:aspect-[5/6] lg:aspect-[3/4]' :
         'aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6]'
       } overflow-hidden relative ${
-        project.id === 7 ? 'bg-gray-100' :
-        project.id === 19 ? 'bg-white' :
-        project.id === 20 ? 'bg-gradient-to-b from-gray-50 to-gray-100' :
-        'bg-gradient-to-b from-gray-50 to-gray-100'
+        project.id === 7 ? 'bg-gray-100 dark:bg-muted' :
+        project.id === 19 ? 'bg-white dark:bg-muted' :
+        project.id === 20 ? 'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-muted dark:to-muted/60' :
+        'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-muted dark:to-muted/60'
       } ${project.id === 20 ? 'pb-4' : ''}`}>
         {(project as any).showBlankThumbnail ? (
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/50" />
@@ -1104,7 +1163,7 @@ function CompactProjectCard({ project }: { project: typeof projects[0] }) {
   
   return (
     <Card
-      className="group overflow-hidden border-0 bg-white transition-all duration-500 cursor-pointer rounded-xl flex-shrink-0"
+      className="group overflow-hidden border-0 bg-white dark:bg-card transition-all duration-500 cursor-pointer rounded-xl flex-shrink-0"
       style={{
         boxShadow: '0 2px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.015)',
         width: '280px'
@@ -1255,7 +1314,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
     // Sixth row: aiInsights, pleaseAssistMe
     // Seventh row: uxAIAgent (full width)
     // Eighth row: noScrollApp, tocaApp
-    displayProjects = [digitalCommercialBanking, outfix, balanceTransfer, aiProductivityOS, ollieAI, aiInsights, pleaseAssistMe, uxAIAgent, noScrollApp, tocaApp].filter(Boolean) as typeof projects;
+    displayProjects = [aiProductivityOS, digitalCommercialBanking, outfix, balanceTransfer, ollieAI, aiInsights, pleaseAssistMe, uxAIAgent, noScrollApp, tocaApp].filter(Boolean) as typeof projects;
   } else if (activeTab === "explorations") {
     // Show only first 5 cards for explorations, exclude project 0, 4 and 10
     displayProjects = projects.filter((project) => project.id <= 5 && project.id !== 0 && project.id !== 4 && project.id !== 10);
@@ -1316,7 +1375,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   });
 
   return (
-    <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA]' : 'bg-white'}`}>
+    <section id="work-section" className={`pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16 ${showTabs || externalActiveTab ? 'bg-[#FAFAFA] dark:bg-background' : 'bg-white dark:bg-background'}`}>
       <div className={`${showTabs || externalActiveTab ? 'max-w-7xl' : 'max-w-6xl'} mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16`}>
         {showTabs ? (
           <>
@@ -1481,11 +1540,11 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
 
       {/* Testimonials Section - Horizontal Scrolling Marquee */}
       {!showTabs && !externalActiveTab && (
-        <div className="w-full py-16 bg-white" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}>
+        <div className="w-full py-16 bg-white dark:bg-background" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}>
           <div className="relative overflow-hidden">
             {/* Gradient fade on edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white dark:from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white dark:from-background to-transparent z-10 pointer-events-none" />
             
             {/* Scrolling container */}
             <div 
@@ -1539,7 +1598,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               ].map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200/50 shadow-sm"
+                  className="flex-shrink-0 w-[350px] bg-white dark:bg-card rounded-xl p-6 border border-gray-200/50 dark:border-border shadow-sm"
                 >
                   <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
                     "{testimonial.text}"
@@ -1606,7 +1665,7 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
               ].map((testimonial) => (
                 <div
                   key={`dup-${testimonial.id}`}
-                  className="flex-shrink-0 w-[350px] bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200/50 shadow-sm"
+                  className="flex-shrink-0 w-[350px] bg-white dark:bg-card rounded-xl p-6 border border-gray-200/50 dark:border-border shadow-sm"
                 >
                   <p className="text-base leading-relaxed mb-4 text-muted-foreground/80 line-clamp-4">
                     "{testimonial.text}"

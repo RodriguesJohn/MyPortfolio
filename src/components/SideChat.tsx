@@ -118,7 +118,7 @@ export function SideChat({ isOpen, onClose }: SideChatProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-4 border-b border-border/50 bg-card">
-          <h3 className="font-semibold text-foreground">Chat with John.ai</h3>
+          <h3 className="font-semibold text-foreground">John.ai</h3>
           <Button
             variant="ghost"
             size="icon"

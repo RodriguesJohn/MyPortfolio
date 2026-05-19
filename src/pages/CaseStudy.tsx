@@ -60,6 +60,12 @@ import uxAgentPGImage from "@/assets/UXAgent.png";
 import aiVoiceVideo from "@/assets/EvaAIV2.mov";
 import evaAIImage from "@/assets/EvaAI.jpg";
 import ollieAIVideo from "@/assets/OllieAIDemo.mp4";
+import outfixVideo from "@/assets/OutfixV2.mp4";
+import outfixHero from "@/assets/outfixHero.png";
+import orbImage from "@/assets/Orb.png";
+import onboardingAnimation from "@/assets/OboardingAnimation.mp4";
+import weavyGemini from "@/assets/weavy-gemini.png";
+import figmaWorkspace from "@/assets/FigmaWorkspace.jpg";
 import dcbImage from "@/assets/DCB.png";
 import meditationUntitled1 from "@/assets/MediatationApp/Untitled.png";
 import meditationUntitled2 from "@/assets/MediatationApp/Untitled (1).png";
@@ -94,6 +100,8 @@ import untitled15 from "@/assets/Untitled (14).png";
 import untitled16 from "@/assets/Untitled (15).png";
 import screenshot2023 from "@/assets/Screenshot 2023-06-06 at 7.57.05 PM.png";
 import citiLogo from "@/assets/Citi.svg.png";
+
+const outfixCaseStudyPresentationUrl = "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FrOsBK6wpYRnmYZF6qTAZ1o%2FOutfix-AI-%257C-Case-Study%3Fnode-id%3D3-55%26viewport%3D-3156%252C-4%252C0.47%26t%3DXQ6uWGUXVOvhBcC3-1%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1";
 
 // Reusable components
 const Section = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
@@ -185,13 +193,14 @@ const CaseStudy = () => {
   const isUXAgent = projectId === "13";
   const isAIProductivityOS = projectId === "15";
   const isOllieAI = projectId === "21";
+  const isOutfixAI = projectId === "20";
 
   const handleTabChange = (tab: string) => {
     navigate('/');
   };
 
   // Check if it's a project that has a case study or should show "coming soon"
-  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS || isDigitalBanking || isOllieAI;
+  const hasCaseStudy = isAIInsights || isBalanceTransfer || isToca || isPAM || isMeditationWatchOS || isUXAgent || isAIProductivityOS || isDigitalBanking || isOllieAI || isOutfixAI;
   const isComingSoon = isAIDataVision || is3DPrinting || isVRLearning;
 
   // Get the case study title for coming soon projects
@@ -1320,7 +1329,7 @@ const CaseStudy = () => {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-foreground mt-1">•</span>
-                    <p className="text-base leading-relaxed text-muted-foreground/90">Make the process of order — submit- leave notes — review easier</p>
+                    <p className="text-base leading-relaxed text-muted-foreground/90">Make the process of ordering, submitting notes, and reviewing easier</p>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-foreground mt-1">•</span>
@@ -2289,15 +2298,29 @@ const CaseStudy = () => {
             
             {/* Header */}
             <div className="mb-16">
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-8">
-                Orbi AI - Personal Assistant | iOS Mobile App
+              {/* Case Study Deck */}
+              <h2 className="text-2xl lg:text-3xl font-semibold text-foreground tracking-tight mb-4">
+                Orbi AI Case Study
+              </h2>
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-zinc-900 mb-8">
+                <iframe
+                  src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FkmEskNJDRsWB58Pm89LvtZ%2FOrbi-AI-%257C-CaseStudyPresentation%3Fnode-id%3D1-306%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1"
+                  title="Orbi AI case study deck"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="fullscreen; clipboard-read; clipboard-write"
+                  allowFullScreen
+                />
+              </div>
+
+              <h1 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-8">
+                Orbi AI - Agentic Productivity iOS App
               </h1>
-              
+
               {/* Hero Image */}
               <div className="rounded-xl overflow-hidden mb-8">
-                <img 
-                  src={evaAIImage} 
-                  alt="Orbi AI" 
+                <img
+                  src={evaAIImage}
+                  alt="Orbi AI"
                   className="w-full h-auto"
                 />
               </div>
@@ -2311,10 +2334,34 @@ const CaseStudy = () => {
               </SectionText>
             </Section>
 
+            {/* My Role, Scope and Tool Stack */}
+            <Section>
+              <SectionTitle>My Role, Scope and Tool Stack</SectionTitle>
+              <SectionText className="mb-4">
+                <strong>Role:</strong> Product Designer, Researcher, Prototyper, Strategist and Design Engineer.
+              </SectionText>
+              <SectionText className="mb-6">
+                <strong>Scope:</strong> 0→1 ownership of product direction, UX, UI, interaction design, user research, and prototyping.
+              </SectionText>
+              <div>
+                <p className="text-[11px] tracking-[0.18em] uppercase text-muted-foreground/70 mb-3">The Stack</p>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs sm:text-sm font-medium tracking-[0.12em] uppercase text-foreground/80">
+                  {["Figma", "Claude", "Xcode", "OpenAI Whisper", "TestFlight", "Codex"].map((tool, i, arr) => (
+                    <span key={tool} className="inline-flex items-center gap-3">
+                      <span>{tool}</span>
+                      {i < arr.length - 1 && (
+                        <span className="text-muted-foreground/40">+</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Section>
+
             {/* Why Should This Product Exist */}
             <Section>
               <SectionTitle>Why Should This Product Exist</SectionTitle>
-              
+
               {/* Video */}
               <div className="rounded-xl overflow-hidden bg-muted/20 mb-8">
                 <video
@@ -2326,23 +2373,9 @@ const CaseStudy = () => {
                   playsInline
                 />
               </div>
-              
+
               <SectionText>
                 Most AI productivity tools fall into two extremes: chat-focused interfaces or traditional to-do lists that require manual entry. Chat-based tools are good at conversation, but they rarely <strong>translate intent into actionable, trackable work</strong>. On the other hand, existing task managers rely heavily on manual input, which increases cognitive load and friction when the user is on the go, leaving users with fragmented workflows.
-              </SectionText>
-            </Section>
-
-            {/* My Role, Scope and Tool Stack */}
-            <Section>
-              <SectionTitle>My Role, Scope and Tool Stack</SectionTitle>
-              <SectionText className="mb-4">
-                <strong>Role:</strong> Product Designer, Researcher, Prototyper, Strategist and Design Engineer.
-              </SectionText>
-              <SectionText className="mb-4">
-                <strong>Scope:</strong> 0→1 ownership of product direction, UX, UI, interaction design, user research, and prototyping.
-              </SectionText>
-              <SectionText>
-                <strong>Tool Stack:</strong> Figma, SwiftUI, Cursor, Xcode, Google AI Studio, Gemini API, ElevenLabs, plus extensive sketching with pen and paper.
               </SectionText>
             </Section>
 
@@ -2358,13 +2391,13 @@ const CaseStudy = () => {
             <Section>
               <SectionTitle>Motivation</SectionTitle>
               <SectionText className="mb-6">
-                I found myself constantly juggling handwritten notes, sticky notes, documents, Notion, multiple to-do list apps, and even ChatGPT. Everything felt scattered. Sometimes I'd be on the go and have a thought I wanted to capture quickly, but there was no easy or consistent way to do it.
+                People juggle handwritten notes, sticky notes, documents, Notion, multiple to-do apps, and AI chats just to keep track of what they need to do. Everything ends up scattered. On the go, a fleeting thought worth capturing rarely has an easy, consistent place to land.
               </SectionText>
               <SectionText className="mb-6">
-                Most to-do apps are designed to track tasks, while goals are treated as something separate. When I tried existing tools, I noticed that tasks and goals often lived in different places and even when they were connected, I couldn't use voice to capture what was on my mind. The friction of manually entering and organizing everything made the experience feel heavy and fragmented.
+                Most to-do apps are built to track tasks, while goals are treated as something separate. Across existing tools, tasks and goals live in different places — and even when they're connected, voice rarely works as a natural way to capture what's on someone's mind. The friction of manually entering and organizing everything makes the experience feel heavy and fragmented.
               </SectionText>
               <SectionText className="mb-6">
-                This gap is what motivated me to create this app.
+                Orbi was built to close that gap — meeting people where their thinking happens.
               </SectionText>
               <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 my-6 italic text-foreground/90">
                 <p className="text-base lg:text-lg">
@@ -2385,6 +2418,414 @@ const CaseStudy = () => {
                 </a>
               </SectionText>
             </Section>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Outfix AI Case Study
+  if (isOutfixAI) {
+    const outfixDetails = [
+      { label: "Role", value: "Product Design Strategy and Design Engineering" },
+      { label: "Timeline", value: "Four weeks project" },
+      { label: "Platform", value: "React Native, iOS" },
+      { label: "Collaborator", value: "Joshua Chung, Founder & ML Engineer" },
+    ];
+
+    return (
+      <div className="min-h-screen bg-background pt-24">
+        <Header activeTab={undefined} onTabChange={handleTabChange} />
+        <div className="py-16 px-6 lg:px-16">
+          <div className="max-w-5xl mx-auto">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="mb-12 group pl-0 hover:pl-2 transition-all"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+
+            {/* Header */}
+            <div className="mb-8">
+              <h2 className="text-2xl lg:text-3xl font-semibold text-foreground tracking-tight mb-4">
+                Case Study Presentation
+              </h2>
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-zinc-900 mb-8">
+                <iframe
+                  src={outfixCaseStudyPresentationUrl}
+                  title="Outfix AI case study deck"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="fullscreen; clipboard-read; clipboard-write"
+                  allowFullScreen
+                />
+              </div>
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground tracking-tight mb-4">
+                Outfix.ai
+              </h1>
+              <SectionText className="text-xl">
+                Designing an AI Personal Stylist from a Blank Page
+              </SectionText>
+            </div>
+
+            {/* Project Details Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+              {outfixDetails.map((detail, idx) => (
+                <DetailCard key={idx} label={detail.label} value={detail.value} />
+              ))}
+            </div>
+
+            {/* Hero Image */}
+            {/* <div className="w-full rounded-2xl overflow-hidden mb-8">
+              <img
+                src={outfixHero}
+                alt="Outfix AI"
+                className="w-full h-auto"
+              />
+            </div> */}
+
+            {/* Video */}
+            <div className="w-full rounded-2xl overflow-hidden mb-16 bg-gradient-to-b from-gray-50 to-gray-100">
+              <video
+                src={outfixVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* How This Started */}
+            <Section>
+              <SectionTitle>How This Started</SectionTitle>
+              <SectionText className="mb-6">
+                I won a hackathon in San Francisco. The event was run by OpenAI, AGI Inc., and Lovable. I was presenting UX Agent, an AI-native design tool I had built for the competition.
+              </SectionText>
+              <SectionText className="mb-6">
+                After the presentations, a guy came up to me. His name was Joshua Chung. Berkeley CS, ML engineer. He said he was working on something and needed a designer. Not to execute a vision he already had. He needed someone to help him figure out what the vision was.
+              </SectionText>
+              <SectionText className="mb-6">
+                We got on a call two weeks later. He said something that I wrote down immediately.
+              </SectionText>
+              <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 mb-6">
+                <p className="text-xl italic text-muted-foreground/80 leading-relaxed">
+                  "I just want to make sure that bad dressers never dress badly again."
+                </p>
+              </blockquote>
+              <SectionText>
+                That sentence became the brief. Everything else we had to figure out together.
+              </SectionText>
+            </Section>
+
+            {/* What Joshua Had Built */}
+            <Section>
+              <SectionTitle>What Joshua Had Built</SectionTitle>
+              <SectionText className="mb-6">
+                Joshua had spent months building a clothing segmentation and recommendation system. The ML model could extract individual clothing items from a photo of a person. It could analyse colour harmonies, pattern matching, and outfit compatibility. He had trained it on Amazon product images.
+              </SectionText>
+              <SectionText className="mb-6">
+                What he didn't have was an interface. He didn't have a product. He didn't have clarity on who the user was. He had intelligence with nowhere to live.
+              </SectionText>
+              <SectionText>
+                His early users had already given him feedback. The onboarding was too long. Nobody wanted to lay their clothes out on the floor to photograph them. The experience asked for too much before giving anything back. He came to me with the ML model working and everything else open.
+              </SectionText>
+            </Section>
+
+            {/* The User Nobody Was Designing For */}
+            <Section>
+              <SectionTitle>The User Nobody Was Designing For</SectionTitle>
+              <SectionText className="mb-6">
+                The first thing I pushed Joshua on was the user. Every fashion app in the market targets people who already care about fashion. Whering, the dominant player, is built for people who genuinely enjoy styling themselves. It's a tool for enthusiasts.
+              </SectionText>
+              <SectionText className="mb-6">
+                Joshua didn't want to build for enthusiasts. He kept coming back to his dad. A 50-something who gets dressed every morning not knowing if his colours match. Someone whose wife tells him he's wearing the wrong thing. Someone who doesn't want to learn about fashion. They just want to not dress badly.
+              </SectionText>
+              <SectionText className="mb-6">
+                That person is everywhere. Busy professionals. Engineers. Anyone who views getting dressed as cognitive overhead rather than creative expression. They wake up, open their wardrobe, and feel a low-level dread.
+              </SectionText>
+              <SectionText>
+                No app was solving that. Most apps made it worse by asking them to engage with fashion on fashion's terms. Once we named that user, everything else followed.
+              </SectionText>
+            </Section>
+
+            {/* Interaction Model */}
+            <Section>
+              <SectionTitle>The First Hard Decision: What Kind of App Is This?</SectionTitle>
+              <SectionText className="mb-6">
+                Before I drew a single screen, Joshua and I had to decide what the interaction model was. He had been thinking about the app as a recommendation engine: take a photo, swipe through suggestions. I pushed back. That felt like every other app.
+              </SectionText>
+              <SectionText className="mb-6">
+                I asked him: what does it feel like when you talk to a stylist? He said it's a conversation. You describe your life, your plans, what you're going for. They respond. They know you over time.
+              </SectionText>
+              <SectionText className="mb-6">
+                He mentioned an anime he liked, Psycho-Pass, where a character just speaks to a system that dresses them. No buttons. No menus. Just talking.
+              </SectionText>
+              <SectionText>
+                That image clicked for both of us. The interaction model wasn't a feed or a swiping interface. It was a conversation with a stylist. Voice became the primary input. That decision shaped everything that came after.
+              </SectionText>
+            </Section>
+
+            {/* 40 Seconds */}
+            <Section>
+              <SectionTitle>The Hardest UX Problem: 40 Seconds</SectionTitle>
+              <SectionText className="mb-6">
+                The segmentation model took about 40 seconds to process a photo. Industry research puts average app abandonment at around 3 seconds of waiting. We had a 37-second problem.
+              </SectionText>
+              <SectionText className="mb-6">
+                My first instinct was to find ways to shorten the perceived time. Progress bars. Skeleton screens. Background processing. Standard answers.
+              </SectionText>
+              <SectionText className="mb-6">
+                But then I thought about what was actually happening. The model wasn't idle for 40 seconds. It was doing something extraordinary: extracting every piece of clothing from a photo, analysing colours, building a dataset that would power personal recommendations. The work was real. The problem was that none of that was visible to the user.
+              </SectionText>
+              <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 mb-6">
+                <p className="text-xl italic text-muted-foreground/80 leading-relaxed">
+                  "I like the word anticipation. The stylist is curating things for you."
+                </p>
+              </blockquote>
+              <SectionText>
+                Instead of a progress bar that makes you watch time pass, the orb would animate with purpose. Copy would appear: "Your stylist is curating clothes for you." The user wasn't waiting. They were being attended to. The same 40 seconds. A completely different emotional experience.
+              </SectionText>
+            </Section>
+
+            {/* The Orb */}
+            <Section>
+              <SectionTitle>The Orb</SectionTitle>
+              <SectionText className="mb-6">
+                Every product has a moment where its identity clicks. For Outfix, it was the orb.
+              </SectionText>
+              <SectionText className="mb-6">
+                I had been exploring what the agent's visual presence should look like. I went through humanoid faces (too literal, uncanny), clothing icons (too functional, no warmth), abstract geometric shapes (too cold). None of them felt like a stylist.
+              </SectionText>
+              <SectionText className="mb-6">
+                I landed on a gradient sphere. Warm orange to deep amber, with a soft inner glow. When rendered in 3D with the right motion, it felt alive. It felt like something was inside it, thinking.
+              </SectionText>
+              <SectionText className="mb-6">
+                But the orb wasn't just brand identity. I designed it to carry functional information without words.
+              </SectionText>
+              <div className="w-full rounded-2xl overflow-hidden mb-6">
+                <img src={orbImage} alt="The Orb" className="w-full h-auto" />
+              </div>
+              <SectionText>
+                Colour became the API. Users learned to read the orb without being taught. The brand and the system status were unified into one thing.
+              </SectionText>
+            </Section>
+
+            {/* Agentic Interface */}
+            <Section>
+              <SectionTitle>Designing for an Agent That Controls Its Own Output</SectionTitle>
+              <SectionText className="mb-6">
+                An AI agent doesn't have a fixed UI. It decides what to show, when to speak, what to recommend. How do you design a screen for a system whose outputs are dynamic and unpredictable?
+              </SectionText>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {[
+                  { title: "Chat-first UI", verdict: "Rejected", reason: "Fashion is visual. Text bubbles can't show outfit pairings at a glance. The agent's most important output would get buried." },
+                  { title: "Card feed", verdict: "Rejected", reason: "Passive. No sense of a stylist guiding you. Would feel like Instagram, not a personal advisor. The agent would disappear." },
+                  { title: "Integrated canvas", verdict: "Chosen", reason: "The orb floated above the tab bar, always present. Top half visual. Bottom half conversational. The agent determines content; I determined the boundaries." },
+                ].map((option, idx) => (
+                  <div key={idx} className={`p-6 rounded-lg border shadow-[0_4px_16px_rgba(0,0,0,0.05)] ${option.verdict === "Chosen" ? "border-foreground/30 bg-foreground/5" : "border-border/50"}`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      {option.verdict === "Chosen" ? (
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                      ) : (
+                        <XCircle className="w-4 h-4 text-red-500/70 flex-shrink-0" />
+                      )}
+                      <h3 className="text-base font-semibold text-foreground">{option.title}</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed">{option.reason}</p>
+                  </div>
+                ))}
+              </div>
+              <blockquote className="border-l-4 border-foreground/20 pl-6 py-2">
+                <p className="text-xl italic text-muted-foreground/80 leading-relaxed">
+                  "You don't design the content. You design the stage."
+                </p>
+              </blockquote>
+            </Section>
+
+            {/* Cold Start */}
+            <Section>
+              <SectionTitle>The Cold Start Problem</SectionTitle>
+              <div className="grid md:grid-cols-2 gap-8 items-start">
+                <div className="flex flex-col gap-4">
+                  <div className="rounded-2xl overflow-hidden">
+                    <video
+                      src={onboardingAnimation}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <div className="rounded-2xl overflow-hidden">
+                    <img src={weavyGemini} alt="Weavy Gemini" className="w-full h-auto" />
+                  </div>
+                </div>
+                <div>
+                  <SectionText className="mb-6">
+                    The recommendation model needed wardrobe data to give good recommendations. No data meant generic suggestions. Generic suggestions meant users wouldn't come back. Users not coming back meant no data. A perfect loop in the wrong direction.
+                  </SectionText>
+                  <SectionText className="mb-6">
+                    The obvious solution was to ask users to upload their clothes. But that's a chore. Nobody wants to photograph their wardrobe before seeing any value from the app.
+                  </SectionText>
+                  <SectionText className="mb-4">Three mechanisms solved it:</SectionText>
+                  <ul className="space-y-4">
+                    {[
+                      "People take mirror selfies constantly on social media, not to document their wardrobe, but to get validation. The first action in the app tapped that instinct. Take a selfie. Get feedback. The psychological reward comes before the data collection.",
+                      "The wardrobe unlock was designed as a progress mechanic. \"Upload 5 photos to unlock your personal wardrobe.\" The user thinks they're earning a feature. The AI is building its training dataset.",
+                      "The agent became the one who asked for more, not the UI. \"I can give you better recommendations if you add more items.\" It felt like guidance, not extraction.",
+                    ].map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-4">
+                        <span className="text-foreground mt-1.5 text-xl leading-none">•</span>
+                        <p className="text-lg leading-relaxed text-muted-foreground/80">{item}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Section>
+
+            {/* Copy as Design */}
+            <Section>
+              <SectionTitle>Copy as a Design Material</SectionTitle>
+              <SectionText className="mb-6">
+                I spent more time on copy in this project than on almost any visual decision. Every word in the onboarding was a design decision.
+              </SectionText>
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="p-6 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-3">Before</p>
+                  <p className="text-base font-medium text-foreground/60 mb-2">"Capture Selfie or Upload Pictures"</p>
+                  <p className="text-sm text-muted-foreground/70">Gave users no mental model. They'd upload whatever felt natural, the model would struggle, and they'd blame the app.</p>
+                </div>
+                <div className="p-6 rounded-lg border border-foreground/20 shadow-[0_4px_16px_rgba(0,0,0,0.05)] bg-foreground/5">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground/40 mb-3">After</p>
+                  <p className="text-base font-medium text-foreground mb-2">"Upload a Full-Body Photo, preferably a mirror selfie that doesn't cover your face"</p>
+                  <p className="text-sm text-muted-foreground/70">Specific. Instructional. Encodes the ML requirement without mentioning ML. The app felt more thoughtful. The model got cleaner inputs.</p>
+                </div>
+              </div>
+              <SectionText className="mb-6">
+                Authentication was another copy decision. For an app asking people to upload photos of themselves, Apple Sign-In as default solved the privacy anxiety. Apple's privacy brand borrows trust that the app hasn't earned yet.
+              </SectionText>
+              <SectionText>
+                "Get started with your wardrobe" became "Your Personal AI Stylist." Nobody wants to manage a wardrobe. They want to dress better. The headline leads with the outcome, earns the action after.
+              </SectionText>
+            </Section>
+
+            {/* Tools */}
+            <Section>
+              <SectionTitle>The Tools I Used</SectionTitle>
+              <div className="w-full rounded-2xl overflow-hidden mb-8">
+                <img
+                  src={figmaWorkspace}
+                  alt="Figma workspace"
+                  className="w-full h-auto"
+                />
+              </div>
+              <SectionText className="mb-6">
+                I designed and built this the way I build everything now: AI tools throughout, not at the end.
+              </SectionText>
+              <ul className="space-y-4 mb-6">
+                {[
+                  "Connected Cursor to Figma via MCP protocol. What would have taken hours of manual token and variable work I was able to automate. The design system came together much faster.",
+                  "Used React Native alongside Joshua to build animation states and component interactions. Cursor handled code generation while I focused on motion behaviour. We shipped orb animations, tab bar interactions, and loading states together.",
+                  "Generated the onboarding illustration with Runway Gen-4, a 3D mirror selfie guide that communicated exactly what a good photo looked like without a photo shoot.",
+                  "Prototyped the clothing recognition UX in Google AI Studio with Gemini before any backend integration. Testing against real model output changed several interface decisions.",
+                  "For the rebuild: a Figma to Claude Code pipeline. Design in Figma, generate in Claude Code, ship. The feedback loop is tight enough to test a decision in production the same day it was made in the design file.",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-4">
+                    <span className="text-foreground mt-1.5 text-xl leading-none">•</span>
+                    <p className="text-lg leading-relaxed text-muted-foreground/80">{item}</p>
+                  </li>
+                ))}
+              </ul>
+            </Section>
+
+            {/* What Happened */}
+            <Section>
+              <SectionTitle>What Happened to the Product</SectionTitle>
+              <SectionText className="mb-6">
+                The initial sprint ended. Joshua built the implementation. And then something we didn't expect: adoption stalled.
+              </SectionText>
+              <SectionText className="mb-6">
+                The design looked right. The implementation didn't match it. The homepage hierarchy was broken. The onboarding had lost the delight it needed. Joshua described it as wanting "magical moments" and not seeing them.
+              </SectionText>
+              <SectionText className="mb-6">
+                I could have written a feedback document. Instead I asked Joshua three questions: what's your goal right now, what are you actually struggling with, why do you think users aren't staying.
+              </SectionText>
+              <SectionText className="mb-6">
+                The answers pointed somewhere unexpected. It wasn't a design problem and it wasn't a code problem. The consumer app was competing against ChatGPT for fashion questions and losing. The stronger play was the ML recommendation model itself. Genuinely proprietary, something fashion brands and styling agencies would pay for.
+              </SectionText>
+              <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 mb-6">
+                <p className="text-xl italic text-muted-foreground/80 leading-relaxed">
+                  "This is what good designers do. They don't just design the product. They shape the business. You entirely changed my whole business."
+                </p>
+                <p className="text-sm text-muted-foreground/50 mt-2">— Joshua Chung, Founder</p>
+              </blockquote>
+              <SectionText>
+                I helped him reframe the whole business from B2C to B2B. Outfix wouldn't be an app for individual users. It would be a platform for professional stylists and agencies, with the consumer app returning later.
+              </SectionText>
+            </Section>
+
+            {/* Key Decisions */}
+            <Section>
+              <SectionTitle>The Design Decisions That Actually Mattered</SectionTitle>
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "The anticipation loading reframe",
+                    description: "Turned a technical limitation into a brand moment. Users feel attended to instead of stuck. A retention decision disguised as a loading state.",
+                  },
+                  {
+                    title: "Orb colour-coded states",
+                    description: "The agent's internal activity was always legible. Users didn't need a tutorial. The system communicated itself. Trust built without asking for it.",
+                  },
+                  {
+                    title: "Integrated canvas",
+                    description: "Gave the agent room to be agentic without the UI becoming unpredictable. Defining the stage instead of the content made the whole interaction model coherent.",
+                  },
+                  {
+                    title: "Cold start mechanics",
+                    description: "Turned a data problem into a product loop. Users built the dataset that made their own recommendations better. The flywheel ran on delight, not obligation.",
+                  },
+                  {
+                    title: "The B2B pivot",
+                    description: "Not a design decision in the traditional sense, but the most important contribution I made. Good design isn't always about the screen.",
+                  },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4 p-5 rounded-lg border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+                    <Lightbulb className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="text-base font-semibold text-foreground mb-1">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground/80 leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            {/* What I Learned */}
+            <Section>
+              <SectionTitle>What I Learned</SectionTitle>
+              <SectionText className="mb-6">
+                I've designed consumer apps before. I've designed AI products before. This project was different because the intelligence was the product, not a feature of the product.
+              </SectionText>
+              <SectionText className="mb-6">
+                When the AI is the core, the interface isn't a layer on top of functionality. It's a relationship with something that has agency. The orb thinks. It decides. It speaks. Designing for that requires thinking differently about what a screen is for.
+              </SectionText>
+              <SectionText className="mb-6">
+                A screen in this context isn't a surface for displaying information. It's a container for a relationship. The design decisions are about making that relationship feel trustworthy, warm, and human. Even when the technical reality underneath is 40-second segmentation pipelines and transformer embeddings.
+              </SectionText>
+            </Section>
+
+            {/* Footer note */}
+            <div className="pt-8 border-t border-border/30">
+              <p className="text-sm text-muted-foreground/50 italic">
+                Outfix.ai is currently in development. The rebuild is ongoing. NDA signed February 25, 2025.
+              </p>
+            </div>
 
           </div>
         </div>
@@ -3174,7 +3615,7 @@ const CaseStudy = () => {
               <span className="text-foreground mt-2 text-xl leading-none">•</span>
               <div>
                 <p className="text-lg font-semibold mb-2 text-foreground">Personalize the experience</p>
-                <p className="text-base text-muted-foreground/80 italic">How can we better understand what's important to users — specifically, their financial goals?</p>
+                <p className="text-base text-muted-foreground/80 italic">How can we better understand what's important to users, specifically their financial goals?</p>
               </div>
             </li>
             <li className="flex items-start gap-4">

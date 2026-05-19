@@ -51,42 +51,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 0 0% 0%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 0%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 64%;
 
-    --accent: 0 0% 0%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 0%;
-    --input: 0 0% 0%;
-    --ring: 0 0% 100%;
-    
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 0%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 0%;
-    --sidebar-ring: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 84%;
+
+    --sidebar-background: 0 0% 9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 0% 84%;
   }
 }
 
@@ -102,7 +102,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     background-color: hsl(var(--background));
   }
   
@@ -206,6 +206,23 @@ All colors MUST be HSL.
   animation: glowMove 3s ease-in-out infinite;
 }
 
+/** Featured carousel — horizontal settle only (no vertical scale) */
+@keyframes featuredSnapSettle {
+  0% {
+    transform: translateX(0);
+  }
+  42% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.featured-settle-bounce {
+  animation: featuredSnapSettle 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-2px); }
@@ -262,9 +279,13 @@ All colors MUST be HSL.
 
 .thinking-dots .dot {
   display: inline-block;
+  width: 0.22em;
+  height: 0.22em;
+  border-radius: 50%;
+  background-color: currentColor;
+  vertical-align: 0.02em;
+  margin-left: 0.12em;
   animation: thinking-dots 1.4s ease-in-out infinite;
-  color: hsl(var(--foreground));
-  -webkit-text-fill-color: hsl(var(--foreground));
 }
 
 .thinking-dots .dot:nth-child(1) {
@@ -278,3 +299,84 @@ All colors MUST be HSL.
 .thinking-dots .dot:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+@keyframes v2GlowStrokeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.v2-glow-cta {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 1px;
+  overflow: hidden;
+  isolation: isolate;
+  /* Always-visible hairline so the pill doesn’t disappear on #000 */
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.v2-glow-cta::before {
+  content: "";
+  position: absolute;
+  inset: -90%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.06) 52deg,
+    rgba(255, 255, 255, 0.34) 112deg,
+    rgba(255, 255, 255, 0.06) 172deg,
+    transparent 232deg
+  );
+  animation: v2GlowStrokeSpin 5.5s linear infinite;
+  pointer-events: none;
+}
+
+.v2-glow-cta__inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 9999px;
+  background: #000000;
+}
+
+.v2-glow-cta:hover .v2-glow-cta__inner {
+  background: #0a0a0a;
+}
+
+.v2-glow-cta:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-glow-cta::before {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+.dock-indicator-pill {
+  transform-origin: center center;
+  will-change: left, width, transform;
+  transition:
+    left 0.52s cubic-bezier(0.34, 1.45, 0.64, 1),
+    width 0.58s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.48s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.28s ease;
+}
+
+.dock-indicator-pill.is-morphing {
+  transform: scaleX(1.07) scaleY(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-indicator-pill {
+    transition: left 0.22s ease, width 0.22s ease, opacity 0.22s ease;
+  }
+
+  .dock-indicator-pill.is-morphing {
+    transform: none;
+  }
+}
+

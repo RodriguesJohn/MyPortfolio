@@ -1,4 +1,5 @@
 import { Linkedin, Twitter } from "lucide-react";
+import { PROFILE_X_URL } from "@/config/profileLinks";
 
 export function About() {
   return (
@@ -43,7 +44,7 @@ export function About() {
               <Linkedin className="h-6 w-6" />
             </a>
             <a
-              href="https://x.com/john_rodrigues_"
+              href={PROFILE_X_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-black dark:text-white hover:opacity-80 transition-opacity"
