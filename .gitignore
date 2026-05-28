@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Raw Orbi recording exports are too large for GitHub.
+src/assets/OrbiDemo*.mp4
+src/assets/Orbi Demo*.mp4
+src/assets/MobileDemo.mov
+src/CaseStudies/Orbi Webiste/src/assets/OrbiDemo.mp4
+src/CaseStudies/Orbi Webiste/src/assets/Orbi Demo 1.mp4
+src/CaseStudies/Orbi Webiste/src/assets/MobileDemo.mov
+public/orbi-website/assets/OrbiDemo-*.mp4
+public/orbi-website/assets/Orbi Demo*.mp4
+public/orbi-website/assets/MobileDemo-*.mov
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

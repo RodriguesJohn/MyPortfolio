@@ -10,6 +10,7 @@ import IndexV2Work from "./pages/IndexV2Work";
 import IndexV2WorkDetail from "./pages/IndexV2WorkDetail";
 import IndexV2Testimonials from "./pages/IndexV2Testimonials";
 import IndexV2ToolStack from "./pages/IndexV2ToolStack";
+import IndexV2CaseStudyPresentation from "./pages/IndexV2CaseStudyPresentation";
 import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/v2/work/:slug" element={<IndexV2WorkDetail />} />
           <Route path="/v2/testimonials" element={<IndexV2Testimonials />} />
           <Route path="/v2/tool-stack" element={<IndexV2ToolStack />} />
+          <Route path="/v2/case-study-presentation" element={<IndexV2CaseStudyPresentation />} />
           <Route path="/explorations" element={<Index />} />
           <Route path="/all-projects" element={<Index />} />
           <Route path="/consulting" element={<Index />} />

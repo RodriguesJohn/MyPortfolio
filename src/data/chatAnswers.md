@@ -34,7 +34,7 @@ I prototype with Claude Code, Cursor, and Codex, design in Figma, and ship produ
 
 ### What have you built?
 Keywords: built, projects, portfolio, work, examples, shipped, made
-Recent work: Orbi AI (Aducivity app shipped to TestFlight), Outfix AI (founder content engine), Loup Agent (AI recruiter), Olli AI (Figma plugin bridging Claude Code to canvas), redesigned No-Scroll iOS (4.5★, 50K users), and a B2B banking platform at JPMorgan Chase.
+Recent work: Orbi AI (AI productivity app shipped to the App Store), Outfix AI (founder content engine), Loup Agent (AI recruiter), Olli AI (Figma plugin bridging Claude Code to canvas), redesigned No-Scroll iOS (4.5★, 50K users), and a B2B banking platform at JPMorgan Chase.
 
 ### Do you teach or write?
 Keywords: teach, teaching, write, writing, course, substack, academy, blog, newsletter

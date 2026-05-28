@@ -4,12 +4,12 @@ import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
 import ollieVideo from "@/assets/OllieAIDemo.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
-
-// Experiments
-import aiDataVisionVideo from "@/assets/AIDataVision.mp4";
-import pamVideo from "@/assets/PAM.mp4";
-import multiModalVideo from "@/assets/MultiModal.mp4";
-import onboardingVideo from "@/assets/OboardingAnimation.mp4";
+import aiMentorVideo from "@/assets/AIMentor.mp4";
+import aiCapExplorationImage from "@/assets/AICapExploration.png";
+import figmaWorkspaceImage from "@/assets/FigmaWorkspace.jpg";
+import cardMotionVideo from "@/assets/Card.mp4";
+import aiSummaryVideo from "@/assets/AISummary.mp4";
+import appleLogoImage from "@/assets/Apple-Logo.png";
 
 // Past Work
 import noScrollImage from "@/assets/NoScrollApp.png";
@@ -50,6 +50,8 @@ export type Project = {
   aboutContext?: string;
   scopeCards?: ProjectScopeCard[];
   slidesUrl?: string;
+  appStoreUrl?: string;
+  macDownloadUrl?: string;
   media: Media;
   tag?: string;
   href?: string;
@@ -59,21 +61,23 @@ const orbiAI: Project = {
   slug: "orbi-ai",
   name: "Orbi AI",
   year: "2026",
-  meta: "iOS · Voice-first · TestFlight",
+  meta: "Agentic Second Brain",
   description:
-    "Voice-first iOS productivity app with proactive follow-ups, shipped to TestFlight.",
+    "Voice-first iOS productivity app with proactive follow-ups, shipped to the App Store.",
   slidesUrl:
     "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FkmEskNJDRsWB58Pm89LvtZ%2FCaseStudyPresentation---Orbi-AI%3Fnode-id%3D1-306%26scaling%3Dmin-zoom%26content-scaling%3Dfixed",
+  appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
+  macDownloadUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
   scopeCards: [
     { label: "Type", value: "Personal project" },
-    { label: "Stage", value: "0 → 1" },
-    { label: "Ship", value: "TestFlight" },
+    { label: "Type", value: "0 → 1" },
+    { label: "Status", value: "Shipped" },
     { label: "Year", value: "2026" },
   ],
   media: {
     type: "video",
-    src: orbiVideo,
-    fit: "cover",
+    src: "/orbi-website/OrbiDemo.web.mp4",
+    fit: "contain",
     bg: "#09090b",
     objectPosition: "center center",
   },
@@ -81,7 +85,7 @@ const orbiAI: Project = {
 
 const olliAI: Project = {
   slug: "olli-ai",
-  name: "Olli AI",
+  name: "OllieAI",
   year: "2025",
   meta: "Figma plugin · Claude Code",
   description:
@@ -89,9 +93,34 @@ const olliAI: Project = {
   media: { type: "video", src: ollieVideo },
 };
 
+const outfixAI: Project = {
+  slug: "outfitx-ai",
+  name: "Outfix AI Project",
+  year: "2025",
+  meta: "AI styling · 0 to 1 product",
+  description:
+    "AI styling product exploration for outfit intelligence, visual taste, and assisted wardrobe workflows.",
+  slidesUrl:
+    "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FeRoGgpMtsBRLJyrgTTM8Hf%2FCase-Study-%257C-Outfix-AI%3Fnode-id%3D1-859%26viewport%3D22%252C198%252C0.2%26t%3DELVdFBt1BLLPABKe-1%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1",
+  scopeCards: [
+    { label: "Type", value: "Founder build" },
+    { label: "Stage", value: "0 → 1" },
+    { label: "Status", value: "Live" },
+    { label: "Year", value: "2025" },
+  ],
+  media: {
+    type: "video",
+    src: outfixVideo,
+    poster: outfixHero,
+    fit: "contain",
+    bg: "#0a0a0a",
+  },
+  tag: "Live",
+};
+
 const citiAiInsights: Project = {
   slug: "ai-insights-citi",
-  name: "AI Insights, Citi",
+  name: "AI Builder Academy",
   year: "2023",
   meta: "Citi · Consumer banking",
   description:
@@ -137,38 +166,53 @@ export const HIGHLIGHTS: Project[] = [
     media: { type: "image", src: dcbImage },
   },
   citiAiInsights,
+  outfixAI,
   citiBalanceTransfer,
-  {
-    slug: "outfix-ai",
-    name: "Outfix AI",
-    year: "2025",
-    meta: "Founder content engine",
-    description:
-      "AI engine that turns founder voice notes into shippable LinkedIn and Twitter posts with personalized voice.",
-    slidesUrl:
-      "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FeRoGgpMtsBRLJyrgTTM8Hf%2FCase-Study-%257C-Outfix-AI%3Fnode-id%3D1-859%26viewport%3D22%252C198%252C0.2%26t%3DELVdFBt1BLLPABKe-1%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1",
-    scopeCards: [
-      { label: "Type", value: "Founder build" },
-      { label: "Stage", value: "0 → 1" },
-      { label: "Status", value: "Live" },
-      { label: "Year", value: "2025" },
-    ],
-    media: {
-      type: "video",
-      src: outfixVideo,
-      poster: outfixHero,
-      fit: "contain",
-      bg: "#0a0a0a",
-    },
-    tag: "Live",
-  },
   olliAI,
 ];
 
 /** Shown on /v2/work under “AI tools I built” */
 export const AI_TOOLS_BUILT: Project[] = [
   orbiAI,
+  {
+    slug: "oliver-ai",
+    name: "OliverAI",
+    year: "2025",
+    meta: "AI mentor · Learning agent",
+    description:
+      "AI mentor experience for guided practice, conversation, and personalized learning support.",
+    media: { type: "video", src: aiMentorVideo, fit: "cover" },
+  },
   olliAI,
+  {
+    slug: "ai-design-academy",
+    name: "AI Design Academy",
+    year: "2025",
+    meta: "Education · AI workflows",
+    description:
+      "Hands-on AI design education platform and curriculum for designers learning AI-native workflows.",
+    media: {
+      type: "image",
+      src: aiCapExplorationImage,
+      fit: "cover",
+      objectPosition: "center",
+    },
+    href: "https://www.theaidesignacademy.com/",
+  },
+  {
+    slug: "design-system-agent-jpmc",
+    name: "Design system Agent for JPMC",
+    year: "2025",
+    meta: "Enterprise agent · Design systems",
+    description:
+      "Agent concept for accelerating enterprise design-system work, documentation, and component production.",
+    media: {
+      type: "image",
+      src: figmaWorkspaceImage,
+      fit: "cover",
+      objectPosition: "center",
+    },
+  },
   {
     slug: "ux-ai-agent",
     name: "UX AI Agent",
@@ -180,46 +224,41 @@ export const AI_TOOLS_BUILT: Project[] = [
     tag: "Hackathon Winner",
   },
   {
-    slug: "ai-data-vision",
-    name: "AI Data Vision",
+    slug: "react-motion-library-skill",
+    name: "React Motion library skill",
     year: "2025",
-    meta: "Concept · Visualization",
+    meta: "Skill · Motion system",
     description:
-      "Concept exploration for visualizing model uncertainty and live agent state in dashboards.",
+      "Reusable motion skill and library patterns for React interfaces, transitions, and animation craft.",
     media: {
       type: "video",
-      src: aiDataVisionVideo,
+      src: cardMotionVideo,
       fit: "cover",
-      objectPosition: "top",
     },
   },
   {
-    slug: "please-assist-me",
-    name: "PAM",
-    year: "2024",
-    meta: "iOS app · Personal assistant",
-    description:
-      "Redesigned the core PAM product with the CEO: household tasks and personal assistant flows for work-life balance.",
-    media: { type: "video", src: pamVideo },
-    tag: "Shipped",
-  },
-  {
-    slug: "multi-modal-interface",
-    name: "Multi-modal Interface",
+    slug: "newsletter-research-agent",
+    name: "Newsletter Research Agent",
     year: "2025",
-    meta: "Pattern study",
+    meta: "Agent · Research workflow",
     description:
-      "Exploration of voice + camera + chat as a unified input surface for AI products.",
-    media: { type: "video", src: multiModalVideo },
+      "Research agent for gathering signals, summarizing sources, and turning raw material into newsletter-ready briefs.",
+    media: { type: "video", src: aiSummaryVideo, fit: "cover" },
   },
+  outfixAI,
   {
-    slug: "onboarding-animation",
-    name: "Onboarding Animation",
+    slug: "apple-notes-mcp",
+    name: "Apple Notes MCP",
     year: "2025",
-    meta: "Motion · Onboarding",
+    meta: "MCP · Personal knowledge",
     description:
-      "Motion study for first-run onboarding: pacing, easing, and information reveal.",
-    media: { type: "video", src: onboardingVideo },
+      "MCP workflow connecting Apple Notes into agentic research, retrieval, and personal knowledge tasks.",
+    media: {
+      type: "image",
+      src: appleLogoImage,
+      fit: "contain",
+      bg: "#f7f7f7",
+    },
   },
 ];
 

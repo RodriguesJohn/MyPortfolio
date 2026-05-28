@@ -6,62 +6,8 @@ import {
 } from "@/config/profileLinks";
 import { useLocation, useNavigate } from "react-router-dom";
 import profileImage from "@/assets/PP.jpg";
-import chatAnswersRaw from "@/data/chatAnswers.md?raw";
 
-type ChatEntry = { keywords: string[]; answer: string };
-type ChatMessage = { role: "user" | "ai"; text: string };
-
-const parseChatAnswers = (md: string): { entries: ChatEntry[]; fallback: string } => {
-  const blocks = md.split(/\n###\s+/).slice(1);
-  const entries: ChatEntry[] = [];
-  let fallback =
-    "I don't have an answer for that yet. Email me at rodriguesjohnbaptist@gmail.com.";
-  for (const block of blocks) {
-    const lines = block.split("\n");
-    const heading = (lines.shift() || "").trim();
-    let keywords: string[] = [];
-    const answerLines: string[] = [];
-    for (const line of lines) {
-      if (/^keywords\s*:/i.test(line)) {
-        keywords = line
-          .slice(line.indexOf(":") + 1)
-          .split(",")
-          .map((k) => k.trim().toLowerCase())
-          .filter(Boolean);
-      } else if (line.trim().length > 0 && !line.startsWith("---")) {
-        answerLines.push(line.trim());
-      }
-    }
-    const answer = answerLines.join(" ").trim();
-    if (!answer) continue;
-    if (heading.toUpperCase() === "FALLBACK") {
-      fallback = answer;
-    } else {
-      entries.push({ keywords, answer });
-    }
-  }
-  return { entries, fallback };
-};
-
-const { entries: CHAT_ENTRIES, fallback: CHAT_FALLBACK } =
-  parseChatAnswers(chatAnswersRaw);
-
-const findChatAnswer = (input: string): string => {
-  const text = input.toLowerCase();
-  let bestScore = 0;
-  let bestAnswer = CHAT_FALLBACK;
-  for (const entry of CHAT_ENTRIES) {
-    let score = 0;
-    for (const kw of entry.keywords) {
-      if (kw.length > 0 && text.includes(kw)) score += 1;
-    }
-    if (score > bestScore) {
-      bestScore = score;
-      bestAnswer = entry.answer;
-    }
-  }
-  return bestAnswer;
-};
+const DELPHI_CHAT_URL = "https://www.delphi.ai/john-rodrigues";
 
 const sans = {
   fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
@@ -238,16 +184,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
       setIsRelatedClosing(false);
     }, 380);
   };
-  const [chatInput, setChatInput] = useState("");
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    {
-      role: "ai",
-      text: "Hi, I'm John. Ask me anything about my work, my approach, or what I can build for you.",
-    },
-  ]);
-  const [aiTyping, setAiTyping] = useState(false);
-  const chatScrollRef = useRef<HTMLDivElement | null>(null);
-
   const speak = (fromChar: number, rate: number) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     const synth = window.speechSynthesis;
@@ -326,38 +262,47 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  // Lock body + html bg to black while a v2 page is mounted so no white
-  // strip leaks through below the dock.
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window === "undefined") return "light";
+    const queryTheme = new URLSearchParams(window.location.search).get("theme");
+    if (queryTheme === "light" || queryTheme === "dark") return queryTheme;
+    return "light";
+  });
+  const isLightPreview = theme === "light";
+
+  useEffect(() => {
+    window.localStorage.setItem("v2-theme", theme);
+    const params = new URLSearchParams(location.search);
+    if (theme === "dark") {
+      params.set("theme", "dark");
+    } else {
+      params.delete("theme");
+    }
+    const nextSearch = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`,
+    );
+  }, [theme, location.pathname]);
+
+  const toggleTheme = () => {
+    setTheme((current) => (current === "light" ? "dark" : "light"));
+  };
+
+  // Lock body + html bg to the v2 page color while mounted so no strip leaks
+  // through below the dock.
   useEffect(() => {
     const prevBody = document.body.style.backgroundColor;
     const prevHtml = document.documentElement.style.backgroundColor;
-    document.body.style.backgroundColor = "#000";
-    document.documentElement.style.backgroundColor = "#000";
+    const pageColor = isLightPreview ? "#f7f7f7" : "#000";
+    document.body.style.backgroundColor = pageColor;
+    document.documentElement.style.backgroundColor = pageColor;
     return () => {
       document.body.style.backgroundColor = prevBody;
       document.documentElement.style.backgroundColor = prevHtml;
     };
-  }, []);
-
-  useEffect(() => {
-    if (chatScrollRef.current) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
-    }
-  }, [chatMessages, aiTyping]);
-
-  const sendChat = (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = chatInput.trim();
-    if (!text) return;
-    setChatMessages((prev) => [...prev, { role: "user", text }]);
-    setChatInput("");
-    setAiTyping(true);
-    const reply = findChatAnswer(text);
-    window.setTimeout(() => {
-      setChatMessages((prev) => [...prev, { role: "ai", text: reply }]);
-      setAiTyping(false);
-    }, 900);
-  };
+  }, [isLightPreview]);
 
   const isWorkRoute = location.pathname.startsWith("/v2/work");
 
@@ -371,6 +316,12 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
     navigate("/v2/tool-stack");
+  };
+
+  const openCaseStudyPresentation = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    navigate("/v2/case-study-presentation");
   };
 
   const dockItems = [
@@ -473,8 +424,15 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
   return (
     <div
-      className="min-h-screen antialiased text-zinc-50"
-      style={{ backgroundColor: "#000000", fontSize: "17px", fontWeight: 500, ...sans }}
+      className={`min-h-screen min-h-[100dvh] overflow-x-hidden antialiased text-zinc-50 ${
+        isLightPreview ? "v2-light" : ""
+      }`}
+      style={{
+        backgroundColor: isLightPreview ? "#f7f7f7" : "#000000",
+        fontSize: "17px",
+        fontWeight: 500,
+        ...sans,
+      }}
     >
       {children}
 
@@ -492,18 +450,27 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           className="box-border w-full overflow-visible rounded-full"
           style={{
             padding: "9px 18px",
-            background:
-              "linear-gradient(180deg, rgba(20,20,22,0.96) 0%, rgba(10,10,12,0.94) 100%)",
+            background: isLightPreview
+              ? "linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(247,247,247,0.84) 100%)"
+              : "linear-gradient(180deg, rgba(20,20,22,0.96) 0%, rgba(10,10,12,0.94) 100%)",
             backdropFilter: "blur(32px) saturate(180%)",
             WebkitBackdropFilter: "blur(32px) saturate(180%)",
-            border: "1px solid rgba(255,255,255,0.14)",
-            boxShadow: [
-              "inset 0 1px 0 rgba(255,255,255,0.18)",
-              "inset 0 -1px 1px rgba(0,0,0,0.55)",
-              "0 1px 0 rgba(255,255,255,0.05)",
-              "0 18px 44px -8px rgba(0,0,0,0.82)",
-              "0 8px 18px -4px rgba(0,0,0,0.58)",
-            ].join(", "),
+            border: isLightPreview
+              ? "1px solid rgba(24,24,27,0.10)"
+              : "1px solid rgba(255,255,255,0.14)",
+            boxShadow: isLightPreview
+              ? [
+                  "inset 0 1px 0 rgba(255,255,255,0.75)",
+                  "0 18px 44px -18px rgba(24,24,27,0.28)",
+                  "0 8px 18px -10px rgba(24,24,27,0.18)",
+                ].join(", ")
+              : [
+                  "inset 0 1px 0 rgba(255,255,255,0.18)",
+                  "inset 0 -1px 1px rgba(0,0,0,0.55)",
+                  "0 1px 0 rgba(255,255,255,0.05)",
+                  "0 18px 44px -8px rgba(0,0,0,0.82)",
+                  "0 8px 18px -4px rgba(0,0,0,0.58)",
+                ].join(", "),
           }}
         >
           <ul
@@ -576,7 +543,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
       {/* Listen popup */}
       {isListenOpen && (
         <div
-          className="fixed z-[90] left-1/2 w-[90%] max-w-[620px]"
+          className="fixed z-[90] left-1/2 w-[92%] max-w-[720px]"
           style={{
             bottom: "calc(max(1.25rem, env(safe-area-inset-bottom, 1.25rem)) + 64px)",
             transformOrigin: "bottom center",
@@ -587,7 +554,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           }}
         >
           <div
-            className="rounded-2xl overflow-hidden text-zinc-50"
+            className="v2-popup-panel rounded-2xl overflow-hidden text-zinc-50"
             style={{
               backgroundColor: "#0a0a0a",
               border: "1px solid #1f1f22",
@@ -698,7 +665,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           }}
         >
           <div
-            className="rounded-2xl overflow-hidden flex flex-col text-zinc-50 h-[460px]"
+            className="v2-popup-panel rounded-2xl overflow-hidden flex flex-col text-zinc-50 h-[min(78vh,760px)] min-h-[620px] max-sm:h-[calc(100dvh-8.5rem)] max-sm:min-h-0"
             style={{
               backgroundColor: "#0a0a0a",
               border: "1px solid #1f1f22",
@@ -726,65 +693,16 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
 
-            <div ref={chatScrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-              {chatMessages.map((m, i) => (
-                <div
-                  key={i}
-                  className={m.role === "user" ? "flex justify-end" : "flex justify-start"}
-                >
-                  <div
-                    className={`max-w-[80%] px-3.5 py-2 rounded-2xl text-[15px] leading-[1.5] ${
-                      m.role === "user"
-                        ? "bg-white text-black rounded-br-md"
-                        : "bg-white/[0.06] text-zinc-100 rounded-bl-md"
-                    }`}
-                  >
-                    {m.text}
-                  </div>
-                </div>
-              ))}
-              {aiTyping && (
-                <div className="flex justify-start">
-                  <div className="px-3.5 py-2.5 rounded-2xl rounded-bl-md bg-white/[0.06]">
-                    <div className="flex items-center gap-1">
-                      {[0, 0.18, 0.36].map((d) => (
-                        <span
-                          key={d}
-                          className="block h-1.5 w-1.5 rounded-full bg-zinc-400"
-                          style={{
-                            animation: "thinkingDot 1.3s ease-in-out infinite",
-                            animationDelay: `${d}s`,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <form
-              onSubmit={sendChat}
-              className="flex items-center gap-2 px-3 py-3 border-t border-white/[0.06]"
-            >
-              <input
-                type="text"
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                placeholder="Ask John anything..."
-                className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-full px-4 py-2 text-[15px] text-zinc-50 placeholder:text-zinc-500 outline-none focus:border-white/20 transition-colors"
+            <div className="flex-1 overflow-hidden bg-white">
+              <iframe
+                src={DELPHI_CHAT_URL}
+                title="John Rodrigues Delphi AI"
+                className="h-full w-full border-0"
+                allow="microphone; camera"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                style={{ colorScheme: "light" }}
               />
-              <button
-                type="submit"
-                disabled={!chatInput.trim()}
-                aria-label="Send"
-                className="h-9 w-9 rounded-full bg-white text-black flex items-center justify-center hover:bg-zinc-100 active:scale-95 transition-transform disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       )}
@@ -819,7 +737,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           }}
         >
           <div
-            className="rounded-2xl overflow-hidden text-zinc-50"
+            className="v2-popup-panel v2-more-panel max-h-[calc(100dvh-7rem)] overflow-y-auto overflow-x-hidden rounded-2xl text-zinc-50"
             style={{
               backgroundColor: "#0a0a0a",
               border: "1px solid #1f1f22",
@@ -827,7 +745,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                 "0 20px 50px -10px rgba(0,0,0,0.85), 0 8px 20px -4px rgba(0,0,0,0.5)",
             }}
           >
-            <div className="flex items-center justify-between px-4 pt-3 pb-1">
+            <div className="flex items-center justify-between px-5 pt-5 pb-2 sm:px-6">
               <span className="text-[10px] tracking-[0.16em] uppercase text-zinc-500">
                 More
               </span>
@@ -843,20 +761,20 @@ const PageShell = ({ children }: { children: ReactNode }) => {
             </div>
 
             {/* Section 1: Social */}
-            <div className="px-4 pt-1 pb-2">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-1.5">
+            <div className="px-5 pt-2 pb-4 sm:px-6">
+              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
                 Connect
               </p>
-              <ul className="-mx-1.5">
+              <ul className="space-y-1">
                 {SOCIAL_LINKS.map((link) => (
-                  <li key={link.label} className="flex items-center gap-0.5 pr-0.5">
+                  <li key={link.label} className="flex items-center gap-2">
                     <a
                       href={link.href}
                       target={link.href.startsWith("mailto:") ? undefined : "_blank"}
                       rel="noreferrer"
-                      className="group flex flex-1 min-w-0 items-center gap-2 px-1.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
+                      className="v2-more-social-link group flex flex-1 min-w-0 items-center gap-3 px-1 py-2 rounded-lg hover:bg-white/[0.05] transition-colors"
                     >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 group-hover:text-white group-hover:bg-white/[0.08] transition-colors [&_svg]:h-3.5 [&_svg]:w-3.5">
+                      <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 group-hover:text-white group-hover:bg-white/[0.08] transition-colors [&_svg]:h-3.5 [&_svg]:w-3.5">
                         {link.icon}
                       </span>
                       <span className="flex-1 min-w-0">
@@ -883,7 +801,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                     <button
                       type="button"
                       onClick={() => copyLinkValue(link.label, linkCopyText(link.href))}
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-white/[0.06] hover:text-zinc-200"
+                      className="v2-more-copy flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-white/[0.06] hover:text-zinc-200"
                       aria-label={
                         copiedLinkLabel === link.label
                           ? `Copied ${link.label}`
@@ -915,13 +833,13 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               </ul>
             </div>
 
-            <div className="border-t border-white/[0.06] px-4 py-1">
+            <div className="border-t border-white/[0.06] px-5 py-3 sm:px-6">
               <button
                 type="button"
                 onClick={openTestimonials}
-                className="group flex w-full items-center gap-2 rounded-lg px-1.5 py-1.5 text-left transition-colors hover:bg-white/[0.05]"
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
                   <svg
                     className="h-3.5 w-3.5"
                     viewBox="0 0 24 24"
@@ -959,9 +877,9 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               <button
                 type="button"
                 onClick={openToolStack}
-                className="group flex w-full items-center gap-2 rounded-lg px-1.5 py-1.5 text-left transition-colors hover:bg-white/[0.05]"
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
                   <svg
                     className="h-3.5 w-3.5"
                     viewBox="0 0 24 24"
@@ -996,21 +914,100 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                   <path d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
               </button>
+              <button
+                type="button"
+                onClick={openCaseStudyPresentation}
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <path d="M8 21h8M12 17v4" />
+                    <path d="M8 9h5M8 12h8" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    Case study presentation
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Custom slide deck
+                  </span>
+                </span>
+                <svg
+                  className="h-3 w-3 shrink-0 text-zinc-600 transition-colors group-hover:text-zinc-300"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="border-t border-white/[0.06] px-5 py-3 sm:px-6">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
+                aria-label={isLightPreview ? "Switch to dark mode" : "Switch to light mode"}
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  {isLightPreview ? (
+                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8z" />
+                    </svg>
+                  ) : (
+                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                    </svg>
+                  )}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    Appearance
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    {isLightPreview ? "Light mode" : "Dark mode"}
+                  </span>
+                </span>
+                <span className="v2-theme-switch relative h-5 w-9 shrink-0 rounded-full bg-white/[0.08] ring-1 ring-white/[0.08]">
+                  <span
+                    className={`absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-zinc-100 transition-transform ${
+                      isLightPreview ? "translate-x-0.5" : "translate-x-[18px]"
+                    }`}
+                  />
+                </span>
+              </button>
             </div>
 
             {/* Section 2: Resume */}
-            <div className="px-4 pt-2 pb-3.5 border-t border-white/[0.06]">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-1.5">
+            <div className="px-5 pt-4 pb-5 border-t border-white/[0.06] sm:px-6">
+              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
                 Resume
               </p>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2.5">
               <a
                 href={RESUME_URL}
                 download
-                className="group flex flex-1 items-center justify-between gap-2 px-2.5 py-2 rounded-lg bg-white text-black hover:bg-zinc-100 active:scale-[0.99] transition-all"
+                className="v2-more-resume group flex flex-1 items-center justify-between gap-3 px-3 py-3 rounded-xl bg-white text-black hover:bg-zinc-100 active:scale-[0.99] transition-all"
               >
-                <span className="flex items-center gap-2 min-w-0">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-black/[0.06]">
+                <span className="flex items-center gap-3 min-w-0">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black/[0.06]">
                     <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                       <polyline points="7 10 12 15 17 10" />
@@ -1035,7 +1032,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                       : RESUME_URL;
                   void copyLinkValue("Resume", url);
                 }}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-zinc-400 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.1] hover:text-zinc-200"
+                className="v2-more-resume-copy flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.1] hover:text-zinc-200"
                 aria-label={
                   copiedLinkLabel === "Resume" ? "Copied resume link" : "Copy resume link"
                 }

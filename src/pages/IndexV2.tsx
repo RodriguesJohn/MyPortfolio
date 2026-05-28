@@ -5,35 +5,6 @@ import PageShell, { display } from "@/components/v2/PageShell";
 import { PROFILE_LINKEDIN_URL } from "@/config/profileLinks";
 import { HIGHLIGHTS } from "@/data/projects";
 
-import chaseLogo from "@/assets/ChaseLightMOde.png";
-import citiLogo from "@/assets/Citi.svg.png";
-import stanfordLogo from "@/assets/Standford.png";
-import googleLogo from "@/assets/GoogleLogog.png";
-import metaLogo from "@/assets/Meta-Emblem.png";
-
-const APPLE_LOGO_WHITE = "https://cdn.simpleicons.org/apple/ffffff";
-
-type ReaderLogo = {
-  name: string;
-  src: string;
-  className?: string;
-  style?: React.CSSProperties;
-};
-
-const READER_LOGOS: ReaderLogo[] = [
-  { name: "Apple", src: APPLE_LOGO_WHITE, className: "h-[18px] w-[18px] sm:h-5 sm:w-5" },
-  { name: "Google", src: googleLogo },
-  { name: "Meta", src: metaLogo },
-  {
-    name: "JPMorgan Chase",
-    src: chaseLogo,
-    className: "h-[18px] w-auto max-w-[52px] sm:h-5 sm:max-w-[58px]",
-    style: { filter: "brightness(3.8) contrast(1.08)" },
-  },
-  { name: "Citi", src: citiLogo },
-  { name: "Stanford", src: stanfordLogo },
-];
-
 /** Set to `true` to show the “3 Ways I Can Help” cards on /v2. */
 const SHOW_THREE_WAYS_SECTION = false;
 
@@ -85,7 +56,7 @@ const useLatestSubstackPost = () => {
             link: item.link,
             pubDate: item.pubDate,
             thumbnail: cover,
-            excerpt,
+            excerpt: excerpt.replace(/&amp;/g, "&"),
           });
         })
         .catch(() => {})
@@ -158,11 +129,15 @@ const CursorLogo = () => (
   </svg>
 );
 
-const CodexLogo = () => (
+const CodexLogo = ({
+  className = "inline-block align-[-3px] mr-1 h-[15px] w-[15px]",
+}: {
+  className?: string;
+}) => (
   <svg
     viewBox="0 0 24 24"
     aria-hidden="true"
-    className="inline-block align-[-3px] mr-1 h-[15px] w-[15px]"
+    className={className}
     fill="none"
     stroke="currentColor"
     strokeWidth="1.75"
@@ -206,12 +181,15 @@ const enterNoBlur = (delay = 0): React.CSSProperties => ({
 const getFeaturedCards = (root: HTMLDivElement) =>
   [...root.querySelectorAll<HTMLElement>("[data-feature-card]")];
 
+const featuredCardScrollTarget = (root: HTMLDivElement, card: HTMLElement) =>
+  card.offsetLeft - (root.clientWidth - card.offsetWidth) / 2;
+
 const nearestFeaturedIndex = (root: HTMLDivElement, cards: HTMLElement[]) => {
   const scrollLeft = root.scrollLeft;
   let nearest = 0;
   let nearestDist = Infinity;
   for (let i = 0; i < cards.length; i++) {
-    const d = Math.abs(cards[i].offsetLeft - scrollLeft);
+    const d = Math.abs(featuredCardScrollTarget(root, cards[i]) - scrollLeft);
     if (d < nearestDist) {
       nearestDist = d;
       nearest = i;
@@ -259,28 +237,36 @@ const syncFeaturedCarousel = (
 const secondaryCtaClass =
   "inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2 text-[13px] font-medium tracking-tight text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.07] hover:text-zinc-100 active:scale-[0.99]";
 
-const FEATURED_AUTO_INTERVAL_MS = 7000;
-const FEATURED_INTERACTION_COOLDOWN_MS = 14000;
+const brandIcon = (slug: string, color?: string) =>
+  `https://cdn.simpleicons.org/${slug}/${color ?? "18181B"}`;
+
+const AI_STACK_ITEMS = [
+  { name: "Claude Code", logo: brandIcon("claude", "D97757") },
+  { name: "Cursor", logo: "https://www.cursor.com/favicon.ico" },
+  { name: "Codex", icon: <CodexLogo className="h-5 w-5" /> },
+  { name: "React", logo: brandIcon("react", "61DAFB") },
+  { name: "Xcode", logo: brandIcon("xcode", "147EFB") },
+  { name: "SwiftUI", logo: brandIcon("swift", "F05138") },
+  { name: "Vercel", logo: brandIcon("vercel", "18181B"), invertOnDark: true },
+  { name: "Supabase", logo: brandIcon("supabase", "3FCF8E") },
+];
 
 const featuredMediaFrame =
-  "relative w-full aspect-[16/11] overflow-hidden rounded-2xl bg-zinc-900 ring-1 ring-white/[0.08]";
+  "v2-featured-media-frame relative w-full aspect-[3840/2060] overflow-hidden rounded-2xl bg-zinc-900 ring-1 ring-white/[0.08]";
 
-/** Slightly narrower than full width so the next slide peeks in */
-const FEATURED_CARD_WIDTH = "calc(100% - 2rem)";
+const FEATURED_CARD_WIDTH = "100%";
 
 const IndexV2 = () => {
   const { post: latestPost } = useLatestSubstackPost();
   const navigate = useNavigate();
   const featuredScrollRef = useRef<HTMLDivElement>(null);
-  const featuredAutoPausedRef = useRef(false);
   const featuredProgrammaticRef = useRef(false);
-  const featuredHoverRef = useRef(false);
-  const featuredCooldownRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const featuredSectionRef = useRef<HTMLElement>(null);
   const playbookCardRef = useRef<HTMLDivElement>(null);
   const featuredBlurRef = useRef(0);
   const [blurPlaybook, setBlurPlaybook] = useState(false);
   const [featuredBlurProgress, setFeaturedBlurProgress] = useState(0);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const [isSubscribeClosing, setIsSubscribeClosing] = useState(false);
 
@@ -360,48 +346,12 @@ const IndexV2 = () => {
 
     const i = ((index % cards.length) + cards.length) % cards.length;
     featuredProgrammaticRef.current = true;
-    root.scrollTo({ left: cards[i].offsetLeft, behavior: "smooth" });
-  };
-
-  const pauseFeaturedAuto = () => {
-    featuredAutoPausedRef.current = true;
-    if (featuredCooldownRef.current) clearTimeout(featuredCooldownRef.current);
-    featuredCooldownRef.current = setTimeout(() => {
-      featuredAutoPausedRef.current = false;
-    }, FEATURED_INTERACTION_COOLDOWN_MS);
+    root.scrollTo({ left: featuredCardScrollTarget(root, cards[i]), behavior: "smooth" });
   };
 
   useEffect(() => {
     const root = featuredScrollRef.current;
     if (!root) return;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-
-    const advanceFeatured = () => {
-      if (
-        featuredAutoPausedRef.current ||
-        featuredHoverRef.current ||
-        document.hidden
-      ) {
-        return;
-      }
-      const cards = getFeaturedCards(root);
-      if (cards.length <= 1) return;
-      const next = nearestFeaturedIndex(root, cards) + 1;
-      scrollFeaturedTo(next);
-    };
-
-    const startAuto = () => {
-      if (reducedMotion.matches) return;
-      if (intervalId) clearInterval(intervalId);
-      intervalId = setInterval(advanceFeatured, FEATURED_AUTO_INTERVAL_MS);
-    };
-
-    const stopAuto = () => {
-      if (intervalId) clearInterval(intervalId);
-      intervalId = undefined;
-    };
 
     let raf = 0;
     let scrollEndTimer: ReturnType<typeof setTimeout> | undefined;
@@ -409,47 +359,31 @@ const IndexV2 = () => {
     const onScrollEnd = () => {
       featuredProgrammaticRef.current = false;
       syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 });
+      const cards = getFeaturedCards(root);
+      if (cards.length) setFeaturedIndex(nearestFeaturedIndex(root, cards));
     };
 
     const onScroll = () => {
-      if (!featuredProgrammaticRef.current) pauseFeaturedAuto();
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() =>
         syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 }),
       );
+      const cards = getFeaturedCards(root);
+      if (cards.length) setFeaturedIndex(nearestFeaturedIndex(root, cards));
       if (scrollEndTimer) clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(onScrollEnd, 480);
+      scrollEndTimer = setTimeout(onScrollEnd, 240);
     };
 
     root.addEventListener("scroll", onScroll, { passive: true });
     root.addEventListener("scrollend", onScrollEnd);
-    root.addEventListener("pointerdown", pauseFeaturedAuto, { passive: true });
 
-    const onVisibility = () => {
-      if (document.hidden) stopAuto();
-      else startAuto();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-
-    const onReducedChange = () => {
-      if (reducedMotion.matches) stopAuto();
-      else startAuto();
-    };
-    reducedMotion.addEventListener("change", onReducedChange);
-
-    startAuto();
     syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 });
 
     return () => {
-      stopAuto();
-      if (featuredCooldownRef.current) clearTimeout(featuredCooldownRef.current);
       if (scrollEndTimer) clearTimeout(scrollEndTimer);
       cancelAnimationFrame(raf);
       root.removeEventListener("scroll", onScroll);
       root.removeEventListener("scrollend", onScrollEnd);
-      root.removeEventListener("pointerdown", pauseFeaturedAuto);
-      document.removeEventListener("visibilitychange", onVisibility);
-      reducedMotion.removeEventListener("change", onReducedChange);
     };
   }, []);
 
@@ -459,7 +393,6 @@ const IndexV2 = () => {
     const cards = getFeaturedCards(root);
     if (!cards.length) return;
 
-    pauseFeaturedAuto();
     const nearest = nearestFeaturedIndex(root, cards);
     scrollFeaturedTo(nearest + direction);
   };
@@ -479,9 +412,9 @@ const IndexV2 = () => {
 
   return (
     <PageShell>
-      <div className="mx-auto w-[90%] max-w-[620px]">
+      <div className="mx-auto w-[94%] max-w-[980px]">
         {/* Hero */}
-        <section className="overflow-visible pt-[120px] pb-0">
+        <section className="flex max-w-[760px] flex-col items-start overflow-visible pt-[120px] pb-0 text-left">
           <div
             className="mb-8 h-16 w-16 rounded-full overflow-hidden ring-1 ring-zinc-800"
             style={enter(0)}
@@ -493,33 +426,29 @@ const IndexV2 = () => {
             />
           </div>
 
-          <div className="w-full space-y-3 overflow-visible">
+          <div className="w-full min-w-0 space-y-3 overflow-visible">
             <h1
-              className="text-[27px] sm:text-[32px] font-semibold tracking-[-0.02em] leading-[1.15] text-zinc-50"
+              className="max-w-full text-[27px] sm:text-[32px] font-semibold tracking-[-0.02em] leading-[1.15] text-zinc-50"
               style={{ ...enterNoBlur(80), ...display }}
             >
               John Rodrigues
               <ThinkingDots />
             </h1>
             <div
-              className="flex flex-wrap items-center gap-x-3 gap-y-1"
+              className="flex min-w-0 flex-wrap items-center justify-start gap-x-3 gap-y-1"
               style={{ ...enterNoBlur(160), ...display }}
             >
-              <span className="text-[16px] sm:text-[18px] font-medium tracking-tight leading-[1.35] text-zinc-500">
-                AI Native Product Designer
-              </span>
-              <span className="h-4 w-px shrink-0 bg-white/25" aria-hidden />
-              <span className="text-[16px] sm:text-[18px] font-medium tracking-tight leading-[1.35] text-zinc-500">
-                Design Engineer
+              <span className="min-w-0 max-w-full text-[18px] font-medium tracking-tight leading-[1.35] text-zinc-300 sm:text-[20px]">
+                AI Design Engineer | Building 0→1 Products and Agents
               </span>
             </div>
             <p
-              className="w-full text-[15px] sm:text-[16px] leading-[1.55] text-zinc-500"
+              className="w-full max-w-[47rem] text-[16px] leading-[1.6] text-zinc-500 sm:text-[17px]"
               style={{ ...enterNoBlur(240), ...display }}
             >
-              I build AI-native products from the ground up, design and code
-              together. 10+ years shipping at startups and scale. Based in the SF
-              Bay Area.
+              I&apos;ve shipped 10+ AI side projects and an agentic thinking
+              framework across 9+ years, from early-stage startups to enterprise
+              products used by 50K to 100M users.
             </p>
           </div>
 
@@ -635,7 +564,7 @@ const IndexV2 = () => {
           {/* Featured work — snap lives outside entrance transform (transform breaks snap in WebKit). */}
           <section
             ref={featuredSectionRef}
-            className={`@container relative mt-3 mb-8 isolate transition-[filter,opacity] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+            className={`@container relative mt-14 mb-8 isolate transition-[filter,opacity] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
               featuredBlurProgress > 0.72 ? "pointer-events-none select-none" : ""
             }`}
             style={{
@@ -645,14 +574,14 @@ const IndexV2 = () => {
                   : "none",
               opacity: featuredSectionOpacity,
             }}
-            onMouseEnter={() => {
-              featuredHoverRef.current = true;
-            }}
-            onMouseLeave={() => {
-              featuredHoverRef.current = false;
-            }}
           >
-            <div className="mb-3 flex justify-end" style={enter(560)}>
+            <div className="mb-3 flex items-center justify-between gap-3" style={enter(560)}>
+              <h2
+                className="text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
+                style={display}
+              >
+                Case Studies
+              </h2>
               <div className="flex shrink-0 gap-1">
                 <button
                   type="button"
@@ -697,7 +626,7 @@ const IndexV2 = () => {
 
             <div
               ref={featuredScrollRef}
-              className="flex w-full min-w-0 snap-x snap-mandatory items-center gap-3 overflow-x-auto overscroll-x-contain py-1 pr-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x"
+              className="flex w-full min-w-0 snap-x snap-mandatory items-center gap-3 overflow-x-auto overscroll-x-contain px-[1.125rem] py-1 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline:1.125rem] [&::-webkit-scrollbar]:hidden touch-pan-x"
               style={{
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "auto",
@@ -715,7 +644,7 @@ const IndexV2 = () => {
                     <div
                       key={project.slug}
                       data-feature-card
-                      className="min-w-0 shrink-0 grow-0 snap-start snap-always transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[transform,opacity,filter] motion-reduce:transition-none"
+                      className="min-w-0 shrink-0 grow-0 snap-start snap-always transition-[transform,opacity,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[transform,opacity,filter] motion-reduce:transition-none"
                       style={{
                         flex: `0 0 ${FEATURED_CARD_WIDTH}`,
                         width: FEATURED_CARD_WIDTH,
@@ -760,19 +689,19 @@ const IndexV2 = () => {
                                 style={posStyle}
                               />
                             )}
-                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                            <div className="v2-featured-media-gradient pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                             {project.tag ? (
                               <span className="absolute left-3 top-3 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.06em] text-zinc-100 ring-1 ring-white/15 backdrop-blur-md">
                                 {project.tag}
                               </span>
                             ) : null}
                           </div>
-                          <div className="mt-2.5 px-1">
-                            <p className="truncate text-[13px] leading-snug sm:text-[14px]">
-                              <span className="font-medium tracking-tight text-zinc-50 transition-colors group-hover:text-white">
+                          <div className="mt-3 px-1">
+                            <p className="truncate text-[16px] leading-snug sm:text-[18px]">
+                              <span className="font-semibold tracking-tight text-zinc-50 transition-colors group-hover:text-white">
                                 {project.name}
                               </span>
-                              <span className="font-normal text-zinc-500 text-[12px] sm:text-[13px]">
+                              <span className="font-normal text-zinc-500 text-[15px] sm:text-[16px]">
                                 {" "}
                                 · {project.meta} · {project.year}
                               </span>
@@ -782,6 +711,31 @@ const IndexV2 = () => {
                     </div>
                   );
                 })}
+            </div>
+            <div
+              className="mt-5 flex items-center justify-center gap-2"
+              aria-label="Featured project carousel"
+            >
+              {HIGHLIGHTS.map((project, index) => {
+                const active = index === featuredIndex;
+                return (
+                  <button
+                    key={project.slug}
+                    type="button"
+                    aria-label={`Show ${project.name}`}
+                    aria-current={active ? "true" : undefined}
+                    onClick={() => {
+                      scrollFeaturedTo(index);
+                      setFeaturedIndex(index);
+                    }}
+                    className={`h-[7px] rounded-full transition-all duration-300 ${
+                      active
+                        ? "w-6 bg-zinc-200"
+                        : "w-[7px] bg-zinc-700 hover:bg-zinc-500"
+                    }`}
+                  />
+                );
+              })}
             </div>
             <div
               aria-hidden
@@ -799,11 +753,70 @@ const IndexV2 = () => {
 
           <Spacer />
 
+          {/* AI stack */}
+          <section className="my-8" style={enterNoBlur(620)}>
+            <div className="mb-3">
+              <h2
+                className="v2-section-title text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
+                style={display}
+              >
+                My AI Tool Stack
+              </h2>
+            </div>
+            <div
+              className="overflow-hidden py-1"
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
+                maskImage:
+                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
+              }}
+            >
+              <div className="v2-tech-stack-marquee flex w-max gap-2 whitespace-nowrap px-4 sm:px-5">
+                {[...AI_STACK_ITEMS, ...AI_STACK_ITEMS].map((tool, index) => (
+                  <span
+                    key={`${tool.name}-${index}`}
+                    aria-hidden={index >= AI_STACK_ITEMS.length ? "true" : undefined}
+                    className="v2-ai-stack-chip inline-flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-[13px] font-medium tracking-tight sm:text-[14px]"
+                  >
+                    {"icon" in tool ? (
+                      <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-zinc-200">
+                        {tool.icon}
+                      </span>
+                    ) : (
+                      <img
+                        src={tool.logo}
+                        alt=""
+                        className={`h-[18px] w-[18px] shrink-0 object-contain ${
+                          "invertOnDark" in tool && tool.invertOnDark
+                            ? "v2-ai-stack-logo-invert"
+                            : ""
+                        }`}
+                        loading="lazy"
+                      />
+                    )}
+                    {tool.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <Spacer />
+
           {/* Substack — playbook-style card */}
           <section className="my-8 pb-[120px]" style={enterNoBlur(640)}>
+            <div className="mb-3">
+              <h2
+                className="v2-section-title text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
+                style={display}
+              >
+                My Blog
+              </h2>
+            </div>
             <div
               ref={playbookCardRef}
-              className={`relative transition-[box-shadow] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+              className={`v2-playbook-wrap relative max-w-[860px] transition-[box-shadow] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                 featuredBlurProgress > 0.35 ? "rounded-2xl ring-1 ring-white/[0.14]" : ""
               }`}
               style={
@@ -816,7 +829,7 @@ const IndexV2 = () => {
               }
             >
             <div
-              className="relative rounded-2xl overflow-hidden px-2.5 pt-2.5 pb-3 sm:px-3 sm:pt-3 sm:pb-3.5 ring-1 ring-zinc-600/80"
+              className="v2-playbook-card relative rounded-2xl overflow-hidden px-3 pt-3 pb-3.5 sm:px-3.5 sm:pt-3.5 sm:pb-4 ring-1 ring-zinc-600/80"
               style={{
                 backgroundColor: "#0a0a0a",
                 border: "1px solid rgba(161, 161, 170, 0.22)",
@@ -829,9 +842,9 @@ const IndexV2 = () => {
                   href={latestPost.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-stretch gap-3.5 px-5 pt-4 pb-4 sm:gap-4 sm:px-6 sm:pt-5 sm:pb-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/20"
+                  className="group flex items-stretch gap-4 px-5 pt-5 pb-5 sm:gap-5 sm:px-7 sm:pt-6 sm:pb-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/20"
                 >
-                  <div className="relative w-[92px] flex-shrink-0 overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-white/[0.14] min-h-[68px] sm:w-[104px] sm:min-h-[72px]">
+                  <div className="v2-playbook-thumb relative w-[116px] flex-shrink-0 overflow-hidden rounded-xl bg-zinc-950 ring-1 ring-white/[0.14] min-h-[84px] sm:w-[140px] sm:min-h-[96px]">
                       {latestPost.thumbnail ? (
                         <img
                           src={latestPost.thumbnail}
@@ -845,19 +858,19 @@ const IndexV2 = () => {
                   </div>
                   <div className="min-w-0 flex-1 self-center py-1 text-left">
                     <h4
-                      className="text-[14px] sm:text-[15px] font-semibold leading-[1.4] tracking-[-0.01em] text-zinc-100 line-clamp-2 group-hover:text-white transition-colors"
+                      className="text-[16px] sm:text-[18px] font-semibold leading-[1.35] tracking-[-0.01em] text-zinc-100 line-clamp-2 group-hover:text-white transition-colors"
                       style={display}
                     >
                       {latestPost.title}
                     </h4>
-                    <p className="mt-1 text-[12px] leading-[1.45] text-zinc-500 line-clamp-2">
+                    <p className="mt-1.5 text-[13px] leading-[1.5] text-zinc-500 line-clamp-2">
                       {latestPost.excerpt}
                     </p>
                   </div>
                 </a>
               ) : (
-                <div className="flex items-stretch gap-3.5 px-5 pt-4 pb-4 sm:gap-4 sm:px-6 sm:pt-5 sm:pb-4">
-                  <div className="flex w-[92px] flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.14] bg-white/[0.04] text-zinc-400 ring-1 ring-white/[0.10] min-h-[68px] sm:w-[104px] sm:min-h-[72px]">
+                <div className="flex items-stretch gap-4 px-5 pt-5 pb-5 sm:gap-5 sm:px-7 sm:pt-6 sm:pb-5">
+                  <div className="flex w-[116px] flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.04] text-zinc-400 ring-1 ring-white/[0.10] min-h-[84px] sm:w-[140px] sm:min-h-[96px]">
                     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
                     </svg>
@@ -876,39 +889,22 @@ const IndexV2 = () => {
                 </div>
               )}
 
-              <div className="mx-6 border-t border-white/[0.08] sm:mx-7" />
+              <div className="v2-playbook-divider mx-6 border-t border-white/[0.08] sm:mx-8" />
 
-              <div className="flex flex-col gap-2.5 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-7 sm:py-5">
-                <p className="min-w-0 text-[12.5px] sm:text-[13px] leading-[1.45] text-zinc-400">
+              <div className="flex flex-col gap-2.5 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8 sm:py-5">
+                <p className="min-w-0 text-[13px] sm:text-[14px] leading-[1.45] text-zinc-400">
                   Join{" "}
-                  <span className="font-medium text-zinc-200">4,000+</span> designers
+                  <span className="font-medium text-zinc-200">4000+</span> readers
                 </p>
                 <button
                   type="button"
                   onClick={() => setIsSubscribeOpen(true)}
-                  className={`${secondaryCtaClass} shrink-0 self-start sm:self-center`}
+                  className={`${secondaryCtaClass} v2-playbook-subscribe shrink-0 self-start sm:self-center`}
                 >
                   Subscribe
                 </button>
               </div>
 
-              <div className="mx-6 border-t border-white/[0.08] sm:mx-7" />
-
-              <div className="flex items-center justify-between gap-3 px-6 py-4 pb-6 sm:gap-4 sm:px-7 sm:py-5 sm:pb-6">
-                {READER_LOGOS.map((logo) => (
-                  <img
-                    key={logo.name}
-                    src={logo.src}
-                    alt={logo.name}
-                    className={
-                      logo.className ??
-                      "h-[18px] w-auto max-w-[44px] shrink-0 object-contain sm:h-5 sm:max-w-[48px]"
-                    }
-                    style={logo.style}
-                    loading="lazy"
-                  />
-                ))}
-              </div>
             </div>
             <div
               aria-hidden
@@ -922,6 +918,24 @@ const IndexV2 = () => {
           </section>
         </main>
       </div>
+
+      <style>{`
+        .v2-tech-stack-marquee {
+          animation: techStackMarquee 34s linear infinite;
+          will-change: transform;
+        }
+
+        @keyframes techStackMarquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(calc(-50% - 0.25rem)); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .v2-tech-stack-marquee {
+            animation: none;
+          }
+        }
+      `}</style>
 
       {/* Subscribe modal with Substack iframe */}
       {isSubscribeOpen && (

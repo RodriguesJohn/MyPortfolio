@@ -130,6 +130,106 @@ All colors MUST be HSL.
   .rotate-y-\[-5deg\] {
     transform: rotateY(-5deg);
   }
+
+  .v2-light {
+    background: #f7f7f7 !important;
+    color: #18181b !important;
+  }
+
+  .v2-light [class*="text-zinc-50"],
+  .v2-light [class*="text-zinc-100"] {
+    color: rgba(24, 24, 27, 0.92) !important;
+  }
+
+  .v2-light [class*="text-zinc-200"],
+  .v2-light [class*="text-zinc-300"] {
+    color: rgba(39, 39, 42, 0.72) !important;
+  }
+
+  .v2-light [class*="text-zinc-400"] {
+    color: rgba(63, 63, 70, 0.72) !important;
+  }
+
+  .v2-light [class*="text-zinc-500"],
+  .v2-light [class*="text-zinc-600"] {
+    color: rgba(82, 82, 91, 0.62) !important;
+  }
+
+  .v2-light .dock-indicator-pill {
+    background-color: rgba(24, 24, 27, 0.08) !important;
+  }
+
+  .v2-light [class*="border-white"],
+  .v2-light [class*="ring-white"] {
+    border-color: rgba(24, 24, 27, 0.1) !important;
+    --tw-ring-color: rgba(24, 24, 27, 0.1) !important;
+  }
+
+  .v2-light [class*="border-zinc"],
+  .v2-light [class*="ring-zinc"] {
+    border-color: rgba(24, 24, 27, 0.12) !important;
+    --tw-ring-color: rgba(24, 24, 27, 0.12) !important;
+  }
+
+  .v2-light [class*="bg-white/["] {
+    background-color: rgba(255, 255, 255, 0.72) !important;
+  }
+
+  .v2-light [class*="bg-black/"] {
+    background-color: rgba(255, 255, 255, 0.82) !important;
+  }
+
+  .v2-light [class*="bg-zinc-900"],
+  .v2-light [class*="bg-zinc-950"] {
+    background-color: #f7f7f7 !important;
+  }
+
+  .v2-light [class*="bg-zinc-600"] {
+    background-color: rgba(82, 82, 91, 0.28) !important;
+  }
+
+  .v2-light [class*="bg-zinc-100"] {
+    background-color: rgba(24, 24, 27, 0.82) !important;
+  }
+
+  .v2-light .v2-glow-cta {
+    color: rgba(24, 24, 27, 0.78);
+    background: rgba(24, 24, 27, 0.14);
+    box-shadow:
+      0 0 0 1px rgba(24, 24, 27, 0.06),
+      0 18px 42px -30px rgba(24, 24, 27, 0.22);
+  }
+
+  .v2-light .v2-glow-cta::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(24, 24, 27, 0.02) 52deg,
+      rgba(24, 24, 27, 0.22) 112deg,
+      rgba(24, 24, 27, 0.03) 172deg,
+      transparent 232deg
+    );
+  }
+
+  .v2-light .v2-glow-cta__inner {
+    background: rgba(255, 255, 255, 0.78);
+    color: rgba(24, 24, 27, 0.76) !important;
+  }
+
+  .v2-light .v2-glow-cta:hover .v2-glow-cta__inner {
+    background: rgba(255, 255, 255, 0.94);
+    color: rgba(24, 24, 27, 0.9) !important;
+  }
+
+  .v2-light .v2-status-pill {
+    background: rgba(24, 24, 27, 0.055) !important;
+    color: rgba(39, 39, 42, 0.74) !important;
+    box-shadow: inset 0 0 0 1px rgba(24, 24, 27, 0.08);
+  }
+
+  .v2-light .v2-status-pill span {
+    background: rgba(39, 39, 42, 0.56) !important;
+  }
 }
 
 @keyframes gradient {
@@ -349,6 +449,12 @@ All colors MUST be HSL.
   background: rgba(255, 255, 255, 0.22);
 }
 
+.v2-status-pill {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(212, 212, 216, 0.86);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .v2-glow-cta::before {
     animation: none;
@@ -380,3 +486,198 @@ All colors MUST be HSL.
   }
 }
 
+.v2-light [class*="bg-zinc-900"],
+.v2-light [class*="bg-zinc-950"] {
+  background-color: #f7f7f7 !important;
+}
+
+.v2-light [class*="text-zinc-50"],
+.v2-light [class*="text-zinc-100"] {
+  color: rgba(24, 24, 27, 0.92) !important;
+}
+
+.v2-light .text-white {
+  color: rgba(24, 24, 27, 0.9) !important;
+}
+
+.v2-light [class*="text-zinc-500"],
+.v2-light [class*="text-zinc-600"] {
+  color: rgba(82, 82, 91, 0.62) !important;
+}
+
+.v2-light [class*="bg-zinc-600"] {
+  background-color: rgba(82, 82, 91, 0.28) !important;
+}
+
+.v2-light [class*="bg-zinc-100"] {
+  background-color: rgba(24, 24, 27, 0.82) !important;
+}
+
+.v2-light [class*="border-white"],
+.v2-light [class*="ring-white"],
+.v2-light [class*="border-zinc"],
+.v2-light [class*="ring-zinc"] {
+  border-color: rgba(24, 24, 27, 0.12) !important;
+  --tw-ring-color: rgba(24, 24, 27, 0.12) !important;
+}
+
+.v2-light .dock-indicator-pill {
+  background-color: rgba(24, 24, 27, 0.08) !important;
+}
+
+.v2-light .v2-brand-logo {
+  filter: none !important;
+  opacity: 0.62 !important;
+}
+
+.v2-light .v2-playbook-wrap {
+  box-shadow: 0 24px 72px -52px rgba(24, 24, 27, 0.18) !important;
+}
+
+.v2-light .v2-playbook-card {
+  background-color: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(24, 24, 27, 0.1) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 80px -58px rgba(24, 24, 27, 0.2) !important;
+}
+
+.v2-light .v2-playbook-thumb {
+  background-color: #f7f7f7 !important;
+  --tw-ring-color: rgba(24, 24, 27, 0.1) !important;
+}
+
+.v2-light .v2-playbook-divider {
+  border-color: rgba(24, 24, 27, 0.08) !important;
+}
+
+.v2-light .v2-playbook-subscribe {
+  background-color: rgba(24, 24, 27, 0.9) !important;
+  border-color: rgba(24, 24, 27, 0.9) !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+.v2-light .v2-playbook-subscribe:hover {
+  background-color: rgba(24, 24, 27, 1) !important;
+  color: #fff !important;
+}
+
+.v2-light .v2-reader-logo {
+  filter: brightness(0) saturate(0) !important;
+  opacity: 0.58 !important;
+}
+
+.v2-light .v2-featured-media-frame {
+  --tw-ring-color: rgba(24, 24, 27, 0.1) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(24, 24, 27, 0.1),
+    0 20px 80px -58px rgba(24, 24, 27, 0.2);
+}
+
+.v2-light .v2-featured-media-gradient {
+  display: none;
+}
+
+.v2-section-title {
+  color: rgba(244, 244, 245, 0.85);
+}
+
+.v2-light .v2-section-title {
+  color: rgba(24, 24, 27, 0.86);
+}
+
+.v2-ai-stack-chip {
+  background-color: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  color: rgba(244, 244, 245, 0.82);
+}
+
+.v2-light .v2-ai-stack-chip {
+  background-color: rgba(244, 244, 245, 0.86);
+  border-color: rgba(212, 212, 216, 0.78);
+  color: rgba(39, 39, 42, 0.9);
+}
+
+.v2-ai-stack-logo-invert {
+  filter: invert(1);
+}
+
+.v2-light .v2-ai-stack-logo-invert {
+  filter: none;
+}
+
+.v2-light .v2-popup-panel {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(24, 24, 27, 0.1) !important;
+  color: rgba(24, 24, 27, 0.9) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 24px 84px -50px rgba(24, 24, 27, 0.32) !important;
+}
+
+.v2-light .v2-popup-panel [class*="border-white"] {
+  border-color: rgba(24, 24, 27, 0.08) !important;
+}
+
+.v2-light .v2-popup-panel input {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(24, 24, 27, 0.1) !important;
+  color: rgba(24, 24, 27, 0.88) !important;
+}
+
+.v2-light .v2-popup-panel input::placeholder {
+  color: rgba(82, 82, 91, 0.62) !important;
+}
+
+.v2-light .v2-popup-panel button[aria-label="Send"],
+.v2-light .v2-popup-panel button[aria-label="Play"],
+.v2-light .v2-popup-panel button[aria-label="Pause"] {
+  background-color: rgba(24, 24, 27, 0.9) !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+.v2-light .v2-more-panel {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(24, 24, 27, 0.08) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 28px 80px -54px rgba(24, 24, 27, 0.3) !important;
+}
+
+.v2-light .v2-more-social-link,
+.v2-light .v2-more-action,
+.v2-light .v2-more-copy {
+  background-color: transparent !important;
+}
+
+.v2-light .v2-more-social-link:hover,
+.v2-light .v2-more-action:hover,
+.v2-light .v2-more-copy:hover {
+  background-color: rgba(24, 24, 27, 0.045) !important;
+}
+
+.v2-light .v2-more-icon,
+.v2-light .v2-more-resume-copy {
+  background-color: rgba(24, 24, 27, 0.04) !important;
+  border-color: rgba(24, 24, 27, 0.08) !important;
+  color: rgba(39, 39, 42, 0.66) !important;
+}
+
+.v2-light .v2-more-resume {
+  background-color: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(24, 24, 27, 0.08) !important;
+  color: rgba(24, 24, 27, 0.88) !important;
+}
+
+.v2-light .v2-more-resume:hover {
+  background-color: rgba(255, 255, 255, 0.86) !important;
+}
+
+.v2-light .v2-more-resume span {
+  color: inherit !important;
+}
+
+.v2-light .v2-theme-switch {
+  background-color: rgba(24, 24, 27, 0.08) !important;
+  border-color: rgba(24, 24, 27, 0.08) !important;
+}

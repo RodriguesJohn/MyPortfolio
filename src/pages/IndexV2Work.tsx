@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import PageShell from "@/components/v2/PageShell";
-import { V2_WORK_PROJECTS, type Project } from "@/data/projects";
+import { AI_TOOLS_BUILT, V2_WORK_PROJECTS, type Project } from "@/data/projects";
 
 import chaseLogo from "@/assets/ChaseLightMOde.png";
 import citiLogo from "@/assets/Citi.svg.png";
@@ -19,6 +19,17 @@ const enter = (delay = 0): React.CSSProperties => ({
   animation: `entranceItem 900ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms forwards`,
   willChange: "transform, filter, opacity",
 });
+
+const ENTERPRISE_PROJECT_SLUGS = [
+  "digital-commercial-banking",
+  "ai-insights-citi",
+  "balance-transfer-citi",
+  "toca-football",
+];
+
+const ENTERPRISE_PROJECTS = V2_WORK_PROJECTS.filter((project) =>
+  ENTERPRISE_PROJECT_SLUGS.includes(project.slug),
+);
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const navigate = useNavigate();
@@ -82,13 +93,13 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         )}
       </div>
 
-      <div className="mt-2.5 px-1">
-        <p className="text-[15px] leading-snug">
+      <div className="mt-3 px-1">
+        <p className="text-[17px] leading-snug sm:text-[18px]">
           <span className="font-semibold text-zinc-50 group-hover:text-white transition-colors">
             {project.name}
           </span>
         </p>
-        <p className="mt-0.5 text-[13px] text-zinc-500">
+        <p className="mt-1 text-[15px] text-zinc-500 sm:text-[16px]">
           {project.meta} · {project.year}
         </p>
       </div>
@@ -96,12 +107,41 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   );
 };
 
+const ProjectLane = ({
+  title,
+  projects,
+  delay,
+}: {
+  title: string;
+  projects: Project[];
+  delay: number;
+}) => (
+  <section className="space-y-5" style={enter(delay)}>
+    <h2 className="text-[18px] font-medium tracking-tight text-zinc-100/85 sm:text-[20px]">
+      {title}
+    </h2>
+    <div
+      className="flex w-full snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-6"
+      aria-label={title}
+    >
+      {projects.map((project, i) => (
+        <div
+          key={project.slug}
+          className="w-[90%] max-w-[640px] shrink-0 snap-start sm:w-[520px] lg:w-[620px]"
+        >
+          <ProjectCard project={project} index={i} />
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
 const IndexV2Work = () => {
   const navigate = useNavigate();
 
   return (
     <PageShell>
-      <div className="mx-auto w-[92%] max-w-[1100px]">
+      <div className="mx-auto w-[94%] max-w-[1280px]">
         <section className="pt-20 sm:pt-24 pb-6">
           <button
             type="button"
@@ -167,7 +207,7 @@ const IndexV2Work = () => {
                   key={`${b.name}-${i}`}
                   src={b.src}
                   alt={b.name}
-                  className="h-5 w-auto object-contain flex-shrink-0"
+                  className="v2-brand-logo h-5 w-auto object-contain flex-shrink-0"
                   style={{
                     filter: "brightness(0) invert(1)",
                     opacity: 0.4,
@@ -184,15 +224,17 @@ const IndexV2Work = () => {
           </div>
         </section>
 
-        <main>
-          <section
-            className="grid grid-cols-1 gap-6 pb-[200px] sm:grid-cols-2"
-            style={enter(240)}
-          >
-            {V2_WORK_PROJECTS.map((project, i) => (
-              <ProjectCard key={project.slug} project={project} index={i} />
-            ))}
-          </section>
+        <main className="space-y-16 pb-[200px]">
+          <ProjectLane
+            title="AI Products Designed, Developed and Shipped (10+)"
+            projects={AI_TOOLS_BUILT}
+            delay={240}
+          />
+          <ProjectLane
+            title="Product Design Work"
+            projects={ENTERPRISE_PROJECTS}
+            delay={320}
+          />
         </main>
       </div>
     </PageShell>
