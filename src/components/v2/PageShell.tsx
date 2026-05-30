@@ -263,18 +263,18 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window === "undefined") return "light";
+    if (typeof window === "undefined") return "dark";
     const queryTheme = new URLSearchParams(window.location.search).get("theme");
     if (queryTheme === "light" || queryTheme === "dark") return queryTheme;
-    return "light";
+    return "dark";
   });
   const isLightPreview = theme === "light";
 
   useEffect(() => {
     window.localStorage.setItem("v2-theme", theme);
     const params = new URLSearchParams(location.search);
-    if (theme === "dark") {
-      params.set("theme", "dark");
+    if (theme === "light") {
+      params.set("theme", "light");
     } else {
       params.delete("theme");
     }
