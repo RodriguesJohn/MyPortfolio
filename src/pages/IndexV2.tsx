@@ -580,7 +580,7 @@ const IndexV2 = () => {
                 className="text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
                 style={display}
               >
-                Case Studies
+                Products Shipped
               </h2>
               <div className="flex shrink-0 gap-1">
                 <button
