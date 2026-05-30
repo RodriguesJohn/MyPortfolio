@@ -439,7 +439,7 @@ const IndexV2 = () => {
               style={{ ...enterNoBlur(160), ...display }}
             >
               <span className="min-w-0 max-w-full text-[18px] font-medium tracking-tight leading-[1.35] text-zinc-300 sm:text-[20px]">
-                AI Design Engineer | Building 0→1 Products and Agents
+                Design Engineer | Building 0→1 Products and Agents
               </span>
             </div>
             <p
