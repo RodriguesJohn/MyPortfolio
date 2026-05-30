@@ -60,7 +60,7 @@ const SOCIAL_LINKS: SocialLink[] = [
     ),
   },
   {
-    label: "AI Design Academy",
+    label: "AI Builder Academy",
     href: "https://www.theaidesignacademy.com/",
     handle: "theaidesignacademy.com",
     icon: (
