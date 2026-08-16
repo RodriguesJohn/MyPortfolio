@@ -20,8 +20,8 @@ const navItems = [
   { icon: Briefcase, label: "Home", value: "Work Highlights", path: "/" },
   {
     icon: GraduationCap,
-    label: "AI Design Academy",
-    href: "https://www.theaidesignacademy.com/",
+    label: "Academy",
+    href: "https://www.humanaistudio.io/academy",
   },
   { icon: FolderOpen, label: "Blog", href: "https://johnrodrigues.substack.com/" },
   { icon: MessageSquare, label: "Testimonial", value: "Testimonials", path: "/testimonials" },
@@ -63,7 +63,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
             
             if (item.href) {
               const isAcademy =
-                item.href.includes("theaidesignacademy.com");
+                item.href.includes("humanaistudio.io/academy");
               return (
                 <a
                   key={item.label}
@@ -72,7 +72,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                   rel="noopener noreferrer"
                   title={
                     isAcademy
-                      ? "Opens AI Design Academy in a new tab (separate site from this portfolio)"
+                      ? "Opens Academy in a new tab (separate site from this portfolio)"
                       : undefined
                   }
                   className={cn(
@@ -223,7 +223,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                     
                     if (item.href) {
                       const isAcademy =
-                        item.href.includes("theaidesignacademy.com");
+                        item.href.includes("humanaistudio.io/academy");
                       return (
                         <a
                           key={item.label}
@@ -232,7 +232,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
                           rel="noopener noreferrer"
                           title={
                             isAcademy
-                              ? "Opens AI Design Academy in a new tab (separate site from this portfolio)"
+                              ? "Opens Academy in a new tab (separate site from this portfolio)"
                               : undefined
                           }
                           onClick={() => setIsMobileMenuOpen(false)}

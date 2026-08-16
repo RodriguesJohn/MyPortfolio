@@ -60,9 +60,9 @@ const SOCIAL_LINKS: SocialLink[] = [
     ),
   },
   {
-    label: "AI Builder Academy",
-    href: "https://www.theaidesignacademy.com/",
-    handle: "theaidesignacademy.com",
+    label: "Academy",
+    href: "https://www.humanaistudio.io/academy",
+    handle: "humanaistudio.io/academy",
     icon: (
       <svg
         className="h-4 w-4"
