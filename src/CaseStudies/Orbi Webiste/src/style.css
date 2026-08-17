@@ -167,7 +167,7 @@ a {
 .hero-copy {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 920px;
   margin: 0;
 }
 
@@ -224,6 +224,7 @@ a {
 
 h1 {
   margin: 0;
+  max-width: 860px;
   color: #ffffff;
   background:
     linear-gradient(180deg, #ffffff 0%, #f3f6ff 46%, rgba(255, 255, 255, 0.62) 100%);
@@ -888,7 +889,25 @@ footer {
 }
 
 @media (max-width: 1180px) {
+  .hero {
+    text-align: center;
+  }
+
+  .hero-copy {
+    margin-inline: auto;
+  }
+
+  .back-link {
+    margin-inline: auto;
+  }
+
+  .hero-kicker,
+  .hero-actions {
+    justify-content: center;
+  }
+
   .hero-subtitle {
+    margin-inline: auto;
     white-space: normal;
   }
 }

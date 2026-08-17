@@ -105,7 +105,7 @@ export default function App() {
           <div className="hero-kicker entrance entrance-1">
             <p className="eyebrow">Orbi AI Agentic Second Brain</p>
           </div>
-          <h1 className="entrance entrance-2">One second brain for every AI agent.</h1>
+          <h1 className="entrance entrance-2">What if all your AI agents had one second brain?</h1>
           <p className="hero-subtitle entrance entrance-3">
             Capture thoughts, organize context, and give your AI the knowledge base you own.
           </p>

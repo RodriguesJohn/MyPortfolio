@@ -1,16 +1,50 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import profileImage from "@/assets/PP.jpg";
-import PageShell, { display } from "@/components/v2/PageShell";
-import { PROFILE_LINKEDIN_URL } from "@/config/profileLinks";
-import { HIGHLIGHTS } from "@/data/projects";
+import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
+import ProfileTiltCard from "@/components/v2/ProfileTiltCard";
+import {
+  v2FadeUp,
+  v2SpringSoft,
+} from "@/components/v2/motion";
+import { PROFILE_LINKEDIN_URL, PROFILE_SUBSTACK_URL, PROFILE_X_URL } from "@/config/profileLinks";
+import {
+  AI_TOOLS_BUILT,
+  HIGHLIGHTS,
+  type Project,
+} from "@/data/projects";
+import { BUILT_TOOLS } from "@/data/builtTools";
+import {
+  DESIGN_SYSTEM_COURSE,
+  FLORENCE_HERO,
+  FLORENCE_URL,
+} from "@/data/designSystems";
+import { TESTIMONIALS } from "@/data/testimonials";
+import logoCursor from "@/assets/logo-cursor.png";
+import logoClaude from "@/assets/logo-claude.png";
+import logoClaudeCode from "@/assets/logo-claude-code.png";
+import logoFigma from "@/assets/logo-figma.png";
+import logoReact from "@/assets/logo-react.png";
+import logoGithub from "@/assets/logo-github.png";
+import logoSwift from "@/assets/logo-swift.png";
+import florenceLaunchVideo from "@/assets/florence-launch.mp4";
+import logoX from "@/assets/logo-x.jpg";
 
-/** Set to `true` to show the “3 Ways I Can Help” cards on /v2. */
-const SHOW_THREE_WAYS_SECTION = false;
+const AI_STACK_LOGOS = [
+  { src: logoCursor, label: "Cursor", fit: "cover" as const },
+  { src: logoClaudeCode, label: "Claude Code", fit: "contain" as const, pad: true },
+  { src: logoClaude, label: "Claude", fit: "contain" as const, pad: true },
+  { src: logoFigma, label: "Figma", fit: "cover" as const },
+  { src: logoReact, label: "React", fit: "contain" as const, pad: true, bare: true },
+  { src: logoGithub, label: "GitHub", fit: "cover" as const },
+  { src: logoSwift, label: "Swift", fit: "cover" as const },
+];
+
+
 
 const SUBSTACK_FEED = "https://johnrodrigues.substack.com/feed";
 
-type LatestPost = {
+type SubstackPost = {
   title: string;
   link: string;
   pubDate: string;
@@ -18,46 +52,104 @@ type LatestPost = {
   excerpt: string;
 };
 
-const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+type FeedTab =
+  | "work"
+  | "experiments"
+  | "systems"
+  | "tools"
+  | "blog"
+  | "testimonials";
 
-const useLatestSubstackPost = () => {
-  const [post, setPost] = useState<LatestPost | null>(null);
+const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
+
+const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
+  { id: "work", label: "Work" },
+  { id: "experiments", label: "AI Experiments", shortLabel: "Experiments" },
+  { id: "systems", label: "AI Design Systems", shortLabel: "Systems" },
+  { id: "tools", label: "Tools" },
+  { id: "blog", label: "Blog" },
+  { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
+];
+
+const ACADEMY_URL = "https://www.humanaistudio.io/academy";
+
+const FEED_TAB_CLASS =
+  "v2-feed-tab shrink-0 pb-3 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors lg:text-[12px]";
+
+const PROJECT_FEED_TABS = new Set<FeedTab>(["work", "experiments"]);
+
+const FEED_BY_TAB: Record<"work" | "experiments", Project[]> = {
+  work: HIGHLIGHTS,
+  experiments: AI_TOOLS_BUILT,
+};
+
+const parseSubstackItem = (item: {
+  title?: string;
+  link?: string;
+  pubDate?: string;
+  description?: string;
+  content?: string;
+  thumbnail?: string;
+  enclosure?: { link?: string };
+}): SubstackPost | null => {
+  if (!item.title || !item.link) return null;
+
+  const text = (item.description || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const excerpt =
+    text.length > 160 ? `${text.slice(0, 160).trim()}…` : text;
+  const thumbnail =
+    item.thumbnail ||
+    item.enclosure?.link ||
+    (item.content || item.description || "").match(
+      /<img[^>]+src="([^"]+)"/i,
+    )?.[1] ||
+    undefined;
+
+  return {
+    title: item.title,
+    link: item.link,
+    pubDate: item.pubDate || "",
+    thumbnail,
+    excerpt: excerpt.replace(/&amp;/g, "&"),
+  };
+};
+
+const formatPostDate = (pubDate: string) => {
+  if (!pubDate) return "";
+  const date = new Date(pubDate);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const useSubstackPosts = () => {
+  const [posts, setPosts] = useState<SubstackPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
-    const fetchLatest = () => {
+    const fetchPosts = () => {
       fetch(
         `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-          SUBSTACK_FEED
-        )}`
+          SUBSTACK_FEED,
+        )}&count=20`,
       )
         .then((r) => r.json())
         .then((data) => {
           if (cancelled) return;
-          const item = data?.items?.[0];
-          if (!item) return;
-          const text = (item.description || "")
-            .replace(/<[^>]+>/g, " ")
-            .replace(/\s+/g, " ")
-            .trim();
-          const excerpt =
-            text.length > 160 ? text.slice(0, 160).trim() + "…" : text;
-          const cover =
-            item.thumbnail ||
-            item.enclosure?.link ||
-            (item.content || item.description || "").match(
-              /<img[^>]+src="([^"]+)"/i
-            )?.[1] ||
-            undefined;
-          setPost({
-            title: item.title,
-            link: item.link,
-            pubDate: item.pubDate,
-            thumbnail: cover,
-            excerpt: excerpt.replace(/&amp;/g, "&"),
-          });
+          const parsed = (data?.items ?? [])
+            .map(parseSubstackItem)
+            .filter((post: SubstackPost | null): post is SubstackPost =>
+              Boolean(post),
+            );
+          setPosts(parsed);
         })
         .catch(() => {})
         .finally(() => {
@@ -65,336 +157,664 @@ const useLatestSubstackPost = () => {
         });
     };
 
-    fetchLatest();
-    const id = window.setInterval(fetchLatest, REFRESH_INTERVAL_MS);
+    fetchPosts();
+    const id = window.setInterval(fetchPosts, REFRESH_INTERVAL_MS);
     return () => {
       cancelled = true;
       window.clearInterval(id);
     };
   }, []);
 
-  return { post, loading };
+  return { posts, loading };
 };
 
-const ThinkingDots = () => (
-  <span
-    aria-hidden="true"
-    className="inline-flex items-baseline gap-[3px] ml-1.5"
-    style={{ transform: "translateY(4px)" }}
-  >
-    {[0, 0.18, 0.36].map((delay) => (
-      <span
-        key={delay}
-        className="block h-[5px] w-[5px] rounded-full bg-zinc-300"
-        style={{
-          animation: "thinkingDot 1.3s ease-in-out infinite",
-          animationDelay: `${delay}s`,
-        }}
-      />
-    ))}
-  </span>
-);
-
-const ClaudeLogo = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className="inline-block align-[-3px] mr-1 h-[15px] w-[15px]"
-    fill="#D97757"
-    style={{
-      transformOrigin: "center",
-      animation: "logoRotate 14s linear infinite",
-    }}
-  >
-    <path d="M12 1.5c.6 0 1 4 1 10.5s-.4 10.5-1 10.5-1-4-1-10.5S11.4 1.5 12 1.5zM1.5 12c0-.6 4-1 10.5-1s10.5.4 10.5 1-4 1-10.5 1S1.5 12.6 1.5 12z" />
-    <path
-      transform="rotate(45 12 12)"
-      d="M12 4c.4 0 .7 2.7.7 7s-.3 7-.7 7-.7-2.7-.7-7 .3-7 .7-7zM4 12c0-.4 2.7-.7 7-.7s7 .3 7 .7-2.7.7-7 .7-7-.3-7-.7z"
-    />
-  </svg>
-);
-
-const CursorLogo = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className="inline-block align-[-3px] mr-1 h-[15px] w-[15px]"
-    fill="currentColor"
-    style={{
-      transformOrigin: "center",
-      animation: "logoTilt 3.4s ease-in-out infinite",
-    }}
-  >
-    <path d="M4 3.5l16 8.5-7 1.8L11 21z" />
-  </svg>
-);
-
-const CodexLogo = ({
-  className = "inline-block align-[-3px] mr-1 h-[15px] w-[15px]",
+const FeedMotionItem = ({
+  children,
+  index,
 }: {
-  className?: string;
+  children: React.ReactNode;
+  index: number;
 }) => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinejoin="round"
-    style={{
-      transformOrigin: "center",
-      animation: "logoPulse 4.2s ease-in-out infinite",
-    }}
+  <motion.div
+    layout
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ ...v2SpringSoft, delay: index * 0.04 }}
   >
-    <path d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z" />
-  </svg>
+    {children}
+  </motion.div>
 );
-
-const Spacer = () => (
-  <div
-    aria-hidden="true"
-    className="my-10 h-px w-full"
-    style={{
-      backgroundImage:
-        "linear-gradient(90deg, rgba(244,244,245,0.18) 0%, rgba(244,244,245,0) 100%)",
-    }}
-  />
-);
-
-const enter = (delay = 0): React.CSSProperties => ({
-  opacity: 0,
-  transform: "translateY(12px)",
-  filter: "blur(6px)",
-  animation: `entranceItem 900ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms forwards`,
-  willChange: "transform, filter, opacity",
-});
-
-/** Same as `enter` but no blur — avoids clipping when paired with horizontal overflow (subtitle). */
-const enterNoBlur = (delay = 0): React.CSSProperties => ({
-  opacity: 0,
-  transform: "translateY(12px)",
-  animation: `entranceItemNoBlur 900ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms forwards`,
-  willChange: "transform, opacity",
-});
-
-const getFeaturedCards = (root: HTMLDivElement) =>
-  [...root.querySelectorAll<HTMLElement>("[data-feature-card]")];
-
-const featuredCardScrollTarget = (root: HTMLDivElement, card: HTMLElement) =>
-  card.offsetLeft - (root.clientWidth - card.offsetWidth) / 2;
-
-const nearestFeaturedIndex = (root: HTMLDivElement, cards: HTMLElement[]) => {
-  const scrollLeft = root.scrollLeft;
-  let nearest = 0;
-  let nearestDist = Infinity;
-  for (let i = 0; i < cards.length; i++) {
-    const d = Math.abs(featuredCardScrollTarget(root, cards[i]) - scrollLeft);
-    if (d < nearestDist) {
-      nearestDist = d;
-      nearest = i;
-    }
-  }
-  return nearest;
-};
-
-const syncFeaturedCarousel = (
-  root: HTMLDivElement,
-  options?: { sectionBlurred?: boolean },
-) => {
-  const cards = getFeaturedCards(root);
-  if (!cards.length) return;
-
-  const sectionBlurred = options?.sectionBlurred ?? false;
-  const rootRect = root.getBoundingClientRect();
-  const viewportCenter = rootRect.left + rootRect.width / 2;
-  const active = nearestFeaturedIndex(root, cards);
-
-  cards.forEach((card, i) => {
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.left + rect.width / 2;
-    const offset = Math.abs(cardCenter - viewportCenter);
-    const normalized = Math.min(1, offset / (rootRect.width * 0.52));
-    const scale = sectionBlurred ? 1 : 1 - normalized * 0.07;
-    const opacity = sectionBlurred ? 1 : 1 - normalized * 0.32;
-    const blurPx = sectionBlurred ? 0 : normalized * 3.5;
-
-    card.style.transform = `scale(${scale.toFixed(3)})`;
-    card.style.opacity = opacity.toFixed(3);
-    card.style.filter = blurPx > 0.2 ? `blur(${blurPx.toFixed(1)}px)` : "none";
-    card.style.transformOrigin = "center center";
-
-    const video = card.querySelector("video");
-    if (!video) return;
-    if (i === active) {
-      void video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
-  });
-};
 
 const secondaryCtaClass =
   "inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2 text-[13px] font-medium tracking-tight text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/[0.07] hover:text-zinc-100 active:scale-[0.99]";
 
-const brandIcon = (slug: string, color?: string) =>
-  `https://cdn.simpleicons.org/${slug}/${color ?? "18181B"}`;
-
-const AI_STACK_ITEMS = [
-  { name: "Claude Code", logo: brandIcon("claude", "D97757") },
-  { name: "Cursor", logo: "https://www.cursor.com/favicon.ico" },
-  { name: "Codex", icon: <CodexLogo className="h-5 w-5" /> },
-  { name: "React", logo: brandIcon("react", "61DAFB") },
-  { name: "Xcode", logo: brandIcon("xcode", "147EFB") },
-  { name: "SwiftUI", logo: brandIcon("swift", "F05138") },
-  { name: "Vercel", logo: brandIcon("vercel", "18181B"), invertOnDark: true },
-  { name: "Supabase", logo: brandIcon("supabase", "3FCF8E") },
-];
-
 const featuredMediaFrame =
-  "v2-featured-media-frame relative w-full aspect-[3840/2060] overflow-hidden rounded-2xl bg-zinc-900 ring-1 ring-white/[0.08]";
+  "v2-featured-media-frame relative w-full overflow-hidden rounded-[20px] bg-zinc-900 ring-1 ring-white/[0.08]";
 
-const FEATURED_CARD_WIDTH = "100%";
+const getFeedLabel = (project: Project, tab: FeedTab, index: number) => {
+  if (index === 0 && tab === "work") return "Featured · Shipped";
+  if (project.tag) return project.tag;
+  if (tab === "experiments") return "AI Experiments";
+  if (tab === "systems") return "AI Design Systems";
+  return "Work";
+};
+
+const ExternalLinkIcon = () => (
+  <svg
+    className="size-3.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M7 17L17 7M17 7H8M17 7V16" />
+  </svg>
+);
+
+const ToolsTabContent = () => (
+  <div className="max-w-[920px] px-0 sm:px-1">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {BUILT_TOOLS.map((tool) => (
+        <article
+          key={tool.id}
+          className="v2-built-tool-card flex min-h-0 flex-col rounded-[20px] p-5 sm:min-h-[280px] sm:p-6 md:min-h-[320px]"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <span className="v2-built-tool-index inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[12px] font-medium">
+              {tool.index}
+            </span>
+            <p className="max-w-[58%] text-right text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+              {tool.tag}
+            </p>
+          </div>
+
+          <div
+            className="mt-5 inline-flex size-12 items-center justify-center overflow-hidden rounded-[14px]"
+            style={{ backgroundColor: tool.icon.bg }}
+          >
+            <img
+              src={tool.icon.src}
+              alt=""
+              className={`size-full ${
+                tool.icon.fit === "contain" ? "object-contain" : "object-cover"
+              } ${tool.icon.pad ? "p-2" : ""} ${
+                tool.icon.mono ? "brightness-0" : ""
+              }`}
+              loading="lazy"
+            />
+          </div>
+
+          <h3
+            className="v2-built-tool-title mt-5 text-[22px] font-semibold leading-tight tracking-[-0.02em]"
+            style={display}
+          >
+            {tool.name}
+          </h3>
+          <p className="v2-built-tool-description mt-3 flex-1 text-[14px] leading-[1.55]">
+            {tool.description}
+          </p>
+
+          <div className="v2-built-tool-divider mt-6 border-t pt-5">
+            <a
+              href={tool.href}
+              target="_blank"
+              rel="noreferrer"
+              className="v2-built-tool-cta v2-explore-cta inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
+            >
+              {tool.ctaLabel}
+              <ExternalLinkIcon />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+);
+
+const DesignSystemsTabContent = () => {
+  const [activeLesson, setActiveLesson] = useState(0);
+  const lesson = DESIGN_SYSTEM_COURSE[activeLesson] ?? DESIGN_SYSTEM_COURSE[0];
+  const embedSrc = lesson.youtubeId
+    ? `https://www.youtube.com/embed/${lesson.youtubeId}${
+        lesson.youtubeStart ? `?start=${lesson.youtubeStart}` : ""
+      }`
+    : undefined;
+
+  return (
+  <div className="mx-auto max-w-[860px] px-0 pb-8 sm:px-1">
+    <h2
+      className="v2-built-tool-title text-[18px] font-semibold leading-[1.2] tracking-[-0.03em] sm:text-[22px] lg:text-[26px]"
+      style={display}
+    >
+      <span className="block">Design Systems as Infrastructure for Agents,</span>
+      <span className="block">Not Just a Component Library</span>
+    </h2>
+
+    <p className="v2-built-tool-description mt-8 max-w-[52ch] text-[16px] leading-[1.65] sm:text-[17px]">
+      Florence is an AI-ready design system built so agents can read components,
+      intent, and rules in one place. Not another static library for humans
+      clicking through Figma. Here is a quick look at how it works in practice.
+    </p>
+    <a
+      href={FLORENCE_URL}
+      target="_blank"
+      rel="noreferrer"
+      className="v2-explore-cta mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold"
+    >
+      Open Florence
+      <ExternalLinkIcon />
+    </a>
+
+    <figure className="mt-6">
+      <div className="overflow-hidden rounded-[20px] bg-zinc-950 ring-1 ring-white/[0.08]">
+        <video
+          src={florenceLaunchVideo}
+          controls
+          controlsList="nodownload"
+          playsInline
+          preload="metadata"
+          className="block h-auto w-full"
+          aria-label={FLORENCE_HERO.alt}
+        >
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <figcaption className="px-1 pt-4">
+        <h3
+          className="v2-built-tool-title text-[18px] font-semibold tracking-[-0.02em]"
+          style={display}
+        >
+          Florence
+        </h3>
+        <p className="mt-0.5 text-[13px] text-zinc-500">
+          AI-ready design system
+        </p>
+      </figcaption>
+    </figure>
+
+    <div className="v2-built-tool-description mt-10 space-y-5 text-[17px] leading-[1.7] sm:text-[18px]">
+      <p>
+        Current design systems are broken for AI. They were built for humans
+        clicking through Figma and Storybook. Agents do not work that way.
+      </p>
+      <p>
+        The component architecture is opaque. Naming is inconsistent. Tokens
+        live in one place, guidelines in another, usage examples somewhere
+        else. The core design is scattered across files no model can hold in
+        one pass.
+      </p>
+      <p>
+        So when I ask an agent to build from the system, it guesses. It invents
+        variants. It misses constraints. Not because the model is weak,
+        because the system was never structured for it to read.
+      </p>
+      <p>
+        I built Florence to fix that. An AI-ready design system where
+        components, intent, and rules sit in one place agents can actually use.
+      </p>
+    </div>
+
+    <section className="mt-14 sm:mt-16">
+      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-zinc-800/80 pb-4">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+            Short course · 3 parts
+          </p>
+          <h3
+            className="v2-built-tool-title mt-1.5 text-[20px] font-semibold tracking-[-0.02em] sm:text-[22px]"
+            style={display}
+          >
+            Making Design Systems AI-Ready
+          </h3>
+        </div>
+        <a
+          href={FLORENCE_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="v2-explore-cta inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold"
+        >
+          Explore Florence
+          <ExternalLinkIcon />
+        </a>
+      </div>
+
+      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start lg:gap-6">
+        <div className="overflow-hidden rounded-[18px] bg-zinc-950 ring-1 ring-white/[0.08]">
+          <div className="relative aspect-video">
+            {embedSrc ? (
+              <iframe
+                key={lesson.id}
+                src={embedSrc}
+                title={lesson.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            ) : null}
+          </div>
+          <div className="px-4 py-3.5 sm:px-5">
+            <p className="text-[11px] font-medium tabular-nums text-zinc-500">
+              Part {lesson.part}
+            </p>
+            <h4
+              className="v2-built-tool-title mt-1 text-[16px] font-semibold tracking-[-0.02em] sm:text-[17px]"
+              style={display}
+            >
+              {lesson.title}
+            </h4>
+            <p className="v2-built-tool-description mt-1 text-[13px] leading-relaxed text-zinc-500">
+              {lesson.description}
+            </p>
+          </div>
+        </div>
+
+        <ol className="flex flex-row gap-2 overflow-x-auto pb-1 lg:flex-col lg:gap-1.5 lg:overflow-visible lg:pb-0">
+          {DESIGN_SYSTEM_COURSE.map((episode, index) => {
+            const active = index === activeLesson;
+            return (
+              <li key={episode.id} className="min-w-[9.5rem] shrink-0 lg:min-w-0">
+                <button
+                  type="button"
+                  onClick={() => setActiveLesson(index)}
+                  className={`w-full rounded-[14px] px-3.5 py-3 text-left transition ${
+                    active
+                      ? "bg-zinc-50 text-zinc-950"
+                      : "bg-zinc-900/70 text-zinc-300 ring-1 ring-white/[0.06] hover:bg-zinc-900 hover:text-zinc-100"
+                  }`}
+                >
+                  <span
+                    className={`text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                      active ? "text-zinc-500" : "text-zinc-500"
+                    }`}
+                  >
+                    Part {episode.part}
+                  </span>
+                  <span
+                    className={`mt-1 block text-[13px] font-semibold leading-snug tracking-[-0.02em] ${
+                      active ? "text-zinc-950" : "text-zinc-200"
+                    }`}
+                    style={display}
+                  >
+                    {episode.title}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  </div>
+  );
+};
+
+const BlogTabContent = ({
+  posts,
+  loading,
+  onSubscribe,
+}: {
+  posts: SubstackPost[];
+  loading: boolean;
+  onSubscribe: () => void;
+}) => (
+  <div className="max-w-[860px] px-0 sm:px-1">
+    {loading ? (
+      <p className="text-[14px] text-zinc-500">Loading articles…</p>
+    ) : posts.length === 0 ? (
+      <div className="v2-built-tool-card rounded-[20px] p-6">
+        <p className="text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-500">
+          AI Design Playbook
+        </p>
+        <h3
+          className="v2-built-tool-title mt-2 text-[18px] font-semibold tracking-tight"
+          style={display}
+        >
+          Weekly essays on AI-native product design
+        </h3>
+        <a
+          href={PROFILE_SUBSTACK_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="v2-explore-cta mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold"
+        >
+          Read on Substack
+          <ExternalLinkIcon />
+        </a>
+      </div>
+    ) : (
+      <ul className="flex flex-col gap-3">
+        {posts.map((post) => (
+          <li key={post.link}>
+            <a
+              href={post.link}
+              target="_blank"
+              rel="noreferrer"
+              className="v2-blog-article-card group flex items-stretch gap-4 rounded-[20px] p-4 sm:gap-5 sm:p-5"
+            >
+              <div className="relative min-h-[72px] w-[88px] shrink-0 overflow-hidden rounded-xl bg-zinc-100 ring-1 ring-zinc-200/80 sm:min-h-[84px] sm:w-[108px]">
+                {post.thumbnail ? (
+                  <img
+                    src={post.thumbnail}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : null}
+              </div>
+              <div className="min-w-0 flex-1 self-center">
+                {post.pubDate ? (
+                  <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
+                    {formatPostDate(post.pubDate)}
+                  </p>
+                ) : null}
+                <h3
+                  className="v2-built-tool-title mt-1 line-clamp-2 text-[16px] font-semibold sm:text-[17px]"
+                  style={display}
+                >
+                  {post.title}
+                </h3>
+                {post.excerpt ? (
+                  <p className="mt-1.5 line-clamp-2 text-[13px] text-zinc-500">
+                    {post.excerpt}
+                  </p>
+                ) : null}
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+    <div className="v2-built-tool-card mt-8 flex flex-col gap-3 rounded-[20px] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+      <p className="v2-built-tool-description text-[14px]">
+        Join <span className="v2-built-tool-title font-semibold">4000+</span> readers.
+      </p>
+      <button
+        type="button"
+        onClick={onSubscribe}
+        className={`${secondaryCtaClass} v2-sidebar-subscribe shrink-0`}
+      >
+        Subscribe
+      </button>
+    </div>
+  </div>
+);
+
+const TestimonialsTabContent = () => (
+  <ul className="grid max-w-[1100px] grid-cols-1 gap-4 px-0 sm:grid-cols-2 sm:px-1 lg:grid-cols-3">
+    {TESTIMONIALS.map((testimonial) => (
+      <li
+        key={testimonial.id}
+        className="v2-built-tool-card flex h-full flex-col rounded-[20px] p-5 sm:p-6"
+      >
+        <p className="v2-built-tool-description flex-1 text-[14px] leading-relaxed">
+          &ldquo;{testimonial.text}&rdquo;
+        </p>
+        <div className="v2-built-tool-divider mt-5 flex items-end justify-between gap-3 border-t pt-4">
+          <div className="min-w-0">
+            <p className="v2-built-tool-title text-[14px] font-semibold">
+              {testimonial.author}
+            </p>
+            <p className="mt-0.5 text-[12.5px] text-zinc-500">{testimonial.role}</p>
+          </div>
+          {testimonial.companyLogo ? (
+            <img
+              src={testimonial.companyLogo}
+              alt=""
+              className="h-5 w-auto max-w-[56px] shrink-0 object-contain opacity-80"
+              style={testimonial.logoStyle}
+              loading="lazy"
+            />
+          ) : null}
+        </div>
+      </li>
+    ))}
+  </ul>
+);
+
+const ProjectFeedCard = ({
+  project,
+  tab,
+  index,
+  featured,
+  onOpen,
+}: {
+  project: Project;
+  tab: FeedTab;
+  index: number;
+  featured?: boolean;
+  onOpen: () => void;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const fitClass =
+    project.media.fit === "contain" ? "object-contain" : "object-cover";
+  const posStyle =
+    "objectPosition" in project.media && project.media.objectPosition
+      ? { objectPosition: project.media.objectPosition }
+      : undefined;
+
+  useEffect(() => {
+    const root = cardRef.current;
+    if (!root || project.media.type !== "video") return;
+
+    const video = root.querySelector("video");
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.45 },
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [project.media.type, project.slug]);
+
+  return (
+    <motion.article
+      ref={cardRef}
+      className="flex flex-col gap-2.5"
+      initial={{ opacity: 1 }}
+    >
+      <button
+        type="button"
+        onClick={onOpen}
+        className="w-full text-left"
+      >
+        <div
+          className={`v2-feed-card-media relative w-full overflow-hidden rounded-[20px] bg-zinc-200 ${
+            project.media.aspect
+              ? ""
+              : featured
+                ? "aspect-[16/9]"
+                : "aspect-[16/11]"
+          }`}
+          style={{
+            ...(project.media.bg
+              ? { backgroundColor: project.media.bg }
+              : undefined),
+            ...(project.media.aspect
+              ? { aspectRatio: project.media.aspect }
+              : undefined),
+          }}
+        >
+          {project.media.type === "video" ? (
+            <video
+              src={project.media.src}
+              poster={
+                "poster" in project.media ? project.media.poster : undefined
+              }
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className={`absolute inset-0 h-full w-full ${fitClass}`}
+              style={posStyle}
+            />
+          ) : (
+            <img
+              src={project.media.src}
+              alt={project.name}
+              className={`absolute inset-0 h-full w-full ${fitClass}`}
+              style={posStyle}
+            />
+          )}
+        </div>
+
+        <div className="mt-3">
+          <h3
+            className="v2-built-tool-title text-[17px] font-semibold leading-[1.2] tracking-[-0.02em] sm:text-[18px]"
+            style={display}
+          >
+            {project.name}
+          </h3>
+          <p className="mt-1 text-[15px] leading-snug text-zinc-400 sm:text-[16px]">
+            {project.meta}
+          </p>
+        </div>
+      </button>
+    </motion.article>
+  );
+};
+
+
+const ExperimentGalleryCard = ({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  index: number;
+  onOpen: () => void;
+}) => {
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const fitClass =
+    project.media.fit === "contain" ? "object-contain" : "object-cover";
+  const posStyle =
+    "objectPosition" in project.media && project.media.objectPosition
+      ? { objectPosition: project.media.objectPosition }
+      : undefined;
+
+  useEffect(() => {
+    const root = cardRef.current;
+    if (!root || project.media.type !== "video") return;
+
+    const video = root.querySelector("video");
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [project.media.type, project.slug]);
+
+  return (
+    <motion.button
+      ref={cardRef}
+      type="button"
+      onClick={onOpen}
+      className="flex w-full flex-col text-left"
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 8 }}
+      transition={{ ...v2SpringSoft, delay: index * 0.035 }}
+    >
+      <div
+        className="v2-feed-card-media relative aspect-video w-full overflow-hidden rounded-[16px] bg-zinc-200"
+        style={
+          project.media.bg ? { backgroundColor: project.media.bg } : undefined
+        }
+      >
+        {project.media.type === "video" ? (
+          <video
+            src={project.media.src}
+            poster={"poster" in project.media ? project.media.poster : undefined}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className={`absolute inset-0 h-full w-full ${fitClass}`}
+            style={posStyle}
+          />
+        ) : (
+          <img
+            src={project.media.src}
+            alt={project.name}
+            className={`absolute inset-0 h-full w-full ${fitClass}`}
+            style={posStyle}
+          />
+        )}
+      </div>
+    </motion.button>
+  );
+};
+
 
 const IndexV2 = () => {
-  const { post: latestPost } = useLatestSubstackPost();
+  const { posts: substackPosts, loading: substackLoading } = useSubstackPosts();
   const navigate = useNavigate();
-  const featuredScrollRef = useRef<HTMLDivElement>(null);
-  const featuredProgrammaticRef = useRef(false);
-  const featuredSectionRef = useRef<HTMLElement>(null);
-  const playbookCardRef = useRef<HTMLDivElement>(null);
-  const featuredBlurRef = useRef(0);
-  const [blurPlaybook, setBlurPlaybook] = useState(false);
-  const [featuredBlurProgress, setFeaturedBlurProgress] = useState(0);
-  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabFromUrl = searchParams.get("tab");
+  const initialTab =
+    tabFromUrl && FEED_TABS.some((tab) => tab.id === tabFromUrl)
+      ? (tabFromUrl as FeedTab)
+      : "work";
+  const [activeTab, setActiveTab] = useState<FeedTab>(initialTab);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const [isSubscribeClosing, setIsSubscribeClosing] = useState(false);
 
   useEffect(() => {
-    const featured = featuredSectionRef.current;
-    const playbook = playbookCardRef.current;
-    if (!featured || !playbook) return;
+    if (
+      tabFromUrl &&
+      FEED_TABS.some((tab) => tab.id === tabFromUrl) &&
+      tabFromUrl !== activeTab
+    ) {
+      setActiveTab(tabFromUrl as FeedTab);
+    }
+  }, [tabFromUrl, activeTab]);
 
-    const updateSectionFocus = () => {
-      const vh = window.innerHeight;
-      const featuredRect = featured.getBoundingClientRect();
-      const playbookRect = playbook.getBoundingClientRect();
+  const feedProjects = PROJECT_FEED_TABS.has(activeTab)
+    ? FEED_BY_TAB[activeTab as keyof typeof FEED_BY_TAB]
+    : [];
 
-      const playbookInFocus =
-        playbookRect.top < vh * 0.72 && playbookRect.bottom > vh * 0.12;
-      const featuredDominant =
-        featuredRect.top < vh * 0.45 &&
-        featuredRect.bottom > vh * 0.38 &&
-        !playbookInFocus;
-      const playbookIsPeeking =
-        playbookRect.top > vh * 0.52 && featuredRect.bottom > vh * 0.55;
-
-      setBlurPlaybook(featuredDominant && playbookIsPeeking);
-
-      const scrollMax = Math.max(
-        document.documentElement.scrollHeight - vh,
-        document.body.scrollHeight - vh,
-        0,
-      );
-      const atPageBottom = window.scrollY >= scrollMax - 32;
-      const featuredIsPrimary =
-        featuredRect.top < vh * 0.44 && featuredRect.bottom > vh * 0.48;
-      const rampStart = vh * 0.9;
-      const rampEnd = vh * 0.56;
-      let progress = 0;
-      if (
-        !featuredIsPrimary &&
-        playbookRect.top < rampStart &&
-        featuredRect.bottom < vh * 0.58
-      ) {
-        progress = (rampStart - playbookRect.top) / (rampStart - rampEnd);
-        progress = Math.max(0, Math.min(1, progress));
-      }
-      if (atPageBottom && playbookInFocus && !featuredIsPrimary) {
-        progress = Math.max(progress, 0.82);
-      }
-
-      featuredBlurRef.current = progress;
-      setFeaturedBlurProgress(progress);
-
-      const carousel = featuredScrollRef.current;
-      if (carousel) syncFeaturedCarousel(carousel, { sectionBlurred: progress > 0.12 });
-    };
-
-    updateSectionFocus();
-    window.addEventListener("scroll", updateSectionFocus, { passive: true });
-    window.addEventListener("resize", updateSectionFocus);
-
-    const observer = new IntersectionObserver(() => updateSectionFocus(), {
-      threshold: [0, 0.1, 0.25, 0.4, 0.6, 0.8, 1],
-    });
-    observer.observe(featured);
-    observer.observe(playbook);
-
-    return () => {
-      window.removeEventListener("scroll", updateSectionFocus);
-      window.removeEventListener("resize", updateSectionFocus);
-      observer.disconnect();
-    };
-  }, [latestPost]);
-
-  const scrollFeaturedTo = (index: number) => {
-    const root = featuredScrollRef.current;
-    if (!root) return;
-    const cards = getFeaturedCards(root);
-    if (!cards.length) return;
-
-    const i = ((index % cards.length) + cards.length) % cards.length;
-    featuredProgrammaticRef.current = true;
-    root.scrollTo({ left: featuredCardScrollTarget(root, cards[i]), behavior: "smooth" });
+  const selectTab = (tab: FeedTab) => {
+    setActiveTab(tab);
+    if (tab === "work") {
+      setSearchParams({}, { replace: true });
+    } else {
+      setSearchParams({ tab }, { replace: true });
+    }
   };
 
-  useEffect(() => {
-    const root = featuredScrollRef.current;
-    if (!root) return;
-
-    let raf = 0;
-    let scrollEndTimer: ReturnType<typeof setTimeout> | undefined;
-
-    const onScrollEnd = () => {
-      featuredProgrammaticRef.current = false;
-      syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 });
-      const cards = getFeaturedCards(root);
-      if (cards.length) setFeaturedIndex(nearestFeaturedIndex(root, cards));
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() =>
-        syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 }),
-      );
-      const cards = getFeaturedCards(root);
-      if (cards.length) setFeaturedIndex(nearestFeaturedIndex(root, cards));
-      if (scrollEndTimer) clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(onScrollEnd, 240);
-    };
-
-    root.addEventListener("scroll", onScroll, { passive: true });
-    root.addEventListener("scrollend", onScrollEnd);
-
-    syncFeaturedCarousel(root, { sectionBlurred: featuredBlurRef.current > 0.12 });
-
-    return () => {
-      if (scrollEndTimer) clearTimeout(scrollEndTimer);
-      cancelAnimationFrame(raf);
-      root.removeEventListener("scroll", onScroll);
-      root.removeEventListener("scrollend", onScrollEnd);
-    };
-  }, []);
-
-  const scrollFeatured = (direction: -1 | 1) => {
-    const root = featuredScrollRef.current;
-    if (!root) return;
-    const cards = getFeaturedCards(root);
-    if (!cards.length) return;
-
-    const nearest = nearestFeaturedIndex(root, cards);
-    scrollFeaturedTo(nearest + direction);
+  const openProject = (project: Project) => {
+    if (project.feedTab) {
+      selectTab(project.feedTab);
+      const main = document.querySelector("main");
+      main?.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (project.href) {
+      window.open(project.href, "_blank", "noopener,noreferrer");
+      return;
+    }
+    navigate(`/work/${project.slug}`);
   };
 
   const closeSubscribe = () => {
@@ -406,538 +826,267 @@ const IndexV2 = () => {
     }, 380);
   };
 
-  const featuredBlurPx = featuredBlurProgress * 8;
-  const featuredSectionOpacity = 1 - featuredBlurProgress * 0.2;
-  const featuredSectionBrightness = 1 - featuredBlurProgress * 0.07;
-
   return (
     <PageShell>
-      <div className="mx-auto w-[94%] max-w-[980px]">
-        {/* Hero */}
-        <section className="flex max-w-[760px] flex-col items-start overflow-visible pt-[120px] pb-0 text-left">
-          <div
-            className="mb-8 h-16 w-16 rounded-full overflow-hidden ring-1 ring-zinc-800"
-            style={enter(0)}
-          >
-            <img
-              src={profileImage}
-              alt="John Rodrigues"
-              className="h-full w-full object-cover"
-            />
-          </div>
+      <div className="mx-auto flex h-auto w-full max-w-[1280px] flex-col overflow-x-hidden px-4 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-5 lg:h-[100dvh] lg:overflow-hidden lg:px-5 lg:pb-0">
+        {/* Top spacer — keeps float room outside the clipped overflow box */}
+        <div className="h-12 shrink-0 sm:h-16 lg:h-[72px]" aria-hidden="true" />
 
-          <div className="w-full min-w-0 space-y-3 overflow-visible">
-            <h1
-              className="max-w-full text-[27px] sm:text-[32px] font-semibold tracking-[-0.02em] leading-[1.15] text-zinc-50"
-              style={{ ...enterNoBlur(80), ...display }}
-            >
-              John Rodrigues
-              <ThinkingDots />
-            </h1>
-            <div
-              className="flex min-w-0 flex-wrap items-center justify-start gap-x-3 gap-y-1"
-              style={{ ...enterNoBlur(160), ...display }}
-            >
-              <span className="min-w-0 max-w-full text-[18px] font-medium tracking-tight leading-[1.35] text-zinc-300 sm:text-[20px]">
-                Design Engineer | Building 0→1 AI-native Products and Agents
-              </span>
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10">
+        {/* Static sidebar — stays put while the feed scrolls */}
+        <motion.aside
+          className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b border-zinc-800/80 pb-4 lg:w-[260px] lg:border-b-0 lg:border-r lg:pb-2 lg:pl-1.5 lg:pr-8"
+          variants={v2FadeUp}
+          initial="hidden"
+          animate="show"
+          custom={0}
+        >
+            <div className="overflow-visible pt-1 pr-0.5 sm:pt-2">
+              <ProfileTiltCard />
             </div>
-            <p
-              className="w-full max-w-[47rem] text-[16px] leading-[1.6] text-zinc-500 sm:text-[17px]"
-              style={{ ...enterNoBlur(240), ...display }}
-            >
-              I&apos;ve shipped 10+ AI side projects and an agentic thinking
-              framework across 9+ years, from early-stage startups to enterprise
-              products used by 50K to 100M users.
-            </p>
-          </div>
 
-          <a
-            href={PROFILE_LINKEDIN_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="v2-glow-cta mt-5"
-            style={enterNoBlur(320)}
-          >
-            <span className="v2-glow-cta__inner inline-flex items-center justify-center gap-2 px-5 py-3 text-[14px] font-medium tracking-tight text-zinc-300 transition-colors hover:text-zinc-100 active:scale-[0.99]">
-              <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
-              </svg>
-              Get in touch
-            </span>
-          </a>
-        </section>
-
-        <main>
-          {SHOW_THREE_WAYS_SECTION ? (
-            <>
-              <Spacer />
-              <section className="my-8" style={enter(320)}>
-                <h2 className="mb-4 text-[20px] font-semibold tracking-tight text-zinc-50" style={display}>
-                  3 Ways I Can Help
-                </h2>
-                <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {(
-                    [
-                      {
-                        title: "AI Strategy",
-                        body: "AI integration, product visioning, functional prototyping, and driving outcomes.",
-                        href: undefined,
-                      },
-                      {
-                        title: "0→1 AI Product Design",
-                        body: (
-                          <>
-                            End-to-end builds with <ClaudeLogo />
-                            Claude, <CursorLogo />
-                            Cursor, <CodexLogo />
-                            Codex.
-                          </>
-                        ),
-                        href: undefined,
-                      },
-                      {
-                        title: "Workshops",
-                        body: "Hands-on AI workshops for teams — via AI Design Academy (external site).",
-                        href: "https://www.theaidesignacademy.com/",
-                      },
-                    ] as { title: string; body: React.ReactNode; href?: string }[]
-                  ).map((card) => {
-                    const cardStyle = {
-                      backgroundColor: "rgba(255,255,255,0.035)",
-                      border: "1px solid rgba(255,255,255,0.10)",
-                      boxShadow:
-                        "inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.30)",
-                    };
-                    const inner = (
-                      <>
-                        <div className="flex items-start justify-between gap-2">
-                          <h3 className="text-[18px] font-semibold tracking-tight text-zinc-50">
-                            {card.title}
-                          </h3>
-                          {card.href && (
-                            <svg
-                              className="h-3.5 w-3.5 text-zinc-500 group-hover:text-zinc-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-0.5"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M7 17L17 7M8 7h9v9" />
-                            </svg>
-                          )}
-                        </div>
-                        <p className="mt-2 text-[14px] leading-[1.6] text-zinc-400">
-                          {card.body}
-                        </p>
-                      </>
-                    );
-                    return card.href ? (
-                      <a
-                        key={card.title}
-                        href={card.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="group relative block rounded-xl p-4 overflow-hidden transition-colors hover:bg-white/[0.06]"
-                        style={cardStyle}
-                      >
-                        {inner}
-                      </a>
-                    ) : (
-                      <div
-                        key={card.title}
-                        className="group relative rounded-xl p-4 overflow-hidden"
-                        style={cardStyle}
-                      >
-                        {inner}
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-              <Spacer />
-            </>
-          ) : null}
-
-          {/* Featured work — snap lives outside entrance transform (transform breaks snap in WebKit). */}
-          <section
-            ref={featuredSectionRef}
-            className={`@container relative mt-14 mb-8 isolate transition-[filter,opacity] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-              featuredBlurProgress > 0.72 ? "pointer-events-none select-none" : ""
-            }`}
-            style={{
-              filter:
-                featuredBlurProgress > 0.02
-                  ? `blur(${featuredBlurPx}px) brightness(${featuredSectionBrightness})`
-                  : "none",
-              opacity: featuredSectionOpacity,
-            }}
-          >
-            <div className="mb-3 flex items-center justify-between gap-3" style={enter(560)}>
-              <h2
-                className="text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
-                style={display}
-              >
-                Products Shipped
-              </h2>
-              <div className="flex shrink-0 gap-1">
-                <button
-                  type="button"
-                  aria-label="Previous project"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.10] bg-white/[0.05] text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
-                  onClick={() => scrollFeatured(-1)}
-                >
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M15 18l-6-6 6-6" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next project"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.10] bg-white/[0.05] text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
-                  onClick={() => scrollFeatured(1)}
-                >
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </button>
+            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-zinc-800/80 pt-3 sm:mt-4 sm:pt-4 lg:block lg:space-y-2">
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                  Location
+                </dt>
+                <dd className="text-[16px] font-bold text-zinc-50">San Francisco</dd>
               </div>
-            </div>
-
-            <div
-              ref={featuredScrollRef}
-              className="flex w-full min-w-0 snap-x snap-mandatory items-center gap-3 overflow-x-auto overscroll-x-contain px-[1.125rem] py-1 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline:1.125rem] [&::-webkit-scrollbar]:hidden touch-pan-x"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "auto",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-                {HIGHLIGHTS.map((project, index) => {
-                  const fitClass =
-                    project.media.fit === "contain" ? "object-contain" : "object-cover";
-                  const posStyle =
-                    "objectPosition" in project.media && project.media.objectPosition
-                      ? { objectPosition: project.media.objectPosition }
-                      : undefined;
-                  return (
-                    <div
-                      key={project.slug}
-                      data-feature-card
-                      className="min-w-0 shrink-0 grow-0 snap-start snap-always transition-[transform,opacity,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[transform,opacity,filter] motion-reduce:transition-none"
-                      style={{
-                        flex: `0 0 ${FEATURED_CARD_WIDTH}`,
-                        width: FEATURED_CARD_WIDTH,
-                        maxWidth: FEATURED_CARD_WIDTH,
-                        scrollSnapAlign: "center",
-                        scrollSnapStop: "always",
-                      }}
-                    >
-                      <button
-                          type="button"
-                          onClick={() => navigate(`/v2/work/${project.slug}`)}
-                          className="group w-full text-left"
-                        >
-                          <div
-                            className={featuredMediaFrame}
-                            style={
-                              project.media.bg
-                                ? { backgroundColor: project.media.bg }
-                                : undefined
-                            }
-                          >
-                            {project.media.type === "video" ? (
-                              <video
-                                src={project.media.src}
-                                poster={
-                                  "poster" in project.media
-                                    ? project.media.poster
-                                    : undefined
-                                }
-                                loop
-                                muted
-                                playsInline
-                                preload="metadata"
-                                className={`absolute inset-0 h-full w-full ${fitClass}`}
-                                style={posStyle}
-                              />
-                            ) : (
-                              <img
-                                src={project.media.src}
-                                alt={project.name}
-                                className={`absolute inset-0 h-full w-full ${fitClass}`}
-                                style={posStyle}
-                              />
-                            )}
-                            <div className="v2-featured-media-gradient pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                            {project.tag ? (
-                              <span className="absolute left-3 top-3 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.06em] text-zinc-100 ring-1 ring-white/15 backdrop-blur-md">
-                                {project.tag}
-                              </span>
-                            ) : null}
-                          </div>
-                          <div className="mt-3 px-1">
-                            <p className="truncate text-[16px] leading-snug sm:text-[18px]">
-                              <span className="font-semibold tracking-tight text-zinc-50 transition-colors group-hover:text-white">
-                                {project.name}
-                              </span>
-                              <span className="font-normal text-zinc-500 text-[15px] sm:text-[16px]">
-                                {" "}
-                                · {project.meta} · {project.year}
-                              </span>
-                            </p>
-                          </div>
-                        </button>
-                    </div>
-                  );
-                })}
-            </div>
-            <div
-              className="mt-5 flex items-center justify-center gap-2"
-              aria-label="Featured project carousel"
-            >
-              {HIGHLIGHTS.map((project, index) => {
-                const active = index === featuredIndex;
-                return (
-                  <button
-                    key={project.slug}
-                    type="button"
-                    aria-label={`Show ${project.name}`}
-                    aria-current={active ? "true" : undefined}
-                    onClick={() => {
-                      scrollFeaturedTo(index);
-                      setFeaturedIndex(index);
-                    }}
-                    className={`h-[7px] rounded-full transition-all duration-300 ${
-                      active
-                        ? "w-6 bg-zinc-200"
-                        : "w-[7px] bg-zinc-700 hover:bg-zinc-500"
-                    }`}
-                  />
-                );
-              })}
-            </div>
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 z-20 transition-[opacity,backdrop-filter,background-color] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
-              style={{
-                opacity: featuredBlurProgress * 0.28,
-                backdropFilter:
-                  featuredBlurProgress > 0.03
-                    ? `blur(${featuredBlurProgress * 12}px)`
-                    : "none",
-                backgroundColor: `rgba(0,0,0,${featuredBlurProgress * 0.26})`,
-              }}
-            />
-          </section>
-
-          <Spacer />
-
-          {/* AI stack */}
-          <section className="my-8" style={enterNoBlur(620)}>
-            <div className="mb-3">
-              <h2
-                className="v2-section-title text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
-                style={display}
-              >
-                My AI Tool Stack
-              </h2>
-            </div>
-            <div
-              className="overflow-hidden py-1"
-              style={{
-                WebkitMaskImage:
-                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-                maskImage:
-                  "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
-              }}
-            >
-              <div className="v2-tech-stack-marquee flex w-max gap-2 whitespace-nowrap px-4 sm:px-5">
-                {[...AI_STACK_ITEMS, ...AI_STACK_ITEMS].map((tool, index) => (
-                  <span
-                    key={`${tool.name}-${index}`}
-                    aria-hidden={index >= AI_STACK_ITEMS.length ? "true" : undefined}
-                    className="v2-ai-stack-chip inline-flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-[13px] font-medium tracking-tight sm:text-[14px]"
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                  Experience
+                </dt>
+                <dd className="text-[16px] font-bold text-zinc-50">8+ yrs</dd>
+              </div>
+              <div className="hidden items-center justify-between gap-4">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                  Socials
+                </dt>
+                <dd className="flex items-center gap-1.5 pr-0.5">
+                  <a
+                    href={PROFILE_X_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="X"
+                    className="inline-flex size-4 items-center justify-center overflow-hidden rounded-full transition hover:scale-110"
                   >
-                    {"icon" in tool ? (
-                      <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-zinc-200">
-                        {tool.icon}
-                      </span>
-                    ) : (
-                      <img
-                        src={tool.logo}
-                        alt=""
-                        className={`h-[18px] w-[18px] shrink-0 object-contain ${
-                          "invertOnDark" in tool && tool.invertOnDark
-                            ? "v2-ai-stack-logo-invert"
-                            : ""
-                        }`}
-                        loading="lazy"
-                      />
-                    )}
-                    {tool.name}
+                    <img
+                      src={logoX}
+                      alt=""
+                      className="size-full object-cover"
+                    />
+                  </a>
+                  <a
+                    href={PROFILE_LINKEDIN_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="inline-flex size-4 items-center justify-center rounded-full bg-[#0A66C2] text-white transition hover:scale-110"
+                  >
+                    <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={PROFILE_SUBSTACK_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Substack"
+                    className="inline-flex size-4 items-center justify-center rounded-full bg-[#FF6719] text-white transition hover:scale-110"
+                  >
+                    <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                    </svg>
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-5 hidden lg:block lg:mt-16">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                AI Stack
+              </p>
+              <div className="mt-3.5 flex flex-wrap items-center gap-1.5">
+                {AI_STACK_LOGOS.map((logo) => (
+                  <span
+                    key={logo.label}
+                    title={logo.label}
+                    className={`inline-flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-[7px] ${
+                      logo.bare ? "bg-transparent" : "bg-white"
+                    } ${logo.pad ? "p-0.5" : ""}`}
+                  >
+                    <img
+                      src={logo.src}
+                      alt=""
+                      className={`size-full ${
+                        logo.fit === "contain" ? "object-contain" : "object-cover"
+                      }`}
+                    />
                   </span>
                 ))}
               </div>
             </div>
-          </section>
 
-          <Spacer />
-
-          {/* Substack — playbook-style card */}
-          <section className="my-8 pb-[120px]" style={enterNoBlur(640)}>
-            <div className="mb-3">
-              <h2
-                className="v2-section-title text-[17px] font-medium tracking-tight text-zinc-100/85 sm:text-[18px]"
-                style={display}
+            <div className="mt-4 flex flex-row gap-2 lg:mt-7 lg:flex-col lg:gap-2.5">
+              <a
+                href={PROFILE_LINKEDIN_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="v2-explore-cta v2-explore-cta-beam inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-[12px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
               >
-                My Blog
-              </h2>
+                <span className="relative z-[1]">Get in touch</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setIsSubscribeOpen(true)}
+                className={`${secondaryCtaClass} v2-sidebar-subscribe w-full`}
+              >
+                Subscribe
+              </button>
             </div>
-            <div
-              ref={playbookCardRef}
-              className={`v2-playbook-wrap relative max-w-[860px] transition-[box-shadow] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-                featuredBlurProgress > 0.35 ? "rounded-2xl ring-1 ring-white/[0.14]" : ""
-              }`}
-              style={
-                featuredBlurProgress > 0.35
-                  ? {
-                      boxShadow:
-                        "0 20px 50px -20px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
-                    }
-                  : undefined
-              }
-            >
-            <div
-              className="v2-playbook-card relative rounded-2xl overflow-hidden px-3 pt-3 pb-3.5 sm:px-3.5 sm:pt-3.5 sm:pb-4 ring-1 ring-zinc-600/80"
-              style={{
-                backgroundColor: "#0a0a0a",
-                border: "1px solid rgba(161, 161, 170, 0.22)",
-                boxShadow:
-                  "inset 0 1px 0 rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.35)",
-              }}
-            >
-              {latestPost ? (
-                <a
-                  href={latestPost.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-stretch gap-4 px-5 pt-5 pb-5 sm:gap-5 sm:px-7 sm:pt-6 sm:pb-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/20"
+          </motion.aside>
+
+          {/* Dominant scroll column — only this pane scrolls on desktop */}
+          <main className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain">
+            <div className="sticky top-0 z-30 -mx-1 mb-5 border-b border-zinc-800/80 px-1 pb-0 pt-2 v2-mobile-tab-bar sm:-mx-0 sm:px-0 lg:static lg:mb-6">
+              <div className="flex items-end justify-between gap-3">
+                <motion.div
+                  className="v2-feed-tabs scrollbar-hide min-w-0 flex flex-1 flex-nowrap items-end gap-x-5 overflow-x-auto overflow-y-visible lg:gap-x-8"
+                  variants={v2FadeUp}
+                  initial="hidden"
+                  animate="show"
+                  custom={0.12}
                 >
-                  <div className="v2-playbook-thumb relative w-[116px] flex-shrink-0 overflow-hidden rounded-xl bg-zinc-950 ring-1 ring-white/[0.14] min-h-[84px] sm:w-[140px] sm:min-h-[96px]">
-                      {latestPost.thumbnail ? (
-                        <img
-                          src={latestPost.thumbnail}
-                          alt=""
-                          className="absolute inset-0 h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.02]"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gradient-to-br from-zinc-700 to-zinc-900" />
-                      )}
-                  </div>
-                  <div className="min-w-0 flex-1 self-center py-1 text-left">
-                    <h4
-                      className="text-[16px] sm:text-[18px] font-semibold leading-[1.35] tracking-[-0.01em] text-zinc-100 line-clamp-2 group-hover:text-white transition-colors"
-                      style={display}
-                    >
-                      {latestPost.title}
-                    </h4>
-                    <p className="mt-1.5 text-[13px] leading-[1.5] text-zinc-500 line-clamp-2">
-                      {latestPost.excerpt}
-                    </p>
-                  </div>
-                </a>
-              ) : (
-                <div className="flex items-stretch gap-4 px-5 pt-5 pb-5 sm:gap-5 sm:px-7 sm:pt-6 sm:pb-5">
-                  <div className="flex w-[116px] flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.04] text-zinc-400 ring-1 ring-white/[0.10] min-h-[84px] sm:w-[140px] sm:min-h-[96px]">
-                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
-                    </svg>
-                  </div>
-                  <div className="min-w-0 self-center py-1">
-                    <p className="text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-500">
-                      AI Design Playbook
-                    </p>
-                    <h4
-                      className="mt-1.5 text-[15px] font-semibold tracking-tight text-zinc-100"
-                      style={display}
-                    >
-                      Weekly essays on AI-native product design
-                    </h4>
-                  </div>
+                  {FEED_TABS.map((tab) => {
+                    const active = activeTab === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => selectTab(tab.id)}
+                        className={`${FEED_TAB_CLASS} ${
+                          active
+                            ? "v2-feed-tab-active text-zinc-50"
+                            : "text-zinc-400 hover:text-zinc-200"
+                        }`}
+                      >
+                        <span className="sm:hidden">{tab.shortLabel ?? tab.label}</span>
+                        <span className="hidden sm:inline">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                  <a
+                    href={ACADEMY_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Opens Academy in a new tab"
+                    className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
+                  >
+                    Academy
+                  </a>
+                </motion.div>
+                <div className="hidden shrink-0 self-center pb-2.5 sm:flex">
+                  <ThemeToggleIcons />
                 </div>
-              )}
-
-              <div className="v2-playbook-divider mx-6 border-t border-white/[0.08] sm:mx-8" />
-
-              <div className="flex flex-col gap-2.5 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8 sm:py-5">
-                <p className="min-w-0 text-[13px] sm:text-[14px] leading-[1.45] text-zinc-400">
-                  Join{" "}
-                  <span className="font-medium text-zinc-200">4000+</span> readers
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setIsSubscribeOpen(true)}
-                  className={`${secondaryCtaClass} v2-playbook-subscribe shrink-0 self-start sm:self-center`}
-                >
-                  Subscribe
-                </button>
               </div>
+            </div>
 
-            </div>
-            <div
-              aria-hidden
-              className={`pointer-events-none absolute inset-0 z-10 rounded-2xl transition-[opacity,backdrop-filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-                blurPlaybook
-                  ? "opacity-100 backdrop-blur-[10px] bg-black/25"
-                  : "opacity-0 backdrop-blur-none bg-transparent"
-              }`}
-            />
-            </div>
-          </section>
-        </main>
+            <AnimatePresence mode="wait">
+              {activeTab === "experiments" ? (
+                <motion.div
+                  key="experiments-gallery"
+                  className="grid grid-cols-1 gap-3 px-0 pb-6 sm:grid-cols-2 sm:gap-4 sm:px-1"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  {feedProjects.map((project, index) => (
+                    <ExperimentGalleryCard
+                      key={project.slug}
+                      project={project}
+                      index={index}
+                      onOpen={() => openProject(project)}
+                    />
+                  ))}
+                </motion.div>
+              ) : activeTab === "tools" ? (
+                <motion.div
+                  key="tools-tab"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  <ToolsTabContent />
+                </motion.div>
+              ) : activeTab === "systems" ? (
+                <motion.div
+                  key="systems-tab"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  <DesignSystemsTabContent />
+                </motion.div>
+              ) : activeTab === "blog" ? (
+                <motion.div
+                  key="blog-tab"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  <BlogTabContent
+                    posts={substackPosts}
+                    loading={substackLoading}
+                    onSubscribe={() => setIsSubscribeOpen(true)}
+                  />
+                </motion.div>
+              ) : activeTab === "testimonials" ? (
+                <motion.div
+                  key="testimonials-tab"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  <TestimonialsTabContent />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`feed-${activeTab}`}
+                  className="flex flex-col gap-8 px-0 pb-6 sm:gap-10 sm:px-1"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={v2SpringSoft}
+                >
+                  {feedProjects.map((project, index) => (
+                    <FeedMotionItem
+                      key={`${activeTab}-${project.slug}`}
+                      index={index}
+                    >
+                      <ProjectFeedCard
+                        project={project}
+                        tab={activeTab}
+                        index={index}
+                        featured={index === 0}
+                        onOpen={() => openProject(project)}
+                      />
+                    </FeedMotionItem>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </main>
+        </div>
+
+        {/* Bottom spacer for the floating chat dock */}
+        <div className="hidden h-[104px] shrink-0 lg:block" aria-hidden="true" />
       </div>
 
-      <style>{`
-        .v2-tech-stack-marquee {
-          animation: techStackMarquee 34s linear infinite;
-          will-change: transform;
-        }
-
-        @keyframes techStackMarquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(calc(-50% - 0.25rem)); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .v2-tech-stack-marquee {
-            animation: none;
-          }
-        }
-      `}</style>
-
-      {/* Subscribe modal with Substack iframe */}
       {isSubscribeOpen && (
         <>
           <div
@@ -953,7 +1102,7 @@ const IndexV2 = () => {
             onClick={closeSubscribe}
           />
           <div
-            className="fixed z-[90] left-1/2 top-1/2 w-[90%] max-w-[440px]"
+            className="fixed left-1/2 top-1/2 z-[90] w-[90%] max-w-[440px]"
             style={{
               transformOrigin: "center",
               animation: isSubscribeClosing
@@ -962,7 +1111,7 @@ const IndexV2 = () => {
             }}
           >
             <div
-              className="rounded-2xl overflow-hidden"
+              className="overflow-hidden rounded-2xl"
               style={{
                 backgroundColor: "#0a0a0a",
                 border: "1px solid #1f1f22",
@@ -970,16 +1119,24 @@ const IndexV2 = () => {
                   "0 20px 50px -10px rgba(0,0,0,0.85), 0 8px 20px -4px rgba(0,0,0,0.5)",
               }}
             >
-              <div className="flex items-center justify-between px-5 pt-4 pb-3">
-                <span className="text-[12px] tracking-[0.18em] uppercase text-zinc-500">
+              <div className="flex items-center justify-between px-5 pb-3 pt-4">
+                <span className="text-[12px] uppercase tracking-[0.18em] text-zinc-500">
                   Subscribe
                 </span>
                 <button
                   onClick={closeSubscribe}
                   aria-label="Close"
-                  className="h-7 w-7 rounded-full hover:bg-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
                 >
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
                 </button>
