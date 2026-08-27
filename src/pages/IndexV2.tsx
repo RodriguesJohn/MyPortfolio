@@ -902,6 +902,23 @@ const IndexV2 = () => {
                     </a>
                   </dd>
                 </div>
+                <div className="mt-1 flex flex-col gap-2 lg:hidden">
+                  <a
+                    href={PROFILE_LINKEDIN_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="v2-explore-cta v2-explore-cta-beam inline-flex w-full items-center justify-center rounded-full px-3 py-2.5 text-[12px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
+                  >
+                    <span className="relative z-[1]">Get in touch</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setIsSubscribeOpen(true)}
+                    className={`${secondaryCtaClass} v2-sidebar-subscribe w-full px-3 py-2.5 text-[12px]`}
+                  >
+                    Subscribe
+                  </button>
+                </div>
               </dl>
             </div>
 
@@ -930,7 +947,7 @@ const IndexV2 = () => {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-row gap-2 lg:mt-7 lg:flex-col lg:gap-2.5">
+            <div className="mt-4 hidden flex-row gap-2 lg:mt-7 lg:flex lg:flex-col lg:gap-2.5">
               <a
                 href={PROFILE_LINKEDIN_URL}
                 target="_blank"
