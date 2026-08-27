@@ -4,6 +4,8 @@ import profileImage from "@/assets/PP2.jpg";
 import p1Image from "@/assets/P1.png";
 import p2Image from "@/assets/P2.png";
 
+const expressiveEase = [0.16, 1, 0.3, 1] as const;
+
 export function PhotoJourney() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -60,7 +62,7 @@ export function PhotoJourney() {
       transition: {
         delay: index * 0.25,
         duration: 0.8,
-        ease: "cubic-bezier(0.16, 1, 0.3, 1)" as any,
+        ease: expressiveEase,
         y: {
           duration: 3 + index * 0.5,
           repeat: Infinity,
@@ -74,7 +76,7 @@ export function PhotoJourney() {
       scale: 1.05,
       transition: {
         duration: 0.3,
-        ease: "cubic-bezier(0.16, 1, 0.3, 1)" as any,
+        ease: expressiveEase,
       },
     },
   };
@@ -85,7 +87,7 @@ export function PhotoJourney() {
       pathLength: 1,
       opacity: 0.3,
       transition: {
-        pathLength: { duration: 1.5, delay: 0.5, ease: "cubic-bezier(0.16, 1, 0.3, 1)" as any },
+        pathLength: { duration: 1.5, delay: 0.5, ease: expressiveEase },
         opacity: { duration: 0.5, delay: 0.5 },
       },
     },
@@ -99,7 +101,7 @@ export function PhotoJourney() {
       transition: {
         delay: 1 + index * 0.2,
         duration: 0.4,
-        ease: "cubic-bezier(0.16, 1, 0.3, 1)" as any,
+        ease: expressiveEase,
       },
     }),
   };
@@ -248,4 +250,3 @@ export function PhotoJourney() {
     </div>
   );
 }
-

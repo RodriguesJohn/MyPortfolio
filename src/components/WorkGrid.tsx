@@ -41,7 +41,35 @@ import outfixVideo from "@/assets/OutfixV2.mp4";
 import ollieAIImage from "@/assets/OllieAIV1.png";
 import ollieAIVideo from "@/assets/OllieAIDemo.mp4";
 
-const projects = [
+type ProjectItem = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  video?: string;
+  thumbnailVideo?: string;
+  link?: string;
+  companyLogo?: string;
+  businessCategory?: string;
+  secondaryTag?: string;
+  rating?: string;
+  isComingSoon?: boolean;
+  isHackathonWinner?: boolean;
+  hackathonText?: string;
+  hackathonLogos?: { src: string; alt: string }[];
+  showRequestModal?: boolean;
+  showBlankThumbnail?: boolean;
+  blurThumbnail?: boolean;
+};
+
+type AudioContextConstructor = typeof AudioContext;
+
+type WindowWithWebkitAudio = Window & {
+  webkitAudioContext?: AudioContextConstructor;
+};
+
+const projects: ProjectItem[] = [
   {
     id: 0,
     title: "AI Productivity OS.",
@@ -337,7 +365,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
         }}
         onClick={() => {
-          if ((project as any).showRequestModal) {
+          if (project.showRequestModal) {
             setShowModal(true);
           } else if (project.link) {
             window.open(project.link, '_blank', 'noopener,noreferrer');
@@ -471,19 +499,19 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           <div className="flex items-center gap-2">
             <p className="text-xs text-muted-foreground/70 truncate flex-1">{displayDescription}</p>
             <div className="flex items-center gap-1.5 flex-shrink-0">
-              {(project as any).businessCategory && (
+              {project.businessCategory && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100/40 text-gray-700/40 dark:bg-gray-800/30 dark:text-gray-300/40">
-                  {(project as any).businessCategory}
+                  {project.businessCategory}
                 </span>
               )}
-              {(project as any).secondaryTag && (
+              {project.secondaryTag && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100/40 text-gray-600/40 dark:bg-gray-800/20 dark:text-gray-400/40">
-                  {(project as any).secondaryTag}
+                  {project.secondaryTag}
                 </span>
               )}
-              {(project as any).rating && (
+              {project.rating && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-100/60 text-amber-700/70 dark:bg-amber-900/30 dark:text-amber-400/70">
-                  ★ {(project as any).rating}
+                  ★ {project.rating}
                 </span>
               )}
             </div>
@@ -509,7 +537,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
         e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
       }}
       onClick={() => {
-        if ((project as any).showRequestModal) {
+        if (project.showRequestModal) {
           setShowModal(true);
         } else if (project.link) {
           window.open(project.link, '_blank', 'noopener,noreferrer');
@@ -599,13 +627,13 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
           <img
             src={project.image}
             alt={displayTitle}
-            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         ) : (
           <img
             src={project.image}
             alt={displayTitle}
-            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            className={`w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -618,7 +646,7 @@ function ProjectCard({ project, showTabs }: { project: typeof projects[0]; showT
   );
 }
 
-function PastProjectListItem({ project }: { project: typeof projects[0] }) {
+function PastProjectListItem({ project }: { project: ProjectItem }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   const navigate = useNavigate();
@@ -658,7 +686,7 @@ function PastProjectListItem({ project }: { project: typeof projects[0] }) {
           <img
             src={project.image}
             alt={project.title}
-            className={`w-full h-full object-cover ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            className={`w-full h-full object-cover ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -867,7 +895,7 @@ function PlaybookCard() {
 }
 
 
-function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square }: { project: typeof projects[0]; reducedHeight?: boolean; slightlyReducedHeight?: boolean; square?: boolean }) {
+function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square }: { project: ProjectItem; reducedHeight?: boolean; slightlyReducedHeight?: boolean; square?: boolean }) {
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
@@ -890,7 +918,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
           e.currentTarget.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.04), 0 1px 15px rgba(0, 0, 0, 0.02)';
         }}
         onClick={() => {
-          if ((project as any).showRequestModal) {
+          if (project.showRequestModal) {
             setShowModal(true);
           } else if (project.link) {
             window.open(project.link, '_blank', 'noopener,noreferrer');
@@ -977,9 +1005,9 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
         project.id === 20 ? 'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-muted dark:to-muted/60' :
         'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-muted dark:to-muted/60'
       } ${project.id === 20 ? 'pb-4' : ''}`}>
-        {(project as any).showBlankThumbnail ? (
+        {project.showBlankThumbnail ? (
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/50" />
-        ) : (project as any).isComingSoon ? (
+        ) : project.isComingSoon ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200/50 gap-3">
             {project.companyLogo && (
               <img
@@ -1025,7 +1053,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
             alt={project.title}
             className={`w-full h-full object-cover object-top transition-transform duration-500 ${
               project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
-            } ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            } ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -1033,21 +1061,21 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
       <div className="px-4 py-3">
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <h3 className="text-sm font-medium text-foreground truncate flex-1 flex items-center gap-1.5">{project.title}{(project as any).blurThumbnail && <Lock className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />}</h3>
+            <h3 className="text-sm font-medium text-foreground truncate flex-1 flex items-center gap-1.5">{project.title}{project.blurThumbnail && <Lock className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />}</h3>
             <div className="flex items-center gap-1.5 flex-shrink-0">
-              {(project as any).businessCategory && (
+              {project.businessCategory && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800/60 dark:text-gray-300">
-                  {(project as any).businessCategory}
+                  {project.businessCategory}
                 </span>
               )}
-              {(project as any).secondaryTag && (
+              {project.secondaryTag && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:text-gray-400">
-                  {(project as any).secondaryTag}
+                  {project.secondaryTag}
                 </span>
               )}
-              {(project as any).rating && (
+              {project.rating && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400">
-                  ★ {(project as any).rating}
+                  ★ {project.rating}
                 </span>
               )}
             </div>
@@ -1060,15 +1088,15 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
             />
           )}
         </div>
-        {!(project as any).isHackathonWinner ? (
+        {!project.isHackathonWinner ? (
           <p className="text-xs text-muted-foreground/70 truncate">{project.description}</p>
         ) : (
           <div>
             <p className="text-xs text-muted-foreground/70 leading-tight mb-1.5">
-              {(project as any).hackathonText}
+              {project.hackathonText}
             </p>
             <div className="flex items-center gap-1.5">
-              {(project as any).hackathonLogos && (project as any).hackathonLogos.map((logo: any, idx: number) => (
+              {project.hackathonLogos && project.hackathonLogos.map((logo, idx) => (
                 <img
                   key={idx}
                   src={logo.src}
@@ -1076,7 +1104,7 @@ function AllProjectsCard({ project, reducedHeight, slightlyReducedHeight, square
                   className="h-3 w-auto object-contain opacity-60"
                 />
               ))}
-              {!(project as any).hackathonLogos && (
+              {!project.hackathonLogos && (
                 <>
                   <span className="text-[8px] text-muted-foreground/50 font-medium">OpenAI</span>
                   <span className="text-[8px] text-muted-foreground/50 font-medium">•</span>
@@ -1110,7 +1138,7 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
     >
       {/* Thumbnail - Square and Larger */}
       <div className="flex-shrink-0 w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100">
-        {(project as any).isComingSoon ? (
+        {project.isComingSoon ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-200/50">
             {project.companyLogo && (
               <img
@@ -1129,13 +1157,13 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
             muted
             playsInline
           />
-        ) : (project as any).showBlankThumbnail ? (
+        ) : project.showBlankThumbnail ? (
           <div className="w-full h-full bg-gray-100 dark:bg-gray-800/50" />
         ) : (
           <img
             src={project.image}
             alt={project.title}
-            className={`w-full h-full object-cover ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            className={`w-full h-full object-cover ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
@@ -1143,7 +1171,7 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <h3 className="text-lg font-medium text-foreground truncate flex items-center gap-1.5">{project.title}{(project as any).blurThumbnail && <Lock className="w-4 h-4 text-muted-foreground flex-shrink-0" />}</h3>
+          <h3 className="text-lg font-medium text-foreground truncate flex items-center gap-1.5">{project.title}{project.blurThumbnail && <Lock className="w-4 h-4 text-muted-foreground flex-shrink-0" />}</h3>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
@@ -1158,7 +1186,7 @@ function ListProjectCard({ project }: { project: typeof projects[0] }) {
   );
 }
 
-function CompactProjectCard({ project }: { project: typeof projects[0] }) {
+function CompactProjectCard({ project }: { project: ProjectItem }) {
   const navigate = useNavigate();
   
   return (
@@ -1184,7 +1212,7 @@ function CompactProjectCard({ project }: { project: typeof projects[0] }) {
     >
       {/* Compact aspect ratio */}
       <div className="aspect-[4/3] overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 relative">
-        {(project as any).isComingSoon ? (
+        {project.isComingSoon ? (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-200/50 text-muted-foreground text-xs font-medium">
             Coming Soon
           </div>
@@ -1209,14 +1237,14 @@ function CompactProjectCard({ project }: { project: typeof projects[0] }) {
             alt={project.title}
             className={`w-full h-full object-cover object-top transition-transform duration-500 ${
               project.id === 4 ? 'opacity-0' : 'group-hover:scale-105'
-            } ${(project as any).blurThumbnail ? 'blur-[3px]' : ''}`}
+            } ${project.blurThumbnail ? 'blur-[3px]' : ''}`}
           />
         )}
       </div>
       {/* Text Content - Compact */}
       <div className="px-3 py-2">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <h3 className="text-xs font-medium text-foreground truncate flex-1 flex items-center gap-1">{project.title}{(project as any).blurThumbnail && <Lock className="w-3 h-3 text-muted-foreground flex-shrink-0" />}</h3>
+          <h3 className="text-xs font-medium text-foreground truncate flex-1 flex items-center gap-1">{project.title}{project.blurThumbnail && <Lock className="w-3 h-3 text-muted-foreground flex-shrink-0" />}</h3>
           {project.companyLogo && (
             <img
               src={project.companyLogo}
@@ -1241,7 +1269,9 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
   // Function to play click sound - realistic button click
   const playClickSound = () => {
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as WindowWithWebkitAudio).webkitAudioContext;
+      if (!AudioContextClass) return;
+      const audioContext = new AudioContextClass();
       const now = audioContext.currentTime;
       
       // Create a quick pop sound with two frequencies (low + high)
@@ -1369,8 +1399,8 @@ export function WorkGrid({ showTabs = false, activeTab: externalActiveTab }: Wor
 
   // Move all "Coming Soon" projects to the bottom
   displayProjects.sort((a, b) => {
-    const aIsComingSoon = (a as any).isComingSoon ? 1 : 0;
-    const bIsComingSoon = (b as any).isComingSoon ? 1 : 0;
+    const aIsComingSoon = a.isComingSoon ? 1 : 0;
+    const bIsComingSoon = b.isComingSoon ? 1 : 0;
     return aIsComingSoon - bIsComingSoon;
   });
 

@@ -838,66 +838,72 @@ const IndexV2 = () => {
           className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b border-zinc-800/80 pb-4 lg:w-[260px] lg:border-b-0 lg:border-r lg:pb-2 lg:pl-1.5 lg:pr-6"
           variants={v2NelsonChild}
         >
-            <div className="overflow-visible pt-1 pr-0.5 sm:pt-2">
-              <ProfileTiltCard />
-            </div>
+            <div className="flex items-start gap-4 overflow-visible pt-1 pr-0.5 sm:gap-5 sm:pt-2 lg:block">
+              <div className="min-w-0 shrink-0">
+                <ProfileTiltCard />
+              </div>
 
-            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-zinc-800/80 pt-3 sm:mt-4 sm:pt-4 lg:block lg:space-y-2">
-              <div className="flex items-baseline justify-between gap-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
-                  Location
-                </dt>
-                <dd className="text-[16px] font-bold text-zinc-50">San Francisco</dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
-                  Experience
-                </dt>
-                <dd className="text-[16px] font-bold text-zinc-50">8+ yrs</dd>
-              </div>
-              <div className="hidden items-center justify-between gap-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
-                  Socials
-                </dt>
-                <dd className="flex items-center gap-1.5 pr-0.5">
-                  <a
-                    href={PROFILE_X_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="X"
-                    className="inline-flex size-4 items-center justify-center overflow-hidden rounded-full transition hover:scale-110"
-                  >
-                    <img
-                      src={logoX}
-                      alt=""
-                      className="size-full object-cover"
-                    />
-                  </a>
-                  <a
-                    href={PROFILE_LINKEDIN_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="LinkedIn"
-                    className="inline-flex size-4 items-center justify-center rounded-full bg-[#0A66C2] text-white transition hover:scale-110"
-                  >
-                    <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
-                    </svg>
-                  </a>
-                  <a
-                    href={PROFILE_SUBSTACK_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Substack"
-                    className="inline-flex size-4 items-center justify-center rounded-full bg-[#FF6719] text-white transition hover:scale-110"
-                  >
-                    <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
-                    </svg>
-                  </a>
-                </dd>
-              </div>
-            </dl>
+              <dl className="mt-1 flex min-w-0 flex-1 flex-col gap-3 border-l border-zinc-800/80 pl-4 sm:mt-2 sm:pl-5 lg:mt-3 lg:block lg:border-l-0 lg:border-t lg:pl-0 lg:pt-4 lg:space-y-2">
+                <div className="space-y-1 lg:flex lg:items-baseline lg:justify-between lg:gap-4 lg:space-y-0">
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-zinc-400 sm:text-[11px]">
+                    Location
+                  </dt>
+                  <dd className="text-[15px] font-bold leading-tight text-zinc-50 sm:text-[16px]">
+                    San Francisco
+                  </dd>
+                </div>
+                <div className="space-y-1 lg:flex lg:items-baseline lg:justify-between lg:gap-4 lg:space-y-0">
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-zinc-400 sm:text-[11px]">
+                    Experience
+                  </dt>
+                  <dd className="text-[15px] font-bold leading-tight text-zinc-50 sm:text-[16px]">
+                    8+ yrs
+                  </dd>
+                </div>
+                <div className="hidden items-center justify-between gap-4">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                    Socials
+                  </dt>
+                  <dd className="flex items-center gap-1.5 pr-0.5">
+                    <a
+                      href={PROFILE_X_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="X"
+                      className="inline-flex size-4 items-center justify-center overflow-hidden rounded-full transition hover:scale-110"
+                    >
+                      <img
+                        src={logoX}
+                        alt=""
+                        className="size-full object-cover"
+                      />
+                    </a>
+                    <a
+                      href={PROFILE_LINKEDIN_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="LinkedIn"
+                      className="inline-flex size-4 items-center justify-center rounded-full bg-[#0A66C2] text-white transition hover:scale-110"
+                    >
+                      <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+                      </svg>
+                    </a>
+                    <a
+                      href={PROFILE_SUBSTACK_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Substack"
+                      className="inline-flex size-4 items-center justify-center rounded-full bg-[#FF6719] text-white transition hover:scale-110"
+                    >
+                      <svg className="size-2 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                      </svg>
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            </div>
 
             <div className="mt-5 hidden lg:block lg:mt-16">
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
