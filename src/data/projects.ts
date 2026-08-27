@@ -3,6 +3,7 @@ import orbiVideo from "@/assets/Orbi.mov";
 import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
 import ollieVideo from "@/assets/OllieAIDemo.mp4";
+import ollieExperimentsVideo from "@/assets/fun-with-wipecoding.mov";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
 import vibespaceVideo from "@/assets/vibespace.mp4";
@@ -256,7 +257,15 @@ export const AI_TOOLS_BUILT: Project[] = [
       objectPosition: "center 22%",
     },
   },
-  olliAI,
+  {
+    ...olliAI,
+    media: {
+      type: "video",
+      src: ollieExperimentsVideo,
+      fit: "cover",
+      objectPosition: "center center",
+    },
+  },
   {
     slug: "ai-design-academy",
     name: "AI Design Academy",
