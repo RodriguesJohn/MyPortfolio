@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PageShell from "@/components/v2/PageShell";
 import BalanceTransferCaseStudy from "@/components/v2/case-studies/BalanceTransferCaseStudy";
-import OrbiCaseStudy from "@/components/v2/case-studies/OrbiCaseStudy";
+import OrbiSimpleCaseStudy from "@/components/v2/case-studies/OrbiSimpleCaseStudy";
+import DCBSimpleCaseStudy from "@/components/v2/case-studies/DCBSimpleCaseStudy";
 import { getProjectBySlug } from "@/data/projects";
 
 const enter = (delay = 0): React.CSSProperties => ({
@@ -44,6 +45,7 @@ const IndexV2WorkDetail = () => {
   const project = slug ? getProjectBySlug(slug) : undefined;
   const leadIsSlides = Boolean(project?.slidesUrl);
   const isOrbiCaseStudy = project?.slug === "orbi-ai";
+  const isDCBCaseStudy = project?.slug === "digital-commercial-banking";
   const hasBalanceTransferCaseStudy = project?.slug === "balance-transfer-citi";
 
   const slidesRef = useRef<HTMLDivElement>(null);
@@ -60,7 +62,7 @@ const IndexV2WorkDetail = () => {
           <p className="mt-2 text-[15px] text-zinc-400">
             That slug doesn't match any project.{" "}
             <button
-              onClick={() => navigate("/v2/work")}
+              onClick={() => navigate("/work")}
               className="text-zinc-50 underline underline-offset-[3px] decoration-zinc-600 hover:decoration-zinc-50"
             >
               Back to My Work
@@ -73,18 +75,21 @@ const IndexV2WorkDetail = () => {
 
   if (isOrbiCaseStudy) {
     return (
-      <div className="fixed inset-0 bg-[#020305]">
-        <iframe
-          title="Orbi AI Agentic Second Brain"
-          src="/orbi-website/index.html"
-          className="block h-full w-full border-0 bg-[#020305]"
-          allow="autoplay; fullscreen"
-        />
-      </div>
+      <PageShell>
+        <OrbiSimpleCaseStudy />
+      </PageShell>
     );
   }
 
-  const bodyText = "text-[19px] sm:text-[20px] leading-[1.7] text-zinc-300";
+  if (isDCBCaseStudy) {
+    return (
+      <PageShell>
+        <DCBSimpleCaseStudy />
+      </PageShell>
+    );
+  }
+
+  const bodyText = "text-[16px] sm:text-[19px] lg:text-[20px] leading-[1.7] text-zinc-300";
   const bodyTextMuted = "text-[19px] sm:text-[20px] leading-[1.7] text-zinc-400";
 
   const renderScopeCards = (opts?: {
@@ -220,7 +225,7 @@ const IndexV2WorkDetail = () => {
           <div>
             <button
               type="button"
-              onClick={() => navigate("/v2/work")}
+              onClick={() => navigate("/work")}
               className="group mb-8 inline-flex items-center gap-2 text-[13px] font-medium text-zinc-400 transition-colors hover:text-white"
               style={enter(0)}
             >

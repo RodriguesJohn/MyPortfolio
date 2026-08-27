@@ -5,3 +5,5 @@ export const PROFILE_LINKEDIN_URL =
 export const PROFILE_GITHUB_URL = "https://github.com/RodriguesJohn";
 
 export const PROFILE_X_URL = "https://x.com/john_rodrigues_";
+
+export const PROFILE_SUBSTACK_URL = "https://johnrodrigues.substack.com";

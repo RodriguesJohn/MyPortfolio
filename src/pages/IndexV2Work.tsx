@@ -37,7 +37,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
     if (project.href) {
       window.open(project.href, "_blank", "noreferrer");
     } else {
-      navigate(`/v2/work/${project.slug}`);
+      navigate(`/work/${project.slug}`);
     }
   };
 
@@ -145,7 +145,7 @@ const IndexV2Work = () => {
         <section className="pt-20 sm:pt-24 pb-6">
           <button
             type="button"
-            onClick={() => navigate("/v2")}
+            onClick={() => navigate("/")}
             className="group inline-flex items-center gap-2 mb-10 text-[13px] font-medium text-zinc-400 hover:text-white transition-colors"
             style={enter(0)}
           >

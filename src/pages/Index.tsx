@@ -15,29 +15,29 @@ import profileImage from "@/assets/PP.jpg";
 
 // Map URL paths to tab values
 const pathToTabMap: Record<string, string> = {
-  "/": "Work Highlights",
-  "/explorations": "Explorations",
-  "/all-projects": "All Projects",
-  "/consulting": "Consulting",
-  "/testimonials": "Testimonials",
-  "/speaking": "Speaking",
-  "/about": "About",
-  "/links": "Quick Links",
-  "/books": "Books",
-  "/resume": "Resume",
+  "/v1": "Work Highlights",
+  "/v1/explorations": "Explorations",
+  "/v1/all-projects": "All Projects",
+  "/v1/consulting": "Consulting",
+  "/v1/testimonials": "Testimonials",
+  "/v1/speaking": "Speaking",
+  "/v1/about": "About",
+  "/v1/links": "Quick Links",
+  "/v1/books": "Books",
+  "/v1/resume": "Resume",
 };
 
 const tabToPathMap: Record<string, string> = {
-  "Work Highlights": "/",
-  "Explorations": "/explorations",
-  "All Projects": "/all-projects",
-  "Consulting": "/consulting",
-  "Testimonials": "/testimonials",
-  "Speaking": "/speaking",
-  "About": "/about",
-  "Quick Links": "/links",
-  "Books": "/books",
-  "Resume": "/resume",
+  "Work Highlights": "/v1",
+  "Explorations": "/v1/explorations",
+  "All Projects": "/v1/all-projects",
+  "Consulting": "/v1/consulting",
+  "Testimonials": "/v1/testimonials",
+  "Speaking": "/v1/speaking",
+  "About": "/v1/about",
+  "Quick Links": "/v1/links",
+  "Books": "/v1/books",
+  "Resume": "/v1/resume",
 };
 
 const Index = () => {
@@ -68,7 +68,7 @@ const Index = () => {
 
   // Handle tab change with URL update
   const handleTabChange = (tab: string) => {
-    const path = tabToPathMap[tab] || "/";
+    const path = tabToPathMap[tab] || "/v1";
     navigate(path);
     setActiveTab(tab);
   };

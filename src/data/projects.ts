@@ -1,22 +1,24 @@
 // Highlights
-import orbiVideo from "@/assets/EvaAIV2.mov";
-import outfixVideo from "@/assets/OutfixV2.mp4";
+import orbiVideo from "@/assets/Orbi.mov";
+import outfixVideo from "@/assets/fun-with-wipecoding.mov";
 import outfixHero from "@/assets/outfixHero.png";
-import ollieVideo from "@/assets/OllieAIDemo.mp4";
+import ollieVideo from "@/assets/mic.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
-import aiCapExplorationImage from "@/assets/AICapExploration.png";
-import figmaWorkspaceImage from "@/assets/FigmaWorkspace.jpg";
+import vibespaceVideo from "@/assets/vibespace.mp4";
+import designSystemAgentVideo from "@/assets/automate-design-systems-ai-agents.mp4";
 import cardMotionVideo from "@/assets/Card.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
-import appleLogoImage from "@/assets/Apple-Logo.png";
+import appleNotesMcpVideo from "@/assets/IMG_7590.mov";
+import florenceImage from "@/assets/florence-design-system.jpg";
+import florenceF2Video from "@/assets/florence-f2.mp4";
+import dcbImage from "@/assets/dcb-accounts-overview.jpg";
 
 // Past Work
 import noScrollImage from "@/assets/NoScrollApp.png";
 import aiInsightsVideo from "@/assets/AI Insights App.mp4";
 import tocaVideo from "@/assets/MyTocaApp.mp4";
 import balanceTransferVideo from "@/assets/BT.mp4";
-import dcbImage from "@/assets/DCB.png";
 
 export type Media =
   | {
@@ -25,14 +27,22 @@ export type Media =
       poster?: string;
       fit?: "cover" | "contain";
       bg?: string;
+      /** Soft matte around the media so light UIs separate from the page. */
+      pad?: boolean;
       objectPosition?: string;
+      /** CSS aspect-ratio value, e.g. "16/9" or "4/3". */
+      aspect?: string;
     }
   | {
       type: "image";
       src: string;
       fit?: "cover" | "contain";
       bg?: string;
+      /** Soft matte around the media so light UIs separate from the page. */
+      pad?: boolean;
       objectPosition?: string;
+      /** CSS aspect-ratio value, e.g. "16/9" or "4/3". */
+      aspect?: string;
     };
 
 export type ProjectScopeCard = {
@@ -55,15 +65,26 @@ export type Project = {
   media: Media;
   tag?: string;
   href?: string;
+  /** Switch to this feed tab on the home page instead of navigating away. */
+  feedTab?:
+    | "work"
+    | "experiments"
+    | "systems"
+    | "tools"
+    | "blog"
+    | "testimonials";
+  /** External CTA on the work detail page (does not replace in-app navigation). */
+  ctaUrl?: string;
+  ctaLabel?: string;
 };
 
 const orbiAI: Project = {
   slug: "orbi-ai",
   name: "Orbi AI",
   year: "2026",
-  meta: "Agentic Second Brain",
+  meta: "AI note taker for creators",
   description:
-    "Voice-first iOS productivity app with proactive follow-ups, shipped to the App Store.",
+    "iOS app for creators. Capture voice notes, thoughts, and ideas — then organize and repurpose them into content later.",
   slidesUrl:
     "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FkmEskNJDRsWB58Pm89LvtZ%2FCaseStudyPresentation---Orbi-AI%3Fnode-id%3D1-306%26scaling%3Dmin-zoom%26content-scaling%3Dfixed",
   appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
@@ -76,7 +97,7 @@ const orbiAI: Project = {
   ],
   media: {
     type: "video",
-    src: "/orbi-website/OrbiDemo.web.mp4",
+    src: orbiVideo,
     fit: "contain",
     bg: "#09090b",
     objectPosition: "center center",
@@ -90,7 +111,18 @@ const olliAI: Project = {
   meta: "Figma plugin · Claude Code",
   description:
     "Bridge between Claude Code and the Figma canvas. Prompts in chat → generated frames and components.",
-  media: { type: "video", src: ollieVideo },
+  ctaUrl:
+    "https://www.figma.com/community/plugin/1599300216747325998/ollie-ai-for-figma",
+  ctaLabel: "Get the plugin",
+  media: {
+    type: "video",
+    src: outfixVideo,
+    poster: outfixHero,
+    fit: "contain",
+    bg: "#000000",
+    objectPosition: "center center",
+    aspect: "1816/1080",
+  },
 };
 
 const outfixAI: Project = {
@@ -110,10 +142,8 @@ const outfixAI: Project = {
   ],
   media: {
     type: "video",
-    src: outfixVideo,
-    poster: outfixHero,
-    fit: "contain",
-    bg: "#0a0a0a",
+    src: ollieVideo,
+    fit: "cover",
   },
   tag: "Live",
 };
@@ -142,7 +172,7 @@ const citiBalanceTransfer: Project = {
   scopeCards: [
     { label: "My Role", value: "Product Designer" },
     { label: "Responsibility", value: "UI & Interaction Design" },
-    { label: "Timeline", value: "Ongoing" },
+    { label: "Timeline", value: "Shipped" },
     { label: "Nature", value: "Feature Design" },
   ],
   media: {
@@ -157,13 +187,38 @@ const citiBalanceTransfer: Project = {
 export const HIGHLIGHTS: Project[] = [
   orbiAI,
   {
+    slug: "florence-design-system",
+    name: "Florence",
+    year: "2026",
+    meta: "AI-ready design system",
+    description:
+      "Agent-ready design system with documented components, guidelines, and patterns for AI-native product work.",
+    feedTab: "systems",
+    media: {
+      type: "video",
+      src: florenceF2Video,
+      poster: florenceImage,
+      fit: "contain",
+      bg: "#0a0a0a",
+      objectPosition: "center center",
+      aspect: "1024/682",
+    },
+  },
+  {
     slug: "digital-commercial-banking",
-    name: "Digital Commercial Banking Platform",
+    name: "Startup Banking by JPMorgan Chase",
     year: "2020–21",
     meta: "JPMorgan Chase · B2B",
     description:
       "Designed institutional-side B2B banking platform for commercial users at JPMorgan Chase.",
-    media: { type: "image", src: dcbImage },
+    media: {
+      type: "image",
+      src: dcbImage,
+      fit: "contain",
+      bg: "#c8c8c8",
+      objectPosition: "center center",
+      aspect: "4/3",
+    },
   },
   citiAiInsights,
   outfixAI,
@@ -173,6 +228,20 @@ export const HIGHLIGHTS: Project[] = [
 
 /** Shown on /v2/work under “AI tools I built” */
 export const AI_TOOLS_BUILT: Project[] = [
+  {
+    slug: "design-system-agent-jpmc",
+    name: "Design system Agent for JPMC",
+    year: "2025",
+    meta: "Enterprise agent · Design systems",
+    description:
+      "Agent concept for accelerating enterprise design-system work, documentation, and component production.",
+    media: {
+      type: "video",
+      src: designSystemAgentVideo,
+      fit: "cover",
+      objectPosition: "center",
+    },
+  },
   orbiAI,
   {
     slug: "oliver-ai",
@@ -181,7 +250,12 @@ export const AI_TOOLS_BUILT: Project[] = [
     meta: "AI mentor · Learning agent",
     description:
       "AI mentor experience for guided practice, conversation, and personalized learning support.",
-    media: { type: "video", src: aiMentorVideo, fit: "cover" },
+    media: {
+      type: "video",
+      src: aiMentorVideo,
+      fit: "cover",
+      objectPosition: "center 22%",
+    },
   },
   olliAI,
   {
@@ -192,26 +266,12 @@ export const AI_TOOLS_BUILT: Project[] = [
     description:
       "Hands-on AI design education platform and curriculum for designers learning AI-native workflows.",
     media: {
-      type: "image",
-      src: aiCapExplorationImage,
+      type: "video",
+      src: vibespaceVideo,
       fit: "cover",
       objectPosition: "center",
     },
     href: "https://www.theaidesignacademy.com/",
-  },
-  {
-    slug: "design-system-agent-jpmc",
-    name: "Design system Agent for JPMC",
-    year: "2025",
-    meta: "Enterprise agent · Design systems",
-    description:
-      "Agent concept for accelerating enterprise design-system work, documentation, and component production.",
-    media: {
-      type: "image",
-      src: figmaWorkspaceImage,
-      fit: "cover",
-      objectPosition: "center",
-    },
   },
   {
     slug: "ux-ai-agent",
@@ -254,10 +314,10 @@ export const AI_TOOLS_BUILT: Project[] = [
     description:
       "MCP workflow connecting Apple Notes into agentic research, retrieval, and personal knowledge tasks.",
     media: {
-      type: "image",
-      src: appleLogoImage,
-      fit: "contain",
-      bg: "#f7f7f7",
+      type: "video",
+      src: appleNotesMcpVideo,
+      fit: "cover",
+      objectPosition: "center",
     },
   },
 ];

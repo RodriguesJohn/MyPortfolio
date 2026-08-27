@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ReactNode, createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   PROFILE_GITHUB_URL,
   PROFILE_LINKEDIN_URL,
@@ -16,6 +16,39 @@ const sans = {
 const displayFont = "'Geist', ui-sans-serif, system-ui, sans-serif";
 
 export const display = { fontFamily: displayFont };
+
+type V2ThemeContextValue = {
+  theme: "dark" | "light";
+  isLightPreview: boolean;
+  toggleTheme: () => void;
+};
+
+export const V2ThemeContext = createContext<V2ThemeContextValue | null>(null);
+
+export const ThemeToggleIcons = () => {
+  const ctx = useContext(V2ThemeContext);
+  if (!ctx) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={ctx.toggleTheme}
+      className="inline-flex size-8 items-center justify-center rounded-full text-zinc-400 transition hover:bg-white/[0.06] hover:text-zinc-100"
+      aria-label={ctx.isLightPreview ? "Switch to dark mode" : "Switch to light mode"}
+    >
+      {ctx.isLightPreview ? (
+        <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8z" />
+        </svg>
+      ) : (
+        <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+      )}
+    </button>
+  );
+};
 
 const NARRATION_TEXT = `Hi, I'm John Rodrigues, a Design Engineer for zero to one AI-Native Products. I prototype AI-native products from scratch. I help teams turn ambiguous ideas into agentic, probabilistic, high-craft interfaces with design and code. I've worked across the spectrum: 25 million dollars raised at TOCA Football, 20 million users shipped at Citi, and B2B banking at JPMorgan Chase. Master's in Interaction Design, undergrad in Engineering, plus UX and AI at Stanford. If you're an AI-native team that wants a designer with technical ability who moves fast, let's build.`;
 
@@ -304,24 +337,24 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     };
   }, [isLightPreview]);
 
-  const isWorkRoute = location.pathname.startsWith("/v2/work");
+  const isWorkRoute = location.pathname.startsWith("/work");
 
   const openTestimonials = () => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
-    navigate("/v2/testimonials");
+    navigate("/testimonials");
   };
 
   const openToolStack = () => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
-    navigate("/v2/tool-stack");
+    navigate("/tool-stack");
   };
 
   const openCaseStudyPresentation = () => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
-    navigate("/v2/case-study-presentation");
+    navigate("/case-study-presentation");
   };
 
   const dockItems = [
@@ -333,7 +366,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           <path d="M4 21a8 8 0 0 1 16 0" />
         </svg>
       ),
-      onClick: () => navigate("/v2"),
+      onClick: () => navigate("/"),
       isActive: location.pathname === "/v2",
     },
     {
@@ -346,7 +379,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           <rect x="14" y="15" width="7" height="6" rx="1.5" />
         </svg>
       ),
-      onClick: () => navigate("/v2/work"),
+      onClick: () => navigate("/work"),
       isActive: isWorkRoute,
     },
     {
@@ -423,13 +456,13 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   }, [targetDockIndex]);
 
   return (
+    <V2ThemeContext.Provider value={{ theme, isLightPreview, toggleTheme }}>
     <div
-      className={`min-h-screen min-h-[100dvh] overflow-x-hidden antialiased text-zinc-50 ${
-        isLightPreview ? "v2-light" : ""
+      className={`min-h-screen min-h-[100dvh] overflow-x-hidden antialiased text-zinc-50 text-[15px] sm:text-[17px] ${
+        isLightPreview ? "v2-light" : "v2-dark"
       }`}
       style={{
         backgroundColor: isLightPreview ? "#f7f7f7" : "#000000",
-        fontSize: "17px",
         fontWeight: 500,
         ...sans,
       }}
@@ -1110,6 +1143,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         }
       `}</style>
     </div>
+    </V2ThemeContext.Provider>
   );
 };
 

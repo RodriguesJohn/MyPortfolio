@@ -138,7 +138,7 @@ const IndexV2CaseStudyPresentation = () => {
       <main className="relative h-dvh overflow-hidden bg-black text-zinc-50">
         <button
           type="button"
-          onClick={() => navigate("/v2/case-study-presentation?theme=dark")}
+          onClick={() => navigate("/case-study-presentation?theme=dark")}
           className="absolute right-4 top-4 z-10 rounded-full border border-white/[0.1] bg-black/40 px-3 py-1.5 text-[12px] font-medium text-zinc-400 backdrop-blur-xl transition-colors hover:text-white"
         >
           Exit preview
@@ -153,7 +153,7 @@ const IndexV2CaseStudyPresentation = () => {
       <main className="mx-auto min-h-screen w-full max-w-5xl px-5 pb-36 pt-8 text-zinc-50 sm:px-8 sm:pt-10">
         <button
           type="button"
-          onClick={() => navigate("/v2")}
+          onClick={() => navigate("/")}
           className="mb-8 inline-flex items-center gap-2 text-[15px] font-medium text-zinc-500 transition-colors hover:text-zinc-100"
         >
           <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03]">
@@ -183,7 +183,7 @@ const IndexV2CaseStudyPresentation = () => {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => navigate("/v2/case-study-presentation?theme=dark&preview=1")}
+                onClick={() => navigate("/case-study-presentation?theme=dark&preview=1")}
                 className="rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-zinc-300 transition-colors hover:bg-white/[0.08] hover:text-white"
               >
                 Preview mode
