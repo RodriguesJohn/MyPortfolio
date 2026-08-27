@@ -132,7 +132,13 @@ All colors MUST be HSL.
   }
 
   .v2-light {
-    background: #f7f7f7 !important;
+    background-color: #f7f7f7 !important;
+    background-image: radial-gradient(
+      circle,
+      rgba(161, 161, 170, 0.34) 1px,
+      transparent 1px
+    ) !important;
+    background-size: 16px 16px !important;
     color: #18181b !important;
   }
 
