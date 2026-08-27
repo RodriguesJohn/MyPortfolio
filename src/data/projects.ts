@@ -1,5 +1,5 @@
 // Highlights
-import orbiVideo from "@/assets/Orbi.mov";
+import orbiHero from "@/assets/rbai-hero.png";
 import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
 import ollieVideo from "@/assets/OllieAIDemo.mp4";
@@ -96,10 +96,10 @@ const orbiAI: Project = {
     { label: "Year", value: "2026" },
   ],
   media: {
-    type: "video",
-    src: orbiVideo,
-    fit: "contain",
-    bg: "#09090b",
+    type: "image",
+    src: orbiHero,
+    fit: "cover",
+    bg: "#f4f4f5",
     objectPosition: "center center",
   },
 };
