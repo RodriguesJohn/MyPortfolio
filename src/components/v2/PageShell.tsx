@@ -458,27 +458,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     };
   }, [isLightPreview]);
 
-  const isWorkRoute = location.pathname.startsWith("/work");
-  const isHomeRoute = location.pathname === "/";
-
-  const openHome = () => {
-    setIsRelatedOpen(false);
-    setIsRelatedClosing(false);
-    navigate("/");
-  };
-
-  const openWork = () => {
-    setIsRelatedOpen(false);
-    setIsRelatedClosing(false);
-    navigate("/work");
-  };
-
-  const openStory = () => {
-    setIsRelatedOpen(false);
-    setIsRelatedClosing(false);
-    setIsListenOpen(true);
-  };
-
   const openTestimonials = () => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
@@ -489,12 +468,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
     navigate("/tool-stack");
-  };
-
-  const openCaseStudyPresentation = () => {
-    setIsRelatedOpen(false);
-    setIsRelatedClosing(false);
-    navigate("/case-study-presentation");
   };
 
   return (
@@ -900,78 +873,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
 
-            <div className="border-t border-white/[0.06] px-5 py-3 sm:px-6">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
-                Explore
-              </p>
-              <button
-                type="button"
-                onClick={openHome}
-                className={`v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05] ${
-                  isHomeRoute ? "bg-white/[0.04]" : ""
-                }`}
-              >
-                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="8" r="4" />
-                    <path d="M4 21a8 8 0 0 1 16 0" />
-                  </svg>
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
-                    Home
-                  </span>
-                  <span className="block text-[11px] leading-tight text-zinc-500">
-                    Feed and experiments
-                  </span>
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={openWork}
-                className={`v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05] ${
-                  isWorkRoute ? "bg-white/[0.04]" : ""
-                }`}
-              >
-                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <rect x="3" y="4" width="7" height="7" rx="1.5" />
-                    <rect x="14" y="4" width="7" height="7" rx="1.5" />
-                    <rect x="3" y="15" width="7" height="6" rx="1.5" />
-                    <rect x="14" y="15" width="7" height="6" rx="1.5" />
-                  </svg>
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
-                    My work
-                  </span>
-                  <span className="block text-[11px] leading-tight text-zinc-500">
-                    Case studies and shipped work
-                  </span>
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={openStory}
-                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
-              >
-                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M3 12a9 9 0 0 1 18 0" />
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" />
-                    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-                  </svg>
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
-                    My story
-                  </span>
-                  <span className="block text-[11px] leading-tight text-zinc-500">
-                    Listen to my background
-                  </span>
-                </span>
-              </button>
-            </div>
+            {/* Explore section (Home / My work / My story) hidden */}
 
             {/* Section 1: Social */}
             <div className="border-t border-white/[0.06] px-5 pt-4 pb-4 sm:px-6">
@@ -1127,48 +1029,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                   <path d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
               </button>
-              <button
-                type="button"
-                onClick={openCaseStudyPresentation}
-                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
-              >
-                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
-                  <svg
-                    className="h-3.5 w-3.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <rect x="3" y="4" width="18" height="13" rx="2" />
-                    <path d="M8 21h8M12 17v4" />
-                    <path d="M8 9h5M8 12h8" />
-                  </svg>
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
-                    Case study presentation
-                  </span>
-                  <span className="block text-[11px] leading-tight text-zinc-500">
-                    Custom slide deck
-                  </span>
-                </span>
-                <svg
-                  className="h-3 w-3 shrink-0 text-zinc-600 transition-colors group-hover:text-zinc-300"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </button>
+              {/* Case study presentation hidden */}
             </div>
 
             <div className="border-t border-white/[0.06] px-5 py-3 sm:px-6">

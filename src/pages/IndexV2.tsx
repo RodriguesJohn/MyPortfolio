@@ -999,10 +999,10 @@ const IndexV2 = () => {
                     href={ACADEMY_URL}
                     target="_blank"
                     rel="noreferrer"
-                    title="Opens Academy in a new tab"
+                    title="Opens Course in a new tab"
                     className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
                   >
-                    Academy
+                    Course
                   </a>
                 </motion.div>
                 <div className="hidden shrink-0 self-center pb-2.5 sm:flex">

@@ -2,7 +2,7 @@
 import orbiVideo from "@/assets/Orbi.mov";
 import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
-import ollieVideo from "@/assets/OllieAIDemo.mp4";
+import ollieVideo from "@/assets/fun-with-wipecoding.mov";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
 import vibespaceVideo from "@/assets/vibespace.mp4";
@@ -117,6 +117,7 @@ const olliAI: Project = {
     type: "video",
     src: ollieVideo,
     fit: "cover",
+    objectPosition: "center center",
   },
 };
 
@@ -139,7 +140,7 @@ const outfixAI: Project = {
     type: "video",
     src: outfixVideo,
     poster: outfixHero,
-    fit: "contain",
+    fit: "cover",
     bg: "#000000",
     objectPosition: "center center",
     aspect: "1816/1080",
