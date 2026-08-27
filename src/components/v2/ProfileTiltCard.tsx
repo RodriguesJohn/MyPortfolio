@@ -285,7 +285,7 @@ const ProfileTiltCard = () => {
           <AnimatePresence>
             {expanded && (
               <motion.div
-                className="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6"
+                className="fixed inset-0 z-[90] flex items-center justify-center overflow-hidden p-4 sm:p-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -308,48 +308,48 @@ const ProfileTiltCard = () => {
                   role="dialog"
                   aria-modal="true"
                   aria-label="Profile cards"
-                  className="relative z-10 flex w-full max-w-[980px] flex-col items-center justify-center gap-4 md:flex-row md:items-stretch md:gap-0"
+                  className="scrollbar-hide relative z-10 flex max-h-[calc(100dvh-7.5rem)] w-full max-w-[980px] snap-x snap-mandatory items-stretch gap-4 overflow-x-auto overflow-y-hidden px-[calc((100vw-min(82vw,300px))/2)] py-3 md:max-h-none md:snap-none md:justify-center md:gap-0 md:overflow-visible md:px-0 md:py-0"
                 >
                   <motion.article
                     layoutId="v2-profile-about-card"
-                    className="relative w-full max-w-[260px] rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-mr-6 md:mt-8 md:rotate-[-8deg]"
+                    className="relative w-[min(82vw,300px)] shrink-0 snap-center rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-mr-6 md:mt-8 md:w-full md:max-w-[260px] md:rotate-[-8deg]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 95 }}
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-5">
+                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none">
                       <ToolboxNoteContent />
                     </div>
                   </motion.article>
 
                   <motion.article
                     layoutId="v2-profile-front-card"
-                    className="relative z-20 w-full max-w-[300px] rounded-[28px] shadow-[0_34px_90px_-28px_rgba(0,0,0,0.6)] ring-1 ring-white/30 md:scale-[1.04]"
+                    className="relative z-20 w-[min(82vw,300px)] shrink-0 snap-center rounded-[28px] shadow-[0_34px_90px_-28px_rgba(0,0,0,0.6)] ring-1 ring-white/30 md:w-full md:max-w-[300px] md:scale-[1.04]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 96 }}
                   >
-                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-6">
+                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-6 md:max-h-none">
                       <ProfileCardContent large />
                     </div>
                   </motion.article>
 
                   <motion.article
                     layoutId="v2-profile-highlights-card"
-                    className="relative w-full max-w-[260px] rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-ml-6 md:mt-8 md:rotate-[8deg]"
+                    className="relative w-[min(82vw,300px)] shrink-0 snap-center rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-ml-6 md:mt-8 md:w-full md:max-w-[260px] md:rotate-[8deg]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 95 }}
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-5">
+                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none">
                       <HighlightsNoteContent />
                     </div>
                   </motion.article>
 
                   <button
                     type="button"
-                    className="absolute -bottom-14 left-1/2 -translate-x-1/2 rounded-full bg-white/15 px-3.5 py-1.5 text-[12px] font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/25 md:-bottom-16"
+                    className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom,0px))] left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/15 px-3.5 py-1.5 text-[12px] font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/25 md:absolute md:-bottom-16 md:bottom-auto"
                     onClick={closeCards}
                   >
                     Close
