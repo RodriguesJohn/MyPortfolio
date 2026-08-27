@@ -523,35 +523,55 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         }}
       >
         <div
+          className="pointer-events-none absolute -inset-x-5 -inset-y-3 rounded-[36px]"
+          style={{
+            background: isLightPreview
+              ? "radial-gradient(ellipse at center, rgba(255,255,255,0.54), rgba(255,255,255,0.18) 48%, transparent 74%)"
+              : "radial-gradient(ellipse at center, rgba(255,255,255,0.10), rgba(0,0,0,0.34) 48%, transparent 76%)",
+            filter: "blur(14px)",
+          }}
+          aria-hidden="true"
+        />
+        <div
           className="v2-chat-dock relative flex items-center gap-1 overflow-hidden rounded-[28px] border px-2 py-1.5"
           style={{
             background: isLightPreview
-              ? "linear-gradient(135deg, rgba(255,255,255,0.82), rgba(255,255,255,0.54))"
-              : "linear-gradient(135deg, rgba(24,24,27,0.66), rgba(8,8,10,0.52))",
-            backdropFilter: "blur(34px) saturate(190%) contrast(112%)",
-            WebkitBackdropFilter: "blur(34px) saturate(190%) contrast(112%)",
+              ? "linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.46))"
+              : "linear-gradient(135deg, rgba(38,38,42,0.50), rgba(10,10,12,0.38))",
+            backdropFilter: "blur(28px) saturate(175%)",
+            WebkitBackdropFilter: "blur(28px) saturate(175%)",
             borderColor: isLightPreview
-              ? "rgba(255,255,255,0.72)"
-              : "rgba(255,255,255,0.12)",
+              ? "rgba(255,255,255,0.64)"
+              : "rgba(255,255,255,0.14)",
             boxShadow: isLightPreview
               ? [
                   "inset 0 1px 0 rgba(255,255,255,0.92)",
                   "inset 0 -1px 0 rgba(24,24,27,0.08)",
-                  "inset 0 0 22px rgba(255,255,255,0.38)",
-                  "0 14px 36px -18px rgba(24,24,27,0.22)",
+                  "inset 0 0 18px rgba(255,255,255,0.30)",
+                  "0 18px 44px -20px rgba(24,24,27,0.28)",
                 ].join(", ")
               : [
-                  "inset 0 1px 0 rgba(255,255,255,0.16)",
-                  "inset 0 -1px 0 rgba(0,0,0,0.55)",
-                  "inset 0 0 28px rgba(255,255,255,0.045)",
-                  "0 16px 42px -16px rgba(0,0,0,0.78)",
+                  "inset 0 1px 0 rgba(255,255,255,0.18)",
+                  "inset 0 -1px 0 rgba(0,0,0,0.46)",
+                  "inset 0 0 22px rgba(255,255,255,0.055)",
+                  "0 18px 48px -16px rgba(0,0,0,0.84)",
+                  "0 2px 14px rgba(255,255,255,0.045)",
                 ].join(", "),
-            maskImage:
-              "linear-gradient(90deg, transparent 0, black 18px, black calc(100% - 18px), transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(90deg, transparent 0, black 18px, black calc(100% - 18px), transparent 100%)",
           }}
         >
+          <span
+            className="pointer-events-none absolute inset-0 rounded-[28px]"
+            style={{
+              background: isLightPreview
+                ? "linear-gradient(180deg, rgba(255,255,255,0.36), transparent 42%, rgba(255,255,255,0.18))"
+                : "linear-gradient(180deg, rgba(255,255,255,0.09), transparent 44%, rgba(255,255,255,0.035))",
+              maskImage:
+                "linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%)",
+            }}
+            aria-hidden="true"
+          />
           <span
             className="pointer-events-none absolute inset-x-4 top-0 h-px"
             style={{
