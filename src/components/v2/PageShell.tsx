@@ -1,5 +1,12 @@
 import { ReactNode, createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
+  motion,
+  animate,
+  useMotionValue,
+  useTransform,
+  useVelocity,
+} from "framer-motion";
+import {
   PROFILE_GITHUB_URL,
   PROFILE_LINKEDIN_URL,
   PROFILE_X_URL,
@@ -25,28 +32,147 @@ type V2ThemeContextValue = {
 
 export const V2ThemeContext = createContext<V2ThemeContextValue | null>(null);
 
-export const ThemeToggleIcons = () => {
+export const useV2Theme = () => {
   const ctx = useContext(V2ThemeContext);
-  if (!ctx) return null;
+  if (!ctx) {
+    throw new Error("useV2Theme must be used within PageShell");
+  }
+  return ctx;
+};
+
+/** Button size (28) + gap (2) — knob travels between sun and moon. */
+const THEME_KNOB_TRAVEL = 30;
+
+const themeToggleSpring = {
+  type: "spring" as const,
+  stiffness: 480,
+  damping: 28,
+  mass: 0.75,
+};
+
+const themeKnobJellySpring = {
+  type: "spring" as const,
+  stiffness: 380,
+  damping: 18,
+  mass: 0.9,
+};
+
+export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => {
+  const { isLightPreview, toggleTheme } = useV2Theme();
+  const knobX = useMotionValue(isLightPreview ? 0 : THEME_KNOB_TRAVEL);
+  const knobVelocity = useVelocity(knobX);
+  const knobScaleX = useTransform(knobVelocity, [-900, 0, 900], [1.42, 1, 1.42]);
+  const knobScaleY = useTransform(knobVelocity, [-900, 0, 900], [0.68, 1, 0.68]);
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    const target = isLightPreview ? 0 : THEME_KNOB_TRAVEL;
+    if (!didMount.current) {
+      didMount.current = true;
+      knobX.set(target);
+      return;
+    }
+    const controls = animate(knobX, target, themeKnobJellySpring);
+    return () => controls.stop();
+  }, [isLightPreview, knobX]);
 
   return (
-    <button
-      type="button"
-      onClick={ctx.toggleTheme}
-      className="inline-flex size-8 items-center justify-center rounded-full text-zinc-400 transition hover:bg-white/[0.06] hover:text-zinc-100"
-      aria-label={ctx.isLightPreview ? "Switch to dark mode" : "Switch to light mode"}
+    <div
+      className={`v2-theme-toggle-icons relative inline-flex items-center gap-0.5 overflow-visible rounded-full p-1 ring-1 ${className}`}
+      role="group"
+      aria-label="Appearance"
     >
-      {ctx.isLightPreview ? (
-        <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8z" />
-        </svg>
-      ) : (
-        <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-        </svg>
-      )}
-    </button>
+      <motion.span
+        aria-hidden="true"
+        className={`v2-theme-toggle-knob pointer-events-none absolute top-1 left-1 z-0 size-7 rounded-full ${
+          isLightPreview
+            ? "v2-theme-toggle-knob--dark"
+            : "v2-theme-toggle-knob--light"
+        }`}
+        style={{
+          x: knobX,
+          scaleX: knobScaleX,
+          scaleY: knobScaleY,
+        }}
+      />
+
+      <button
+        type="button"
+        onClick={() => {
+          if (!isLightPreview) toggleTheme();
+        }}
+        className={`relative z-[1] inline-flex size-7 items-center justify-center rounded-full ${
+          isLightPreview
+            ? "v2-theme-toggle-icon--on"
+            : "text-zinc-500 hover:text-zinc-300"
+        }`}
+        aria-label="Switch to light mode"
+        aria-pressed={isLightPreview}
+      >
+        <motion.span
+          className="relative z-[1] inline-flex"
+          animate={
+            isLightPreview
+              ? { rotate: 0, scale: 1, opacity: 1 }
+              : { rotate: -20, scale: 0.9, opacity: 0.65 }
+          }
+          whileTap={{ scale: 0.86, rotate: 12 }}
+          transition={themeToggleSpring}
+        >
+          <svg
+            className="size-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+        </motion.span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          if (isLightPreview) toggleTheme();
+        }}
+        className={`relative z-[1] inline-flex size-7 items-center justify-center rounded-full ${
+          !isLightPreview
+            ? "v2-theme-toggle-icon--on-dark"
+            : "text-zinc-500 hover:text-zinc-700"
+        }`}
+        aria-label="Switch to dark mode"
+        aria-pressed={!isLightPreview}
+      >
+        <motion.span
+          className="relative z-[1] inline-flex"
+          animate={
+            !isLightPreview
+              ? { rotate: 0, scale: 1, opacity: 1 }
+              : { rotate: 16, scale: 0.9, opacity: 0.65 }
+          }
+          whileTap={{ scale: 0.86, rotate: -12 }}
+          transition={themeToggleSpring}
+        >
+          <svg
+            className="size-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8z" />
+          </svg>
+        </motion.span>
+      </button>
+    </div>
   );
 };
 
