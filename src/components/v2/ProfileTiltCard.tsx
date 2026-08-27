@@ -23,12 +23,12 @@ const handwritten = {
 };
 
 const HIGHLIGHT_NOTES = [
-  "Orbi AI — AI note taker for creators",
-  "20M+ users shipped across banks",
-  "JPMC commercial banking platform",
-  "Design system agent for JPMC",
-  "OllieAI + Outfix AI experiments",
-  "AI Design Academy curriculum",
+  "Orbi AI — 0→1 AI product building app",
+  "Startup banking platform shipped for JPMorgan Chase",
+  "Florence AI-ready design system",
+  "Founded Human AI Studio",
+  "OutfitX AI MVP",
+  "Design development",
 ];
 
 const TOOLBOX_LOGOS = [
@@ -145,11 +145,11 @@ const HighlightsNoteContent = () => (
       >
         work highlights
       </p>
-      <ul className="mt-4 space-y-2.5">
+      <ul className="mt-4 space-y-2">
         {HIGHLIGHT_NOTES.map((note, index) => (
           <li
             key={note}
-            className="flex gap-2 text-[14px] leading-[1.3] text-white"
+            className="flex gap-2 text-[13.5px] leading-[1.28] text-white"
             style={{
               ...handwritten,
               fontWeight: 500,
