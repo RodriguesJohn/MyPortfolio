@@ -1,8 +1,8 @@
 // Highlights
 import orbiVideo from "@/assets/Orbi.mov";
-import outfixVideo from "@/assets/fun-with-wipecoding.mov";
+import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
-import ollieVideo from "@/assets/mic.mp4";
+import ollieVideo from "@/assets/OllieAIDemo.mp4";
 import uxAgentVideo from "@/assets/V2UXAgent.mp4";
 import aiMentorVideo from "@/assets/AIMentor.mp4";
 import vibespaceVideo from "@/assets/vibespace.mp4";
@@ -116,12 +116,8 @@ const olliAI: Project = {
   ctaLabel: "Get the plugin",
   media: {
     type: "video",
-    src: outfixVideo,
-    poster: outfixHero,
-    fit: "contain",
-    bg: "#000000",
-    objectPosition: "center center",
-    aspect: "1816/1080",
+    src: ollieVideo,
+    fit: "cover",
   },
 };
 
@@ -142,8 +138,12 @@ const outfixAI: Project = {
   ],
   media: {
     type: "video",
-    src: ollieVideo,
-    fit: "cover",
+    src: outfixVideo,
+    poster: outfixHero,
+    fit: "contain",
+    bg: "#000000",
+    objectPosition: "center center",
+    aspect: "1816/1080",
   },
   tag: "Live",
 };
@@ -178,9 +178,10 @@ const citiBalanceTransfer: Project = {
   media: {
     type: "video",
     src: balanceTransferVideo,
-    fit: "contain",
+    fit: "cover",
     bg: "#0a0a0a",
     objectPosition: "center center",
+    aspect: "1976/1080",
   },
 };
 
@@ -220,7 +221,6 @@ export const HIGHLIGHTS: Project[] = [
       aspect: "4/3",
     },
   },
-  citiAiInsights,
   outfixAI,
   citiBalanceTransfer,
   olliAI,

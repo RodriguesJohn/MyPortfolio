@@ -93,7 +93,7 @@ const ProfileCardContent = ({ large = false }: { large?: boolean }) => (
           }}
         >
           I focus on 0→1 AI-native products, design systems, and agentic
-          experiences.
+          experiences. Founder of Human AI Studio.
         </p>
       </div>
     </div>
@@ -201,7 +201,7 @@ const ProfileTiltCard = () => {
   return (
     <>
       <motion.div
-        className="relative z-50 mb-3 w-full max-w-[200px] overflow-visible sm:mb-5 sm:max-w-[220px]"
+        className="relative z-50 mb-3 w-full max-w-[210px] overflow-visible sm:mb-5 sm:max-w-[230px]"
         initial={{ opacity: 0, y: 18, rotate: -5 }}
         animate={{ opacity: 1, y: 0, rotate: 0 }}
         transition={v2SpringSoft}
@@ -265,7 +265,7 @@ const ProfileTiltCard = () => {
                 />
                 <motion.div
                   layoutId="v2-profile-front-card"
-                  className="v2-profile-stack-card v2-profile-stack-card--front v2-profile-card-whiteboard relative overflow-hidden rounded-[24px] p-4 shadow-[0_22px_52px_-24px_rgba(37,99,235,0.4)] ring-1 ring-white/25"
+                  className="v2-profile-stack-card v2-profile-stack-card--front relative rounded-[24px] shadow-[0_22px_52px_-24px_rgba(0,0,0,0.5)] ring-1 ring-white/25"
                   variants={v2ProfileFront}
                   transition={v2SpringSoft}
                   style={{ zIndex: closing ? 94 : undefined }}
@@ -273,7 +273,9 @@ const ProfileTiltCard = () => {
                     if (closing) setClosing(false);
                   }}
                 >
-                  <ProfileCardContent />
+                  <div className="v2-profile-card-whiteboard relative h-full overflow-hidden rounded-[24px] p-4">
+                    <ProfileCardContent />
+                  </div>
                 </motion.div>
               </>
             )}
@@ -313,33 +315,39 @@ const ProfileTiltCard = () => {
                 >
                   <motion.article
                     layoutId="v2-profile-about-card"
-                    className="v2-profile-card-whiteboard relative w-full max-w-[260px] overflow-hidden rounded-[28px] p-5 shadow-[0_28px_70px_-30px_rgba(37,99,235,0.5)] ring-1 ring-white/25 md:-mr-6 md:mt-8 md:rotate-[-8deg]"
+                    className="relative w-full max-w-[260px] rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-mr-6 md:mt-8 md:rotate-[-8deg]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 95 }}
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <ToolboxNoteContent />
+                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-5">
+                      <ToolboxNoteContent />
+                    </div>
                   </motion.article>
 
                   <motion.article
                     layoutId="v2-profile-front-card"
-                    className="v2-profile-card-whiteboard relative z-20 w-full max-w-[300px] overflow-hidden rounded-[28px] p-6 shadow-[0_34px_90px_-28px_rgba(37,99,235,0.6)] ring-1 ring-white/30 md:scale-[1.04]"
+                    className="relative z-20 w-full max-w-[300px] rounded-[28px] shadow-[0_34px_90px_-28px_rgba(0,0,0,0.6)] ring-1 ring-white/30 md:scale-[1.04]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 96 }}
                   >
-                    <ProfileCardContent large />
+                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-6">
+                      <ProfileCardContent large />
+                    </div>
                   </motion.article>
 
                   <motion.article
                     layoutId="v2-profile-highlights-card"
-                    className="v2-profile-card-whiteboard relative w-full max-w-[260px] overflow-hidden rounded-[28px] p-5 shadow-[0_28px_70px_-30px_rgba(37,99,235,0.5)] ring-1 ring-white/25 md:-ml-6 md:mt-8 md:rotate-[8deg]"
+                    className="relative w-full max-w-[260px] rounded-[28px] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.55)] ring-1 ring-white/25 md:-ml-6 md:mt-8 md:rotate-[8deg]"
                     transition={v2SpringSoft}
                     style={{ zIndex: 95 }}
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <HighlightsNoteContent />
+                    <div className="v2-profile-card-whiteboard relative overflow-hidden rounded-[28px] p-5">
+                      <HighlightsNoteContent />
+                    </div>
                   </motion.article>
 
                   <button

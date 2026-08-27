@@ -879,7 +879,17 @@ All colors MUST be HSL.
 
 .v2-built-tool-card {
   background: #0a0a0a;
-  border: 1px solid rgba(161, 161, 170, 0.22);
+  border: 1px solid rgba(161, 161, 170, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 16px 40px -24px rgba(0, 0, 0, 0.45);
+}
+
+.v2-built-tool-index {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.72);
+  background: transparent;
 }
 
 .v2-built-tool-title {
@@ -887,7 +897,38 @@ All colors MUST be HSL.
 }
 
 .v2-built-tool-description {
-  color: rgba(161, 161, 170, 0.95);
+  color: rgba(161, 161, 170, 0.92);
+}
+
+.v2-built-tool-divider {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.v2-light .v2-built-tool-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(24, 24, 27, 0.06) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 2px rgba(24, 24, 27, 0.04),
+    0 16px 40px -24px rgba(24, 24, 27, 0.14) !important;
+}
+
+.v2-light .v2-built-tool-index {
+  border-color: rgba(24, 24, 27, 0.08) !important;
+  color: rgba(82, 82, 91, 0.72) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+}
+
+.v2-light .v2-built-tool-title {
+  color: #09090b !important;
+}
+
+.v2-light .v2-built-tool-description {
+  color: rgba(82, 82, 91, 0.82) !important;
+}
+
+.v2-light .v2-built-tool-divider {
+  border-color: rgba(24, 24, 27, 0.05) !important;
 }
 
 .v2-blog-article-card {
@@ -896,17 +937,18 @@ All colors MUST be HSL.
 }
 
 .v2-feed-card-media {
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.35),
-    0 10px 28px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 64px -48px rgba(0, 0, 0, 0.42);
+}
+
+.v2-light .v2-feed-card-media {
+  box-shadow: 0 20px 80px -58px rgba(24, 24, 27, 0.14);
 }
 
 .v2-profile-stack {
   position: relative;
   height: 320px;
   overflow: visible;
-  padding-top: 10px;
-  padding-bottom: 12px;
+  padding: 10px 8px 12px;
 }
 
 .v2-profile-stack-inner {
@@ -920,15 +962,15 @@ All colors MUST be HSL.
 }
 
 .v2-profile-stack-card--back {
-  background: linear-gradient(155deg, #3a6fbf 0%, #7eb0f0 55%, #b7d4ff 100%);
-  opacity: 0.55;
-  box-shadow: 0 12px 28px -22px rgba(37, 99, 235, 0.28);
+  background: linear-gradient(155deg, #2a5fad 0%, #3568b5 55%, #3f79c9 100%);
+  opacity: 0.42;
+  box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.45);
 }
 
 .v2-profile-stack-card--mid {
-  background: linear-gradient(155deg, #4d82d4 0%, #8ebcf5 55%, #c5deff 100%);
-  opacity: 0.7;
-  box-shadow: 0 12px 28px -22px rgba(37, 99, 235, 0.22);
+  background: linear-gradient(155deg, #3568b5 0%, #3f79c9 55%, #4d82d4 100%);
+  opacity: 0.58;
+  box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.35);
 }
 
 .v2-profile-shader {
@@ -1000,8 +1042,8 @@ All colors MUST be HSL.
     color-mix(in srgb, var(--shader-d) 60%, transparent),
     color-mix(in srgb, var(--shader-b) 70%, transparent)
   );
-  opacity: 0.85;
-  filter: blur(24px);
+  opacity: 0.65;
+  filter: blur(18px);
   animation: v2ProfileShaderSpin 18s linear infinite;
 }
 
@@ -1036,6 +1078,7 @@ All colors MUST be HSL.
 
 .v2-profile-card-whiteboard {
   --tw-ring-color: rgba(255, 255, 255, 0.22);
+  isolation: isolate;
 }
 
 .v2-profile-name {

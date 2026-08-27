@@ -828,14 +828,14 @@ const IndexV2 = () => {
 
   return (
     <PageShell>
-      <div className="mx-auto flex h-auto w-full max-w-[1280px] flex-col overflow-x-hidden px-4 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-5 lg:h-[100dvh] lg:overflow-hidden lg:px-5 lg:pb-0">
+      <div className="mx-auto flex h-auto w-full max-w-[1280px] flex-col overflow-x-hidden px-4 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-5 lg:h-[100dvh] lg:overflow-y-hidden lg:overflow-x-visible lg:px-5 lg:pb-0">
         {/* Top spacer — keeps float room outside the clipped overflow box */}
         <div className="h-12 shrink-0 sm:h-16 lg:h-[72px]" aria-hidden="true" />
 
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10 lg:overflow-x-visible">
         {/* Static sidebar — stays put while the feed scrolls */}
         <motion.aside
-          className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b border-zinc-800/80 pb-4 lg:w-[260px] lg:border-b-0 lg:border-r lg:pb-2 lg:pl-1.5 lg:pr-8"
+          className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b border-zinc-800/80 pb-4 lg:w-[260px] lg:border-b-0 lg:border-r lg:pb-2 lg:pl-1.5 lg:pr-6"
           variants={v2FadeUp}
           initial="hidden"
           animate="show"

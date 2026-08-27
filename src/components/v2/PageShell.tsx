@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   motion,
   animate,
@@ -316,12 +316,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   const [isRelatedClosing, setIsRelatedClosing] = useState(false);
   const [copiedLinkLabel, setCopiedLinkLabel] = useState<string | null>(null);
 
-  const dockListRef = useRef<HTMLUListElement>(null);
-  const dockButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [hoveredDockIndex, setHoveredDockIndex] = useState<number | null>(null);
-  const [dockIndicator, setDockIndicator] = useState({ left: 0, width: 0, opacity: 0 });
-  const [dockIndicatorMorph, setDockIndicatorMorph] = useState(false);
-
   const copyLinkValue = async (label: string, value: string) => {
     try {
       await navigator.clipboard.writeText(value);
@@ -464,6 +458,25 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   }, [isLightPreview]);
 
   const isWorkRoute = location.pathname.startsWith("/work");
+  const isHomeRoute = location.pathname === "/";
+
+  const openHome = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    navigate("/");
+  };
+
+  const openWork = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    navigate("/work");
+  };
+
+  const openStory = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    setIsListenOpen(true);
+  };
 
   const openTestimonials = () => {
     setIsRelatedOpen(false);
@@ -483,104 +496,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     navigate("/case-study-presentation");
   };
 
-  const dockItems = [
-    {
-      label: "Home",
-      icon: (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 21a8 8 0 0 1 16 0" />
-        </svg>
-      ),
-      onClick: () => navigate("/"),
-      isActive: location.pathname === "/v2",
-    },
-    {
-      label: "My work",
-      icon: (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="4" width="7" height="7" rx="1.5" />
-          <rect x="14" y="4" width="7" height="7" rx="1.5" />
-          <rect x="3" y="15" width="7" height="6" rx="1.5" />
-          <rect x="14" y="15" width="7" height="6" rx="1.5" />
-        </svg>
-      ),
-      onClick: () => navigate("/work"),
-      isActive: isWorkRoute,
-    },
-    {
-      label: "John.ai",
-      icon: (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-        </svg>
-      ),
-      onClick: () => setIsChatOpen(true),
-      isActive: false,
-    },
-    {
-      label: "My story",
-      icon: (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 12a9 9 0 0 1 18 0" />
-          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" />
-          <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-        </svg>
-      ),
-      onClick: () => setIsListenOpen(true),
-      isActive: false,
-    },
-    {
-      label: "More",
-      icon: (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="5" cy="12" r="1.25" fill="currentColor" stroke="none" />
-          <circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none" />
-          <circle cx="19" cy="12" r="1.25" fill="currentColor" stroke="none" />
-        </svg>
-      ),
-      onClick: () => setIsRelatedOpen(true),
-      isActive: false,
-    },
-  ];
-
-  const activeDockIndex = dockItems.findIndex((item) => item.isActive);
-  const targetDockIndex =
-    hoveredDockIndex ?? (activeDockIndex >= 0 ? activeDockIndex : null);
-
-  const syncDockIndicator = useCallback(() => {
-    if (targetDockIndex === null) {
-      setDockIndicator((prev) => ({ ...prev, opacity: 0 }));
-      return;
-    }
-    const btn = dockButtonRefs.current[targetDockIndex];
-    const list = dockListRef.current;
-    if (!btn || !list) return;
-    const listRect = list.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    setDockIndicator({
-      left: btnRect.left - listRect.left,
-      width: btnRect.width,
-      opacity: 1,
-    });
-  }, [targetDockIndex]);
-
-  useLayoutEffect(() => {
-    syncDockIndicator();
-  }, [syncDockIndicator, location.pathname]);
-
-  useEffect(() => {
-    window.addEventListener("resize", syncDockIndicator);
-    return () => window.removeEventListener("resize", syncDockIndicator);
-  }, [syncDockIndicator]);
-
-  useEffect(() => {
-    if (targetDockIndex === null) return;
-    setDockIndicatorMorph(true);
-    const t = window.setTimeout(() => setDockIndicatorMorph(false), 560);
-    return () => window.clearTimeout(t);
-  }, [targetDockIndex]);
-
   return (
     <V2ThemeContext.Provider value={{ theme, isLightPreview, toggleTheme }}>
     <div
@@ -595,9 +510,9 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     >
       {children}
 
-      {/* Floating bottom dock */}
+      {/* Chat-style composer + More */}
       <nav
-        className="fixed left-1/2 z-50 w-[min(calc(100vw-2rem),460px)] -translate-x-1/2"
+        className="fixed left-1/2 z-50 w-[min(calc(100vw-2rem),420px)] -translate-x-1/2"
         style={{
           bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
           opacity: 0,
@@ -606,80 +521,100 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         }}
       >
         <div
-          className="box-border w-full overflow-visible rounded-full"
+          className="v2-chat-dock flex items-center gap-1 rounded-[28px] px-2 py-1.5"
           style={{
-            padding: "9px 18px",
             background: isLightPreview
-              ? "linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(247,247,247,0.84) 100%)"
-              : "linear-gradient(180deg, rgba(20,20,22,0.96) 0%, rgba(10,10,12,0.94) 100%)",
+              ? "rgba(255,255,255,0.92)"
+              : "rgba(16,16,18,0.94)",
             backdropFilter: "blur(32px) saturate(180%)",
             WebkitBackdropFilter: "blur(32px) saturate(180%)",
-            border: isLightPreview
-              ? "1px solid rgba(24,24,27,0.10)"
-              : "1px solid rgba(255,255,255,0.14)",
+            border: "none",
             boxShadow: isLightPreview
               ? [
-                  "inset 0 1px 0 rgba(255,255,255,0.75)",
-                  "0 18px 44px -18px rgba(24,24,27,0.28)",
-                  "0 8px 18px -10px rgba(24,24,27,0.18)",
+                  "inset 0 2px 4px rgba(24,24,27,0.10)",
+                  "inset 0 1px 1px rgba(24,24,27,0.08)",
+                  "inset 0 -1px 0 rgba(255,255,255,0.85)",
+                  "0 14px 36px -18px rgba(24,24,27,0.22)",
                 ].join(", ")
               : [
-                  "inset 0 1px 0 rgba(255,255,255,0.18)",
-                  "inset 0 -1px 1px rgba(0,0,0,0.55)",
-                  "0 1px 0 rgba(255,255,255,0.05)",
-                  "0 18px 44px -8px rgba(0,0,0,0.82)",
-                  "0 8px 18px -4px rgba(0,0,0,0.58)",
+                  "inset 0 2px 5px rgba(0,0,0,0.55)",
+                  "inset 0 1px 1px rgba(0,0,0,0.35)",
+                  "inset 0 -1px 0 rgba(255,255,255,0.08)",
+                  "0 16px 40px -14px rgba(0,0,0,0.75)",
                 ].join(", "),
           }}
         >
-          <ul
-            ref={dockListRef}
-            className="relative m-0 flex w-full list-none items-center justify-between gap-1 p-0"
-            onMouseLeave={() => setHoveredDockIndex(null)}
-          >
-          <div
-            aria-hidden
-            className={`dock-indicator-pill pointer-events-none absolute top-0 bottom-0 rounded-full bg-white/[0.10] ${
-              dockIndicatorMorph ? "is-morphing" : ""
+          <button
+            type="button"
+            onClick={() => setIsChatOpen(true)}
+            className={`group flex min-w-0 flex-1 items-center gap-2 rounded-full px-3.5 py-2.5 text-left transition ${
+              isLightPreview
+                ? "hover:bg-zinc-900/[0.04]"
+                : "hover:bg-white/[0.05]"
             }`}
-            style={{
-              left: dockIndicator.left,
-              width: dockIndicator.width,
-              opacity: dockIndicator.opacity,
-            }}
+            aria-label="Ask John.ai"
+          >
+            <span
+              className={`min-w-0 flex-1 truncate text-[14px] font-medium leading-tight ${
+                isLightPreview ? "text-zinc-500" : "text-zinc-400"
+              }`}
+            >
+              Ask John.ai…
+            </span>
+            <span
+              className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full transition ${
+                isLightPreview
+                  ? "bg-zinc-900/[0.06] text-zinc-700 group-hover:bg-zinc-900 group-hover:text-white"
+                  : "bg-white/[0.08] text-zinc-200 group-hover:bg-white group-hover:text-zinc-950"
+              }`}
+              aria-hidden="true"
+            >
+              <svg
+                className="size-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 19V5M5 12l7-7 7 7" />
+              </svg>
+            </span>
+          </button>
+
+          <div
+            className={`mx-0.5 h-7 w-px shrink-0 ${
+              isLightPreview ? "bg-zinc-900/10" : "bg-white/10"
+            }`}
+            aria-hidden="true"
           />
-          {dockItems.map((item, index) => {
-            const isHighlighted =
-              item.isActive || hoveredDockIndex === index;
-            return (
-              <li key={item.label} className="shrink-0">
-                <button
-                  type="button"
-                  ref={(el) => {
-                    dockButtonRefs.current[index] = el;
-                  }}
-                  onClick={item.onClick}
-                  onMouseEnter={() => setHoveredDockIndex(index)}
-                  onFocus={() => setHoveredDockIndex(index)}
-                  className={`relative z-[1] flex origin-center items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-[12px] font-medium transition-[color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-colors motion-reduce:transform-none ${
-                    isHighlighted
-                      ? "scale-[1.05] text-white"
-                      : "scale-100 text-zinc-400"
-                  }`}
-                >
-                  <span
-                    className={`shrink-0 transition-colors duration-300 ${
-                      isHighlighted ? "text-white" : "text-zinc-500"
-                    }`}
-                  >
-                    {item.icon}
-                  </span>
-                  <span className="shrink-0">{item.label}</span>
-                </button>
-              </li>
-            );
-          })}
-          </ul>
+
+          <button
+            type="button"
+            onClick={() => setIsRelatedOpen(true)}
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2.5 text-[13px] font-semibold transition ${
+              isLightPreview
+                ? "text-zinc-800 hover:bg-zinc-900/[0.06]"
+                : "text-zinc-100 hover:bg-white/[0.06]"
+            }`}
+            aria-label="Open more menu"
+            aria-expanded={isRelatedOpen}
+          >
+            More
+            <svg
+              className="size-3.5 opacity-70"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
         </div>
       </nav>
 
@@ -919,8 +854,81 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
 
+            <div className="border-t border-white/[0.06] px-5 py-3 sm:px-6">
+              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
+                Explore
+              </p>
+              <button
+                type="button"
+                onClick={openHome}
+                className={`v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05] ${
+                  isHomeRoute ? "bg-white/[0.04]" : ""
+                }`}
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21a8 8 0 0 1 16 0" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    Home
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Feed and experiments
+                  </span>
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={openWork}
+                className={`v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05] ${
+                  isWorkRoute ? "bg-white/[0.04]" : ""
+                }`}
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="7" height="7" rx="1.5" />
+                    <rect x="14" y="4" width="7" height="7" rx="1.5" />
+                    <rect x="3" y="15" width="7" height="6" rx="1.5" />
+                    <rect x="14" y="15" width="7" height="6" rx="1.5" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    My work
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Case studies and shipped work
+                  </span>
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={openStory}
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 18 0" />
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" />
+                    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    My story
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Listen to my background
+                  </span>
+                </span>
+              </button>
+            </div>
+
             {/* Section 1: Social */}
-            <div className="px-5 pt-2 pb-4 sm:px-6">
+            <div className="border-t border-white/[0.06] px-5 pt-4 pb-4 sm:px-6">
               <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
                 Connect
               </p>
