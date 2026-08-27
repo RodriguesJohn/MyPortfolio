@@ -4,8 +4,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
 import ProfileTiltCard from "@/components/v2/ProfileTiltCard";
 import {
-  v2FadeUp,
-  v2SpringSoft,
+  v2NelsonChild,
+  v2NelsonPage,
+  v2NelsonShell,
+  v2NelsonStagger,
 } from "@/components/v2/motion";
 import { PROFILE_LINKEDIN_URL, PROFILE_SUBSTACK_URL, PROFILE_X_URL } from "@/config/profileLinks";
 import {
@@ -170,17 +172,13 @@ const useSubstackPosts = () => {
 
 const FeedMotionItem = ({
   children,
-  index,
 }: {
   children: React.ReactNode;
   index: number;
 }) => (
   <motion.div
     layout
-    initial={{ opacity: 0, y: 16 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    transition={{ ...v2SpringSoft, delay: index * 0.04 }}
+    variants={v2NelsonChild}
   >
     {children}
   </motion.div>
@@ -731,10 +729,7 @@ const ExperimentGalleryCard = ({
       type="button"
       onClick={onOpen}
       className="flex w-full flex-col text-left"
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 8 }}
-      transition={{ ...v2SpringSoft, delay: index * 0.035 }}
+      variants={v2NelsonChild}
     >
       <div
         className="v2-feed-card-media relative aspect-video w-full overflow-hidden rounded-[16px] bg-zinc-200"
@@ -832,14 +827,16 @@ const IndexV2 = () => {
         {/* Top spacer — keeps float room outside the clipped overflow box */}
         <div className="h-12 shrink-0 sm:h-16 lg:h-[72px]" aria-hidden="true" />
 
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10 lg:overflow-x-visible">
+        <motion.div
+          className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10 lg:overflow-x-visible"
+          variants={v2NelsonShell}
+          initial="hidden"
+          animate="show"
+        >
         {/* Static sidebar — stays put while the feed scrolls */}
         <motion.aside
           className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b border-zinc-800/80 pb-4 lg:w-[260px] lg:border-b-0 lg:border-r lg:pb-2 lg:pl-1.5 lg:pr-6"
-          variants={v2FadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0}
+          variants={v2NelsonChild}
         >
             <div className="overflow-visible pt-1 pr-0.5 sm:pt-2">
               <ProfileTiltCard />
@@ -947,15 +944,15 @@ const IndexV2 = () => {
           </motion.aside>
 
           {/* Dominant scroll column — only this pane scrolls on desktop */}
-          <main className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain">
+          <motion.main
+            className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain"
+            variants={v2NelsonStagger}
+          >
             <div className="sticky top-0 z-30 -mx-1 mb-5 border-b border-zinc-800/80 px-1 pb-0 pt-2 v2-mobile-tab-bar sm:-mx-0 sm:px-0 lg:static lg:mb-6">
               <div className="flex items-end justify-between gap-3">
                 <motion.div
                   className="v2-feed-tabs scrollbar-hide min-w-0 flex flex-1 flex-nowrap items-end gap-x-5 overflow-x-auto overflow-y-visible lg:gap-x-8"
-                  variants={v2FadeUp}
-                  initial="hidden"
-                  animate="show"
-                  custom={0.12}
+                  variants={v2NelsonChild}
                 >
                   {FEED_TABS.map((tab) => {
                     const active = activeTab === tab.id;
@@ -996,10 +993,10 @@ const IndexV2 = () => {
                 <motion.div
                   key="experiments-gallery"
                   className="grid grid-cols-1 gap-3 px-0 pb-6 sm:grid-cols-2 sm:gap-4 sm:px-1"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonStagger}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   {feedProjects.map((project, index) => (
                     <ExperimentGalleryCard
@@ -1013,30 +1010,30 @@ const IndexV2 = () => {
               ) : activeTab === "tools" ? (
                 <motion.div
                   key="tools-tab"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   <ToolsTabContent />
                 </motion.div>
               ) : activeTab === "systems" ? (
                 <motion.div
                   key="systems-tab"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   <DesignSystemsTabContent />
                 </motion.div>
               ) : activeTab === "blog" ? (
                 <motion.div
                   key="blog-tab"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   <BlogTabContent
                     posts={substackPosts}
@@ -1047,10 +1044,10 @@ const IndexV2 = () => {
               ) : activeTab === "testimonials" ? (
                 <motion.div
                   key="testimonials-tab"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   <TestimonialsTabContent />
                 </motion.div>
@@ -1058,10 +1055,10 @@ const IndexV2 = () => {
                 <motion.div
                   key={`feed-${activeTab}`}
                   className="flex flex-col gap-8 px-0 pb-6 sm:gap-10 sm:px-1"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={v2SpringSoft}
+                  variants={v2NelsonStagger}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
                 >
                   {feedProjects.map((project, index) => (
                     <FeedMotionItem
@@ -1080,8 +1077,8 @@ const IndexV2 = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </main>
-        </div>
+          </motion.main>
+        </motion.div>
 
         {/* Bottom spacer for the floating chat dock */}
         <div className="hidden h-[104px] shrink-0 lg:block" aria-hidden="true" />

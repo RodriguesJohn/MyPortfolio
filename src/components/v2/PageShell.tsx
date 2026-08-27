@@ -5,6 +5,7 @@ import {
   useMotionValue,
   useTransform,
   useVelocity,
+  MotionConfig,
 } from "framer-motion";
 import {
   PROFILE_GITHUB_URL,
@@ -498,6 +499,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
   return (
     <V2ThemeContext.Provider value={{ theme, isLightPreview, toggleTheme }}>
+    <MotionConfig reducedMotion="user">
     <div
       className={`min-h-screen min-h-[100dvh] overflow-x-hidden antialiased text-zinc-50 text-[15px] sm:text-[17px] ${
         isLightPreview ? "v2-light" : "v2-dark"
@@ -516,7 +518,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         style={{
           bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
           opacity: 0,
-          animation: "navEntrance 900ms cubic-bezier(0.22, 1, 0.36, 1) 720ms forwards",
+          animation: "navEntrance 700ms cubic-bezier(0.16, 1, 0.3, 1) 560ms both",
           ...sans,
         }}
       >
@@ -1248,16 +1250,16 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           50%      { transform: scale(1.04); }
         }
         @keyframes entranceItem {
-          from { opacity: 0; transform: translateY(12px); filter: blur(6px); }
+          from { opacity: 0; transform: translateY(16px); filter: blur(8px); }
           to   { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         @keyframes entranceItemNoBlur {
-          from { opacity: 0; transform: translateY(12px); }
+          from { opacity: 0; transform: translateY(16px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes navEntrance {
-          from { opacity: 0; transform: translate(-50%, 12px) scale(0.98); filter: blur(6px); }
-          to   { opacity: 1; transform: translate(-50%, 0) scale(1); filter: blur(0); }
+          from { opacity: 0; transform: translate(-50%, 16px); filter: blur(8px); }
+          to   { opacity: 1; transform: translate(-50%, 0); filter: blur(0); }
         }
         @keyframes popupRise {
           from { opacity: 0; transform: translate(-50%, 12px) scale(0.96); }
@@ -1275,8 +1277,17 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           from { opacity: 1; }
           to   { opacity: 0; }
         }
+        @media (prefers-reduced-motion: reduce) {
+          nav {
+            animation: none !important;
+            opacity: 1 !important;
+            filter: none !important;
+            transform: translate(-50%, 0) !important;
+          }
+        }
       `}</style>
     </div>
+    </MotionConfig>
     </V2ThemeContext.Provider>
   );
 };

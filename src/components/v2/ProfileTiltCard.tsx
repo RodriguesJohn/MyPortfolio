@@ -202,9 +202,6 @@ const ProfileTiltCard = () => {
     <>
       <motion.div
         className="relative z-50 mb-3 w-full max-w-[210px] overflow-visible sm:mb-5 sm:max-w-[230px]"
-        initial={{ opacity: 0, y: 18, rotate: -5 }}
-        animate={{ opacity: 1, y: 0, rotate: 0 }}
-        transition={v2SpringSoft}
         style={{ zIndex: expanded || closing ? 90 : 50 }}
       >
         <motion.button

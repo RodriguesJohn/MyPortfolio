@@ -29,14 +29,92 @@ export const v2CardHover: Transition = {
   mass: 0.85,
 };
 
-export const v2FadeUp: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  show: (delay = 0) => ({
+/** nelson.co homepage: critically damped rise */
+export const v2NelsonY: Transition = {
+  type: "spring",
+  duration: 1.4,
+  bounce: 0,
+};
+
+export const v2NelsonFade: Transition = {
+  duration: 0.7,
+};
+
+export const v2NelsonExit: Transition = {
+  duration: 0.24,
+  ease: [0.4, 0, 1, 1],
+};
+
+/** Outer layout stagger — no filter here (filter clips profile-card shadows). */
+export const v2NelsonShell: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+/** Parent: dissolve blur, then stagger children 80ms. Use on text/tab blocks only. */
+export const v2NelsonContainer: Variants = {
+  hidden: { opacity: 0, filter: "blur(8px)" },
+  show: {
+    opacity: 1,
+    filter: "blur(0px)",
+    transition: {
+      staggerChildren: 0.08,
+      opacity: v2NelsonFade,
+      filter: v2NelsonFade,
+    },
+  },
+};
+
+/** Nested stagger without a second blur layer (keeps video cards sharp). */
+export const v2NelsonStagger: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08 },
+  },
+  exit: {
+    opacity: 0,
+    filter: "blur(6px)",
+    transition: v2NelsonExit,
+  },
+};
+
+/** Child: 16px rise. Opacity is inherited from the blurring parent. */
+export const v2NelsonChild: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
     opacity: 1,
     y: 0,
-    transition: { ...v2SpringSoft, delay },
-  }),
+    transition: {
+      y: v2NelsonY,
+      opacity: v2NelsonFade,
+    },
+  },
 };
+
+/** Tab / page swap — nelson.co exploration enter. */
+export const v2NelsonPage: Variants = {
+  hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      staggerChildren: 0.08,
+      opacity: v2NelsonFade,
+      filter: v2NelsonFade,
+      y: { type: "spring", duration: 0.8, bounce: 0 },
+    },
+  },
+  exit: {
+    opacity: 0,
+    filter: "blur(6px)",
+    transition: v2NelsonExit,
+  },
+};
+
+export const v2FadeUp: Variants = v2NelsonChild;
 
 export const v2ProfileStack: Variants = {
   rest: {},
