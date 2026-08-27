@@ -514,7 +514,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
       {/* Chat-style composer + More */}
       <nav
-        className="fixed left-1/2 z-50 w-[min(calc(100vw-2rem),420px)] -translate-x-1/2"
+        className="fixed left-1/2 z-50 w-[min(calc(100vw-2.75rem),420px)] -translate-x-1/2 sm:w-[min(calc(100vw-2rem),420px)]"
         style={{
           bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
           opacity: 0,
@@ -523,33 +523,57 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         }}
       >
         <div
-          className="v2-chat-dock flex items-center gap-1 rounded-[28px] px-2 py-1.5"
+          className="v2-chat-dock relative flex items-center gap-1 overflow-hidden rounded-[28px] border px-2 py-1.5"
           style={{
             background: isLightPreview
-              ? "rgba(255,255,255,0.92)"
-              : "rgba(16,16,18,0.94)",
-            backdropFilter: "blur(32px) saturate(180%)",
-            WebkitBackdropFilter: "blur(32px) saturate(180%)",
-            border: "none",
+              ? "linear-gradient(135deg, rgba(255,255,255,0.82), rgba(255,255,255,0.54))"
+              : "linear-gradient(135deg, rgba(24,24,27,0.66), rgba(8,8,10,0.52))",
+            backdropFilter: "blur(34px) saturate(190%) contrast(112%)",
+            WebkitBackdropFilter: "blur(34px) saturate(190%) contrast(112%)",
+            borderColor: isLightPreview
+              ? "rgba(255,255,255,0.72)"
+              : "rgba(255,255,255,0.12)",
             boxShadow: isLightPreview
               ? [
-                  "inset 0 2px 4px rgba(24,24,27,0.10)",
-                  "inset 0 1px 1px rgba(24,24,27,0.08)",
-                  "inset 0 -1px 0 rgba(255,255,255,0.85)",
+                  "inset 0 1px 0 rgba(255,255,255,0.92)",
+                  "inset 0 -1px 0 rgba(24,24,27,0.08)",
+                  "inset 0 0 22px rgba(255,255,255,0.38)",
                   "0 14px 36px -18px rgba(24,24,27,0.22)",
                 ].join(", ")
               : [
-                  "inset 0 2px 5px rgba(0,0,0,0.55)",
-                  "inset 0 1px 1px rgba(0,0,0,0.35)",
-                  "inset 0 -1px 0 rgba(255,255,255,0.08)",
-                  "0 16px 40px -14px rgba(0,0,0,0.75)",
+                  "inset 0 1px 0 rgba(255,255,255,0.16)",
+                  "inset 0 -1px 0 rgba(0,0,0,0.55)",
+                  "inset 0 0 28px rgba(255,255,255,0.045)",
+                  "0 16px 42px -16px rgba(0,0,0,0.78)",
                 ].join(", "),
+            maskImage:
+              "linear-gradient(90deg, transparent 0, black 18px, black calc(100% - 18px), transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(90deg, transparent 0, black 18px, black calc(100% - 18px), transparent 100%)",
           }}
         >
+          <span
+            className="pointer-events-none absolute inset-x-4 top-0 h-px"
+            style={{
+              background: isLightPreview
+                ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent)"
+                : "linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent)",
+            }}
+            aria-hidden="true"
+          />
+          <span
+            className="pointer-events-none absolute -left-10 top-0 h-full w-28 rotate-12"
+            style={{
+              background: isLightPreview
+                ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.30), transparent)"
+                : "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)",
+            }}
+            aria-hidden="true"
+          />
           <button
             type="button"
             onClick={() => setIsChatOpen(true)}
-            className={`group flex min-w-0 flex-1 items-center gap-2 rounded-full px-3.5 py-2.5 text-left transition ${
+            className={`group relative z-[1] flex min-w-0 flex-1 items-center gap-2 rounded-full px-3.5 py-2.5 text-left transition ${
               isLightPreview
                 ? "hover:bg-zinc-900/[0.04]"
                 : "hover:bg-white/[0.05]"
@@ -586,7 +610,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           </button>
 
           <div
-            className={`mx-0.5 h-7 w-px shrink-0 ${
+            className={`relative z-[1] mx-0.5 h-7 w-px shrink-0 ${
               isLightPreview ? "bg-zinc-900/10" : "bg-white/10"
             }`}
             aria-hidden="true"
@@ -595,7 +619,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           <button
             type="button"
             onClick={() => setIsRelatedOpen(true)}
-            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2.5 text-[13px] font-semibold transition ${
+            className={`relative z-[1] inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2.5 text-[13px] font-semibold transition ${
               isLightPreview
                 ? "text-zinc-800 hover:bg-zinc-900/[0.06]"
                 : "text-zinc-100 hover:bg-white/[0.06]"
