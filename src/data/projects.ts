@@ -1,5 +1,5 @@
 // Highlights
-import orbiHero from "@/assets/rbai-hero.png";
+import orbiVideo from "@/assets/Orbi.mov";
 import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
 import ollieVideo from "@/assets/OllieAIDemo.mp4";
@@ -10,7 +10,6 @@ import designSystemAgentVideo from "@/assets/automate-design-systems-ai-agents.m
 import cardMotionVideo from "@/assets/Card.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
 import appleNotesMcpVideo from "@/assets/IMG_7590.mov";
-import florenceImage from "@/assets/florence-design-system.jpg";
 import florenceF2Video from "@/assets/florence-f2.mp4";
 import dcbImage from "@/assets/dcb-accounts-overview.jpg";
 
@@ -96,10 +95,10 @@ const orbiAI: Project = {
     { label: "Year", value: "2026" },
   ],
   media: {
-    type: "image",
-    src: orbiHero,
-    fit: "cover",
-    bg: "#f4f4f5",
+    type: "video",
+    src: orbiVideo,
+    fit: "contain",
+    bg: "#09090b",
     objectPosition: "center center",
   },
 };
@@ -198,11 +197,10 @@ export const HIGHLIGHTS: Project[] = [
     media: {
       type: "video",
       src: florenceF2Video,
-      poster: florenceImage,
-      fit: "contain",
+      fit: "cover",
       bg: "#0a0a0a",
       objectPosition: "center center",
-      aspect: "1024/682",
+      aspect: "3708/2160",
     },
   },
   {
