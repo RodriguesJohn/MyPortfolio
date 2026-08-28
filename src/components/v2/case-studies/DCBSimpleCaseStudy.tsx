@@ -78,6 +78,15 @@ const DCBSimpleCaseStudy = () => {
           </p>
         </section>
 
+        <aside className="rounded-2xl bg-zinc-900 p-5 ring-1 ring-white/[0.08] sm:p-6">
+          <p className={`text-center ${muted}`}>
+            This work was completed under JPMorgan Chase and remains
+            confidential. Detailed process, research artifacts, and deeper case
+            study materials are available on request or during a private case
+            study walkthrough.
+          </p>
+        </aside>
+
         <section>
           <h2 className={`${h2} text-center`} style={display}>
             Roles and responsibilities
@@ -131,15 +140,6 @@ const DCBSimpleCaseStudy = () => {
             JPMorgan, not a pile of disconnected screens.
           </p>
         </section>
-
-        <aside className="rounded-2xl bg-zinc-900 p-5 ring-1 ring-white/[0.08] sm:p-6">
-          <p className={`text-center ${muted}`}>
-            This work was completed under JPMorgan Chase and remains
-            confidential. Detailed process, research artifacts, and deeper case
-            study materials are available on request or during a private case
-            study walkthrough.
-          </p>
-        </aside>
       </div>
     </article>
   );

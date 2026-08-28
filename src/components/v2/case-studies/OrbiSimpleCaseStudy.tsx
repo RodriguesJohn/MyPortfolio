@@ -95,9 +95,8 @@ const OrbiSimpleCaseStudy = () => {
           Orbi AI
         </h1>
         <p className={`mx-auto mt-6 max-w-[36rem] ${body}`}>
-          An AI note-taker for creators. Capture voice notes, thoughts, and ideas
-          so you can repurpose them as content later. Orbi helps you capture,
-          organize, and repurpose your thoughts into content.
+          An AI note-taker for creators. Capture voice notes, thoughts, and ideas—then
+          organize and repurpose them into content when you're ready.
         </p>
         <dl className="mt-8 flex flex-wrap items-start justify-center gap-x-10 gap-y-6 text-left sm:gap-x-14">
           <div className="min-w-[168px]">

@@ -918,11 +918,35 @@ const IndexV2 = () => {
                   >
                     Subscribe
                   </button>
+                  <div className="mt-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
+                      AI Stack
+                    </p>
+                    <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                      {AI_STACK_LOGOS.map((logo) => (
+                        <span
+                          key={logo.label}
+                          title={logo.label}
+                          className={`inline-flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-[7px] ${
+                            logo.bare ? "bg-transparent" : "bg-white"
+                          } ${logo.pad ? "p-0.5" : ""}`}
+                        >
+                          <img
+                            src={logo.src}
+                            alt=""
+                            className={`size-full ${
+                              logo.fit === "contain" ? "object-contain" : "object-cover"
+                            }`}
+                          />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </dl>
             </div>
 
-            <div className="mt-5 hidden lg:block lg:mt-16">
+            <div className="mt-16 hidden lg:block">
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
                 AI Stack
               </p>
