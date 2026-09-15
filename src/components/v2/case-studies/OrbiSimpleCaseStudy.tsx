@@ -293,6 +293,36 @@ const OrbiSimpleCaseStudy = () => {
         </figure>
       </section>
 
+      <section className="mx-auto mt-16 max-w-[40rem] border-t border-white/[0.06] pt-12 sm:mt-20 sm:pt-14">
+        <h2 className={h2} style={display}>
+          Join the waitlist
+        </h2>
+        <p className={`mx-auto mt-4 max-w-[32rem] ${muted}`}>
+          Orbi is live at heyorbi.ai. Join the waitlist to get early access and
+          start capturing your thinking without distraction.
+        </p>
+        <a
+          href="https://www.heyorbi.ai/"
+          target="_blank"
+          rel="noreferrer"
+          className="v2-explore-cta mt-8 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
+        >
+          Join the waitlist
+          <svg
+            className="size-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+      </section>
+
     </article>
   );
 };
