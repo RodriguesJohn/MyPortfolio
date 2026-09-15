@@ -73,7 +73,7 @@ const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
 ];
 
-const ACADEMY_URL = "https://www.humanaistudio.io/academy";
+const ACADEMY_URL = "https://www.humanaistudio.io/course";
 
 const FEED_TAB_CLASS =
   "v2-feed-tab shrink-0 pb-3 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors lg:text-[12px]";
