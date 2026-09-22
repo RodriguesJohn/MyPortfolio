@@ -13,7 +13,7 @@ export function Resume() {
           </div>
           <motion.a
             href={resumePdf}
-            download="John_Rodrigues_Resume.pdf"
+            download="JohnRodriguesResume.pdf"
             className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white"
             style={{
               background: 'linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%)',
@@ -35,7 +35,7 @@ export function Resume() {
         <div className="bg-white dark:bg-gray-900/50 rounded-2xl border border-gray-200/50 dark:border-gray-800/50 overflow-hidden shadow-sm">
           <div className="bg-gray-100 dark:bg-gray-800/50 px-4 py-3 border-b border-gray-200/50 dark:border-gray-700/50 flex items-center gap-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">John_Rodrigues_Resume.pdf</span>
+            <span className="text-sm text-muted-foreground">JohnRodriguesResume.pdf</span>
           </div>
           <div className="aspect-[8.5/11] w-full">
             <iframe

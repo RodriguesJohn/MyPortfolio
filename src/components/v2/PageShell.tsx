@@ -261,7 +261,7 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-const RESUME_URL = "/John-Rodrigues-Resume.pdf";
+const RESUME_URL = "/JohnRodriguesResume.pdf";
 
 const Waveform = ({ playing }: { playing: boolean }) => {
   const bars = Array.from({ length: 56 });
