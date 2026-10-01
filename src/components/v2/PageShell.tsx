@@ -221,8 +221,8 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     label: "Academy",
-    href: "https://www.humanaistudio.io/course",
-    handle: "humanaistudio.io/course",
+    href: "https://www.humanaistudio.io/academy",
+    handle: "humanaistudio.io/academy",
     icon: (
       <svg
         className="h-4 w-4"

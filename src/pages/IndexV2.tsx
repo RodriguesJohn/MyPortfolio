@@ -73,7 +73,7 @@ const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
 ];
 
-const ACADEMY_URL = "https://www.humanaistudio.io/course";
+const ACADEMY_URL = "https://www.humanaistudio.io/academy";
 
 const FEED_TAB_CLASS =
   "v2-feed-tab shrink-0 pb-3 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors lg:text-[12px]";
@@ -1023,10 +1023,10 @@ const IndexV2 = () => {
                     href={ACADEMY_URL}
                     target="_blank"
                     rel="noreferrer"
-                    title="Opens Course in a new tab"
+                    title="Opens Academy in a new tab"
                     className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
                   >
-                    Course
+                    Academy
                   </a>
                 </motion.div>
                 <div className="hidden shrink-0 self-center pb-2.5 sm:flex">
