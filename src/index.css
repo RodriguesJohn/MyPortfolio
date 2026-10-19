@@ -1141,3 +1141,81 @@ All colors MUST be HSL.
     height: 240px;
   }
 }
+
+/* Launch banner — fade in, slow light sweep, soft pulse on the "New" tag */
+.v2-launch-banner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: v2LaunchBannerIn 900ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+}
+
+.v2-launch-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: v2LaunchBannerSweep 6s ease-in-out 1.4s infinite;
+}
+
+.v2-light .v2-launch-banner::after {
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(16, 185, 129, 0.08) 50%,
+    transparent 65%
+  );
+}
+
+.v2-launch-badge {
+  animation: v2LaunchBadgePulse 3s ease-in-out 1.2s infinite;
+}
+
+@keyframes v2LaunchBannerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes v2LaunchBannerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  35%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes v2LaunchBadgePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-launch-banner,
+  .v2-launch-banner::after,
+  .v2-launch-badge {
+    animation: none;
+  }
+}

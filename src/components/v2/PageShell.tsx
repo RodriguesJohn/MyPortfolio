@@ -473,7 +473,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   const openMentorship = () => {
     setIsRelatedOpen(false);
     setIsRelatedClosing(false);
-    navigate("/mentorship");
+    navigate("/?tab=mentorship");
   };
 
   return (

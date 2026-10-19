@@ -60,12 +60,14 @@ type FeedTab =
   | "systems"
   | "tools"
   | "blog"
-  | "testimonials";
+  | "testimonials"
+  | "mentorship";
 
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
 
 const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "work", label: "Work" },
+  { id: "mentorship", label: "Mentorship" },
   { id: "experiments", label: "AI Experiments", shortLabel: "Experiments" },
   { id: "systems", label: "AI Design Systems", shortLabel: "Systems" },
   { id: "tools", label: "Tools" },
@@ -265,6 +267,108 @@ const ToolsTabContent = () => (
               className="v2-built-tool-cta v2-explore-cta inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
             >
               {tool.ctaLabel}
+              <ExternalLinkIcon />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+);
+
+const MENTORSHIP_SESSIONS = [
+  {
+    id: "intro",
+    index: "01",
+    tag: "15 min",
+    price: "Free",
+    title: "Quick chat",
+    description:
+      "A short call to talk through your portfolio, career questions, or a project you're working on.",
+    topics: ["Portfolio feedback", "Career questions", "Project direction"],
+    href: "https://cal.com/john-rodrigues-rqt2lg/30min",
+    ctaLabel: "Book a free chat",
+  },
+  {
+    id: "mentorship",
+    index: "02",
+    tag: "30 min",
+    price: "$99",
+    title: "Mentorship session",
+    description:
+      "A focused session on design, AI, and shipping products end to end, shaped around where you want to grow.",
+    topics: ["Design engineering", "AI-native workflows", "Shipping end to end"],
+    href: "https://cal.com/john-rodrigues-vj4aia/mentorship",
+    ctaLabel: "Book for $99",
+  },
+];
+
+const MentorshipTabContent = () => (
+  <div className="max-w-[920px] px-0 pb-8 sm:px-1">
+    <h2
+      className="v2-built-tool-title text-[18px] font-semibold leading-[1.2] tracking-[-0.03em] sm:text-[22px] lg:text-[26px]"
+      style={display}
+    >
+      Book time with me
+    </h2>
+    <p className="v2-built-tool-description mt-3 max-w-[52ch] text-[15px] leading-[1.6] sm:text-[16px]">
+      Talk design, AI, and building products. Pick the session that fits where
+      you are right now.
+    </p>
+
+    <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      {MENTORSHIP_SESSIONS.map((session) => (
+        <article
+          key={session.id}
+          className="v2-built-tool-card flex min-h-0 flex-col rounded-[20px] p-5 sm:p-6"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <span className="v2-built-tool-index inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[12px] font-medium">
+              {session.index}
+            </span>
+            <p className="text-right text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+              {session.tag}
+            </p>
+          </div>
+
+          <div className="mt-6 flex items-baseline justify-between gap-4">
+            <h3
+              className="v2-built-tool-title text-[22px] font-semibold leading-tight tracking-[-0.02em]"
+              style={display}
+            >
+              {session.title}
+            </h3>
+            <span
+              className="v2-built-tool-title shrink-0 text-[22px] font-semibold leading-tight tracking-[-0.02em]"
+              style={display}
+            >
+              {session.price}
+            </span>
+          </div>
+          <p className="v2-built-tool-description mt-3 text-[14px] leading-[1.55]">
+            {session.description}
+          </p>
+
+          <ul className="mt-5 flex flex-1 flex-col gap-2">
+            {session.topics.map((topic) => (
+              <li
+                key={topic}
+                className="v2-built-tool-description flex items-center gap-2.5 text-[13px]"
+              >
+                <span className="size-1 shrink-0 rounded-full bg-emerald-500" aria-hidden="true" />
+                {topic}
+              </li>
+            ))}
+          </ul>
+
+          <div className="v2-built-tool-divider mt-6 border-t pt-5">
+            <a
+              href={session.href}
+              target="_blank"
+              rel="noreferrer"
+              className="v2-built-tool-cta v2-explore-cta inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
+            >
+              {session.ctaLabel}
               <ExternalLinkIcon />
             </a>
           </div>
@@ -536,7 +640,7 @@ const BlogTabContent = ({
         onClick={onSubscribe}
         className={`${secondaryCtaClass} v2-sidebar-subscribe shrink-0`}
       >
-        Subscribe
+        Join newsletter
       </button>
     </div>
   </div>
@@ -829,9 +933,9 @@ const IndexV2 = () => {
         <div className="flex h-12 shrink-0 items-center justify-center sm:h-16 lg:h-[72px]">
           <a
             href={COURSE_URL}
-            className="v2-built-tool-card group inline-flex max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-3.5 text-[12px] transition active:scale-[0.99]"
+            className="v2-built-tool-card v2-launch-banner group inline-flex max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-3.5 text-[12px] transition active:scale-[0.99]"
           >
-            <span className="shrink-0 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-500">
+            <span className="v2-launch-badge shrink-0 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-500">
               New
             </span>
             <span className="v2-built-tool-title truncate font-semibold">
@@ -935,7 +1039,7 @@ const IndexV2 = () => {
                     onClick={() => setIsSubscribeOpen(true)}
                     className={`${secondaryCtaClass} v2-sidebar-subscribe w-full px-3 py-2.5 text-[12px]`}
                   >
-                    Subscribe
+                    Join newsletter
                   </button>
                   <div className="mt-4">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
@@ -1004,7 +1108,7 @@ const IndexV2 = () => {
                 onClick={() => setIsSubscribeOpen(true)}
                 className={`${secondaryCtaClass} v2-sidebar-subscribe w-full`}
               >
-                Subscribe
+                Join newsletter
               </button>
             </div>
           </motion.aside>
@@ -1118,6 +1222,16 @@ const IndexV2 = () => {
                     onSubscribe={() => setIsSubscribeOpen(true)}
                   />
                 </motion.div>
+              ) : activeTab === "mentorship" ? (
+                <motion.div
+                  key="mentorship-tab"
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                >
+                  <MentorshipTabContent />
+                </motion.div>
               ) : activeTab === "testimonials" ? (
                 <motion.div
                   key="testimonials-tab"
@@ -1195,7 +1309,7 @@ const IndexV2 = () => {
             >
               <div className="flex items-center justify-between px-5 pb-3 pt-4">
                 <span className="text-[12px] uppercase tracking-[0.18em] text-zinc-500">
-                  Subscribe
+                  Join newsletter
                 </span>
                 <button
                   onClick={closeSubscribe}
