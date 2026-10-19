@@ -1,8 +1,9 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
 import ProfileTiltCard from "@/components/v2/ProfileTiltCard";
+import { loadCalEmbed } from "@/lib/calEmbed";
 import {
   v2NelsonChild,
   v2NelsonPage,
@@ -286,7 +287,7 @@ const MENTORSHIP_SESSIONS = [
     description:
       "A short call to talk through your portfolio, career questions, or a project you're working on.",
     topics: ["Portfolio feedback", "Career questions", "Project direction"],
-    href: "https://cal.com/john-rodrigues-rqt2lg/30min",
+    calLink: "john-rodrigues-vj4aia/mentorship",
     ctaLabel: "Book a free chat",
   },
   {
@@ -298,12 +299,15 @@ const MENTORSHIP_SESSIONS = [
     description:
       "A focused session on design, AI, and shipping products end to end, shaped around where you want to grow.",
     topics: ["Design engineering", "AI-native workflows", "Shipping end to end"],
-    href: "https://cal.com/john-rodrigues-vj4aia/mentorship",
+    calLink: "john-rodrigues-vj4aia/30min",
     ctaLabel: "Book for $99",
   },
 ];
 
-const MentorshipTabContent = () => (
+const MentorshipTabContent = () => {
+  useEffect(loadCalEmbed, []);
+
+  return (
   <div className="max-w-[920px] px-0 pb-8 sm:px-1">
     <h2
       className="v2-built-tool-title text-[18px] font-semibold leading-[1.2] tracking-[-0.03em] sm:text-[22px] lg:text-[26px]"
@@ -362,21 +366,21 @@ const MentorshipTabContent = () => (
           </ul>
 
           <div className="v2-built-tool-divider mt-6 border-t pt-5">
-            <a
-              href={session.href}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
+              data-cal-link={session.calLink}
+              data-cal-config='{"layout":"month_view","overlayCalendar":"true"}'
               className="v2-built-tool-cta v2-explore-cta inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold transition active:translate-y-[1px] active:scale-[0.99]"
             >
               {session.ctaLabel}
-              <ExternalLinkIcon />
-            </a>
+            </button>
           </div>
         </article>
       ))}
     </div>
   </div>
-);
+  );
+};
 
 const DesignSystemsTabContent = () => {
   const [activeLesson, setActiveLesson] = useState(0);
@@ -565,6 +569,25 @@ const BlogTabContent = ({
   onSubscribe: () => void;
 }) => (
   <div className="max-w-[860px] px-0 sm:px-1">
+    <Link
+      to="/blog"
+      className="v2-built-tool-card group mb-6 flex items-center justify-between gap-3 rounded-[20px] p-5 sm:p-6"
+    >
+      <div className="min-w-0">
+        <p className="v2-built-tool-title text-[16px] font-semibold" style={display}>
+          Read the blog
+        </p>
+        <p className="v2-built-tool-description mt-1 text-[13px]">
+          Articles on AI, design systems, and design engineering.
+        </p>
+      </div>
+      <span
+        className="v2-built-tool-description shrink-0 transition-transform group-hover:translate-x-0.5"
+        aria-hidden="true"
+      >
+        →
+      </span>
+    </Link>
     {loading ? (
       <p className="text-[14px] text-zinc-500">Loading articles…</p>
     ) : posts.length === 0 ? (
@@ -980,7 +1003,7 @@ const IndexV2 = () => {
                     Experience
                   </dt>
                   <dd className="text-[15px] font-bold leading-tight text-zinc-50 sm:text-[16px]">
-                    8+ yrs
+                    10+ yrs
                   </dd>
                 </div>
                 <div className="hidden items-center justify-between gap-4">

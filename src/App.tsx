@@ -17,6 +17,8 @@ import IndexV2Work from "./pages/IndexV2Work";
 import IndexV2WorkDetail from "./pages/IndexV2WorkDetail";
 import IndexV2Testimonials from "./pages/IndexV2Testimonials";
 import IndexV2ToolStack from "./pages/IndexV2ToolStack";
+import IndexV2Blog from "./pages/IndexV2Blog";
+import IndexV2BlogPost from "./pages/IndexV2BlogPost";
 import IndexV2CaseStudyPresentation from "./pages/IndexV2CaseStudyPresentation";
 import IndexV2ComponentGallery from "./pages/IndexV2ComponentGallery";
 import CaseStudy from "./pages/CaseStudy";
@@ -71,6 +73,8 @@ const App = () => (
             path="/mentorship"
             element={<Navigate to={{ pathname: "/", search: "?tab=mentorship" }} replace />}
           />
+          <Route path="/blog" element={<IndexV2Blog />} />
+          <Route path="/blog/:slug" element={<IndexV2BlogPost />} />
           <Route
             path="/case-study-presentation"
             element={<IndexV2CaseStudyPresentation />}
