@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
@@ -73,7 +73,8 @@ const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
 ];
 
-const ACADEMY_URL = "https://www.humanaistudio.io/academy";
+const COURSE_URL = "/design-engineering-course/";
+const WORKSHOPS_URL = "https://maven.com/humanaistudio";
 
 const FEED_TAB_CLASS =
   "v2-feed-tab shrink-0 pb-3 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors lg:text-[12px]";
@@ -824,8 +825,26 @@ const IndexV2 = () => {
   return (
     <PageShell>
       <div className="mx-auto flex h-auto w-full max-w-[1280px] flex-col overflow-x-hidden px-4 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-5 lg:h-[100dvh] lg:overflow-y-hidden lg:overflow-x-visible lg:px-5 lg:pb-0">
-        {/* Top spacer — keeps float room outside the clipped overflow box */}
-        <div className="h-12 shrink-0 sm:h-16 lg:h-[72px]" aria-hidden="true" />
+        {/* Top spacer — keeps float room outside the clipped overflow box; holds the launch banner */}
+        <div className="flex h-12 shrink-0 items-center justify-center sm:h-16 lg:h-[72px]">
+          <a
+            href={COURSE_URL}
+            className="v2-built-tool-card group inline-flex max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-3.5 text-[12px] transition active:scale-[0.99]"
+          >
+            <span className="shrink-0 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-500">
+              New
+            </span>
+            <span className="v2-built-tool-title truncate font-semibold">
+              Design Engineering Course launched
+            </span>
+            <span
+              className="v2-built-tool-description shrink-0 transition-transform group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        </div>
 
         <motion.div
           className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-x-hidden sm:gap-5 lg:flex-row lg:items-stretch lg:gap-10 lg:overflow-x-visible"
@@ -1001,33 +1020,44 @@ const IndexV2 = () => {
                   className="v2-feed-tabs scrollbar-hide min-w-0 flex flex-1 flex-nowrap items-end gap-x-5 overflow-x-auto overflow-y-visible lg:gap-x-8"
                   variants={v2NelsonChild}
                 >
-                  {FEED_TABS.map((tab) => {
+                  {FEED_TABS.map((tab, index) => {
                     const active = activeTab === tab.id;
                     return (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => selectTab(tab.id)}
-                        className={`${FEED_TAB_CLASS} ${
-                          active
-                            ? "v2-feed-tab-active text-zinc-50"
-                            : "text-zinc-400 hover:text-zinc-200"
-                        }`}
-                      >
-                        <span className="sm:hidden">{tab.shortLabel ?? tab.label}</span>
-                        <span className="hidden sm:inline">{tab.label}</span>
-                      </button>
+                      <Fragment key={tab.id}>
+                        <button
+                          type="button"
+                          onClick={() => selectTab(tab.id)}
+                          className={`${FEED_TAB_CLASS} ${
+                            active
+                              ? "v2-feed-tab-active text-zinc-50"
+                              : "text-zinc-400 hover:text-zinc-200"
+                          }`}
+                        >
+                          <span className="sm:hidden">{tab.shortLabel ?? tab.label}</span>
+                          <span className="hidden sm:inline">{tab.label}</span>
+                        </button>
+                        {index === 0 && (
+                          <a
+                            href={COURSE_URL}
+                            className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
+                          >
+                            Course
+                          </a>
+                        )}
+                        {index === 0 && (
+                          <a
+                            href={WORKSHOPS_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            title="Opens Workshops in a new tab"
+                            className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
+                          >
+                            Workshops
+                          </a>
+                        )}
+                      </Fragment>
                     );
                   })}
-                  <a
-                    href={ACADEMY_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    title="Opens Academy in a new tab"
-                    className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
-                  >
-                    Academy
-                  </a>
                 </motion.div>
                 <div className="hidden shrink-0 self-center pb-2.5 sm:flex">
                   <ThemeToggleIcons />

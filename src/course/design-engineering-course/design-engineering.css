@@ -1,0 +1,604 @@
+/* Design Engineering course (/academy/design-engineering). Builds on design-systems.css. */
+
+/* Hero video: narrower than the full rail so it doesn't take over the first screen. */
+.de-page .ds-audit-hero-media {
+  max-width: min(100%, 74rem);
+}
+
+/* Title on one line on desktop; it wraps on phones. */
+@media (min-width: 720px) {
+  .de-page .ds-audit-hero h1 {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+/* Testimonials: every quote in two rows drifting in opposite directions, styled like the
+   Academy hub's strip (ai-systems-home.css .ash-quotes), copied so this page doesn't need .ash. */
+.de-quotes {
+  padding: 0 0 clamp(3.5rem, 7vw, 5.5rem);
+  background: #000;
+  color: #fff;
+}
+
+/* Same width as the content rail, with the page margin on both sides. */
+.de-quotes .home-proof-marquees {
+  width: min(calc(100% - clamp(1rem, 3vw, 2.5rem) * 2), 74rem);
+  margin-inline: auto;
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.de-quotes .home-quotes-row {
+  overflow: hidden;
+  touch-action: pan-y;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.de-quotes .home-quotes-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: de-quotes-scroll 78s linear infinite;
+}
+
+.de-quotes .home-quotes-row.is-reverse .home-quotes-track {
+  animation-direction: reverse;
+  animation-duration: 92s;
+}
+
+.de-quotes .home-quotes-row:hover .home-quotes-track {
+  animation-play-state: paused;
+}
+
+.de-quotes .home-quote-card {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  width: clamp(18rem, 30vw, 24rem);
+  margin: 0;
+  padding: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: #0d0d0f;
+}
+
+.de-quotes .home-quote-stars {
+  display: flex;
+  gap: 0.18rem;
+  color: #f5c451;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.de-quotes .home-quote-card blockquote {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.de-quotes .home-quote-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.de-quotes .home-quote-card img,
+.de-quotes .home-quote-initials {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.de-quotes .home-quote-initials {
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.de-quotes .home-quote-card strong,
+.de-quotes .home-quote-card small {
+  display: block;
+}
+
+.de-quotes .home-quote-card strong {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.de-quotes .home-quote-card small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+}
+
+@keyframes de-quotes-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Market stats above the outcome cards: number first, label, then the source. */
+.de-stats-intro {
+  max-width: 46rem;
+  text-wrap: balance;
+  margin: 1.25rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* Stat cards: the big number up top, what it measures, and the source at the bottom. */
+.de-stat-card strong {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(3.25rem, 5.4vw, 4.75rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.de-stat-card p {
+  margin: auto 0 0;
+  padding-top: 2rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.de-stat-card small {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.75rem;
+}
+
+/* Pricing: one learner quote and the rating under a short line of copy. */
+.de-offer-quote {
+  margin: 2rem 0 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.de-offer-quote blockquote {
+  margin: 0;
+  color: #fff;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.de-offer-quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.de-offer-quote figcaption img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.de-offer-quote figcaption span {
+  display: grid;
+}
+
+.de-offer-quote figcaption strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.ds-audit-page .ds-offer-copy > p.de-offer-rating {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+}
+
+.de-offer-rating strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Hero: price under the primary button. */
+.de-hero-join {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.de-hero-price {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .de-hero-join {
+    display: flex;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+/* Pricing card: upcoming price increase, in the header badge. */
+.ds-price-badge.de-price-hike {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(251, 191, 36, 0.12);
+  color: #fcd34d;
+  font-variant-numeric: tabular-nums;
+}
+
+.de-price-hike-dot {
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #fbbf24;
+  box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5);
+  animation: de-price-hike-pulse 2s ease-out infinite;
+}
+
+@keyframes de-price-hike-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 0.45rem rgba(251, 191, 36, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .de-price-hike-dot { animation: none; }
+}
+
+/* Instructor: proof numbers and a call to action under the bio. */
+.de-instructor-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0 0;
+}
+
+.de-instructor-stats > div {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.de-instructor-stats dd {
+  order: -1;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.de-instructor-stats dt {
+  margin-top: 0.35rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.de-instructor-cta {
+  margin-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .de-instructor-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.de-modules {
+  padding: clamp(4.5rem, 8vw, 7rem) var(--page-padding);
+  background: #000;
+}
+
+.de-modules h2 {
+  margin: 0;
+  font-size: clamp(2rem, 3.25vw, 3.25rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.de-module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 1.6vw, 1.4rem);
+  margin-top: clamp(2.75rem, 5vw, 4rem);
+}
+
+.de-module-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 16rem;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(1.35rem, 2vw, 1.7rem);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.4rem;
+  background: #0d0d0f;
+}
+
+/* Matches the homepage service cards: both colors blended and lifted toward white (as the
+   WebGL shader does), at 60% over the dark surface, lighter at the top and shaded at the bottom. */
+.de-module-shader {
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  background:
+    radial-gradient(40% 44% at 30% 30%, color-mix(in srgb, var(--card-color-2) 58%, white), transparent 72%),
+    radial-gradient(46% 50% at 72% 60%, color-mix(in srgb, var(--card-color-1) 58%, white), transparent 72%),
+    color-mix(in srgb, color-mix(in srgb, var(--card-color-1) 50%, var(--card-color-2)) 58%, white);
+  opacity: 0.6;
+  animation: de-shader-drift 14s ease-in-out infinite alternate;
+}
+
+.de-module-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent 35%, rgba(13, 13, 15, 0.5) 100%);
+}
+
+.de-module-card:nth-child(2) .de-module-shader { animation-delay: -3s; }
+.de-module-card:nth-child(3) .de-module-shader { animation-delay: -6s; }
+.de-module-card:nth-child(4) .de-module-shader { animation-delay: -9s; }
+.de-module-card:nth-child(5) .de-module-shader { animation-delay: -12s; }
+.de-module-card:nth-child(6) .de-module-shader { animation-delay: -2s; }
+.de-module-card:nth-child(7) .de-module-shader { animation-delay: -5s; }
+.de-module-card:nth-child(8) .de-module-shader { animation-delay: -8s; }
+.de-module-card:nth-child(9) .de-module-shader { animation-delay: -11s; }
+
+@keyframes de-shader-drift {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(6%, -4%) rotate(12deg) scale(1.08); }
+  100% { transform: translate(-5%, 5%) rotate(-10deg) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .de-module-shader {
+    animation: none;
+  }
+}
+
+.de-module-number {
+  align-self: flex-start;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.de-module-card h3 {
+  margin: auto 0 0;
+  padding-top: 2.5rem;
+  font-size: clamp(1.15rem, 1.55vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+/* Two lines at most, and room for two, so titles line up across a row. */
+.de-module-card p {
+  display: -webkit-box;
+  min-height: 3em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  margin: 0.5rem 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .de-module-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .de-module-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* "Designer who ships": heading and one paragraph on the left, one data card on the right. */
+.de-why-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+/* Heading uses the page's shared heading size; the paragraph needs the extra classes to win. */
+.ds-audit-page.de-page .ds-why-section .de-why-text p {
+  max-width: 28rem;
+  margin: 1.5rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* One card, one type scale: small labels, white numbers, everything on the same left edge. */
+.de-shift-chart {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.de-shift-chart figcaption,
+.de-shift-stat span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.de-shift-bars {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.de-shift-row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.de-shift-year {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.de-shift-track {
+  display: block;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.de-shift-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.de-shift-row:last-child .de-shift-fill {
+  background: #fff;
+}
+
+.de-shift-value {
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.de-shift-stat {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.de-shift-stat strong {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2.75rem, 4.4vw, 3.75rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.de-shift-chart small {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .de-why-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Who it's for: two lists side by side, the "not for" list muted. */
+.ds-fit .ds-fit-grid {
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
+  align-items: start;
+}
+
+.de-fit-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.de-fit-columns h3 {
+  margin: 0 0 1rem;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.de-fit-columns .is-not-fit li {
+  color: var(--ds-muted);
+}
+
+.ds-fit .de-cross {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  color: var(--ds-muted);
+}
+
+@media (max-width: 900px) {
+  .ds-fit .ds-fit-grid,
+  .de-fit-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Community note under the module grid. */
+.de-modules-note {
+  margin: clamp(1.25rem, 2vw, 1.75rem) 0 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.de-modules-note strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Count-up numbers rise in as a block, so the blur doesn't clip. */
+.de-count {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+/* Homepage footer: .ash sets a full-screen min-height for whole pages, not needed here. */
+.de-footer {
+  min-height: 0;
+}
+
+/* The shared course styles leave room at the bottom for a docked workshop bar. This page has
+   no bar, so the footer sits at the very bottom. */
+.ds-audit-page.de-page {
+  padding-bottom: 0;
+}

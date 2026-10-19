@@ -1,0 +1,693 @@
+.studio-home .home-trust,
+.studio-home .home-products,
+.studio-home .home-quotes {
+  color: #ffffff;
+  background: #000000;
+}
+
+.studio-home.training-home.current-home {
+  background: #000000;
+}
+
+.studio-home .home-trust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: clamp(3rem, 6vw, 4.5rem) var(--page-padding) clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.studio-home .home-trust-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2.25rem);
+  width: 100%;
+  max-width: 42rem;
+}
+
+.studio-home .home-trust-stats div {
+  display: grid;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.studio-home .home-trust-stats strong {
+  color: #ffffff;
+  font-size: clamp(1.7rem, 3.2vw, 2.35rem);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.studio-home .home-trust-stats span {
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.studio-home .home-trust-logos {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.studio-home .home-trust-logos-track {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: homeTrustLogosScroll 36s linear infinite;
+  will-change: transform;
+}
+
+.studio-home .home-trust-logo.is-dup {
+  display: grid;
+}
+
+.studio-home .home-trust-logo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-height: 2.75rem;
+  padding-inline: 1.25rem;
+}
+
+.studio-home .home-trust-logo img {
+  display: block;
+  width: auto;
+  max-width: 7.5rem;
+  height: auto;
+  max-height: 2rem;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.studio-home .home-trust-logo-text {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  font-weight: 560;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.studio-home .home-trust-logo img[alt="Apple"] {
+  filter: brightness(2.4);
+  max-height: 1.85rem;
+}
+
+.studio-home .home-trust-logo img[alt="Chase"] {
+  max-height: 1.9rem;
+  max-width: 2.4rem;
+  opacity: 0.95;
+}
+
+.studio-home .home-trust-logo img[alt="Salesforce"] {
+  height: 1.95rem;
+  max-width: 7.75rem;
+  opacity: 0.95;
+}
+
+.studio-home .home-trust-logo img[alt="Meta"] {
+  max-height: 1.85rem;
+  max-width: 6.5rem;
+  opacity: 0.95;
+}
+
+.studio-home .home-trust-logo img[alt="Adobe"],
+.studio-home .home-trust-logo img[alt="GitLab"] {
+  max-height: 1.85rem;
+  max-width: 7.5rem;
+  opacity: 0.92;
+}
+
+.studio-home .home-products {
+  display: grid;
+  gap: clamp(2.25rem, 3.8vw, 3.25rem);
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 var(--page-padding) clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.studio-home .home-courses-title {
+  width: min(100%, 92rem);
+  margin: 0 auto;
+  color: #ffffff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+
+.studio-home .home-product-card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.82fr) minmax(0, 1.28fr);
+  align-items: stretch;
+  overflow: hidden;
+  width: min(100%, 92rem);
+  min-height: 34rem;
+  margin-inline: auto;
+  scroll-margin-top: 6.5rem;
+  border: 1px solid transparent;
+  border-radius: 1.6rem;
+  background:
+    radial-gradient(
+      90% 70% at 12% 18%,
+      color-mix(in srgb, var(--card-color-2, #fff) 22%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      80% 60% at 92% 88%,
+      color-mix(in srgb, var(--card-color-1, #fff) 20%, transparent),
+      transparent 46%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card-color-1, #fff) 24%, #1c1f24) 0%,
+      color-mix(in srgb, var(--card-color-1, #fff) 12%, #14161a) 100%
+    );
+}
+
+.studio-home .home-product-card:hover::after {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card-color-2, #fff) 90%, white),
+    rgba(255, 255, 255, 0.34) 42%,
+    color-mix(in srgb, var(--card-color-1, #fff) 68%, transparent)
+  );
+}
+
+.studio-home .home-product-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card-color-2, #fff) 78%, white),
+    rgba(255, 255, 255, 0.22) 42%,
+    color-mix(in srgb, var(--card-color-1, #fff) 55%, transparent)
+  );
+  content: "";
+  pointer-events: none;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}
+
+.studio-home .home-product-shader {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.studio-home .home-product-shader canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.studio-home .home-product-shader[data-webgl-unavailable="true"] {
+  background:
+    radial-gradient(
+      120% 90% at 22% 18%,
+      color-mix(in srgb, var(--card-color-2, #bae6fd) 72%, white),
+      transparent 58%
+    ),
+    radial-gradient(
+      100% 80% at 82% 78%,
+      color-mix(in srgb, var(--card-color-1, #3b82f6) 52%, transparent),
+      transparent 56%
+    );
+}
+
+.studio-home .home-product-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+.studio-home .home-product-copy h2 {
+  max-width: 22ch;
+  margin: 0 0 0.85rem;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 2.3vw, 2.05rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.studio-home .home-product-copy p {
+  max-width: 28rem;
+  margin: 0 0 0.85rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.studio-home .home-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.15rem;
+  margin-top: 0.5rem;
+}
+
+.studio-home .home-entry-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.05rem;
+  padding: 0.85rem 1.35rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0a0a0a;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.studio-home .home-entry-cta:hover {
+  background: #f3f3f3;
+}
+
+.studio-home .home-entry-cta.is-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.studio-home .home-entry-cta.is-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.studio-home .home-product-media {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-self: stretch;
+  box-sizing: border-box;
+  min-height: 0;
+  padding: clamp(1.5rem, 3vw, 2.35rem);
+  overflow: hidden;
+  background: transparent;
+}
+
+.studio-home .home-product-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 1.15rem;
+  background: #000000;
+  outline: 1px solid oklch(1 0 0 / 0.1);
+  outline-offset: -1px;
+}
+
+.studio-home .home-product-media--workshop {
+  place-items: center;
+}
+
+.studio-home .home-product-media--workshop video {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0.45rem;
+}
+
+.studio-home .home-product-media--app .academy-hero-app,
+.studio-home .home-product-media--app .academy-hero-app-scaler,
+.studio-home .home-product-media--app .academy-hero-app-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.studio-home .home-product-media--app .academy-hero-app,
+.studio-home .home-product-media--app .academy-hero-app-scaler {
+  overflow: hidden;
+  border-radius: 1.15rem;
+  background: #000000;
+}
+
+.studio-home .home-product-media--app .academy-hero-app-scaler {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  outline: 1px solid oklch(1 0 0 / 0.1);
+  outline-offset: -1px;
+}
+
+.studio-home .home-product-media--app .academy-hero-app-frame {
+  overflow: hidden;
+  background: #000000;
+}
+
+.studio-home .home-quotes {
+  padding: 0 var(--page-padding) clamp(5rem, 9vw, 7.5rem);
+}
+
+.studio-home .home-quotes-inner {
+  width: min(100%, 92rem);
+  margin-inline: auto;
+}
+
+.studio-home .home-quotes h2 {
+  width: 100%;
+  margin: 0 0 1.75rem;
+  color: #ffffff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.studio-home .home-quotes-rows {
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.studio-home .home-quotes-row {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.studio-home .home-quotes-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: homeQuotesScroll 78s linear infinite;
+  will-change: transform;
+}
+
+.studio-home .home-quotes-row.is-reverse .home-quotes-track {
+  animation-direction: reverse;
+  animation-duration: 92s;
+}
+
+.studio-home .home-quotes-row:hover .home-quotes-track {
+  animation-play-state: paused;
+}
+
+.studio-home .home-quote-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+  width: clamp(19rem, 32vw, 26rem);
+  min-height: 17.5rem;
+  margin: 0;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.15rem;
+  padding: clamp(1.25rem, 2vw, 1.65rem);
+  background: linear-gradient(180deg, #1d2025 0%, #131519 100%);
+  box-shadow: 0 0.4rem 1.1rem rgba(0, 0, 0, 0.12);
+}
+
+.studio-home .home-quote-stars {
+  display: flex;
+  gap: 0.18rem;
+  color: #f5c451;
+  font-size: 0.82rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.studio-home .home-quote-card blockquote {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.studio-home .home-quote-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.35rem;
+}
+
+.studio-home .home-quote-card img,
+.studio-home .home-quote-initials {
+  width: 2.45rem;
+  height: 2.45rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.studio-home .home-quote-initials {
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.studio-home .home-quote-card strong,
+.studio-home .home-quote-card small {
+  display: block;
+}
+
+.studio-home .home-quote-card strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.studio-home .home-quote-card small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+}
+
+@keyframes homeQuotesScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes homeTrustLogosScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .studio-home .home-trust-logos-track {
+    animation-duration: 28s;
+  }
+
+  .studio-home .home-trust-logo {
+    padding-inline: 1.1rem;
+  }
+}
+
+@media (max-width: 1120px) {
+  .studio-home .home-product-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 1.25rem;
+  }
+
+  .studio-home .home-product-copy {
+    padding: 1.25rem 1.2rem 1.45rem;
+    justify-content: flex-start;
+  }
+
+  .studio-home .home-product-copy h2 {
+    max-width: none;
+    font-size: clamp(1.32rem, 6.2vw, 1.8rem);
+  }
+
+  .studio-home .home-product-copy p {
+    max-width: none;
+    font-size: 0.95rem;
+  }
+
+  .studio-home .home-entry-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .studio-home .home-entry-cta {
+    width: 100%;
+    min-height: 2.85rem;
+    justify-content: center;
+  }
+
+  .studio-home .home-product-media {
+    order: -1;
+    min-height: 0;
+    padding: 1rem 1rem 0;
+  }
+
+  .studio-home .home-product-media--workshop video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+
+  .studio-home .home-product-media--app {
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .studio-home .home-product-media--app .academy-hero-app,
+  .studio-home .home-product-media--app .academy-hero-app-scaler,
+  .studio-home .home-product-media--app .academy-hero-app-frame {
+    height: auto;
+    min-height: 0;
+  }
+
+  .studio-home .home-product-media--app .academy-hero-app-scaler {
+    --preview-width: 70rem;
+    --preview-height: 38rem;
+    --preview-scale: min(1, calc(100cqi / var(--preview-width)));
+    container-type: inline-size;
+    height: calc(2.35rem + var(--preview-height) * var(--preview-scale));
+  }
+
+  .studio-home .home-product-media--app .academy-hero-app-frame {
+    position: absolute;
+    top: 2.35rem;
+    left: 0;
+    width: var(--preview-width);
+    height: var(--preview-height);
+    transform: scale(var(--preview-scale));
+    transform-origin: top left;
+  }
+
+  .studio-home .home-quotes h2 {
+    font-size: clamp(1.55rem, 7vw, 2.15rem);
+    margin-bottom: 1.15rem;
+  }
+
+  .studio-home .home-quote-card {
+    width: min(18.5rem, 78vw);
+    min-height: 14.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .studio-home .home-trust {
+    padding-block: 2.25rem 1.75rem;
+    gap: 1rem;
+  }
+
+  .studio-home .home-trust-stats {
+    gap: 0.75rem;
+  }
+
+  .studio-home .home-trust-stats strong {
+    font-size: 1.35rem;
+  }
+
+  .studio-home .home-trust-stats span {
+    font-size: 0.7rem;
+  }
+
+  .studio-home .home-products {
+    gap: 1.35rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .studio-home .home-courses-title {
+    font-size: 1.7rem;
+  }
+
+  .studio-home .home-product-card {
+    border-radius: 1.05rem;
+  }
+
+  .studio-home .home-product-copy {
+    padding: 1.05rem 1.05rem 1.25rem;
+  }
+
+  .studio-home .home-product-copy h2 {
+    margin-bottom: 0.65rem;
+    font-size: 1.42rem;
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+  }
+
+  .studio-home .home-product-copy p {
+    font-size: 0.9rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .studio-home .home-entry-cta {
+    min-height: 2.7rem;
+    font-size: 0.88rem;
+  }
+
+  .studio-home .home-product-media,
+  .studio-home .home-product-media--app {
+    padding: 0.85rem;
+  }
+
+  .studio-home .home-product-media--workshop {
+    padding: 0.85rem 0.85rem 0;
+  }
+
+  .studio-home .home-quotes {
+    padding-bottom: 3.75rem;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .studio-home .home-product-card {
+    border-color: color-mix(in srgb, var(--card-color-1, #fff) 58%, rgba(255, 255, 255, 0.38));
+    box-shadow:
+      0 0 0 1px oklch(1 0 0 / 0.2),
+      0 0 56px color-mix(in srgb, var(--card-color-1, #fff) 28%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-home .home-quotes-track,
+  .studio-home .home-trust-logos-track {
+    animation: none;
+  }
+}

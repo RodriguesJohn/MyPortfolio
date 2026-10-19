@@ -1,10 +1,24 @@
 {
+  "redirects": [
+    {
+      "source": "/course",
+      "destination": "/design-engineering-course/",
+      "permanent": true
+    },
+    {
+      "source": "/workshops",
+      "destination": "https://maven.com/humanaistudio",
+      "permanent": false
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/design-engineering-course",
+      "destination": "/design-engineering-course/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
 }
-
-

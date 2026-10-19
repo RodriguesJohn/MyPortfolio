@@ -1,0 +1,1147 @@
+/* Homepage (/): AI systems for creative teams and businesses. */
+
+.ash {
+  /* Same rail as the other pages (design-systems.css --ds-rail). */
+  --ash-rail: min(calc(100% - clamp(1rem, 3vw, 2.5rem) * 2), 74rem);
+  --ash-ink: #fff;
+  --ash-text: rgba(255, 255, 255, 0.72);
+  --ash-soft: rgba(255, 255, 255, 0.5);
+  --ash-line: rgba(255, 255, 255, 0.12);
+  --ash-surface: #0d0d0f;
+  min-height: 100vh;
+  background: #000;
+  color: var(--ash-ink);
+  font-family: Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ash *,
+.ash *::before,
+.ash *::after {
+  box-sizing: border-box;
+}
+
+.ash-rail {
+  width: var(--ash-rail);
+  margin-inline: auto;
+}
+
+.ash-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.78);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+.ash-sticky .studio-nav {
+  background: transparent;
+}
+
+.ash-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  margin-right: 0.75rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #000 !important;
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 160ms ease;
+}
+
+.ash-nav-cta:hover {
+  background: #e6e6e6;
+}
+
+/* Type */
+
+.ash h1,
+.ash h2,
+.ash h3,
+.ash p {
+  margin: 0;
+}
+
+.ash h1 {
+  white-space: normal;
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ash h2 {
+  max-width: 22ch;
+  font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.ash h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.ash .ash-eyebrow {
+  margin-bottom: 1rem !important;
+  color: var(--ash-soft);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ash-intro {
+  max-width: 38rem;
+  text-wrap: balance;
+  margin-top: 1.5rem !important;
+  color: var(--ash-text);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.ash-lede {
+  max-width: 38rem;
+  margin-top: 1.25rem;
+  color: var(--ash-text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+/* Buttons */
+
+.ash-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.ash-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.ash-btn.is-primary {
+  background: #fff;
+  color: #000;
+}
+
+/* Primary button with John's photo at the start, for booking a call with him. */
+.ash-btn.has-avatar {
+  gap: 0.6rem;
+  padding-left: 0.45rem;
+}
+
+.ash-btn.has-avatar img {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.ash-btn.is-primary:hover {
+  background: #e6e6e6;
+}
+
+.ash-btn.is-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.ash-btn.is-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ash-btn:focus-visible,
+.ash-nav-cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Sections */
+
+.ash-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: min(52rem, calc(100svh - 5.75rem));
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+/* Butterflies: full-bleed loop behind the copy. */
+.ash-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+}
+
+.ash-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* The overlay the cinematic hero always had (styles.css .hero-cinematic-scrim), fading into the page. */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.26)),
+    radial-gradient(120% 90% at 50% 55%, transparent 30%, rgba(1, 1, 1, 0.55) 100%),
+    linear-gradient(180deg, rgba(1, 1, 1, 0.5) 0%, rgba(1, 1, 1, 0.12) 34%, rgba(1, 1, 1, 0.62) 92%, #000 100%);
+  pointer-events: none;
+}
+
+.ash-hero h1 {
+  max-width: 16ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+/* Homepage headline: the short title gets more size so it leads the subtitle and buttons. */
+#ash-title {
+  font-size: clamp(2.6rem, 6.6vw, 5.5rem);
+  line-height: 0.98;
+}
+
+/* Two lines on desktop. */
+.ash-hero .ash-intro {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.ash-hero .ash-actions {
+  justify-content: center;
+}
+
+.ash-hero .ash-eyebrow,
+.ash-hero .ash-intro {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.ash-section {
+  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--ash-line);
+}
+
+#approach,
+#ai-operations-os,
+#programs {
+  scroll-margin-top: 6rem;
+}
+
+/* Every section title is centered, like the hero. */
+.ash-head {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+}
+
+.ash-head h2,
+.ash-head .ash-lede {
+  margin-inline: auto;
+}
+
+.ash-section > .ash-actions {
+  justify-content: center;
+}
+
+/* Problem: one centered statement */
+
+.ash-statement {
+  text-align: center;
+}
+
+.ash-statement h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+  font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+}
+
+.ash-statement .ash-intro {
+  margin-inline: auto;
+}
+
+/* Grids and cards */
+
+.ash-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ash-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ash-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ash-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ash-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: clamp(1.4rem, 2.4vw, 1.75rem);
+  border: 1px solid var(--ash-line);
+  border-radius: 1.25rem;
+  background: var(--ash-surface);
+}
+
+.ash-card p,
+.ash-step p {
+  color: var(--ash-text);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+
+.ash-tiles .ash-card {
+  min-height: 8rem;
+  justify-content: flex-end;
+}
+
+.ash-tiles h3 {
+  font-size: 1.25rem;
+}
+
+/* Approach: shader cards */
+
+.ash-step {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 15rem;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+  border: 1px solid var(--ash-line);
+  border-radius: 1.4rem;
+  background: var(--ash-surface);
+}
+
+.ash-step-shader {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ash-step-shader canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ash-step-shader[data-webgl-unavailable="true"] {
+  background:
+    radial-gradient(120% 90% at 22% 18%, color-mix(in srgb, var(--card-color-2) 60%, transparent), transparent 58%),
+    radial-gradient(100% 80% at 82% 78%, color-mix(in srgb, var(--card-color-1) 52%, transparent), transparent 56%);
+}
+
+/* Academy course cards: a thumbnail (video or shader) on top, text below on the card surface. */
+.ash-program--thumb {
+  gap: 0;
+  padding: 0;
+}
+
+.ash-program-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ash-line);
+}
+
+.ash-program-thumb video,
+.ash-program-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ash-program-thumb .ash-step-shader {
+  opacity: 1;
+}
+
+/* Workflow canvas thumbnail: dotted node-editor grid, sized in container units so it scales with the card. */
+.ash-workflow {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.14) 1px, transparent 0) 0 0 / 18px 18px,
+    radial-gradient(120% 90% at 50% 40%, #1b1830 0%, #0d0d12 70%);
+}
+
+.ash-workflow > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ash-workflow-edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.45);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.ash-workflow-edge.is-sub {
+  stroke-dasharray: 4 4;
+  stroke: rgba(255, 255, 255, 0.3);
+}
+
+.ash-workflow-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 2cqi;
+  padding: 0 2.4cqi;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.6cqi;
+  background: #1c1c22;
+  color: #fff;
+  overflow: hidden;
+  font-size: 2.5cqi;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ash-workflow-node svg {
+  flex: none;
+  width: 3.4cqi;
+  height: 3.4cqi;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ash-workflow-node.is-trigger svg {
+  color: #f59e0b;
+}
+
+.ash-workflow-node.is-agent {
+  border-color: rgba(167, 139, 250, 0.7);
+  background: #241d3d;
+  font-size: 3.2cqi;
+  box-shadow: 0 0 6cqi rgba(124, 58, 237, 0.35);
+}
+
+.ash-workflow-node.is-agent svg {
+  width: 4.4cqi;
+  height: 4.4cqi;
+  color: #c4b5fd;
+}
+
+.ash-workflow-node.is-sub {
+  justify-content: center;
+  gap: 1.2cqi;
+  padding: 0 1.2cqi;
+  border-radius: 999px;
+  font-size: 2cqi;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ash-workflow-node.is-sub svg {
+  width: 2.6cqi;
+  height: 2.6cqi;
+}
+
+.ash-workflow-node.is-action svg {
+  color: #34d399;
+}
+
+.ash-program-body .ash-program-cta.is-disabled {
+  color: var(--ash-soft);
+  cursor: default;
+}
+
+.ash-step .ash-program-body .ash-step-label.is-soon {
+  justify-self: start;
+  align-self: flex-start;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.75rem;
+}
+
+.ash-program-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+}
+
+.ash-step .ash-program-body .ash-step-label {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: var(--ash-muted, rgba(255, 255, 255, 0.6));
+}
+
+.ash-program-body .ash-program-cta {
+  margin-top: auto;
+}
+
+.ash-step > :not(.ash-step-shader) {
+  position: relative;
+  z-index: 1;
+}
+
+.ash-step .ash-step-label {
+  margin-bottom: auto;
+  padding-bottom: 2rem;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.ash-step--compact {
+  min-height: 14rem;
+}
+
+.ash-step--compact .ash-step-label {
+  padding-bottom: 2rem;
+}
+
+.ash-step h3 {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.ash-step .ash-outcome {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 500;
+}
+
+.ash-outcome span {
+  color: var(--ash-soft);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* AI Operations OS */
+
+.ash-checks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ash-checks li {
+  position: relative;
+  padding: 1.1rem 1.1rem 1.1rem 2.75rem;
+  border: 1px solid var(--ash-line);
+  border-radius: 1rem;
+  background: var(--ash-surface);
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.45;
+}
+
+.ash-checks li::before {
+  content: "";
+  position: absolute;
+  top: 1.4rem;
+  left: 1.1rem;
+  width: 0.9rem;
+  height: 0.5rem;
+  border-bottom: 1.5px solid #fff;
+  border-left: 1.5px solid #fff;
+  transform: rotate(-45deg);
+}
+
+/* AI Operations OS: two paragraphs beside a before/after illustration, CTA underneath. */
+
+.ash-os {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.ash-os-copy {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.ash-os-copy .ash-actions {
+  margin-top: 0.75rem;
+}
+
+.ash-os-copy p {
+  margin: 0;
+  color: var(--ash-text);
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.ash-os-copy p:first-child {
+  color: var(--ash-ink);
+}
+
+.ash-os-visual {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.ash-os-visual svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ash-os-tags {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ash-os-tags span {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.4s ease;
+}
+
+.ash-os-tags span.is-on {
+  color: #fff;
+}
+
+.ash-os-tangle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.ash-os-spoke {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1;
+}
+
+.ash-os-pulse {
+  fill: #c4b5fd;
+}
+
+.ash-os-ring {
+  fill: none;
+  stroke: rgba(196, 181, 253, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.ash-os-hub {
+  fill: #0d0d0f;
+  stroke: #c4b5fd;
+  stroke-width: 1.25;
+}
+
+.ash-os-hub-label {
+  fill: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+}
+
+.ash-os-node {
+  fill: #0d0d0f;
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 1;
+  transition: stroke 0.4s ease;
+}
+
+.ash-os-node.is-linked {
+  stroke: #c4b5fd;
+}
+
+.ash-os-group {
+  fill: rgba(255, 255, 255, 0.45);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+  text-transform: uppercase;
+}
+
+.ash-os-group.is-start {
+  text-anchor: start;
+}
+
+.ash-os-axis {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+}
+
+.ash-os-bar {
+  fill: rgba(52, 211, 153, 0.12);
+  stroke: rgba(52, 211, 153, 0.7);
+  stroke-width: 1;
+}
+
+.ash-os-bar.is-last {
+  fill: rgba(52, 211, 153, 0.35);
+  stroke: #34d399;
+}
+
+.ash-os-trend {
+  fill: none;
+  stroke: #a7f3d0;
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+}
+
+.ash-os-revenue-label {
+  fill: #a7f3d0;
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.ash-os-node-label {
+  fill: rgba(255, 255, 255, 0.65);
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+@media (max-width: 900px) {
+  .ash-os {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ash-os-copy {
+    text-align: center;
+  }
+
+  .ash-os-copy .ash-actions {
+    justify-content: center;
+  }
+}
+
+/* Workshops: learner logos (where people who took the courses work) */
+
+.ash-logos {
+  overflow: hidden;
+  touch-action: pan-y;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.ash-logos-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  animation: ash-marquee 36s linear infinite;
+}
+
+.ash-logos img {
+  height: 1.75rem;
+  width: auto;
+  object-fit: contain;
+}
+
+@keyframes ash-marquee {
+  to {
+    transform: translateX(calc(-50% - clamp(1.25rem, 3vw, 2.25rem)));
+  }
+}
+
+/* Academy hub (/academy) */
+
+/* Shares .ash-hero (video, scrim, centered copy); only the type differs. */
+.ash-academy-hero {
+  text-align: center;
+}
+
+.ash-academy-hero h1 {
+  max-width: 22ch;
+  margin-inline: auto;
+  font-size: clamp(2.1rem, 5.5vw, 3.75rem);
+  text-wrap: balance;
+}
+
+.ash-academy-hero .ash-intro {
+  margin-inline: auto;
+}
+
+.ash-stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 3.5rem);
+  margin: 2.5rem 0 0;
+}
+
+.ash-stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.2rem;
+}
+
+.ash-stats dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.ash-stats dt {
+  color: var(--ash-soft);
+  font-size: 0.82rem;
+}
+
+.ash-academy .ash-grid > li {
+  display: flex;
+}
+
+a.ash-program,
+div.ash-program {
+  width: 100%;
+  min-height: 18rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 220ms ease, border-color 220ms ease;
+}
+
+a.ash-program:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-3px);
+}
+
+a.ash-program:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.ash-program-cta {
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-weight: 500;
+}
+
+.ash-academy-logos {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* Walkthrough video */
+
+.ash-video {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--ash-line);
+  border-radius: 1.4rem;
+  background: var(--ash-surface);
+}
+
+.ash-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Testimonials: two rows drifting in opposite directions (DualQuoteMarquee) */
+
+/* Full-bleed rows, so no rail-width divider above. */
+.ash-quotes {
+  border-top: 0;
+}
+
+.ash-quotes .home-proof-marquees {
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.ash-quotes .home-quotes-row {
+  overflow: hidden;
+  touch-action: pan-y;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.ash-quotes .home-quotes-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: ash-quotes-scroll 78s linear infinite;
+}
+
+.ash-quotes .home-quotes-row.is-reverse .home-quotes-track {
+  animation-direction: reverse;
+  animation-duration: 92s;
+}
+
+.ash-quotes .home-quotes-row:hover .home-quotes-track {
+  animation-play-state: paused;
+}
+
+.ash-quotes .home-quote-card {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  width: clamp(18rem, 30vw, 24rem);
+  margin: 0;
+  padding: 1.35rem;
+  border: 1px solid var(--ash-line);
+  border-radius: 1rem;
+  background: var(--ash-surface);
+}
+
+.ash-quotes .home-quote-stars {
+  display: flex;
+  gap: 0.18rem;
+  color: #f5c451;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.ash-quotes .home-quote-card blockquote {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.ash-quotes .home-quote-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.ash-quotes .home-quote-card img,
+.ash-quotes .home-quote-initials {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ash-quotes .home-quote-initials {
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.ash-quotes .home-quote-card strong,
+.ash-quotes .home-quote-card small {
+  display: block;
+}
+
+.ash-quotes .home-quote-card strong {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.ash-quotes .home-quote-card small {
+  color: var(--ash-soft);
+  font-size: 0.75rem;
+}
+
+@keyframes ash-quotes-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Final CTA */
+
+.ash-final {
+  text-align: center;
+}
+
+.ash-final h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+  font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+}
+
+.ash-final .ash-intro {
+  margin-inline: auto;
+}
+
+.ash-final .ash-actions {
+  justify-content: center;
+}
+
+/* Footer */
+
+.ash-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: clamp(2.5rem, 5vw, 3.5rem) clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--ash-line);
+}
+
+.ash-footer-brand {
+  font-size: 1rem;
+  font-weight: 520;
+  letter-spacing: -0.02em;
+}
+
+.ash-footer-tag,
+.ash-footer-address {
+  margin-top: 0.35rem;
+  color: var(--ash-soft);
+  font-size: 0.88rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.ash-footer-note {
+  flex-basis: 100%;
+  max-width: 46rem;
+  margin: 0.5rem 0 0;
+  color: var(--ash-soft);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* Responsive */
+
+@media (max-width: 960px) {
+  .ash-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ash-grid--3,
+  .ash-grid--2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ash-step {
+    min-height: 0;
+  }
+
+  .ash-checks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .ash-grid--4:not(.ash-tiles),
+  .ash-checks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ash-tiles .ash-card {
+    min-height: 6.5rem;
+  }
+
+  .ash-quotes .home-quote-card {
+    width: min(17rem, 78vw);
+  }
+
+  /* Full screen, copy centered over the scene, same as desktop. */
+  .ash-hero {
+    min-height: calc(100svh - 4.5rem);
+    padding-block: 3rem;
+  }
+
+  .ash-hero h1,
+  .ash-academy-hero h1 {
+    font-size: 1.95rem;
+    line-height: 1.08;
+  }
+
+  .ash-hero #ash-title {
+    font-size: clamp(2.3rem, 11vw, 2.75rem);
+    line-height: 1.02;
+  }
+
+  .ash .ash-eyebrow {
+    margin-bottom: 0.85rem !important;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+  }
+
+  .ash-intro {
+    font-size: 1rem;
+  }
+
+  /* Stacked, centered buttons narrower than the rail, so the side margins read clearly. */
+  .ash-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ash-actions .ash-btn {
+    width: min(100%, 20rem);
+  }
+
+  .ash-nav-cta {
+    margin-right: 0.5rem;
+    padding-inline: 0.8rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .ash-logos {
+    overflow-x: auto;
+    touch-action: auto;
+  }
+
+  .ash-logos-track,
+  .ash-quotes .home-quotes-track {
+    animation: none;
+  }
+
+  .ash-quotes .home-quotes-row {
+    overflow-x: auto;
+    touch-action: auto;
+  }
+}

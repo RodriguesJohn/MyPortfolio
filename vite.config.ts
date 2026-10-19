@@ -19,4 +19,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   assetsInclude: ["**/*.MOV"],
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+        course: path.resolve(__dirname, "design-engineering-course/index.html"),
+      },
+    },
+  },
 }));

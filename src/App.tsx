@@ -17,6 +17,7 @@ import IndexV2Work from "./pages/IndexV2Work";
 import IndexV2WorkDetail from "./pages/IndexV2WorkDetail";
 import IndexV2Testimonials from "./pages/IndexV2Testimonials";
 import IndexV2ToolStack from "./pages/IndexV2ToolStack";
+import IndexV2Mentorship from "./pages/IndexV2Mentorship";
 import IndexV2CaseStudyPresentation from "./pages/IndexV2CaseStudyPresentation";
 import IndexV2ComponentGallery from "./pages/IndexV2ComponentGallery";
 import CaseStudy from "./pages/CaseStudy";
@@ -39,6 +40,18 @@ const RedirectWithSearch = ({ to }: { to: string }) => {
   return <Navigate to={{ pathname: to, search }} replace />;
 };
 
+// The course is a separate HTML entry (design-engineering-course/index.html), so it needs a full page load.
+const RedirectToCoursePage = () => {
+  window.location.replace("/design-engineering-course/");
+  return null;
+};
+
+// Workshops live on Maven, so /workshops leaves the app entirely.
+const RedirectToWorkshops = () => {
+  window.location.replace("https://maven.com/humanaistudio");
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -48,10 +61,14 @@ const App = () => (
         <Routes>
           {/* Live portfolio */}
           <Route path="/" element={<IndexV2 />} />
+          <Route path="/design-engineering-course" element={<RedirectToCoursePage />} />
+          <Route path="/course" element={<RedirectToCoursePage />} />
+          <Route path="/workshops" element={<RedirectToWorkshops />} />
           <Route path="/work" element={<IndexV2Work />} />
           <Route path="/work/:slug" element={<IndexV2WorkDetail />} />
           <Route path="/testimonials" element={<IndexV2Testimonials />} />
           <Route path="/tool-stack" element={<IndexV2ToolStack />} />
+          <Route path="/mentorship" element={<IndexV2Mentorship />} />
           <Route
             path="/case-study-presentation"
             element={<IndexV2CaseStudyPresentation />}

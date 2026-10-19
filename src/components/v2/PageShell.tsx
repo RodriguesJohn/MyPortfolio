@@ -470,6 +470,12 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     navigate("/tool-stack");
   };
 
+  const openMentorship = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    navigate("/mentorship");
+  };
+
   return (
     <V2ThemeContext.Provider value={{ theme, isLightPreview, toggleTheme }}>
     <MotionConfig reducedMotion="user">
@@ -1014,6 +1020,47 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                   </span>
                   <span className="block text-[11px] leading-tight text-zinc-500">
                     Design, AI, and code
+                  </span>
+                </span>
+                <svg
+                  className="h-3 w-3 shrink-0 text-zinc-600 transition-colors group-hover:text-zinc-300"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={openMentorship}
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <path d="M16 2v4M8 2v4M3 10h18" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    Mentorship
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Book a 1:1 session
                   </span>
                 </span>
                 <svg
