@@ -41,9 +41,9 @@ const RedirectWithSearch = ({ to }: { to: string }) => {
   return <Navigate to={{ pathname: to, search }} replace />;
 };
 
-// The course is a separate HTML entry (design-engineering-course/index.html), so it needs a full page load.
+// Courses now live on the Human AI Studio Academy.
 const RedirectToCoursePage = () => {
-  window.location.replace("/design-engineering-course/");
+  window.location.replace("https://www.humanaistudio.io/academy");
   return null;
 };
 

@@ -38,7 +38,7 @@ Recent work: Orbi AI (AI productivity app shipped to the App Store), Outfix AI (
 
 ### Do you teach or write?
 Keywords: teach, teaching, write, writing, course, substack, academy, blog, newsletter
-Yes. I write *AI Design Playbook* on Substack (4,000+ readers) and teach at *AI Design Academy* (designers from Apple and JPMorgan Chase).
+Yes. I write *AI Design Playbook* on Substack (6,000+ readers) and teach at *AI Design Academy* (designers from Apple and JPMorgan Chase).
 
 ### Where are you based?
 Keywords: based, location, where, live, city, sf, bay, area, remote

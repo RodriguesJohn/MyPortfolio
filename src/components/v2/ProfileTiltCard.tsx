@@ -75,12 +75,14 @@ const ProfileCardContent = ({ large = false }: { large?: boolean }) => (
         </h1>
 
         <p
-          className={`v2-profile-role leading-none text-white/85 ${
+          className={`v2-profile-role leading-[1.25] text-white/85 ${
             large ? "text-[17px]" : "text-[15px]"
           }`}
           style={{ ...handwritten, fontWeight: 500 }}
         >
           Design Engineer
+          <br />
+          Senior Product Designer
         </p>
 
         <p
@@ -92,8 +94,8 @@ const ProfileCardContent = ({ large = false }: { large?: boolean }) => (
             fontWeight: 400,
           }}
         >
-          I focus on 0→1 AI-native products, design systems, and agentic
-          experiences. Founder of Human AI Studio.
+          I build 0→1 AI-native products end to end. 10+ years across
+          JPMorgan Chase and early-stage startups.
         </p>
       </div>
     </div>

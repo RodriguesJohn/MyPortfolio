@@ -62,22 +62,25 @@ type FeedTab =
   | "tools"
   | "blog"
   | "testimonials"
+  | "resume"
   | "mentorship";
 
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
 
 const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "work", label: "Work" },
+  { id: "resume", label: "Resume" },
+  { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
   { id: "mentorship", label: "Mentorship" },
   { id: "experiments", label: "AI Experiments", shortLabel: "Experiments" },
   { id: "systems", label: "AI Design Systems", shortLabel: "Systems" },
   { id: "tools", label: "Tools" },
   { id: "blog", label: "Blog" },
-  { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
 ];
 
-const COURSE_URL = "/design-engineering-course/";
+const COURSE_URL = "https://www.humanaistudio.io/academy";
 const WORKSHOPS_URL = "https://maven.com/humanaistudio";
+const RESUME_PDF_URL = "/JohnRodriguesResume.pdf";
 
 const FEED_TAB_CLASS =
   "v2-feed-tab shrink-0 pb-3 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors lg:text-[12px]";
@@ -656,7 +659,7 @@ const BlogTabContent = ({
     )}
     <div className="v2-built-tool-card mt-8 flex flex-col gap-3 rounded-[20px] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
       <p className="v2-built-tool-description text-[14px]">
-        Join <span className="v2-built-tool-title font-semibold">4000+</span> readers.
+        Join <span className="v2-built-tool-title font-semibold">6000+</span> readers.
       </p>
       <button
         type="button"
@@ -665,6 +668,60 @@ const BlogTabContent = ({
       >
         Join newsletter
       </button>
+    </div>
+  </div>
+);
+
+const ResumeTabContent = () => (
+  <div className="max-w-[1100px] px-0 sm:px-1">
+    <div className="v2-built-tool-card overflow-hidden rounded-[20px]">
+      <div className="v2-built-tool-divider flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4 sm:px-6">
+        <div className="min-w-0">
+          <p className="v2-built-tool-title text-[14px] font-semibold">John Rodrigues Resume</p>
+          <p className="mt-0.5 text-[12.5px] text-zinc-500">One page · PDF · Updated 2026</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <a
+            href={RESUME_PDF_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="v2-built-tool-description inline-flex items-center rounded-full px-3.5 py-2 text-[12px] font-semibold ring-1 ring-zinc-500/30 transition hover:bg-zinc-500/10"
+          >
+            Open
+          </a>
+          <a
+            href={RESUME_PDF_URL}
+            download
+            className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-[12px] font-semibold text-black transition hover:bg-zinc-100 active:scale-[0.99]"
+          >
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+      <object
+        data={`${RESUME_PDF_URL}#view=FitH&navpanes=0`}
+        type="application/pdf"
+        aria-label="John Rodrigues resume"
+        className="block h-[78vh] min-h-[520px] w-full bg-white"
+      >
+        <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
+          <p className="v2-built-tool-description text-[14px]">
+            Your browser can't show the PDF here.
+          </p>
+          <a
+            href={RESUME_PDF_URL}
+            download
+            className="inline-flex items-center rounded-full bg-white px-4 py-2 text-[12px] font-semibold text-black"
+          >
+            Download resume
+          </a>
+        </div>
+      </object>
     </div>
   </div>
 );
@@ -1062,7 +1119,7 @@ const IndexV2 = () => {
                     onClick={() => setIsSubscribeOpen(true)}
                     className={`${secondaryCtaClass} v2-sidebar-subscribe w-full px-3 py-2.5 text-[12px]`}
                   >
-                    Join newsletter
+                    Join 6K+ readers on my Substack
                   </button>
                   <div className="mt-4">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400">
@@ -1131,7 +1188,7 @@ const IndexV2 = () => {
                 onClick={() => setIsSubscribeOpen(true)}
                 className={`${secondaryCtaClass} v2-sidebar-subscribe w-full`}
               >
-                Join newsletter
+                Join 6K+ readers on my Substack
               </button>
             </div>
           </motion.aside>
@@ -1171,7 +1228,7 @@ const IndexV2 = () => {
                             Course
                           </a>
                         )}
-                        {index === 0 && (
+                        {tab.id === "testimonials" && (
                           <a
                             href={WORKSHOPS_URL}
                             target="_blank"
@@ -1254,6 +1311,16 @@ const IndexV2 = () => {
                   exit="exit"
                 >
                   <MentorshipTabContent />
+                </motion.div>
+              ) : activeTab === "resume" ? (
+                <motion.div
+                  key="resume-tab"
+                  variants={v2NelsonPage}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                >
+                  <ResumeTabContent />
                 </motion.div>
               ) : activeTab === "testimonials" ? (
                 <motion.div

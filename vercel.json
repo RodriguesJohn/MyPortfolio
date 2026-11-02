@@ -2,8 +2,13 @@
   "redirects": [
     {
       "source": "/course",
-      "destination": "/design-engineering-course/",
-      "permanent": true
+      "destination": "https://www.humanaistudio.io/academy",
+      "permanent": false
+    },
+    {
+      "source": "/design-engineering-course/:path*",
+      "destination": "https://www.humanaistudio.io/academy",
+      "permanent": false
     },
     {
       "source": "/workshops",
@@ -12,10 +17,6 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/design-engineering-course",
-      "destination": "/design-engineering-course/index.html"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

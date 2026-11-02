@@ -187,6 +187,22 @@ const citiBalanceTransfer: Project = {
 };
 
 export const HIGHLIGHTS: Project[] = [
+  {
+    slug: "digital-commercial-banking",
+    name: "Startup Banking by JPMorgan Chase",
+    year: "2020–21",
+    meta: "JPMorgan Chase · B2B",
+    description:
+      "Designed institutional-side B2B banking platform for commercial users at JPMorgan Chase.",
+    media: {
+      type: "image",
+      src: dcbImage,
+      fit: "contain",
+      bg: "#c8c8c8",
+      objectPosition: "center center",
+      aspect: "4/3",
+    },
+  },
   orbiAI,
   {
     slug: "florence-design-system",
@@ -203,22 +219,6 @@ export const HIGHLIGHTS: Project[] = [
       bg: "#0a0a0a",
       objectPosition: "center center",
       aspect: "3708/2160",
-    },
-  },
-  {
-    slug: "digital-commercial-banking",
-    name: "Startup Banking by JPMorgan Chase",
-    year: "2020–21",
-    meta: "JPMorgan Chase · B2B",
-    description:
-      "Designed institutional-side B2B banking platform for commercial users at JPMorgan Chase.",
-    media: {
-      type: "image",
-      src: dcbImage,
-      fit: "contain",
-      bg: "#c8c8c8",
-      objectPosition: "center center",
-      aspect: "4/3",
     },
   },
   outfixAI,

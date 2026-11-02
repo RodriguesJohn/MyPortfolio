@@ -476,6 +476,12 @@ const PageShell = ({ children }: { children: ReactNode }) => {
     navigate("/?tab=mentorship");
   };
 
+  const openBlog = () => {
+    setIsRelatedOpen(false);
+    setIsRelatedClosing(false);
+    navigate("/blog");
+  };
+
   return (
     <V2ThemeContext.Provider value={{ theme, isLightPreview, toggleTheme }}>
     <MotionConfig reducedMotion="user">
@@ -881,6 +887,71 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
             {/* Explore section (Home / My work / My story) hidden */}
 
+            {/* Resume (top) */}
+            <div className="px-5 pt-4 pb-4 border-t border-white/[0.06] sm:px-6">
+              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
+                Resume
+              </p>
+              <div className="flex items-center gap-2.5">
+              <a
+                href={RESUME_URL}
+                download
+                className="v2-more-resume group flex flex-1 items-center justify-between gap-3 px-3 py-3 rounded-xl bg-white text-black hover:bg-zinc-100 active:scale-[0.99] transition-all"
+              >
+                <span className="flex items-center gap-3 min-w-0">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black/[0.06]">
+                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="text-[13px] font-semibold leading-tight">Download my resume</span>
+                    <span className="text-[11px] text-black/55 leading-tight">PDF · Updated 2026</span>
+                  </span>
+                </span>
+                <svg className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  const url =
+                    typeof window !== "undefined"
+                      ? `${window.location.origin}${RESUME_URL}`
+                      : RESUME_URL;
+                  void copyLinkValue("Resume", url);
+                }}
+                className="v2-more-resume-copy flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.1] hover:text-zinc-200"
+                aria-label={
+                  copiedLinkLabel === "Resume" ? "Copied resume link" : "Copy resume link"
+                }
+              >
+                {copiedLinkLabel === "Resume" ? (
+                  <span className="text-[9px] font-medium uppercase tracking-wide text-emerald-400">
+                    OK
+                  </span>
+                ) : (
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                )}
+              </button>
+              </div>
+            </div>
+
             {/* Section 1: Social */}
             <div className="border-t border-white/[0.06] px-5 pt-4 pb-4 sm:px-6">
               <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
@@ -1076,6 +1147,47 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                   <path d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
               </button>
+              <button
+                type="button"
+                onClick={openBlog}
+                className="v2-more-action group flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-white/[0.05]"
+              >
+                <span className="v2-more-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-zinc-200 transition-colors group-hover:bg-white/[0.08] group-hover:text-white">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z" />
+                    <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-medium leading-tight text-zinc-100 group-hover:text-white">
+                    Blog
+                  </span>
+                  <span className="block text-[11px] leading-tight text-zinc-500">
+                    Articles on AI and design
+                  </span>
+                </span>
+                <svg
+                  className="h-3 w-3 shrink-0 text-zinc-600 transition-colors group-hover:text-zinc-300"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </button>
               {/* Case study presentation hidden */}
             </div>
 
@@ -1116,70 +1228,6 @@ const PageShell = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
 
-            {/* Section 2: Resume */}
-            <div className="px-5 pt-4 pb-5 border-t border-white/[0.06] sm:px-6">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
-                Resume
-              </p>
-              <div className="flex items-center gap-2.5">
-              <a
-                href={RESUME_URL}
-                download
-                className="v2-more-resume group flex flex-1 items-center justify-between gap-3 px-3 py-3 rounded-xl bg-white text-black hover:bg-zinc-100 active:scale-[0.99] transition-all"
-              >
-                <span className="flex items-center gap-3 min-w-0">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black/[0.06]">
-                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                  </span>
-                  <span className="flex min-w-0 flex-col">
-                    <span className="text-[13px] font-semibold leading-tight">Download my resume</span>
-                    <span className="text-[11px] text-black/55 leading-tight">PDF · Updated 2026</span>
-                  </span>
-                </span>
-                <svg className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </a>
-              <button
-                type="button"
-                onClick={() => {
-                  const url =
-                    typeof window !== "undefined"
-                      ? `${window.location.origin}${RESUME_URL}`
-                      : RESUME_URL;
-                  void copyLinkValue("Resume", url);
-                }}
-                className="v2-more-resume-copy flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400 ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.1] hover:text-zinc-200"
-                aria-label={
-                  copiedLinkLabel === "Resume" ? "Copied resume link" : "Copy resume link"
-                }
-              >
-                {copiedLinkLabel === "Resume" ? (
-                  <span className="text-[9px] font-medium uppercase tracking-wide text-emerald-400">
-                    OK
-                  </span>
-                ) : (
-                  <svg
-                    className="h-3.5 w-3.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <rect x="9" y="9" width="13" height="13" rx="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                )}
-              </button>
-              </div>
-            </div>
           </div>
         </div>
       )}
