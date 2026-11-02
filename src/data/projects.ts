@@ -187,6 +187,7 @@ const citiBalanceTransfer: Project = {
 };
 
 export const HIGHLIGHTS: Project[] = [
+  orbiAI,
   {
     slug: "digital-commercial-banking",
     name: "Startup Banking by JPMorgan Chase",
@@ -203,7 +204,6 @@ export const HIGHLIGHTS: Project[] = [
       aspect: "4/3",
     },
   },
-  orbiAI,
   {
     slug: "florence-design-system",
     name: "Florence",
