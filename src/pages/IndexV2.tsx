@@ -79,7 +79,6 @@ const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
 ];
 
 const COURSE_URL = "https://www.humanaistudio.io/academy";
-const WORKSHOPS_URL = "https://maven.com/humanaistudio";
 const RESUME_PDF_URL = "/JohnRodriguesResume.pdf";
 
 const FEED_TAB_CLASS =
@@ -1226,17 +1225,6 @@ const IndexV2 = () => {
                             className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
                           >
                             Course
-                          </a>
-                        )}
-                        {tab.id === "testimonials" && (
-                          <a
-                            href={WORKSHOPS_URL}
-                            target="_blank"
-                            rel="noreferrer"
-                            title="Opens Workshops in a new tab"
-                            className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
-                          >
-                            Workshops
                           </a>
                         )}
                       </Fragment>
