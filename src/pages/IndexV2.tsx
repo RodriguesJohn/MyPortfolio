@@ -1012,6 +1012,8 @@ const IndexV2 = () => {
         <div className="flex h-12 shrink-0 items-center justify-center sm:h-16 lg:h-[72px]">
           <a
             href={COURSE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="v2-built-tool-card v2-launch-banner group inline-flex max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-3.5 text-[12px] transition active:scale-[0.99]"
           >
             <span className="v2-launch-badge shrink-0 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-500">
@@ -1059,7 +1061,7 @@ const IndexV2 = () => {
                     Experience
                   </dt>
                   <dd className="text-[15px] font-bold leading-tight text-zinc-50 sm:text-[16px]">
-                    10+ yrs
+                    8+ yrs
                   </dd>
                 </div>
                 <div className="hidden items-center justify-between gap-4">
@@ -1222,6 +1224,8 @@ const IndexV2 = () => {
                         {index === 0 && (
                           <a
                             href={COURSE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className={`${FEED_TAB_CLASS} text-zinc-400 hover:text-zinc-200`}
                           >
                             Course
