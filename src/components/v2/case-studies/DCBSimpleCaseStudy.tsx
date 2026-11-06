@@ -1,4 +1,4 @@
-import dcbImage from "@/assets/dcb-accounts-overview.jpg";
+import startupBankingVideo from "@/assets/startup-banking-jpmc.mp4";
 import {
   CaseStudyHero,
   CaseStudyNote,
@@ -35,11 +35,16 @@ const DCBSimpleCaseStudy = () => (
     />
 
     <CaseStudyHero>
-      <img
-        src={dcbImage}
-        alt="Startup Banking by JPMorgan Chase accounts overview"
+      <video
+        src={startupBankingVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
         className="block h-auto w-full"
-        loading="eager"
+        style={{ aspectRatio: "3646/2160" }}
+        aria-label="Startup Banking by JPMorgan Chase demo"
       />
     </CaseStudyHero>
 

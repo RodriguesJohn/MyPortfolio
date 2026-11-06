@@ -13,7 +13,7 @@ import cardMotionVideo from "@/assets/Card.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
 import appleNotesMcpVideo from "@/assets/IMG_7590.mov";
 import florenceF2Video from "@/assets/florence-f2.mp4";
-import dcbImage from "@/assets/dcb-accounts-overview.jpg";
+import startupBankingVideo from "@/assets/startup-banking-jpmc.mp4";
 
 // Past Work
 import noScrollImage from "@/assets/NoScrollApp.png";
@@ -83,7 +83,7 @@ const orbiAI: Project = {
   slug: "orbi-ai",
   name: "Agentic Content Studio",
   year: "2026",
-  meta: "Orbi AI",
+  meta: "Orbi AI at Antler VC",
   description:
     "AI-native content studio for brands and creators. Take an idea from script to video, repurposing, scheduling and analytics in one workspace, with agents that work in your voice.",
   slidesUrl:
@@ -229,12 +229,12 @@ export const HIGHLIGHTS: Project[] = [
     description:
       "Designed institutional-side B2B banking platform for commercial users at JPMorgan Chase.",
     media: {
-      type: "image",
-      src: dcbImage,
+      type: "video",
+      src: startupBankingVideo,
       fit: "cover",
       bg: "#c8c8c8",
       objectPosition: "center center",
-      aspect: "4/3",
+      aspect: "3646/2160",
     },
   },
   citiBalanceTransfer,
