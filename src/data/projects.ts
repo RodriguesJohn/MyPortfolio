@@ -81,7 +81,7 @@ export type Project = {
 
 const orbiAI: Project = {
   slug: "orbi-ai",
-  name: "Agentic Content Studio",
+  name: "Orbi AI agentic content studio at Antler VC",
   year: "2026",
   meta: "Orbi AI at Antler VC",
   description:
@@ -108,7 +108,7 @@ const orbiAI: Project = {
 
 const olliAI: Project = {
   slug: "olli-ai",
-  name: "Figma AI plugin",
+  name: "Figma AI plugin at OllieAI",
   year: "2025",
   meta: "OllieAI",
   description:
@@ -127,7 +127,7 @@ const olliAI: Project = {
 
 const muo: Project = {
   slug: "muo",
-  name: "Muo AI note taker",
+  name: "Muo AI note taker at Human AI Studio",
   year: "2025",
   meta: "Human AI Studio",
   description:
@@ -145,7 +145,7 @@ const muo: Project = {
 
 const outfixAI: Project = {
   slug: "outfitx-ai",
-  name: "AI personalized stylist app",
+  name: "AI personalized stylist app at Outfix AI",
   year: "2025",
   meta: "Outfix AI",
   description:
@@ -182,7 +182,7 @@ const citiAiInsights: Project = {
 
 const citiBalanceTransfer: Project = {
   slug: "balance-transfer-citi",
-  name: "Balance transfer design for 20M+ users",
+  name: "Balance transfer for 20M+ users at Citibank",
   year: "2022",
   meta: "Citibank",
   description:
@@ -209,7 +209,7 @@ const citiBalanceTransfer: Project = {
 
 const noScroll: Project = {
   slug: "no-scroll-ios",
-  name: "Screen time app, 50K+ downloads",
+  name: "Screen time iOS app with 50K+ downloads at No Scroll",
   year: "2024",
   meta: "No Scroll iOS app",
   description:
@@ -222,7 +222,7 @@ const noScroll: Project = {
 export const HIGHLIGHTS: Project[] = [
   {
     slug: "digital-commercial-banking",
-    name: "Startup Banking by JPMorgan Chase",
+    name: "Startup banking platform at JPMorgan Chase",
     year: "2020–21",
     meta: "JPMorgan Chase · B2B",
     description:
@@ -241,7 +241,7 @@ export const HIGHLIGHTS: Project[] = [
   outfixAI,
   {
     slug: "florence-design-system",
-    name: "Florence AI-ready design system",
+    name: "Florence design system at Human AI Studio",
     year: "2026",
     meta: "Human AI Studio",
     description:

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
 import { useSmoothScroll } from "@/components/v2/useSmoothScroll";
 import ProfileTiltCard from "@/components/v2/ProfileTiltCard";
@@ -672,30 +672,30 @@ const BlogTabContent = ({
   onSubscribe: () => void;
 }) => (
   <div className="px-0 sm:px-1">
-    <div className="mb-5 flex items-end justify-between gap-4">
-      <div className="min-w-0">
-        <h2
-          className="v2-built-tool-title text-[15px] font-medium leading-[1.5]"
-          style={display}
-        >
-          Writing
-        </h2>
-        <p className="text-[15px] leading-[1.5] text-zinc-400">
-          Articles on AI, product, and design, read by 6K+ readers.
-        </p>
+    <div className="mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+        <p className="text-[13px] leading-[1.5] text-zinc-400">Read by designers from</p>
+        <ul className="flex flex-wrap items-center gap-x-8 gap-y-3">
+          {RESOURCES_TRUSTED_BY.map((logo) => (
+            <li key={logo.label} className="flex h-7 items-center">
+              <img
+                src={logo.src}
+                alt={logo.label}
+                style={{ height: Math.round(logo.height * 1.35) }}
+                className={`w-auto max-w-none ${logo.darkInk ? "v2-logo-dark-ink" : ""}`}
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
       </div>
-      <Link
-        to="/blog"
-        className="group inline-flex shrink-0 items-center gap-1 text-[15px] leading-[1.5] text-zinc-400 transition-colors hover:text-zinc-200"
+      <button
+        type="button"
+        onClick={onSubscribe}
+        className={`${secondaryCtaClass} v2-sidebar-subscribe shrink-0`}
       >
-        View all
-        <span
-          aria-hidden="true"
-          className="transition-transform group-hover:translate-x-0.5"
-        >
-          →
-        </span>
-      </Link>
+        Join Newsletter
+      </button>
     </div>
     {loading ? (
       <p className="text-[15px] text-zinc-500">Loading articles…</p>
@@ -728,7 +728,7 @@ const BlogTabContent = ({
               href={post.link}
               target="_blank"
               rel="noreferrer"
-              className="v2-built-tool-card group flex h-full flex-col overflow-hidden rounded-[12px] p-2 transition-transform duration-300 hover:-translate-y-0.5"
+              className="v2-built-tool-card v2-blog-card group flex h-full flex-col overflow-hidden rounded-[12px] p-2 transition-transform duration-300 hover:-translate-y-0.5"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[6px] bg-zinc-900">
                 {post.thumbnail ? (
@@ -747,11 +747,6 @@ const BlogTabContent = ({
                 >
                   {post.title}
                 </h3>
-                {post.excerpt ? (
-                  <p className="v2-built-tool-description line-clamp-2 text-[15px] leading-[1.5]">
-                    {post.excerpt}
-                  </p>
-                ) : null}
                 {post.pubDate ? (
                   <p className="mt-auto pt-3 text-[15px] leading-[1.5] text-zinc-400">
                     {formatPostDate(post.pubDate)}
@@ -763,7 +758,7 @@ const BlogTabContent = ({
         ))}
       </ul>
     )}
-    <div className="v2-built-tool-card mt-8 flex flex-col gap-3 rounded-[12px] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+    <div className="v2-built-tool-card v2-blog-card mt-8 flex flex-col gap-3 rounded-[12px] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
       <p className="v2-built-tool-description text-[15px]">
         Join <span className="v2-built-tool-title font-medium">6000+</span> readers.
       </p>
@@ -977,9 +972,6 @@ const ProjectFeedCard = ({
           >
             {project.name}
           </h3>
-          <p className="text-[13px] font-normal leading-[1.45] text-zinc-400">
-            {project.meta}
-          </p>
         </div>
       </button>
     </motion.article>
@@ -1243,15 +1235,6 @@ const IndexV2 = () => {
         <div className="relative mx-auto flex h-14 w-full max-w-[1280px] items-stretch gap-6 px-4 sm:px-5 min-[1180px]:gap-0">
           {/* At wide widths this column matches the sidebar (260px + 40px gap), so the links centre over the feed. */}
           <div className="hidden flex-1 basis-0 items-center md:flex min-[1180px]:w-[300px] min-[1180px]:flex-none">
-            <button
-              type="button"
-              onClick={() => selectTab("work")}
-              className="v2-built-tool-title shrink-0 text-[13px] font-medium leading-[1.5]"
-              style={display}
-              aria-label="John Rodrigues, home"
-            >
-              JR
-            </button>
           </div>
           <div className="flex min-w-0 items-stretch gap-x-5 lg:gap-x-7 min-[1180px]:flex-1 min-[1180px]:justify-center">
           <nav
@@ -1470,7 +1453,7 @@ const IndexV2 = () => {
           {/* Dominant scroll column — only this pane scrolls on desktop */}
           <motion.main
             ref={feedScrollRef}
-            className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:pt-28 lg:pb-32"
+            className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:pt-[125px] lg:pb-32"
             variants={v2NelsonStagger}
           >
             <AnimatePresence mode="wait">
@@ -1562,7 +1545,7 @@ const IndexV2 = () => {
                   className={
                     FEED_GRID
                       ? "grid grid-cols-1 gap-x-4 gap-y-8 px-0 pb-6 sm:grid-cols-2 sm:gap-y-10 sm:px-1"
-                      : "flex flex-col gap-8 px-0 pb-6 sm:gap-10 sm:px-1"
+                      : "flex flex-col gap-12 px-0 pb-6 sm:gap-16 sm:px-1"
                   }
                   variants={v2NelsonStagger}
                   initial="hidden"

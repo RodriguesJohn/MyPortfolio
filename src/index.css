@@ -927,6 +927,25 @@ All colors MUST be HSL.
   border-color: rgba(24, 24, 27, 0.05) !important;
 }
 
+/* Blog cards: a touch more grey and a soft lifted shadow so they stand out. */
+.v2-blog-card {
+  background: #111113 !important;
+  border-color: rgba(161, 161, 170, 0.18) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 24px 48px -28px rgba(0, 0, 0, 0.55) !important;
+}
+
+.v2-light .v2-blog-card {
+  background: #ffffff !important;
+  border-color: rgba(24, 24, 27, 0.1) !important;
+  box-shadow:
+    0 1px 2px rgba(24, 24, 27, 0.05),
+    0 8px 24px -12px rgba(24, 24, 27, 0.12),
+    0 28px 56px -32px rgba(24, 24, 27, 0.16) !important;
+}
+
 .v2-blog-article-card {
   background: #0a0a0a;
   border: 1px solid rgba(161, 161, 170, 0.18);
@@ -1367,17 +1386,17 @@ All colors MUST be HSL.
 
 /* Fixed top navigation */
 .v2-top-nav {
-  -webkit-backdrop-filter: saturate(140%) blur(20px);
-  backdrop-filter: saturate(140%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(32px);
+  backdrop-filter: saturate(180%) blur(32px);
 }
 
 .v2-dark .v2-top-nav,
 .v2-top-nav {
-  background-color: rgba(0, 0, 0, 0.88);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .v2-light .v2-top-nav {
-  background-color: rgba(247, 247, 247, 0.92);
+  background-color: rgba(247, 247, 247, 0.66);
 }
 
 /* Lenis smooth scroll (recommended base styles) */

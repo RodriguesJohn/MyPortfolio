@@ -99,9 +99,6 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             {project.name}
           </span>
         </p>
-        <p className="mt-1 text-[15px] text-zinc-500 sm:text-[16px]">
-          {project.meta} · {project.year}
-        </p>
       </div>
     </article>
   );
