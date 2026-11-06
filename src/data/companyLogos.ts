@@ -8,6 +8,7 @@ import chaseLogo from "@/assets/logos/chase.png";
 import citiLogo from "@/assets/logos/citi.png";
 import tocaLogo from "@/assets/logos/toca.png";
 import notableLogo from "@/assets/logos/notable.png";
+import antlerLogo from "@/assets/logos/antler.png";
 import intercomLogo from "@/assets/intercom-2.svg";
 
 export type CompanyLogo = {
@@ -20,6 +21,7 @@ export type CompanyLogo = {
 };
 
 export const WORKED_AT: CompanyLogo[] = [
+  { src: antlerLogo, label: "Antler", height: 16 },
   { src: chaseLogo, label: "JPMorgan Chase", height: 11, darkInk: true },
   { src: citiLogo, label: "Citi", height: 17 },
   { src: tocaLogo, label: "Toca", height: 13, darkInk: true },

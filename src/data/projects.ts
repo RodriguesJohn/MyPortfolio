@@ -85,7 +85,7 @@ const orbiAI: Project = {
   year: "2026",
   meta: "Orbi AI",
   description:
-    "iOS app for creators. Capture voice notes, thoughts, and ideas, then organize and repurpose them into content later.",
+    "AI-native content studio for brands and creators. Take an idea from script to video, repurposing, scheduling and analytics in one workspace, with agents that work in your voice.",
   slidesUrl:
     "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FkmEskNJDRsWB58Pm89LvtZ%2FCaseStudyPresentation---Orbi-AI%3Fnode-id%3D1-306%26scaling%3Dmin-zoom%26content-scaling%3Dfixed",
   appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
@@ -108,9 +108,9 @@ const orbiAI: Project = {
 
 const olliAI: Project = {
   slug: "olli-ai",
-  name: "OllieAI",
+  name: "Figma AI plugin",
   year: "2025",
-  meta: "Figma plugin · Claude Code",
+  meta: "OllieAI",
   description:
     "Bridge between Claude Code and the Figma canvas. Prompts in chat → generated frames and components.",
   ctaUrl:
@@ -121,14 +121,15 @@ const olliAI: Project = {
     src: ollieVideo,
     fit: "cover",
     objectPosition: "center center",
+    aspect: "3488/2160",
   },
 };
 
 const muo: Project = {
   slug: "muo",
-  name: "Muo",
+  name: "Muo AI note taker",
   year: "2025",
-  meta: "AI note taker",
+  meta: "Human AI Studio",
   description:
     "iOS app for creators. Capture voice notes, thoughts, and ideas, then organize and repurpose them into content later.",
   appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
@@ -138,14 +139,15 @@ const muo: Project = {
     fit: "cover",
     bg: "#09090b",
     objectPosition: "center center",
+    aspect: "1920/1080",
   },
 };
 
 const outfixAI: Project = {
   slug: "outfitx-ai",
-  name: "Outfix AI Project",
+  name: "AI personalized stylist app",
   year: "2025",
-  meta: "AI styling · 0 to 1 product",
+  meta: "Outfix AI",
   description:
     "AI styling product exploration for outfit intelligence, visual taste, and assisted wardrobe workflows.",
   slidesUrl:
@@ -205,6 +207,18 @@ const citiBalanceTransfer: Project = {
   },
 };
 
+const noScroll: Project = {
+  slug: "no-scroll-ios",
+  name: "Screen time app, 50K+ downloads",
+  year: "2024",
+  meta: "No Scroll iOS app",
+  description:
+    "Redesigned an attention-management app. 50K+ downloads and a 4.5 rating from 2,000+ reviews on the App Store.",
+  media: { type: "image", src: noScrollImage, fit: "contain", bg: "#f6f6f6", aspect: "16/10" },
+  tag: "Shipped",
+  appStoreUrl: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216",
+};
+
 export const HIGHLIGHTS: Project[] = [
   orbiAI,
   {
@@ -226,9 +240,9 @@ export const HIGHLIGHTS: Project[] = [
   citiBalanceTransfer,
   {
     slug: "florence-design-system",
-    name: "Florence",
+    name: "Florence AI-ready design system",
     year: "2026",
-    meta: "AI-ready design system",
+    meta: "Human AI Studio",
     description:
       "Agent-ready design system with documented components, guidelines, and patterns for AI-native product work.",
     feedTab: "systems",
@@ -244,6 +258,7 @@ export const HIGHLIGHTS: Project[] = [
   outfixAI,
   muo,
   olliAI,
+  noScroll,
 ];
 
 /** Shown on /v2/work under “AI tools I built” */
@@ -351,17 +366,7 @@ export const AI_TOOLS_BUILT: Project[] = [
 ];
 
 export const PAST: Project[] = [
-  {
-    slug: "no-scroll-ios",
-    name: "No Scroll",
-    year: "2024",
-    meta: "iOS · 4.5★ · 50K+ downloads",
-    description:
-      "Redesigned an attention-management app. 50K+ downloads and a 4.5 rating from 2,000+ reviews on the App Store.",
-    media: { type: "image", src: noScrollImage },
-    tag: "Shipped",
-    href: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216",
-  },
+  noScroll,
   citiAiInsights,
   {
     slug: "toca-football",
