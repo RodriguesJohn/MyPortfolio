@@ -864,17 +864,25 @@ const TestimonialsTabContent = () => (
   </ul>
 );
 
+/** Work feed layout: two-column grid (true) or single large cards (false). */
+const FEED_GRID = false;
+/** Shared card ratio in grid mode; close to most project videos (~1.7). */
+const FEED_GRID_ASPECT = "17/10";
+
 const ProjectFeedCard = ({
   project,
   tab,
   index,
   featured,
+  uniformAspect,
   onOpen,
 }: {
   project: Project;
   tab: FeedTab;
   index: number;
   featured?: boolean;
+  /** Grid mode: every card shares one ratio so rows line up. */
+  uniformAspect?: string;
   onOpen: () => void;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -922,7 +930,7 @@ const ProjectFeedCard = ({
           className={`v2-feed-card-media relative isolate w-full overflow-hidden rounded-[12px] [transform:translateZ(0)] ${
             project.media.fit === "contain" ? "bg-zinc-200" : ""
           } ${
-            project.media.aspect
+            project.media.aspect || uniformAspect
               ? ""
               : featured
                 ? "aspect-[16/9]"
@@ -934,8 +942,8 @@ const ProjectFeedCard = ({
             ...(project.media.bg && project.media.fit === "contain"
               ? { backgroundColor: project.media.bg }
               : undefined),
-            ...(project.media.aspect
-              ? { aspectRatio: project.media.aspect }
+            ...(uniformAspect || project.media.aspect
+              ? { aspectRatio: uniformAspect ?? project.media.aspect }
               : undefined),
           }}
         >
@@ -962,14 +970,14 @@ const ProjectFeedCard = ({
           )}
         </div>
 
-        <div className="mt-3">
+        <div className="mt-2.5">
           <h3
-            className="v2-built-tool-title text-[15px] font-normal leading-[1.5]"
+            className="v2-built-tool-title text-[14px] font-normal leading-[1.45]"
             style={display}
           >
             {project.name}
           </h3>
-          <p className="text-[15px] font-normal leading-[1.5] text-zinc-400">
+          <p className="text-[13px] font-normal leading-[1.45] text-zinc-400">
             {project.meta}
           </p>
         </div>
@@ -1551,7 +1559,11 @@ const IndexV2 = () => {
               ) : (
                 <motion.div
                   key={`feed-${activeTab}`}
-                  className="flex flex-col gap-8 px-0 pb-6 sm:gap-10 sm:px-1"
+                  className={
+                    FEED_GRID
+                      ? "grid grid-cols-1 gap-x-4 gap-y-8 px-0 pb-6 sm:grid-cols-2 sm:gap-y-10 sm:px-1"
+                      : "flex flex-col gap-8 px-0 pb-6 sm:gap-10 sm:px-1"
+                  }
                   variants={v2NelsonStagger}
                   initial="hidden"
                   animate="show"
@@ -1566,7 +1578,8 @@ const IndexV2 = () => {
                         project={project}
                         tab={activeTab}
                         index={index}
-                        featured={index === 0}
+                        featured={!FEED_GRID && index === 0}
+                        uniformAspect={FEED_GRID ? FEED_GRID_ASPECT : undefined}
                         onOpen={() => openProject(project)}
                       />
                     </FeedMotionItem>

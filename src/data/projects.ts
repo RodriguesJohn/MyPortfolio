@@ -220,7 +220,6 @@ const noScroll: Project = {
 };
 
 export const HIGHLIGHTS: Project[] = [
-  orbiAI,
   {
     slug: "digital-commercial-banking",
     name: "Startup Banking by JPMorgan Chase",
@@ -238,6 +237,8 @@ export const HIGHLIGHTS: Project[] = [
     },
   },
   citiBalanceTransfer,
+  orbiAI,
+  outfixAI,
   {
     slug: "florence-design-system",
     name: "Florence AI-ready design system",
@@ -255,7 +256,6 @@ export const HIGHLIGHTS: Project[] = [
       aspect: "3708/2160",
     },
   },
-  outfixAI,
   muo,
   olliAI,
   noScroll,
