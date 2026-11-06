@@ -60,19 +60,21 @@ const LogoRow = ({
     <div className="v2-logo-row mt-2.5 overflow-hidden">
       <ul
         className="v2-logo-marquee flex w-max"
-        style={{ animationDuration: `${duration}s` }}
+        // Six copies: each half of the strip holds three sets, so it always
+        // fills the row and the -50% loop stays seamless at any width.
+        style={{ animationDuration: `${duration * 3}s` }}
       >
-        {[0, 1].map((copy) =>
+        {[0, 1, 2, 3, 4, 5].map((copy) =>
           logos.map((logo) => (
             <li
               key={`${copy}-${logo.label}`}
               title={logo.label}
-              aria-hidden={copy === 1 ? true : undefined}
+              aria-hidden={copy > 0 ? true : undefined}
               className="mr-7 flex h-6 shrink-0 items-center"
             >
               <img
                 src={logo.src}
-                alt={copy === 1 ? "" : logo.label}
+                alt={copy > 0 ? "" : logo.label}
                 style={{ height: logo.height }}
                 className={`w-auto max-w-none ${logo.darkInk ? "v2-logo-dark-ink" : ""}`}
               />
@@ -1188,53 +1190,6 @@ const IndexV2 = () => {
     ? FEED_BY_TAB[activeTab as keyof typeof FEED_BY_TAB]
     : [];
 
-  // Scroll focus: the project crossing the focus line stays sharp, the rest soften.
-  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [focusedProject, setFocusedProject] = useState(0);
-  const isProjectFeed = activeTab === "work";
-
-  useEffect(() => {
-    if (!isProjectFeed) return;
-    setFocusedProject(0);
-    let frame = 0;
-
-    const measure = () => {
-      frame = 0;
-      const line = window.innerHeight * 0.45;
-      let best = 0;
-      let bestDistance = Infinity;
-      projectRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const distance =
-          rect.top <= line && rect.bottom >= line
-            ? 0
-            : Math.min(Math.abs(rect.top - line), Math.abs(rect.bottom - line));
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          best = i;
-        }
-      });
-      setFocusedProject(best);
-    };
-
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(measure);
-    };
-
-    const scroller = feedScrollRef.current;
-    scroller?.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    onScroll();
-
-    return () => {
-      cancelAnimationFrame(frame);
-      scroller?.removeEventListener("scroll", onScroll);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [isProjectFeed, feedProjects.length]);
 
   const selectTab = (tab: FeedTab) => {
     setActiveTab(tab);
@@ -1414,12 +1369,12 @@ const IndexV2 = () => {
           className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b v2-divider border-zinc-800/50 pb-4 lg:w-[260px] lg:border-b-0 lg:pb-2 lg:pt-28 lg:pl-1.5 lg:pr-6"
           variants={v2NelsonChild}
         >
-            <div className="flex items-start gap-4 overflow-visible pt-1 pr-0.5 sm:gap-5 sm:pt-2 lg:block">
+            <div className="flex flex-col gap-2 overflow-visible pt-1 sm:pt-2 lg:block">
               <div className="min-w-0 shrink-0">
                 <ProfileTiltCard />
               </div>
 
-              <dl className="mt-1 flex min-w-0 flex-1 flex-col gap-3 border-l v2-divider border-zinc-800/50 pl-4 sm:mt-2 sm:pl-5 lg:hidden">
+              <dl className="flex w-full max-w-[420px] flex-col gap-3 lg:hidden">
                 <div className="hidden items-center justify-between gap-4">
                   <dt className="text-[13px] font-medium text-zinc-400">
                     Socials
@@ -1478,7 +1433,7 @@ const IndexV2 = () => {
                   >
                     Join 6K+ Readers
                   </button>
-                  <TrustedBy className="mt-4" />
+                  <TrustedBy className="mt-6" />
                 </div>
               </dl>
             </div>
@@ -1607,24 +1562,13 @@ const IndexV2 = () => {
                       key={`${activeTab}-${project.slug}`}
                       index={index}
                     >
-                      <div
-                        ref={(el) => {
-                          projectRefs.current[index] = el;
-                        }}
-                        className={`transition-[filter,opacity] duration-500 ease-out ${
-                          !isProjectFeed || focusedProject === index
-                            ? ""
-                            : "opacity-40 blur-[6px] hover:opacity-100 hover:blur-0"
-                        }`}
-                      >
-                        <ProjectFeedCard
-                          project={project}
-                          tab={activeTab}
-                          index={index}
-                          featured={index === 0}
-                          onOpen={() => openProject(project)}
-                        />
-                      </div>
+                      <ProjectFeedCard
+                        project={project}
+                        tab={activeTab}
+                        index={index}
+                        featured={index === 0}
+                        onOpen={() => openProject(project)}
+                      />
                     </FeedMotionItem>
                   ))}
                 </motion.div>

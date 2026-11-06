@@ -1128,7 +1128,7 @@ All colors MUST be HSL.
   }
 
   .v2-profile-stack {
-    height: 240px;
+    height: auto;
   }
 }
 
@@ -1407,10 +1407,10 @@ html.lenis body {
   background-color: #f2f2f3;
 }
 
-/* Sidebar logo rows: soft fade on both edges, slow continuous drift */
+/* Sidebar logo rows: flush left with their label, fade on the right, slow continuous drift */
 .v2-logo-row {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 44px, #000 calc(100% - 44px), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 44px, #000 calc(100% - 44px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 44px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 44px), transparent);
 }
 
 .v2-logo-marquee {

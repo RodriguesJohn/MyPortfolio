@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PageShell from "@/components/v2/PageShell";
 import BalanceTransferCaseStudy from "@/components/v2/case-studies/BalanceTransferCaseStudy";
 import OrbiSimpleCaseStudy from "@/components/v2/case-studies/OrbiSimpleCaseStudy";
+import MuoCaseStudy from "@/components/v2/case-studies/MuoCaseStudy";
 import DCBSimpleCaseStudy from "@/components/v2/case-studies/DCBSimpleCaseStudy";
 import { getProjectBySlug } from "@/data/projects";
 
@@ -46,6 +47,7 @@ const IndexV2WorkDetail = () => {
   const leadIsSlides = Boolean(project?.slidesUrl);
   const isOrbiCaseStudy = project?.slug === "orbi-ai";
   const isDCBCaseStudy = project?.slug === "digital-commercial-banking";
+  const isMuoCaseStudy = project?.slug === "muo";
   const hasBalanceTransferCaseStudy = project?.slug === "balance-transfer-citi";
 
   const slidesRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,14 @@ const IndexV2WorkDetail = () => {
     return (
       <PageShell>
         <OrbiSimpleCaseStudy />
+      </PageShell>
+    );
+  }
+
+  if (isMuoCaseStudy) {
+    return (
+      <PageShell>
+        <MuoCaseStudy />
       </PageShell>
     );
   }

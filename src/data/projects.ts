@@ -1,5 +1,6 @@
 // Highlights
-import orbiVideo from "@/assets/Orbi.mov";
+import orbiVideo from "@/assets/orbi-hero.mp4";
+import muoVideo from "@/assets/Orbi.mov";
 import outfixVideo from "@/assets/OutfixV2.mp4";
 import outfixHero from "@/assets/outfixHero.png";
 import ollieVideo from "@/assets/OllieAIDemo.mp4";
@@ -80,9 +81,9 @@ export type Project = {
 
 const orbiAI: Project = {
   slug: "orbi-ai",
-  name: "Orbi AI",
+  name: "Agentic Content Studio",
   year: "2026",
-  meta: "AI note taker for creators",
+  meta: "Orbi AI",
   description:
     "iOS app for creators. Capture voice notes, thoughts, and ideas, then organize and repurpose them into content later.",
   slidesUrl:
@@ -99,6 +100,7 @@ const orbiAI: Project = {
     type: "video",
     src: orbiVideo,
     fit: "cover",
+    aspect: "3704/2160",
     bg: "#09090b",
     objectPosition: "center center",
   },
@@ -118,6 +120,23 @@ const olliAI: Project = {
     type: "video",
     src: ollieVideo,
     fit: "cover",
+    objectPosition: "center center",
+  },
+};
+
+const muo: Project = {
+  slug: "muo",
+  name: "Muo",
+  year: "2025",
+  meta: "AI note taker",
+  description:
+    "iOS app for creators. Capture voice notes, thoughts, and ideas, then organize and repurpose them into content later.",
+  appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
+  media: {
+    type: "video",
+    src: muoVideo,
+    fit: "cover",
+    bg: "#09090b",
     objectPosition: "center center",
   },
 };
@@ -161,9 +180,9 @@ const citiAiInsights: Project = {
 
 const citiBalanceTransfer: Project = {
   slug: "balance-transfer-citi",
-  name: "Balance Transfer, Citi",
+  name: "Balance transfer design for 20M+ users",
   year: "2022",
-  meta: "Citi · Consumer banking",
+  meta: "Citibank",
   description:
     "Balance transfer feature for ~20M Citi Mobile users, transferring balances from prior creditors to Citi on iOS.",
   longDescription:
@@ -204,6 +223,7 @@ export const HIGHLIGHTS: Project[] = [
       aspect: "4/3",
     },
   },
+  citiBalanceTransfer,
   {
     slug: "florence-design-system",
     name: "Florence",
@@ -222,7 +242,7 @@ export const HIGHLIGHTS: Project[] = [
     },
   },
   outfixAI,
-  citiBalanceTransfer,
+  muo,
   olliAI,
 ];
 

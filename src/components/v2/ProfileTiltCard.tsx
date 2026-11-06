@@ -198,7 +198,7 @@ const ProfileTiltCard = () => {
   return (
     <>
       <motion.div
-        className="relative z-50 mb-3 w-full max-w-[210px] overflow-visible sm:mb-5 sm:max-w-[230px]"
+        className="relative z-50 mb-3 w-full max-w-[420px] overflow-visible sm:mb-5 lg:max-w-[230px]"
         style={{ zIndex: expanded || closing ? 90 : 50 }}
       >
         <motion.button
@@ -225,11 +225,11 @@ const ProfileTiltCard = () => {
             {expanded ? (
               <>
                 <div
-                  className="v2-profile-stack-card absolute inset-x-4 top-2.5 aspect-[3/4] rounded-[24px] opacity-0"
+                  className="v2-profile-stack-card absolute inset-x-4 top-2.5 bottom-0 lg:bottom-auto lg:aspect-[3/4] rounded-[24px] opacity-0"
                   aria-hidden="true"
                 />
                 <div
-                  className="v2-profile-stack-card absolute inset-x-2 top-1 aspect-[3/4] rounded-[24px] opacity-0"
+                  className="v2-profile-stack-card absolute inset-x-2 top-1 bottom-0 lg:bottom-auto lg:aspect-[3/4] rounded-[24px] opacity-0"
                   aria-hidden="true"
                 />
                 <div
@@ -243,7 +243,7 @@ const ProfileTiltCard = () => {
               <>
                 <motion.div
                   layoutId="v2-profile-about-card"
-                  className="v2-profile-stack-card v2-profile-stack-card--back absolute inset-x-4 top-2.5 aspect-[3/4] rounded-[24px]"
+                  className="v2-profile-stack-card v2-profile-stack-card--back absolute inset-x-4 top-2.5 bottom-0 lg:bottom-auto lg:aspect-[3/4] rounded-[24px]"
                   variants={v2ProfileBack}
                   transition={v2SpringSoft}
                   style={{ zIndex: closing ? 92 : undefined }}
@@ -251,7 +251,7 @@ const ProfileTiltCard = () => {
                 />
                 <motion.div
                   layoutId="v2-profile-highlights-card"
-                  className="v2-profile-stack-card v2-profile-stack-card--mid absolute inset-x-2 top-1 aspect-[3/4] rounded-[24px]"
+                  className="v2-profile-stack-card v2-profile-stack-card--mid absolute inset-x-2 top-1 bottom-0 lg:bottom-auto lg:aspect-[3/4] rounded-[24px]"
                   variants={v2ProfileMid}
                   transition={v2SpringSoft}
                   style={{ zIndex: closing ? 93 : undefined }}
