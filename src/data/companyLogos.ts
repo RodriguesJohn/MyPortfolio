@@ -1,7 +1,8 @@
 // Logos are trimmed to their exact edges (src/assets/logos), so sizing by
 // height alone is predictable and nothing gets cropped.
 import appleLogo from "@/assets/logos/apple.png";
-import metaLogo from "@/assets/logos/meta.png";
+// Neutral filename: ad blockers block asset URLs containing "meta".
+import metaLogo from "@/assets/logos/infinity-mark.png";
 import googleLogo from "@/assets/logos/google.png";
 import chaseLogo from "@/assets/logos/chase.png";
 import citiLogo from "@/assets/logos/citi.png";
