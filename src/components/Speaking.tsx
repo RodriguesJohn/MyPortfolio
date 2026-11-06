@@ -11,7 +11,7 @@ export function Speaking() {
       year: "2024",
       location: "San Francisco, CA",
       thumbnail: speakingThumbnail,
-      description: "\"Out of Scope\" is an event that features a candid design panel—created to spark real, unfiltered conversations about the state of the industry",
+      description: "\"Out of Scope\" is an event that features a candid design panel, created to spark real, unfiltered conversations about the state of the industry",
     },
     {
       id: 2,

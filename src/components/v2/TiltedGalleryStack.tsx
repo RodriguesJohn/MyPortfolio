@@ -67,7 +67,7 @@ const TiltedGalleryStack = ({ className = "" }: TiltedGalleryStackProps) => {
 
       <div className="mt-4 flex items-center justify-between gap-3 px-1">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
+          <p className="text-[11px] font-medium text-zinc-500">
             Explore
           </p>
           <p className="v2-gallery-stack-title mt-0.5 text-[14px] font-semibold tracking-[-0.01em] text-zinc-200 transition-colors group-hover:text-white">

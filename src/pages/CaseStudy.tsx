@@ -2394,10 +2394,10 @@ const CaseStudy = () => {
                 People juggle handwritten notes, sticky notes, documents, Notion, multiple to-do apps, and AI chats just to keep track of what they need to do. Everything ends up scattered. On the go, a fleeting thought worth capturing rarely has an easy, consistent place to land.
               </SectionText>
               <SectionText className="mb-6">
-                Most to-do apps are built to track tasks, while goals are treated as something separate. Across existing tools, tasks and goals live in different places — and even when they're connected, voice rarely works as a natural way to capture what's on someone's mind. The friction of manually entering and organizing everything makes the experience feel heavy and fragmented.
+                Most to-do apps are built to track tasks, while goals are treated as something separate. Across existing tools, tasks and goals live in different places, and even when they're connected, voice rarely works as a natural way to capture what's on someone's mind. The friction of manually entering and organizing everything makes the experience feel heavy and fragmented.
               </SectionText>
               <SectionText className="mb-6">
-                Orbi was built to close that gap — meeting people where their thinking happens.
+                Orbi was built to close that gap, meeting people where their thinking happens.
               </SectionText>
               <blockquote className="border-l-4 border-foreground/20 pl-6 py-2 my-6 italic text-foreground/90">
                 <p className="text-base lg:text-lg">
@@ -2762,7 +2762,7 @@ const CaseStudy = () => {
                 <p className="text-xl italic text-muted-foreground/80 leading-relaxed">
                   "This is what good designers do. They don't just design the product. They shape the business. You entirely changed my whole business."
                 </p>
-                <p className="text-sm text-muted-foreground/50 mt-2">— Joshua Chung, Founder</p>
+                <p className="text-sm text-muted-foreground/50 mt-2">Joshua Chung, Founder</p>
               </blockquote>
               <SectionText>
                 I helped him reframe the whole business from B2C to B2B. Outfix wouldn't be an app for individual users. It would be a platform for professional stylists and agencies, with the consumer app returning later.
@@ -3038,7 +3038,7 @@ const CaseStudy = () => {
                 <p className="text-lg text-muted-foreground/80 italic">
                   "I just want to know what I owe and when it's due. Why do I have to click through five screens to find that?"
                 </p>
-                <p className="text-sm text-muted-foreground/60 mt-2">— Research participant</p>
+                <p className="text-sm text-muted-foreground/60 mt-2">Research participant</p>
               </blockquote>
             </Section>
 

@@ -23,7 +23,7 @@ export const BUILT_TOOLS: BuiltTool[] = [
   {
     id: "apple-notes-mcp",
     index: "01",
-    tag: "Open source · MCP server",
+    tag: "Open Source · MCP Server",
     name: "Apple Notes MCP",
     description:
       "Connect AI assistants to Apple Notes so you can read, create, search, update, and delete notes through natural conversation.",
@@ -40,7 +40,7 @@ export const BUILT_TOOLS: BuiltTool[] = [
   {
     id: "ollie-ai-figma",
     index: "02",
-    tag: "Figma plugin · AI design assistant",
+    tag: "Figma Plugin · AI Design Assistant",
     name: "Ollie AI for Figma",
     description:
       "Use Ollie AI directly inside Figma as an AI design assistant for prompting, exploring, and supporting design work without leaving the canvas.",

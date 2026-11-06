@@ -26,7 +26,7 @@ const IndexV2ComponentGallery = () => (
         className="mt-3 max-w-[36rem] text-[15px] leading-[1.55] text-zinc-500"
         style={enter(140)}
       >
-        Interactive UI patterns, motion studies, and interface experiments —
+        Interactive UI patterns, motion studies, and interface experiments,
         built in code. This gallery is coming together; check back soon.
       </p>
 

@@ -35,6 +35,8 @@ const IndexV2Blog = () => {
           </p>
           <a
             href={COURSE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/[0.04] py-1 pl-1 pr-3.5 text-[12px] ring-1 ring-white/[0.08] transition-colors hover:bg-white/[0.07]"
             style={enter(220)}
           >

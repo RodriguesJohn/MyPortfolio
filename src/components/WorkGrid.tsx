@@ -127,7 +127,7 @@ const projects: ProjectItem[] = [
     category: "commercial",
     businessCategory: "B2C",
     secondaryTag: "Shipped",
-    rating: "4.6 on App Store",
+    rating: "4.5 on App Store",
   },
   {
     id: 3,
@@ -805,7 +805,7 @@ function PlaybookCard() {
                   </svg>
                 </div>
                 <div>
-                  <div className="text-[10px] tracking-[0.2em] uppercase opacity-55 mb-1.5">
+                  <div className="text-[10px] opacity-55 mb-1.5">
                     AI Design
                   </div>
                   <div className="text-2xl font-semibold leading-tight tracking-tight">

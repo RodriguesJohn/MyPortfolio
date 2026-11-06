@@ -84,7 +84,7 @@ const orbiAI: Project = {
   year: "2026",
   meta: "AI note taker for creators",
   description:
-    "iOS app for creators. Capture voice notes, thoughts, and ideas — then organize and repurpose them into content later.",
+    "iOS app for creators. Capture voice notes, thoughts, and ideas, then organize and repurpose them into content later.",
   slidesUrl:
     "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdeck%2FkmEskNJDRsWB58Pm89LvtZ%2FCaseStudyPresentation---Orbi-AI%3Fnode-id%3D1-306%26scaling%3Dmin-zoom%26content-scaling%3Dfixed",
   appStoreUrl: "https://apps.apple.com/us/app/orbi-voice-tasks-reminders/id6754195534",
@@ -98,7 +98,7 @@ const orbiAI: Project = {
   media: {
     type: "video",
     src: orbiVideo,
-    fit: "contain",
+    fit: "cover",
     bg: "#09090b",
     objectPosition: "center center",
   },
@@ -151,11 +151,11 @@ const outfixAI: Project = {
 
 const citiAiInsights: Project = {
   slug: "ai-insights-citi",
-  name: "AI Builder Academy",
+  name: "AI Insights, Citi",
   year: "2023",
   meta: "Citi · Consumer banking",
   description:
-    "AI insights surface inside the Citi consumer banking app. Shipped to 20M+ users.",
+    "0 to 1 AI insights prototype for the Citi Mobile app, pitched to leadership as an $80M revenue opportunity.",
   media: { type: "video", src: aiInsightsVideo },
 };
 
@@ -198,7 +198,7 @@ export const HIGHLIGHTS: Project[] = [
     media: {
       type: "image",
       src: dcbImage,
-      fit: "contain",
+      fit: "cover",
       bg: "#c8c8c8",
       objectPosition: "center center",
       aspect: "4/3",
@@ -335,9 +335,9 @@ export const PAST: Project[] = [
     slug: "no-scroll-ios",
     name: "No Scroll",
     year: "2024",
-    meta: "iOS · 4.6★ · 50K users",
+    meta: "iOS · 4.5★ · 50K+ downloads",
     description:
-      "Redesigned an attention-management app. Hit 4.6 rating with 50K active users on the App Store.",
+      "Redesigned an attention-management app. 50K+ downloads and a 4.5 rating from 2,000+ reviews on the App Store.",
     media: { type: "image", src: noScrollImage },
     tag: "Shipped",
     href: "https://apps.apple.com/us/app/no-scroll-limit-screen-time/id6474079216",

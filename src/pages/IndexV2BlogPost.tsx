@@ -10,6 +10,8 @@ export const BlogCourseCta = () => (
     </p>
     <a
       href={COURSE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       className="v2-explore-cta inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold"
     >
       {COURSE_CTA.label} →
@@ -49,7 +51,7 @@ const IndexV2BlogPost = () => {
           ) : null}
           <aside className="mt-6 rounded-xl bg-white/[0.04] p-4 text-[14px] leading-[1.6] text-zinc-300 ring-1 ring-white/[0.08]">
             <strong className="text-zinc-50">Note:</strong> {COURSE_CTA.note}{" "}
-            <a href={COURSE_URL} className="font-semibold text-zinc-50 underline underline-offset-4">
+            <a href={COURSE_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-zinc-50 underline underline-offset-4">
               {COURSE_CTA.noteLabel} →
             </a>
           </aside>

@@ -18,7 +18,7 @@ import profileImage from "@/assets/PP.jpg";
 const DELPHI_CHAT_URL = "https://www.delphi.ai/john-rodrigues";
 
 const sans = {
-  fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
+  fontFamily: "'Geist', ui-sans-serif, system-ui, sans-serif",
 };
 
 const displayFont = "'Geist', ui-sans-serif, system-ui, sans-serif";
@@ -41,8 +41,8 @@ export const useV2Theme = () => {
   return ctx;
 };
 
-/** Button size (28) + gap (2) — knob travels between sun and moon. */
-const THEME_KNOB_TRAVEL = 30;
+/** Button size (22) + gap (2): knob travels between sun and moon. */
+const THEME_KNOB_TRAVEL = 24;
 
 const themeToggleSpring = {
   type: "spring" as const,
@@ -79,13 +79,13 @@ export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => 
 
   return (
     <div
-      className={`v2-theme-toggle-icons relative inline-flex items-center gap-0.5 overflow-visible rounded-full p-1 ring-1 ${className}`}
+      className={`v2-theme-toggle-icons relative inline-flex items-center gap-0.5 overflow-visible rounded-full p-[3px] ring-1 ${className}`}
       role="group"
       aria-label="Appearance"
     >
       <motion.span
         aria-hidden="true"
-        className={`v2-theme-toggle-knob pointer-events-none absolute top-1 left-1 z-0 size-7 rounded-full ${
+        className={`v2-theme-toggle-knob pointer-events-none absolute top-[3px] left-[3px] z-0 size-[22px] rounded-full ${
           isLightPreview
             ? "v2-theme-toggle-knob--dark"
             : "v2-theme-toggle-knob--light"
@@ -102,7 +102,7 @@ export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => 
         onClick={() => {
           if (!isLightPreview) toggleTheme();
         }}
-        className={`relative z-[1] inline-flex size-7 items-center justify-center rounded-full ${
+        className={`relative z-[1] inline-flex size-[22px] items-center justify-center rounded-full ${
           isLightPreview
             ? "v2-theme-toggle-icon--on"
             : "text-zinc-500 hover:text-zinc-300"
@@ -121,7 +121,7 @@ export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => 
           transition={themeToggleSpring}
         >
           <svg
-            className="size-3.5"
+            className="size-3"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -141,7 +141,7 @@ export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => 
         onClick={() => {
           if (isLightPreview) toggleTheme();
         }}
-        className={`relative z-[1] inline-flex size-7 items-center justify-center rounded-full ${
+        className={`relative z-[1] inline-flex size-[22px] items-center justify-center rounded-full ${
           !isLightPreview
             ? "v2-theme-toggle-icon--on-dark"
             : "text-zinc-500 hover:text-zinc-700"
@@ -160,7 +160,7 @@ export const ThemeToggleIcons = ({ className = "" }: { className?: string }) => 
           transition={themeToggleSpring}
         >
           <svg
-            className="size-3.5"
+            className="size-3"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -295,7 +295,15 @@ const Waveform = ({ playing }: { playing: boolean }) => {
   );
 };
 
-const PageShell = ({ children }: { children: ReactNode }) => {
+const PageShell = ({
+  children,
+  dockAlign = "page",
+}: {
+  children: ReactNode;
+  /** "feed": on desktop, centre the chat dock over the homepage feed column
+   *  (260px sidebar + 40px gap pushes the column's centre 150px right). */
+  dockAlign?: "page" | "feed";
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -417,18 +425,18 @@ const PageShell = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window === "undefined") return "dark";
+    if (typeof window === "undefined") return "light";
     const queryTheme = new URLSearchParams(window.location.search).get("theme");
     if (queryTheme === "light" || queryTheme === "dark") return queryTheme;
-    return "dark";
+    return "light";
   });
   const isLightPreview = theme === "light";
 
   useEffect(() => {
     window.localStorage.setItem("v2-theme", theme);
     const params = new URLSearchParams(location.search);
-    if (theme === "light") {
-      params.set("theme", "light");
+    if (theme === "dark") {
+      params.set("theme", "dark");
     } else {
       params.delete("theme");
     }
@@ -491,7 +499,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
       }`}
       style={{
         backgroundColor: isLightPreview ? "#f7f7f7" : "#000000",
-        fontWeight: 500,
+        fontWeight: 400,
         ...sans,
       }}
     >
@@ -499,7 +507,9 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
       {/* Chat-style composer + More */}
       <nav
-        className="fixed left-1/2 z-50 w-[min(calc(100vw-2.75rem),420px)] -translate-x-1/2 sm:w-[min(calc(100vw-2rem),420px)]"
+        className={`fixed left-1/2 z-50 w-[min(calc(100vw-2.75rem),340px)] -translate-x-1/2 sm:w-[min(calc(100vw-2rem),340px)] ${
+          dockAlign === "feed" ? "lg:left-[calc(50%+150px)]" : ""
+        }`}
         style={{
           bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
           opacity: 0,
@@ -508,7 +518,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
         }}
       >
         <div
-          className="pointer-events-none absolute -inset-x-5 -inset-y-3 rounded-[36px]"
+          className="pointer-events-none absolute -inset-x-5 -inset-y-3 rounded-[30px]"
           style={{
             background: isLightPreview
               ? "radial-gradient(ellipse at center, rgba(255,255,255,0.54), rgba(255,255,255,0.18) 48%, transparent 74%)"
@@ -518,7 +528,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           aria-hidden="true"
         />
         <div
-          className="v2-chat-dock relative flex items-center gap-1 overflow-hidden rounded-[28px] border px-2 py-1.5"
+          className="v2-chat-dock relative flex items-center gap-1 overflow-hidden rounded-[24px] border px-1.5 py-1"
           style={{
             background: isLightPreview
               ? "linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.46))"
@@ -578,7 +588,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           <button
             type="button"
             onClick={() => setIsChatOpen(true)}
-            className={`group relative z-[1] flex min-w-0 flex-1 items-center gap-2 rounded-full px-3.5 py-2.5 text-left transition ${
+            className={`group relative z-[1] flex min-w-0 flex-1 items-center gap-2 rounded-full px-3 py-2 text-left transition ${
               isLightPreview
                 ? "hover:bg-zinc-900/[0.04]"
                 : "hover:bg-white/[0.05]"
@@ -586,14 +596,14 @@ const PageShell = ({ children }: { children: ReactNode }) => {
             aria-label="Ask John.ai"
           >
             <span
-              className={`min-w-0 flex-1 truncate text-[14px] font-medium leading-tight ${
+              className={`min-w-0 flex-1 truncate text-[13px] font-normal leading-tight ${
                 isLightPreview ? "text-zinc-500" : "text-zinc-400"
               }`}
             >
               Ask John.ai…
             </span>
             <span
-              className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full transition ${
+              className={`inline-flex size-7 shrink-0 items-center justify-center rounded-full transition ${
                 isLightPreview
                   ? "bg-zinc-900/[0.06] text-zinc-700 group-hover:bg-zinc-900 group-hover:text-white"
                   : "bg-white/[0.08] text-zinc-200 group-hover:bg-white group-hover:text-zinc-950"
@@ -615,7 +625,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           </button>
 
           <div
-            className={`relative z-[1] mx-0.5 h-7 w-px shrink-0 ${
+            className={`relative z-[1] mx-0.5 h-5 w-px shrink-0 ${
               isLightPreview ? "bg-zinc-900/10" : "bg-white/10"
             }`}
             aria-hidden="true"
@@ -624,7 +634,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
           <button
             type="button"
             onClick={() => setIsRelatedOpen(true)}
-            className={`relative z-[1] inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2.5 text-[13px] font-semibold transition ${
+            className={`relative z-[1] inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-[13px] font-medium transition ${
               isLightPreview
                 ? "text-zinc-800 hover:bg-zinc-900/[0.06]"
                 : "text-zinc-100 hover:bg-white/[0.06]"
@@ -687,7 +697,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
             }}
           >
             <div className="flex items-center justify-between px-5 pt-4">
-              <span className="text-[12px] tracking-[0.18em] uppercase text-zinc-500">My story</span>
+              <span className="text-[12px] text-zinc-500">My Story</span>
               <button
                 onClick={closeListen}
                 aria-label="Close"
@@ -803,7 +813,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                   <img src={profileImage} alt="John" className="h-full w-full object-cover" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[15px] font-semibold">John.ai</span>
+                  <span className="text-[15px] font-medium">John.ai</span>
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 </div>
               </div>
@@ -871,7 +881,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
             }}
           >
             <div className="flex items-center justify-between px-5 pt-5 pb-2 sm:px-6">
-              <span className="text-[10px] tracking-[0.16em] uppercase text-zinc-500">
+              <span className="text-[10px] text-zinc-500">
                 More
               </span>
               <button
@@ -889,7 +899,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
             {/* Resume (top) */}
             <div className="px-5 pt-4 pb-4 border-t border-white/[0.06] sm:px-6">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
+              <p className="text-[10px] text-zinc-500 mb-2.5">
                 Resume
               </p>
               <div className="flex items-center gap-2.5">
@@ -907,7 +917,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
                     </svg>
                   </span>
                   <span className="flex min-w-0 flex-col">
-                    <span className="text-[13px] font-semibold leading-tight">Download my resume</span>
+                    <span className="text-[13px] font-medium leading-tight">Download my resume</span>
                     <span className="text-[11px] text-black/55 leading-tight">PDF · Updated 2026</span>
                   </span>
                 </span>
@@ -954,7 +964,7 @@ const PageShell = ({ children }: { children: ReactNode }) => {
 
             {/* Section 1: Social */}
             <div className="border-t border-white/[0.06] px-5 pt-4 pb-4 sm:px-6">
-              <p className="text-[10px] tracking-[0.16em] uppercase text-zinc-500 mb-2.5">
+              <p className="text-[10px] text-zinc-500 mb-2.5">
                 Connect
               </p>
               <ul className="space-y-1">

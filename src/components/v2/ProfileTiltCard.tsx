@@ -1,14 +1,19 @@
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  PROFILE_GITHUB_URL,
+  PROFILE_LINKEDIN_URL,
+  PROFILE_SUBSTACK_URL,
+  PROFILE_X_URL,
+} from "@/config/profileLinks";
 import { AnimatePresence, motion } from "framer-motion";
-import profileVideo from "@/assets/profile-video.mp4";
-import logoCursor from "@/assets/logo-cursor.png";
-import logoClaude from "@/assets/logo-claude.png";
-import logoClaudeCode from "@/assets/logo-claude-code.png";
-import logoFigma from "@/assets/logo-figma.png";
-import logoReact from "@/assets/logo-react.png";
-import logoGithub from "@/assets/logo-github.png";
-import logoSwift from "@/assets/logo-swift.png";
+import ProfileShader from "@/components/v2/ProfileShader";
+import {
+  RESOURCES_TRUSTED_BY,
+  WORKED_AT,
+  type CompanyLogo,
+} from "@/data/companyLogos";
+import profilePhoto from "@/assets/profile-photo.jpeg";
 import {
   v2ProfileBack,
   v2ProfileFloat,
@@ -18,148 +23,138 @@ import {
   v2SpringSoft,
 } from "@/components/v2/motion";
 
-const handwritten = {
-  fontFamily: "'Kalam', 'Nothing You Could Do', cursive",
+const sans = {
+  fontFamily: "'Geist', ui-sans-serif, system-ui, sans-serif",
 };
 
-const HIGHLIGHT_NOTES = [
-  "Orbi AI — 0→1 AI product building app",
-  "Startup banking platform shipped for JPMorgan Chase",
-  "Florence AI-ready design system",
-  "Founded Human AI Studio",
-  "OutfitX AI MVP",
-  "Design development",
+const HELPFUL_LINKS = [
+  { label: "Resume", href: "/JohnRodriguesResume.pdf" },
+  { label: "Course", href: "https://www.humanaistudio.io/academy" },
+  { label: "GitHub", href: PROFILE_GITHUB_URL },
+  { label: "LinkedIn", href: PROFILE_LINKEDIN_URL },
+  { label: "Substack", href: PROFILE_SUBSTACK_URL },
+  { label: "X", href: PROFILE_X_URL },
 ];
-
-const TOOLBOX_LOGOS = [
-  { src: logoCursor, label: "Cursor" },
-  { src: logoClaudeCode, label: "Claude Code" },
-  { src: logoClaude, label: "Claude" },
-  { src: logoFigma, label: "Figma" },
-  { src: logoReact, label: "React" },
-  { src: logoGithub, label: "GitHub" },
-  { src: logoSwift, label: "Swift" },
-] as const;
 
 const ProfileCardContent = ({ large = false }: { large?: boolean }) => (
   <>
-    <div className="v2-profile-shader" aria-hidden="true" />
-    <div className="v2-profile-shader-noise" aria-hidden="true" />
+    <ProfileShader />
 
     <div className="relative z-10">
       <div
         className={`relative overflow-hidden rounded-full bg-zinc-950 ring-2 ring-white/55 ${
-          large ? "size-[148px]" : "size-[108px]"
+          large ? "size-[112px]" : "size-[80px]"
         }`}
       >
-        <video
-          src={profileVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          aria-label="John Rodrigues"
-          className="absolute inset-0 size-full scale-[1.22] object-cover object-[center_32%]"
+        <img
+          src={profilePhoto}
+          alt="John Rodrigues"
+          className="absolute inset-0 size-full origin-[58%_10%] scale-[1.2] object-cover"
         />
       </div>
 
       <div className={`space-y-1.5 ${large ? "mt-5" : "mt-3.5"}`}>
         <h1
           className={`v2-profile-name leading-none text-white whitespace-normal sm:whitespace-nowrap ${
-            large ? "text-[30px]" : "text-[24px]"
+            "text-[20px]"
           }`}
-          style={{ ...handwritten, fontWeight: 700 }}
+          style={{ ...sans, fontWeight: 500 }}
         >
           John Rodrigues
         </h1>
 
         <p
           className={`v2-profile-role leading-[1.25] text-white/85 ${
-            large ? "text-[17px]" : "text-[15px]"
+            "text-[13px]"
           }`}
-          style={{ ...handwritten, fontWeight: 500 }}
+          style={{ ...sans, fontWeight: 400 }}
         >
-          Design Engineer
-          <br />
           Senior Product Designer
+          <br />
+          Design Engineer
         </p>
 
         <p
-          className={`pt-1.5 leading-[1.5] text-white/85 ${
-            large ? "text-[15px]" : "text-[13.5px]"
+          className={`pt-1.5 leading-[1.5] text-white/85 [text-wrap:pretty] ${
+            "text-[13px]"
           }`}
-          style={{
-            fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
-            fontWeight: 400,
-          }}
+          style={{ ...sans, fontWeight: 400 }}
         >
-          I build 0→1 AI-native products end to end. 10+ years across
-          JPMorgan Chase and early-stage startups.
+          8+ years, based in the SF Bay Area. Previously at JPMorgan Chase,
+          Citibank, and Toca. Founded Human AI Studio.
         </p>
       </div>
     </div>
   </>
 );
 
-const ToolboxNoteContent = () => (
+const CompanyLogoGroup = ({
+  title,
+  logos,
+}: {
+  title: string;
+  logos: CompanyLogo[];
+}) => (
+  <div>
+    <p
+      className="text-[13px] leading-none text-white/70"
+      style={{ ...sans, fontWeight: 500 }}
+    >
+      {title}
+    </p>
+    <ul className="mt-4 grid grid-cols-2 items-center gap-x-4 gap-y-4">
+      {logos.map((logo) => (
+        <li key={logo.label} className="flex h-6 items-center" title={logo.label}>
+          <img
+            src={logo.src}
+            alt={logo.label}
+            style={{ height: logo.height }}
+            className="w-auto max-w-full object-contain object-left brightness-0 invert"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const CompaniesNoteContent = () => (
   <>
-    <div className="v2-profile-shader v2-profile-shader--note" aria-hidden="true" />
-    <div className="v2-profile-shader-noise" aria-hidden="true" />
-    <div className="relative z-10 flex h-full flex-col">
-      <p
-        className="text-[13px] leading-none text-white/70"
-        style={{ ...handwritten, fontWeight: 500 }}
-      >
-        toolbox
-      </p>
-      <div className="mt-5 grid grid-cols-3 gap-x-3 gap-y-4">
-        {TOOLBOX_LOGOS.map((logo) => (
-          <div key={logo.label} className="flex flex-col items-center gap-1.5">
-            <span className="inline-flex size-11 items-center justify-center overflow-hidden rounded-[12px] bg-white/95">
-              <img
-                src={logo.src}
-                alt=""
-                className="size-full object-cover"
-              />
-            </span>
-            <span
-              className="max-w-full truncate text-center text-[11px] leading-none text-white/90"
-              style={{ ...handwritten, fontWeight: 500 }}
-            >
-              {logo.label}
-            </span>
-          </div>
-        ))}
-      </div>
+    <ProfileShader shift={3} />
+    <div className="relative z-10 flex h-full flex-col gap-7">
+      <CompanyLogoGroup title="Worked At" logos={WORKED_AT} />
+      <CompanyLogoGroup title="Resources Trusted By" logos={RESOURCES_TRUSTED_BY} />
     </div>
   </>
 );
 
-const HighlightsNoteContent = () => (
+const LinksNoteContent = () => (
   <>
-    <div className="v2-profile-shader v2-profile-shader--note" aria-hidden="true" />
-    <div className="v2-profile-shader-noise" aria-hidden="true" />
+    <ProfileShader shift={6} />
     <div className="relative z-10 flex h-full flex-col">
       <p
         className="text-[13px] leading-none text-white/70"
-        style={{ ...handwritten, fontWeight: 500 }}
+        style={{ ...sans, fontWeight: 500 }}
       >
-        work highlights
+        Helpful Links
       </p>
-      <ul className="mt-4 space-y-2">
-        {HIGHLIGHT_NOTES.map((note, index) => (
-          <li
-            key={note}
-            className="flex gap-2 text-[13.5px] leading-[1.28] text-white"
-            style={{
-              ...handwritten,
-              fontWeight: 500,
-              transform: `rotate(${index % 2 === 0 ? 0.5 : -0.8}deg)`,
-            }}
-          >
-            <span className="mt-[0.15em] shrink-0 text-white/55">•</span>
-            <span>{note}</span>
+      <ul className="mt-4 flex flex-col divide-y divide-white/15">
+        {HELPFUL_LINKS.map((link) => (
+          <li key={link.label}>
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between py-3 text-[14px] leading-none text-white transition-opacity hover:opacity-80"
+              style={{ ...sans, fontWeight: 500 }}
+            >
+              {link.label}
+              <span
+                aria-hidden="true"
+                className="text-white/55 transition-transform group-hover:-translate-y-px group-hover:translate-x-px"
+              >
+                ↗
+              </span>
+            </a>
           </li>
         ))}
       </ul>
@@ -320,8 +315,8 @@ const ProfileTiltCard = () => {
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none">
-                      <ToolboxNoteContent />
+                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none md:pr-8">
+                      <CompaniesNoteContent />
                     </div>
                   </motion.article>
 
@@ -344,8 +339,8 @@ const ProfileTiltCard = () => {
                     initial={{ opacity: 0.85 }}
                     animate={{ opacity: 1 }}
                   >
-                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none">
-                      <HighlightsNoteContent />
+                    <div className="v2-profile-card-whiteboard relative h-full max-h-[calc(100dvh-8rem)] overflow-hidden rounded-[28px] p-5 md:max-h-none md:pl-11">
+                      <LinksNoteContent />
                     </div>
                   </motion.article>
 

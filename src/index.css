@@ -133,12 +133,7 @@ All colors MUST be HSL.
 
   .v2-light {
     background-color: #f7f7f7 !important;
-    background-image: radial-gradient(
-      circle,
-      rgba(161, 161, 170, 0.34) 1px,
-      transparent 1px
-    ) !important;
-    background-size: 16px 16px !important;
+    background-image: none !important; /* dot grid off; was: radial-gradient(circle, rgba(161, 161, 170, 0.34) 1px, transparent 1px), size 16px */
     color: #18181b !important;
   }
 
@@ -755,12 +750,7 @@ All colors MUST be HSL.
 
 .v2-dark {
   background-color: #000000 !important;
-  background-image: radial-gradient(
-    circle,
-    rgba(113, 113, 122, 0.34) 1px,
-    transparent 1px
-  ) !important;
-  background-size: 16px 16px !important;
+  background-image: none !important; /* dot grid off; was: radial-gradient(circle, rgba(113, 113, 122, 0.34) 1px, transparent 1px), size 16px */
   color: #fafafa !important;
 }
 
@@ -952,7 +942,7 @@ All colors MUST be HSL.
 
 .v2-profile-stack {
   position: relative;
-  height: 320px;
+  height: 290px;
   overflow: visible;
   padding: 10px 8px 12px;
 }
@@ -968,23 +958,23 @@ All colors MUST be HSL.
 }
 
 .v2-profile-stack-card--back {
-  background: linear-gradient(155deg, #2a5fad 0%, #3568b5 55%, #3f79c9 100%);
+  background: linear-gradient(155deg, #4c85d9 0%, #5a91e0 55%, #6aa0e8 100%);
   opacity: 0.42;
   box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.45);
 }
 
 .v2-profile-stack-card--mid {
-  background: linear-gradient(155deg, #3568b5 0%, #3f79c9 55%, #4d82d4 100%);
+  background: linear-gradient(155deg, #5a91e0 0%, #6aa0e8 55%, #78abee 100%);
   opacity: 0.58;
   box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.35);
 }
 
 .v2-profile-shader {
-  --shader-base: #3f79c9;
-  --shader-a: #6aa3eb;
-  --shader-b: #2a5fad;
-  --shader-c: #9cc8f7;
-  --shader-d: #1e4f96;
+  --shader-base: #5e97e5;
+  --shader-a: #80b5f2;
+  --shader-b: #4c85d9;
+  --shader-c: #aed5fb;
+  --shader-d: #3c71c6;
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -1088,11 +1078,11 @@ All colors MUST be HSL.
 }
 
 .v2-profile-name {
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .v2-profile-role {
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .v2-light .v2-profile-card-whiteboard,
@@ -1102,11 +1092,11 @@ All colors MUST be HSL.
 
 .v2-light .v2-profile-shader,
 :not(.v2-light) .v2-profile-shader {
-  --shader-base: #3f79c9;
-  --shader-a: #6aa3eb;
-  --shader-b: #2a5fad;
-  --shader-c: #9cc8f7;
-  --shader-d: #1e4f96;
+  --shader-base: #5e97e5;
+  --shader-a: #80b5f2;
+  --shader-b: #4c85d9;
+  --shader-c: #aed5fb;
+  --shader-d: #3c71c6;
 }
 
 :not(.v2-light) .v2-profile-shader-noise {
@@ -1360,3 +1350,88 @@ All colors MUST be HSL.
 .v2-light .v2-blog-prose td {
   border-color: rgba(24, 24, 27, 0.1);
 }
+
+/* Section dividers: lighter than default borders */
+.v2-light .v2-divider {
+  border-color: rgba(24, 24, 27, 0.06) !important;
+}
+
+/* Active nav tab: soft bar under the label */
+.v2-feed-tab-indicator {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+.v2-light .v2-feed-tab-indicator {
+  background-color: rgba(24, 24, 27, 0.14);
+}
+
+/* Fixed top navigation */
+.v2-top-nav {
+  -webkit-backdrop-filter: saturate(140%) blur(20px);
+  backdrop-filter: saturate(140%) blur(20px);
+}
+
+.v2-dark .v2-top-nav,
+.v2-top-nav {
+  background-color: rgba(0, 0, 0, 0.88);
+}
+
+.v2-light .v2-top-nav {
+  background-color: rgba(247, 247, 247, 0.92);
+}
+
+/* Lenis smooth scroll (recommended base styles) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Desktop feed: faint tinted canvas behind the project column */
+.v2-feed-bg {
+  background-color: #080809;
+}
+
+.v2-light .v2-feed-bg {
+  background-color: #f2f2f3;
+}
+
+/* Sidebar logo rows: soft fade on both edges, slow continuous drift */
+.v2-logo-row {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 44px, #000 calc(100% - 44px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 44px, #000 calc(100% - 44px), transparent);
+}
+
+.v2-logo-marquee {
+  animation: v2LogoMarquee 24s linear infinite;
+}
+
+.v2-logo-row:hover .v2-logo-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes v2LogoMarquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-logo-marquee {
+    animation: none;
+  }
+}
+
+/* Dark-ink company marks (Chase, Toca, Apple) flip to white in dark mode */
+.v2-dark .v2-logo-dark-ink { filter: brightness(0) invert(1); }

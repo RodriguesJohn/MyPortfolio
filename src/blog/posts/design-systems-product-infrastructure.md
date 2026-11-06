@@ -1,6 +1,6 @@
 ---
 title: "Design Systems: Build Product Infrastructure"
-description: "Learn how to build design systems that connect tokens, components, governance, and code—then improve adoption, delivery, and consistency across products."
+description: "Learn how to build design systems that connect tokens, components, governance, and code, then improve adoption, delivery, and consistency across products."
 date: "2026-09-07"
 author: "John Rodrigues"
 tags: ["Design systems", "Tokens", "Governance"]

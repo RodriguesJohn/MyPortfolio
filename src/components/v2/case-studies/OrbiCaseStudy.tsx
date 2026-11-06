@@ -33,7 +33,7 @@ const Section = ({
 }) => (
   <section className="mb-11 sm:mb-14">
     {kicker ? (
-      <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500">
+      <p className="mb-2 text-[11px] font-medium text-zinc-500">
         {kicker}
       </p>
     ) : null}
@@ -57,7 +57,7 @@ const NumberedList = ({ items }: { items: { title: string; body: React.ReactNode
   <div className="space-y-4">
     {items.map((item, index) => (
       <div key={item.title} className="rounded-2xl bg-white/[0.035] p-4 ring-1 ring-white/[0.08]">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
+        <p className="text-[11px] font-medium text-zinc-500">
           {String(index + 1).padStart(2, "0")}
         </p>
         <h3 className="mt-2 text-[16px] font-semibold tracking-tight text-zinc-100">
@@ -351,7 +351,7 @@ const OrbiCaseStudy = () => (
         two. That velocity is not a shortcut. It is what becomes possible when design
         and engineering stop being separate roles and start being the same thought.
       </p>
-      <p className="mt-5 text-[13px] font-medium uppercase tracking-[0.16em] text-zinc-500">
+      <p className="mt-5 text-[13px] font-medium text-zinc-500">
         Designer + Engineer · Solo · 5 Weeks · Figma → Claude → Xcode → App Store
       </p>
     </Section>

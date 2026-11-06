@@ -448,7 +448,7 @@ export const modules = [
           "Git for tokens, contracts, and code. Figma as the working file the team can see. Storybook or a preview as the human viewing surface. Not three laws.",
           "Storybook is a visual documentation tool. In a world of agents you still need a place humans can see states. That can be Storybook. It can be a preview app. The repo can be the viewing surface.",
           "Florence preview is the repo expressed as a gallery. The agent does not need Storybook to retrieve. It needs the contract. Do not make Storybook the only place the rule lives.",
-          "Other visual layers — Paper, shaders, the marketing site — get a DESIGN.md if you do not want the look invented. They do not become a second component catalog.",
+          "Other visual layers (Paper, shaders, the marketing site) get a DESIGN.md if you do not want the look invented. They do not become a second component catalog.",
           "DESIGN.md is needed when the visual language is its own surface. DESIGN.md says how it should look here. AGENTS.md says how to work. getdesign.md is the pattern. Florence has foundations. They are not the same file. Do not paste Florence primitives into a marketing site."
         ]
       }

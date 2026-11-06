@@ -59,8 +59,8 @@ const FigureConfidential = ({ src }: { src: string }) => (
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
     </div>
-    <figcaption className="border-t border-white/[0.06] px-4 py-2.5 text-center text-[11px] font-medium uppercase tracking-[0.14em] text-zinc-500">
-      Confidential · sessions anonymized
+    <figcaption className="border-t border-white/[0.06] px-4 py-2.5 text-center text-[11px] font-medium text-zinc-500">
+      Confidential · Sessions Anonymized
     </figcaption>
   </figure>
 );

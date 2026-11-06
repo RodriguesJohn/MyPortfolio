@@ -45,7 +45,7 @@ export const v2NelsonExit: Transition = {
   ease: [0.4, 0, 1, 1],
 };
 
-/** Outer layout stagger — no filter here (filter clips profile-card shadows). */
+/** Outer layout stagger. No filter here (filter clips profile-card shadows). */
 export const v2NelsonShell: Variants = {
   hidden: {},
   show: {
@@ -80,20 +80,25 @@ export const v2NelsonStagger: Variants = {
   },
 };
 
-/** Child: 16px rise. Opacity is inherited from the blurring parent. */
+/** Child (nelson.co homeChild): 16px rise on a critically damped spring, 0.7s fade.
+ *  Carries the 8px blur itself (nelson puts it on the container) and drops the filter
+ *  when done so profile-card shadows never clip. */
 export const v2NelsonChild: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 16, filter: "blur(8px)" },
   show: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
       y: v2NelsonY,
       opacity: v2NelsonFade,
+      filter: v2NelsonFade,
     },
+    transitionEnd: { filter: "none" },
   },
 };
 
-/** Tab / page swap — nelson.co exploration enter. */
+/** Tab / page swap: nelson.co exploration enter. */
 export const v2NelsonPage: Variants = {
   hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
   show: {
@@ -106,6 +111,7 @@ export const v2NelsonPage: Variants = {
       filter: v2NelsonFade,
       y: { type: "spring", duration: 0.8, bounce: 0 },
     },
+    transitionEnd: { filter: "none" },
   },
   exit: {
     opacity: 0,
@@ -160,16 +166,16 @@ export const v2ProfileBack: Variants = {
 
 export const v2ProfileMid: Variants = {
   rest: {
-    rotate: 3,
-    x: 3,
-    y: 2,
-    scale: 0.985,
-    opacity: 0.7,
+    rotate: 7,
+    x: 16,
+    y: 6,
+    scale: 0.96,
+    opacity: 0.75,
   },
   hover: {
-    rotate: 5,
-    x: 6,
-    y: 4,
+    rotate: 10,
+    x: 24,
+    y: 8,
     scale: 0.985,
     opacity: 0.75,
   },
@@ -184,11 +190,11 @@ export const v2ProfileMid: Variants = {
 
 export const v2ProfileFront: Variants = {
   rest: {
-    rotate: -3,
+    rotate: 0,
     y: 0,
   },
   hover: {
-    rotate: -1.5,
+    rotate: 0,
     y: -4,
   },
   open: {
