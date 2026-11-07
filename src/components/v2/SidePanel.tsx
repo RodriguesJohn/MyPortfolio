@@ -1,4 +1,4 @@
-import { Children, useState, type ReactNode } from "react";
+import { Children, type ReactNode } from "react";
 import { motion, type Variants } from "framer-motion";
 import ProfileShader from "@/components/v2/ProfileShader";
 import PanelParticles from "@/components/v2/PanelParticles";
@@ -64,8 +64,6 @@ const SidePanel = ({
   /** Sits in the gradient at the bottom, above the (fixed) chat dock on desktop. */
   card?: ReactNode;
 }) => {
-  const [replay, setReplay] = useState(0);
-
   return (
   <motion.section
     className="v2-side-panel relative flex h-full min-h-[640px] flex-col overflow-hidden rounded-[28px] px-7 pb-7 pt-7 lg:min-h-0 lg:pb-[88px]"
@@ -97,11 +95,10 @@ const SidePanel = ({
       />
     </motion.span>
 
-    {/* Each line draws its outline letter by letter, then fills; hover redraws. */}
+    {/* Each line draws its outline letter by letter, then fills, once on entrance. */}
     <h1
       className="relative z-10 mt-5 whitespace-nowrap text-[22px] leading-[1.18] tracking-[-0.025em]"
       style={{ ...sans, fontWeight: 500 }}
-      onMouseEnter={() => setReplay((n) => n + 1)}
     >
       {HEADING_LINES.map((line, i) => (
         <StrokeText
@@ -114,7 +111,6 @@ const SidePanel = ({
           fillDelay={0.2}
           strokeColor="#A78BFA"
           strokeWidth={0.8}
-          replayKey={replay}
         />
       ))}
     </h1>

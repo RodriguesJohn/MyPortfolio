@@ -124,7 +124,7 @@ const FEED_TABS: { id: FeedTab; label: string; shortLabel?: string }[] = [
   { id: "work", label: "Work" },
   { id: "resume", label: "Resume" },
   { id: "testimonials", label: "Testimonials", shortLabel: "Praise" },
-  { id: "blog", label: "Blog" },
+  { id: "blog", label: "Field Notes", shortLabel: "Notes" },
   { id: "tools", label: "Tools" },
   { id: "mentorship", label: "Mentorship" },
   { id: "experiments", label: "AI Experiments", shortLabel: "Experiments" },
@@ -685,6 +685,9 @@ const BlogTabContent = ({
   soft?: boolean;
 }) => (
   <div className="px-0 sm:px-1">
+    <p className="v2-built-tool-title mb-5 text-[15px] leading-[1.5]" style={display}>
+      Blog on AI, product and design
+    </p>
     <div className="mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
       <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
         <p className="text-[13px] leading-[1.5] text-zinc-400">Read by designers from</p>

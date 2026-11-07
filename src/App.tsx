@@ -26,6 +26,11 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const RedirectV2Home = () => {
+  const { search } = useLocation();
+  return <Navigate to={{ pathname: "/", search }} replace />;
+};
+
 const RedirectV2Work = () => {
   const { slug } = useParams();
   return <Navigate to={`/work/${slug ?? ""}`} replace />;
@@ -56,7 +61,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Live portfolio */}
-          <Route path="/" element={<IndexV2 />} />
+          <Route path="/" element={<IndexV2 layout="panel" />} />
           <Route path="/design-engineering-course" element={<RedirectToCoursePage />} />
           <Route path="/course" element={<RedirectToCoursePage />} />
           <Route path="/workshops" element={<RedirectToWorkshops />} />
@@ -89,8 +94,7 @@ const App = () => (
           <Route path="/v1/resume" element={<Index />} />
 
           {/* Old /v2 URLs */}
-          {/* Exploration: framed side-panel layout */}
-          <Route path="/v2" element={<IndexV2 layout="panel" />} />
+          <Route path="/v2" element={<RedirectV2Home />} />
           <Route path="/v2/work" element={<Navigate to="/work" replace />} />
           <Route path="/v2/work/:slug" element={<RedirectV2Work />} />
           <Route
