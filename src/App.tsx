@@ -26,11 +26,6 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const RedirectV2Home = () => {
-  const { search } = useLocation();
-  return <Navigate to={{ pathname: "/", search }} replace />;
-};
-
 const RedirectV2Work = () => {
   const { slug } = useParams();
   return <Navigate to={`/work/${slug ?? ""}`} replace />;
@@ -94,7 +89,8 @@ const App = () => (
           <Route path="/v1/resume" element={<Index />} />
 
           {/* Old /v2 URLs */}
-          <Route path="/v2" element={<RedirectV2Home />} />
+          {/* Exploration: framed side-panel layout */}
+          <Route path="/v2" element={<IndexV2 layout="panel" />} />
           <Route path="/v2/work" element={<Navigate to="/work" replace />} />
           <Route path="/v2/work/:slug" element={<RedirectV2Work />} />
           <Route

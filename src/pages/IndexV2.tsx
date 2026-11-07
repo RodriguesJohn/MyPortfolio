@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import PageShell, { display, ThemeToggleIcons } from "@/components/v2/PageShell";
 import { useSmoothScroll } from "@/components/v2/useSmoothScroll";
 import ProfileTiltCard from "@/components/v2/ProfileTiltCard";
+import SidePanel from "@/components/v2/SidePanel";
 import { loadCalEmbed } from "@/lib/calEmbed";
 import {
   v2NelsonChild,
@@ -51,13 +52,15 @@ const LogoRow = ({
   logos,
   duration = 24,
 }: {
-  title: string;
+  title?: string;
   logos: CompanyLogo[];
   duration?: number;
 }) => (
   <div>
-    <p className="text-[13px] leading-[1.5] text-zinc-400 opacity-70">{title}</p>
-    <div className="v2-logo-row mt-2.5 overflow-hidden">
+    {title && (
+      <p className="text-[13px] leading-[1.5] text-zinc-400 opacity-70">{title}</p>
+    )}
+    <div className={`v2-logo-row overflow-hidden ${title ? "mt-2.5" : ""}`}>
       <ul
         className="v2-logo-marquee flex w-max"
         // Six copies: each half of the strip holds three sets, so it always
@@ -148,6 +151,13 @@ const FEED_BY_TAB: Record<"work" | "experiments", Project[]> = {
   experiments: AI_TOOLS_BUILT,
 };
 
+/** Turns HTML entities in feed text ("&amp;", "&#8217;") into plain characters. */
+const decodeEntities = (value: string) => {
+  const el = document.createElement("textarea");
+  el.innerHTML = value;
+  return el.value;
+};
+
 const parseSubstackItem = (item: {
   title?: string;
   link?: string;
@@ -174,7 +184,7 @@ const parseSubstackItem = (item: {
     undefined;
 
   return {
-    title: item.title,
+    title: decodeEntities(item.title),
     link: item.link,
     pubDate: item.pubDate || "",
     thumbnail,
@@ -666,10 +676,13 @@ const BlogTabContent = ({
   posts,
   loading,
   onSubscribe,
+  soft = false,
 }: {
   posts: SubstackPost[];
   loading: boolean;
   onSubscribe: () => void;
+  /** /v2: softer frosted cards (matching the panel's newsletter card), no dates. */
+  soft?: boolean;
 }) => (
   <div className="px-0 sm:px-1">
     <div className="mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
@@ -728,9 +741,15 @@ const BlogTabContent = ({
               href={post.link}
               target="_blank"
               rel="noreferrer"
-              className="v2-built-tool-card v2-blog-card group flex h-full flex-col overflow-hidden rounded-[12px] p-2 transition-transform duration-300 hover:-translate-y-0.5"
+              className={`v2-built-tool-card v2-blog-card group flex h-full flex-col overflow-hidden p-2 transition-transform duration-300 hover:-translate-y-0.5 ${
+                soft ? "v2-blog-card--soft rounded-[20px]" : "rounded-[12px]"
+              }`}
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[6px] bg-zinc-900">
+              <div
+                className={`relative aspect-[16/10] w-full overflow-hidden bg-zinc-900 ${
+                  soft ? "rounded-[14px]" : "rounded-[6px]"
+                }`}
+              >
                 {post.thumbnail ? (
                   <img
                     src={post.thumbnail}
@@ -747,7 +766,7 @@ const BlogTabContent = ({
                 >
                   {post.title}
                 </h3>
-                {post.pubDate ? (
+                {post.pubDate && !soft ? (
                   <p className="mt-auto pt-3 text-[15px] leading-[1.5] text-zinc-400">
                     {formatPostDate(post.pubDate)}
                   </p>
@@ -758,7 +777,11 @@ const BlogTabContent = ({
         ))}
       </ul>
     )}
-    <div className="v2-built-tool-card v2-blog-card mt-8 flex flex-col gap-3 rounded-[12px] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+    <div
+      className={`v2-built-tool-card v2-blog-card mt-8 flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6 ${
+        soft ? "v2-blog-card--soft rounded-[20px]" : "rounded-[12px]"
+      }`}
+    >
       <p className="v2-built-tool-description text-[15px]">
         Join <span className="v2-built-tool-title font-medium">6000+</span> readers.
       </p>
@@ -1161,7 +1184,8 @@ const NavMoreMenu = ({
   );
 };
 
-const IndexV2 = () => {
+const IndexV2 = ({ layout = "sidebar" }: { layout?: "sidebar" | "panel" }) => {
+  const isPanel = layout === "panel";
   const { posts: substackPosts, loading: substackLoading } = useSubstackPosts();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -1224,7 +1248,7 @@ const IndexV2 = () => {
   };
 
   return (
-    <PageShell dockAlign="feed">
+    <PageShell dockAlign={isPanel ? "panel" : "feed"}>
       {/* Top navigation: fixed, translucent, blurred */}
       <motion.header
         className="v2-top-nav fixed inset-x-0 top-0 z-50"
@@ -1234,7 +1258,7 @@ const IndexV2 = () => {
       >
         <div className="relative mx-auto flex h-14 w-full max-w-[1280px] items-stretch gap-6 px-4 sm:px-5 min-[1180px]:gap-0">
           {/* At wide widths this column matches the sidebar (260px + 40px gap), so the links centre over the feed. */}
-          <div className="hidden flex-1 basis-0 items-center md:flex min-[1180px]:w-[300px] min-[1180px]:flex-none">
+          <div className={`hidden flex-1 basis-0 items-center md:flex min-[1180px]:flex-none ${isPanel ? "min-[1180px]:w-[360px]" : "min-[1180px]:w-[300px]"}`}>
           </div>
           <div className="flex min-w-0 items-stretch gap-x-5 lg:gap-x-7 min-[1180px]:flex-1 min-[1180px]:justify-center">
           <nav
@@ -1317,11 +1341,11 @@ const IndexV2 = () => {
       <div className="h-14 shrink-0 lg:hidden" aria-hidden="true" />
       {/* Desktop feed panel: from the sidebar's right edge to the window's right edge,
           starting below the nav (centred 1280px container + 20px padding + 260px sidebar). */}
-      <div
+      {!isPanel && <div
         className="v2-feed-bg pointer-events-none fixed bottom-0 right-0 top-14 hidden rounded-tl-[20px] lg:block"
         style={{ left: "calc(max(0px, (100vw - 1280px) / 2) + 280px)" }}
         aria-hidden="true"
-      />
+      />}
 
       <div className="mx-auto flex h-auto w-full max-w-[1280px] flex-col overflow-x-hidden px-4 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-5 lg:h-[100dvh] lg:overflow-y-hidden lg:overflow-x-visible lg:px-5 lg:pb-0">
         {/* Top spacer: float room for the tilted profile card; holds the (hidden) launch banner */}
@@ -1356,6 +1380,47 @@ const IndexV2 = () => {
           animate="show"
         >
         {/* Static sidebar — stays put while the feed scrolls */}
+        {isPanel ? (
+          <motion.aside
+            className="relative z-40 shrink-0 pt-2 lg:w-[320px] lg:pb-5 lg:pt-[72px]"
+            variants={v2NelsonShell}
+          >
+            <SidePanel
+              footer={
+                <LogoRow logos={WORKED_AT.filter((logo) => logo.label !== "Notable")} />
+              }
+              card={
+                <div className="v2-newsletter-card rounded-[20px] px-4 pb-3 pt-3.5">
+                  <p className="v2-newsletter-title whitespace-nowrap text-[13px] font-medium leading-tight tracking-[-0.01em]">
+                    Field Notes on AI, Product &amp; Design
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setIsSubscribeOpen(true)}
+                    className={`${secondaryCtaClass} v2-sidebar-subscribe mt-2.5 w-full`}
+                  >
+                    Join 6K+ Readers
+                  </button>
+                  <div className="v2-newsletter-logos mt-3 border-t pt-2.5">
+                    <LogoRow
+                      logos={RESOURCES_TRUSTED_BY}
+                      duration={28}
+                    />
+                  </div>
+                </div>
+              }
+            >
+              <a
+                href={PROFILE_LINKEDIN_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="v2-explore-cta v2-explore-cta-beam inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-[13px] font-medium transition active:translate-y-[1px] active:scale-[0.99]"
+              >
+                <span className="relative z-[1]">Get in Touch</span>
+              </a>
+            </SidePanel>
+          </motion.aside>
+        ) : (
         <motion.aside
           className="v2-explore-sidebar relative z-40 shrink-0 overflow-visible border-b v2-divider border-zinc-800/50 pb-4 lg:w-[260px] lg:border-b-0 lg:pb-2 lg:pt-28 lg:pl-1.5 lg:pr-6"
           variants={v2NelsonChild}
@@ -1449,11 +1514,12 @@ const IndexV2 = () => {
             <TrustedBy className="mt-10 hidden lg:block" />
 
           </motion.aside>
+        )}
 
           {/* Dominant scroll column — only this pane scrolls on desktop */}
           <motion.main
             ref={feedScrollRef}
-            className="scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:pt-[125px] lg:pb-32"
+            className={`scrollbar-hide relative z-0 min-w-0 flex-1 overflow-x-hidden lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:pb-32 ${isPanel ? "lg:pt-[72px]" : "lg:pt-[125px]"}`}
             variants={v2NelsonStagger}
           >
             <AnimatePresence mode="wait">
@@ -1507,6 +1573,7 @@ const IndexV2 = () => {
                     posts={substackPosts}
                     loading={substackLoading}
                     onSubscribe={() => setIsSubscribeOpen(true)}
+                    soft={isPanel}
                   />
                 </motion.div>
               ) : activeTab === "mentorship" ? (
@@ -1598,23 +1665,17 @@ const IndexV2 = () => {
                 : "subscribeRise 460ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
             }}
           >
-            <div
-              className="overflow-hidden rounded-2xl"
-              style={{
-                backgroundColor: "#0a0a0a",
-                border: "1px solid #1f1f22",
-                boxShadow:
-                  "0 20px 50px -10px rgba(0,0,0,0.85), 0 8px 20px -4px rgba(0,0,0,0.5)",
-              }}
-            >
+            {/* The white form below is Substack's iframe and can't be restyled;
+                this header follows the theme so light mode reads as one surface. */}
+            <div className="v2-subscribe-modal overflow-hidden rounded-2xl">
               <div className="flex items-center justify-between px-5 pb-3 pt-4">
-                <span className="text-[13px] text-zinc-500">
+                <span className="v2-subscribe-eyebrow text-[13px]">
                   Join Newsletter
                 </span>
                 <button
                   onClick={closeSubscribe}
                   aria-label="Close"
-                  className="flex h-7 w-7 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="v2-subscribe-close flex h-7 w-7 items-center justify-center rounded-full transition-colors"
                 >
                   <svg
                     className="h-4 w-4"
@@ -1630,10 +1691,10 @@ const IndexV2 = () => {
                 </button>
               </div>
               <div className="px-5 pb-3">
-                <h3 className="text-[22px] font-medium text-zinc-50">
+                <h3 className="v2-subscribe-title text-[22px] font-medium">
                   Join My Substack
                 </h3>
-                <p className="mt-1 text-[15px] text-zinc-400">
+                <p className="v2-subscribe-body mt-1 text-[15px]">
                   Subscribe via Substack. Confirmation will land in your inbox.
                 </p>
               </div>

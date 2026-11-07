@@ -301,11 +301,14 @@ const PageShell = ({
 }: {
   children: ReactNode;
   /** "feed": on desktop, centre the chat dock over the homepage feed column
-   *  (260px sidebar + 40px gap pushes the column's centre 150px right). */
-  dockAlign?: "page" | "feed";
+   *  (260px sidebar + 40px gap pushes the column's centre 150px right).
+   *  "panel": on desktop, sit the dock inside the /v2 side panel's gradient. */
+  dockAlign?: "page" | "feed" | "panel";
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  // In the /v2 panel the dock is narrow, so "More" becomes an icon.
+  const compactMore = dockAlign === "panel";
 
   // Listen state
   const [isListenOpen, setIsListenOpen] = useState(false);
@@ -508,7 +511,11 @@ const PageShell = ({
       {/* Chat-style composer + More */}
       <nav
         className={`fixed left-1/2 z-50 w-[min(calc(100vw-2.75rem),340px)] -translate-x-1/2 sm:w-[min(calc(100vw-2rem),340px)] ${
-          dockAlign === "feed" ? "lg:left-[calc(50%+150px)]" : ""
+          dockAlign === "feed"
+            ? "lg:left-[calc(50%+150px)]"
+            : dockAlign === "panel"
+              ? "v2-dock-in-panel"
+              : ""
         }`}
         style={{
           bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
@@ -634,27 +641,42 @@ const PageShell = ({
           <button
             type="button"
             onClick={() => setIsRelatedOpen(true)}
-            className={`relative z-[1] inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-[13px] font-medium transition ${
+            className={`relative z-[1] inline-flex shrink-0 items-center rounded-full text-[13px] font-medium transition ${
+              compactMore ? "size-9 justify-center" : "gap-1.5 px-3 py-2"
+            } ${
               isLightPreview
                 ? "text-zinc-800 hover:bg-zinc-900/[0.06]"
                 : "text-zinc-100 hover:bg-white/[0.06]"
             }`}
             aria-label="Open more menu"
             aria-expanded={isRelatedOpen}
+            title={compactMore ? "More" : undefined}
           >
-            More
-            <svg
-              className="size-3.5 opacity-70"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
+            {compactMore ? (
+              // Four-dot grid: icon-only "More" so the input gets the width.
+              <svg className="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="7" cy="7" r="2.1" />
+                <circle cx="17" cy="7" r="2.1" />
+                <circle cx="7" cy="17" r="2.1" />
+                <circle cx="17" cy="17" r="2.1" />
+              </svg>
+            ) : (
+              <>
+                More
+                <svg
+                  className="size-3.5 opacity-70"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </>
+            )}
           </button>
         </div>
       </nav>

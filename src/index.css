@@ -848,7 +848,8 @@ All colors MUST be HSL.
 .v2-explore-cta-beam::after {
   content: "";
   position: absolute;
-  inset: -3px;
+  /* Kept tight to the edge so the halo hugs the pill instead of bleeding out */
+  inset: -1px;
   border-radius: inherit;
   background: conic-gradient(
     from var(--v2-beam-angle),
@@ -859,8 +860,8 @@ All colors MUST be HSL.
     transparent 88%,
     transparent 100%
   );
-  filter: blur(7px);
-  opacity: 0.55;
+  filter: blur(3px);
+  opacity: 0.5;
   animation: v2-beam-spin 6.5s linear infinite;
   pointer-events: none;
   z-index: -1;
@@ -1454,3 +1455,109 @@ html.lenis body {
 
 /* Dark-ink company marks (Chase, Toca, Apple) flip to white in dark mode */
 .v2-dark .v2-logo-dark-ink { filter: brightness(0) invert(1); }
+
+/* ── /v2 exploration: framed side panel ───────────────────────────── */
+.v2-side-panel {
+  background: linear-gradient(180deg, #121214 0%, #0b0b0c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 30px 60px -30px rgba(0, 0, 0, 0.8);
+}
+
+.v2-light .v2-side-panel {
+  background: #f3f3f4;
+  border-color: rgba(24, 24, 27, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 30px 60px -36px rgba(24, 24, 27, 0.25);
+}
+
+.v2-side-panel-logos { border-color: rgba(255, 255, 255, 0.07); }
+.v2-light .v2-side-panel-logos { border-color: rgba(24, 24, 27, 0.08); }
+
+.v2-side-panel-horizon {
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,0.6) 35%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,0.6) 35%, transparent 100%);
+}
+
+.v2-side-panel-subtitle { color: #71717a; }
+.v2-side-panel-title { color: #fafafa; }
+.v2-side-panel-body { color: #a1a1aa; }
+.v2-light .v2-side-panel-subtitle { color: #8a8a93; }
+.v2-light .v2-side-panel-title { color: #18181b; }
+.v2-light .v2-side-panel-body { color: #52525b; }
+
+.v2-side-panel-avatar { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14); }
+.v2-light .v2-side-panel-avatar { box-shadow: 0 0 0 1px rgba(24, 24, 27, 0.08), 0 2px 6px -2px rgba(24, 24, 27, 0.2); }
+
+/* Logo row labels ("Worked At", "Resources Trusted By"): a touch smaller in the panel */
+.v2-side-panel-logos p { font-size: 11.5px; }
+
+/* /v2: the chat dock sits in the side panel's gradient on desktop.
+   Panel = centred 1280px container + 20px padding, 320px wide, 20px off the bottom. */
+@media (min-width: 1024px) {
+  .v2-dock-in-panel {
+    left: calc(max(0px, (100vw - 1280px) / 2) + 20px + 160px) !important;
+    bottom: 48px !important; /* panel's 20px offset + its 28px padding */
+    width: 264px !important; /* panel inner width: 320 - 2 × 28 */
+  }
+}
+
+/* /v2 newsletter card: frosted glass over the panel gradient */
+.v2-newsletter-card {
+  background: linear-gradient(160deg, rgba(24, 24, 27, 0.72), rgba(12, 12, 14, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 16px 36px -20px rgba(0, 0, 0, 0.7);
+}
+.v2-light .v2-newsletter-card {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62));
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 16px 36px -20px rgba(30, 50, 110, 0.35);
+}
+.v2-newsletter-title { color: #fafafa; }
+.v2-newsletter-logos { border-color: rgba(255, 255, 255, 0.08); }
+.v2-light .v2-newsletter-title { color: #18181b; }
+.v2-light .v2-newsletter-logos { border-color: rgba(24, 24, 27, 0.08); }
+
+/* Newsletter pop-up header (the form under it is Substack's iframe) */
+.v2-subscribe-modal {
+  background-color: #0a0a0a;
+  border: 1px solid #1f1f22;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 8px 20px -4px rgba(0, 0, 0, 0.5);
+}
+.v2-subscribe-eyebrow { color: #71717a; }
+.v2-subscribe-title { color: #fafafa; }
+.v2-subscribe-body { color: #a1a1aa; }
+.v2-subscribe-close { color: #a1a1aa; }
+.v2-subscribe-close:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+/* Light: match Substack's #f4f4f4 form so header and iframe read as one card */
+.v2-light .v2-subscribe-modal {
+  background-color: #f4f4f4;
+  border-color: rgba(24, 24, 27, 0.08);
+  box-shadow: 0 24px 60px -20px rgba(24, 24, 27, 0.35), 0 8px 20px -8px rgba(24, 24, 27, 0.15);
+}
+.v2-light .v2-subscribe-eyebrow { color: #71717a !important; }
+.v2-light .v2-subscribe-title { color: #18181b !important; }
+.v2-light .v2-subscribe-body { color: #52525b !important; }
+.v2-light .v2-subscribe-close { color: #52525b !important; }
+.v2-light .v2-subscribe-close:hover { color: #18181b !important; background: rgba(24, 24, 27, 0.06); }
+
+/* /v2 blog cards: same soft, frosted feel as the panel's newsletter card */
+.v2-blog-card.v2-blog-card--soft {
+  background: linear-gradient(160deg, rgba(24, 24, 27, 0.8), rgba(14, 14, 16, 0.7)) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 40px -24px rgba(0, 0, 0, 0.6) !important;
+}
+.v2-light .v2-blog-card.v2-blog-card--soft {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 18px 40px -24px rgba(24, 24, 27, 0.14) !important;
+}
