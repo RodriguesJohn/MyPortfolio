@@ -1,9 +1,9 @@
 import { useEffect, type RefObject } from "react";
 import Lenis from "lenis";
 
-/** Same feel as omnagarkar.com: 0.85s settle on an expo-out curve. */
+/** Same expo-out curve as omnagarkar.com, with a shorter 0.6s settle so it feels less heavy. */
 const LENIS_OPTIONS = {
-  duration: 0.85,
+  duration: 0.6,
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
   wheelMultiplier: 1,
