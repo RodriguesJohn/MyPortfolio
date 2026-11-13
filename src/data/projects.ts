@@ -13,7 +13,7 @@ import cardMotionVideo from "@/assets/Card.mp4";
 import aiSummaryVideo from "@/assets/AISummary.mp4";
 import appleNotesMcpVideo from "@/assets/IMG_7590.mov";
 import florenceF2Video from "@/assets/florence-f2.mp4";
-import startupBankingVideo from "@/assets/startup-banking-jpmc.mp4";
+import startupBankingVideo from "@/assets/startup-banking-ultramock.mp4";
 
 // Past Work
 import noScrollImage from "@/assets/NoScrollApp.png";
@@ -233,7 +233,7 @@ export const HIGHLIGHTS: Project[] = [
       fit: "cover",
       bg: "#c8c8c8",
       objectPosition: "center center",
-      aspect: "3646/2160",
+      aspect: "16/9",
     },
   },
   citiBalanceTransfer,
