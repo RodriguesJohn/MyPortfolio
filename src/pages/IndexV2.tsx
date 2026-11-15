@@ -139,6 +139,22 @@ const SHOW_COURSE_NAV = true;
 
 /** Tabs tucked into the nav's "More" dropdown. */
 const MORE_TAB_IDS = new Set<FeedTab>(["mentorship", "experiments", "systems"]);
+/** Extra tabs moved into "More" on phones (< 640px) so the row fits without scrolling. */
+const MOBILE_MORE_TAB_IDS = new Set<FeedTab>(["tools"]);
+
+const useIsPhone = () => {
+  const query = "(max-width: 639px)";
+  const [isPhone, setIsPhone] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(query).matches,
+  );
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = () => setIsPhone(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return isPhone;
+};
 const RESUME_PDF_URL = "/JohnRodriguesResume.pdf";
 
 const FEED_TAB_CLASS =
@@ -1088,7 +1104,7 @@ const NavMoreMenu = ({
   activeTab,
   onSelect,
 }: {
-  tabs: { id: FeedTab; label: string }[];
+  tabs: { id: FeedTab; label: string; shortLabel?: string }[];
   activeTab: FeedTab;
   onSelect: (tab: FeedTab) => void;
 }) => {
@@ -1126,7 +1142,14 @@ const NavMoreMenu = ({
         }`}
       >
         <span className="relative">
-          {activeItem ? activeItem.label : "More"}
+          {activeItem ? (
+            <>
+              <span className="sm:hidden">{activeItem.shortLabel ?? activeItem.label}</span>
+              <span className="hidden sm:inline">{activeItem.label}</span>
+            </>
+          ) : (
+            "More"
+          )}
           {activeItem && (
             <motion.span
               layoutId="v2-feed-tab-indicator"
@@ -1198,6 +1221,9 @@ const IndexV2 = ({ layout = "sidebar" }: { layout?: "sidebar" | "panel" }) => {
       ? (tabFromUrl as FeedTab)
       : "work";
   const [activeTab, setActiveTab] = useState<FeedTab>(initialTab);
+  const isPhone = useIsPhone();
+  const isInMore = (id: FeedTab) =>
+    MORE_TAB_IDS.has(id) || (isPhone && MOBILE_MORE_TAB_IDS.has(id));
   const feedScrollRef = useRef<HTMLElement>(null);
   useSmoothScroll(feedScrollRef);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
@@ -1263,12 +1289,12 @@ const IndexV2 = ({ layout = "sidebar" }: { layout?: "sidebar" | "panel" }) => {
           {/* At wide widths this column matches the sidebar (260px + 40px gap), so the links centre over the feed. */}
           <div className={`hidden flex-1 basis-0 items-center md:flex min-[1180px]:flex-none ${isPanel ? "min-[1180px]:w-[360px]" : "min-[1180px]:w-[300px]"}`}>
           </div>
-          <div className="flex min-w-0 items-stretch gap-x-5 lg:gap-x-7 min-[1180px]:flex-1 min-[1180px]:justify-center">
+          <div className="flex min-w-0 items-stretch gap-x-4 sm:gap-x-5 lg:gap-x-7 min-[1180px]:flex-1 min-[1180px]:justify-center">
           <nav
             aria-label="Sections"
-            className="v2-feed-tabs scrollbar-hide flex min-w-0 flex-nowrap items-stretch gap-x-5 overflow-x-auto lg:gap-x-7"
+            className="v2-feed-tabs scrollbar-hide flex min-w-0 flex-nowrap items-stretch gap-x-4 overflow-x-auto sm:gap-x-5 lg:gap-x-7"
           >
-            {FEED_TABS.filter((tab) => !MORE_TAB_IDS.has(tab.id)).map((tab, index) => {
+            {FEED_TABS.filter((tab) => !isInMore(tab.id)).map((tab, index) => {
               const active = activeTab === tab.id;
               return (
                 <Fragment key={tab.id}>
@@ -1309,7 +1335,7 @@ const IndexV2 = ({ layout = "sidebar" }: { layout?: "sidebar" | "panel" }) => {
             })}
           </nav>
           <NavMoreMenu
-            tabs={FEED_TABS.filter((tab) => MORE_TAB_IDS.has(tab.id))}
+            tabs={FEED_TABS.filter((tab) => isInMore(tab.id))}
             activeTab={activeTab}
             onSelect={selectTab}
           />
