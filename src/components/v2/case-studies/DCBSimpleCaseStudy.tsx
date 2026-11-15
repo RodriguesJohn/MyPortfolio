@@ -1,7 +1,6 @@
-import startupBankingVideo from "@/assets/startup-banking-jpmc.mp4";
+import startupBankingVideo from "@/assets/startup-banking-ultramock.mp4";
 import {
   CaseStudyHero,
-  CaseStudyNote,
   CaseStudyPage,
   CaseStudySection,
   CaseStudySplash,
@@ -25,6 +24,18 @@ const OUTCOMES = [
 
 const DCBSimpleCaseStudy = () => (
   <CaseStudyPage>
+    <aside className="mb-16 flex items-start gap-3 rounded-[12px] border border-zinc-800 bg-zinc-900/60 px-5 py-4 text-[14px] leading-[1.6] text-zinc-300 lg:mb-20">
+      <span
+        aria-hidden="true"
+        className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-zinc-400"
+      />
+      <p className="m-0">
+        This is current internal work at JPMorgan Chase and remains
+        confidential. More details and the full case study are shared during a
+        portfolio presentation, on request.
+      </p>
+    </aside>
+
     <CaseStudySplash
       titleLines={["Startup Banking,", "JPMorgan Chase"]}
       details={[
@@ -42,8 +53,8 @@ const DCBSimpleCaseStudy = () => (
         muted
         playsInline
         preload="metadata"
-        className="block h-auto w-full"
-        style={{ aspectRatio: "3646/2160" }}
+        className="block h-auto w-full object-cover object-center"
+        style={{ aspectRatio: "16/9", backgroundColor: "#c8c8c8" }}
         aria-label="Startup Banking by JPMorgan Chase demo"
       />
     </CaseStudyHero>
@@ -60,12 +71,6 @@ const DCBSimpleCaseStudy = () => (
       titleLines={["A place to bank", "built for founders"]}
       paragraphs={OUTCOMES}
     />
-
-    <CaseStudyNote>
-      This work was completed under JPMorgan Chase and remains confidential.
-      Detailed process, research artifacts, and deeper case study materials are
-      available on request or during a private case study walkthrough.
-    </CaseStudyNote>
   </CaseStudyPage>
 );
 
